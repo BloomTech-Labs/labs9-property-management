@@ -1,7 +1,7 @@
-## Labs 9 - Property Management 
+# Labs 9 - Property Management 
 Welcome to our Property Management Application.
 
-### Contributors:
+## Contributors:
 Josue Peralta <br /> 
 Sean Kennedy <br />
 Charlie Winslow <br /> 
