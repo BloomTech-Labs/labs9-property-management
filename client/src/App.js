@@ -1,28 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import 'typeface-roboto';
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: 'none'
+  }
+});
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    console.log(this.props);
+    const { classes } = this.props;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <CssBaseline />
+        <Button variant="contained" className={classes.button}>
+          Default
+        </Button>
       </div>
     );
   }
 }
 
-export default App;
+export default withStyles(styles, { withTheme: true })(App);
