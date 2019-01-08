@@ -8,7 +8,7 @@ Charlie Winslow <br />
 Luis F. Salazar <br /> 
 Keegan Burkett <br /> 
 
-### Tech Stack
+## Tech Stack
 
-### Table of Contents
+## Table of Contents
 
