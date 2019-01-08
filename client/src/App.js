@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import 'typeface-roboto';
 
 const styles = theme => ({
@@ -25,9 +24,7 @@ class App extends Component {
     return (
       <div className="App">
         <CssBaseline />
-        <Button variant="contained" className={classes.button}>
-          Default
-        </Button>
+        <div>Hello world</div>
       </div>
     );
   }
