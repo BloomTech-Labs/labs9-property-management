@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { withStyles } from '@material-ui/core/styles';
-import 'typeface-roboto';
-import Admin from './components/admin/Admin';
+import React, { Component } from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { withStyles } from "@material-ui/core/styles";
+import "typeface-roboto";
+import Admin from "./components/admin/Admin";
+import Home from "./components/home/Home"
+import { Route } from "react-router-dom";
 
 const styles = theme => ({
   button: {
@@ -20,6 +22,8 @@ class App extends Component {
     return (
       <div className="App">
         <CssBaseline />
+        <Admin />
+        <Route exact path="/test-home" render={props => <Home />} />
         <Admin />
 
         <div>
