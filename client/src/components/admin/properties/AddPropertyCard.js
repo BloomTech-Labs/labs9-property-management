@@ -23,8 +23,7 @@ const styles = theme => ({
     justifyContent: 'center'
   },
   button: {
-    margin: theme.spacing.unit,
-    padding: 0
+    margin: theme.spacing.unit
   }
 });
 
@@ -43,7 +42,7 @@ class Properties extends React.Component {
             <CardActions className={classes.actions}>
               <IconButton
                 color="primary"
-                classeName={classes.button}
+                className={classes.button}
                 aria-label="Add a new property"
               >
                 <AddCircleIcon />
