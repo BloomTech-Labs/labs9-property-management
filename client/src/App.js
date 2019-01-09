@@ -3,7 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
 import 'typeface-roboto';
 import Admin from './components/Admin/Admin'
-import {Route} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 const styles = theme => ({
   button: {
@@ -26,15 +26,16 @@ class App extends Component {
     return (
       <div className="App">
         <CssBaseline />
-    <Route exact path='/' render={props => <Admin/>}/>
+      
+      <Route exact path='/' render={props => <Admin/>}/>
 
-        <div>
-
+     <div>
      {/*<Route exact path='/orders' render={props => </>}/>*/}
      {/*<Route exact path='/tenants' render={props => </>}/>*/}
      {/*<Route exact path='/billing' render={props => </>}/>*/}
      {/*<Route exact path='/settings' render={props => </>}/>*/}
-        </div>
+     </div>
+
       </div>
     );
   }
