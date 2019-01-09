@@ -11,21 +11,20 @@ const styles = theme => ({
     margin: theme.spacing.unit
   },
   input: {
-    display: "none"
+    display: 'none'
   }
 });
 
 class App extends Component {
   render() {
     console.log(this.props);
-    const { classes } = this.props;
 
     return (
       <div className="App">
         <CssBaseline />
-
-        <Route exact path="/" render={props => <Admin />} />
+        <Admin />
         <Route exact path="/test-home" render={props => <Home />} />
+        <Admin />
 
         <div>
           {/*<Route exact path='/orders' render={props => </>}/>*/}

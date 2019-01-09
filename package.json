@@ -4,7 +4,8 @@
   "description": "Team Members: Josue Peralta Sean Kennedy Charlie Winslow Luis F. Salazar Keegan Burkett",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "server": "nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
