@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Sidebar from './sidebarAdmin'
+import Sidebar from './SidebarAdmin'
 
 
 class Layout extends Component {
