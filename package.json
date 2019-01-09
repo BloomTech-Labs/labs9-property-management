@@ -1,0 +1,31 @@
+{
+  "name": "labs9-property-management",
+  "version": "1.0.0",
+  "description": "Team Members: Josue Peralta Sean Kennedy Charlie Winslow Luis F. Salazar Keegan Burkett",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lambda-School-Labs/labs9-property-management.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lambda-School-Labs/labs9-property-management/issues"
+  },
+  "homepage": "https://github.com/Lambda-School-Labs/labs9-property-management#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "helmet": "^3.15.0",
+    "knex": "^0.16.3",
+    "morgan": "^1.9.1",
+    "sqlite3": "^4.0.4"
+  }
+}
