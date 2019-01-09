@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Sidebar from './SidebarAdmin'
+import SidebarAdmin from './SidebarAdmin';
 
 
 class Layout extends Component {
@@ -7,7 +8,7 @@ class Layout extends Component {
     render() { 
         return ( 
             <>
-            <Sidebar/>
+            <SidebarAdmin/>
             {this.props.children}
             </>
          );
