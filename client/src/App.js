@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
 import 'typeface-roboto';
-import Admin from './components/Admin/Admin'
+import Admin from './components/admin/Admin'
 import { Route } from 'react-router-dom'
 
 const styles = theme => ({
@@ -15,10 +15,7 @@ const styles = theme => ({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+ 
   render() {
     console.log(this.props);
     const { classes } = this.props;
