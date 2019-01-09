@@ -29,7 +29,7 @@ const MobileMenuLink = styled.span`
   }
 `
 const SignUpLink = styled(Link)`
-  justify-self: end;
+  justify-self: center;
   color: #5F29FF;
   font-weight: 500;
   font-size: 1.6rem;

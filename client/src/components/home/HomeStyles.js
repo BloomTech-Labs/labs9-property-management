@@ -72,7 +72,7 @@ font-size: 1.6rem;
 font-weight: 600;
 color: white;
 text-transform: none;
-background: #874ef4;
+background: #6142d2;
 box-shadow: 0 2px 0 0 #6416d0;
 padding: 1.6rem 2.4rem 1.4rem;
 text-decoration: none;
