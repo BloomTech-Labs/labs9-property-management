@@ -12,4 +12,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+<<<<<<< HEAD
 *.sqlite3
+=======
+.sqlite3
+>>>>>>> fde46d0a315dfe77384b4b5836d367b53bf60dc0
