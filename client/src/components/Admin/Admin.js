@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Layout from './Layout/layout'
+import Layout from './layout/Layout'
 
 class Admin extends Component {
     state = {  }
