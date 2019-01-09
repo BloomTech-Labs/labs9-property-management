@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import 'typeface-roboto';
+import Admin from './components/Admin/Admin'
+import {Route} from 'react-router-dom'
 
 const styles = theme => ({
   button: {
@@ -25,9 +26,15 @@ class App extends Component {
     return (
       <div className="App">
         <CssBaseline />
-        <Button variant="contained" className={classes.button}>
-          Default
-        </Button>
+    <Route exact path='/' render={props => <Admin/>}/>
+
+        <div>
+
+     {/*<Route exact path='/orders' render={props => </>}/>*/}
+     {/*<Route exact path='/tenants' render={props => </>}/>*/}
+     {/*<Route exact path='/billing' render={props => </>}/>*/}
+     {/*<Route exact path='/settings' render={props => </>}/>*/}
+        </div>
       </div>
     );
   }
