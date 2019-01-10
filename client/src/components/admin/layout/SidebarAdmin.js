@@ -73,7 +73,7 @@ class SidebarAdmin extends Component {
         >
           <div className={classes.toolbar} />
           <List>
-            <Link style={{ textDecoration: "none" }} to="/Properties">
+            <Link style={{ textDecoration: "none" }} to="/admin/properties">
               <ListItem button key={"Properties"}>
                 <ListItemIcon>
                   <Business />
@@ -81,7 +81,7 @@ class SidebarAdmin extends Component {
                 <ListItemText primary={"Properties"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/work_orders">
+            <Link style={{ textDecoration: "none" }} to="/admin/work-orders">
               <ListItem button key={"Work Orders"}>
                 <ListItemIcon>
                   <Assignment />
@@ -89,7 +89,7 @@ class SidebarAdmin extends Component {
                 <ListItemText primary={"Work Orders"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/Tenants">
+            <Link style={{ textDecoration: "none" }} to="/admin/tenants">
               <ListItem button key={"Tenants"}>
                 <ListItemIcon>
                   <SupervisorAccount />
@@ -97,7 +97,7 @@ class SidebarAdmin extends Component {
                 <ListItemText primary={"Tenants"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/Billing">
+            <Link style={{ textDecoration: "none" }} to="/admin/billing">
               <ListItem button key={"Billing"}>
                 <ListItemIcon>
                   <CreditCard />
@@ -105,7 +105,7 @@ class SidebarAdmin extends Component {
                 <ListItemText primary={"Billing"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/Settings">
+            <Link style={{ textDecoration: "none" }} to="/admin/settings">
               <ListItem button key={"Settings"}>
                 <ListItemIcon>
                   <Settings />
