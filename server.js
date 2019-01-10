@@ -13,9 +13,11 @@ server.use(morgan());
 //==== ROUTES ====
 const usersRoutes = require('./routes/usersRoutes');
 const propertyRoutes = require('./routes/propertyRoutes');
+const workOrderRoutes = require('./routes/workOrderRoutes');
 
 server.use('/api', usersRoutes);
 server.use('/api', propertyRoutes);
+server.use('/api', workOrderRoutes);
 
 //==== TESTING API END POINT ====
 server.get('/', (req, res) => {

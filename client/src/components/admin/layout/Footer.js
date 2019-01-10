@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   appBar: {
@@ -29,13 +30,10 @@ class Footer extends Component {
         <CssBaseline />
         <AppBar position="static" color="primary" className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
-            <IconButton color="inherit" aria-label="Open drawer">
-              <MenuIcon />
-            </IconButton>
+            <Typography variant="h9" color="inherit" noWrap>
+            © 2019 PropertEAZY 
+            </Typography>
             <div>
-              <IconButton color="inherit">
-                <SearchIcon />
-              </IconButton>
               <IconButton color="inherit">
                 <MoreIcon />
               </IconButton>
