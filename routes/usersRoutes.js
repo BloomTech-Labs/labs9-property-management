@@ -1,25 +1,25 @@
-const express = require("express");
-const db = require("../db/dbConfig");
+const express = require('express');
+const db = require('../db/dbConfig');
 
 const router = express.Router();
 
 // Register user
-router.post("/register", (req, res) => {
+router.post('/register', (req, res) => {
   const creds = req.body;
   db.insert(creds)
-    .into("users")
+    .into('users')
     .then(id => {
       res.status(201).json(id);
     })
     .catch(err =>
-      res.status(500).json({ errorMessage: "Could not register the user!" })
+      res.status(500).json({ errorMessage: 'Could not register the user!' })
     );
 });
 
 // Basic Login User
-router.post("/login", (req, res) => {
+router.post('/login', (req, res) => {
   const creds = req.body;
-  db("users")
+  db('users')
     .where({ email: creds.email, password: creds.password })
     .first()
     .then(user => {
@@ -27,16 +27,16 @@ router.post("/login", (req, res) => {
         // returning user information
         res.status(200).send(user);
       } else {
-        res.status(401).json({ errorMessage: "Wrong credentials!" });
+        res.status(401).json({ errorMessage: 'Wrong credentials!' });
       }
     })
     .catch(err => res.status(500).send(err));
 });
 
 // Get all users
-router.get("/users", (req, res) => {
-  db("users")
-    .select("id", "firstname", "email")
+router.get('/users', (req, res) => {
+  db('users')
+    .select('id', 'first_name', 'email')
     .then(users => {
       res.status(200).send(users);
     })
