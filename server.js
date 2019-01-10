@@ -26,16 +26,4 @@ server.get("/", (req, res) => {
     );
 });
 
-server.get("/users", (req, res) => {
-  db("users")
-    .then(user => {
-      res.status(200).json(user);
-    })
-    .catch(err =>
-      res
-        .status(500)
-        .json({ errorMessage: "The users could not be retrieved." })
-    );
-});
-
 module.exports = server;
