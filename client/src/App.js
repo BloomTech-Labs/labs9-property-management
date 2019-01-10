@@ -3,9 +3,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { withStyles } from "@material-ui/core/styles";
 import "typeface-roboto";
 import Admin from "./components/admin/Admin";
-import Home from "./components/home/Home"
-import Login from "./components/auth/Login"
-import Signup from "./components/auth/Signup"
+import Home from "./components/home/Home";
+import Login from "./components/auth/Login";
+import Signup from "./components/auth/Signup";
 import { Route } from "react-router-dom";
 
 const styles = theme => ({
@@ -13,7 +13,7 @@ const styles = theme => ({
     margin: theme.spacing.unit
   },
   input: {
-    display: 'none'
+    display: "none"
   }
 });
 
