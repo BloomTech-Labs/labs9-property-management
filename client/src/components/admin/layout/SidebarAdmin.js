@@ -81,7 +81,7 @@ class SidebarAdmin extends Component {
                 <ListItemText primary={"Properties"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/Work Orders">
+            <Link style={{ textDecoration: "none" }} to="/work_orders">
               <ListItem button key={"Work Orders"}>
                 <ListItemIcon>
                   <Assignment />
