@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import SidebarAdmin from './SidebarAdmin';
-import Grid from '@material-ui/core/Grid';
-
+import React, { Component } from "react";
+import SidebarAdmin from "./SidebarAdmin";
+import Grid from "@material-ui/core/Grid";
+import Footer from "./Footer";
 class Layout extends Component {
   state = {};
   render() {
@@ -13,6 +13,7 @@ class Layout extends Component {
         <Grid item xs={9}>
           {this.props.children}
         </Grid>
+        <Footer />
       </Grid>
     );
   }
