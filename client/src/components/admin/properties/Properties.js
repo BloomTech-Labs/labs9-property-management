@@ -36,13 +36,6 @@ const styles = theme => ({
   actions: {
     display: 'flex',
     justifyContent: 'flex-end'
-  },
-  addPropertyCard: {
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
-    maxWidth: 400,
-    minHeight: 384
   }
 });
 
