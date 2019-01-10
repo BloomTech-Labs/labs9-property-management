@@ -39,8 +39,8 @@ router.get("/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   const newProp = req.body;
-  const { ownerName, ownerEmail } = req.body;
-  if (!ownerName || !ownerEmail) {
+  const { ownerfirstname, owneremail } = req.body;
+  if (!ownerfirstname || !owneremail) {
     res
       .status(400)
       .json({ errorMessage: "The owner name and email are required" });
