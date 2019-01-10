@@ -10,6 +10,11 @@ server.use(cors());
 server.use(helmet());
 server.use(morgan());
 
+//==== ROUTES ====
+const usersRoutes = require("./routes/usersRoutes");
+
+server.use("/api/users", usersRoutes);
+
 //==== TESTING API END POINT ====
 server.get("/", (req, res) => {
   res
