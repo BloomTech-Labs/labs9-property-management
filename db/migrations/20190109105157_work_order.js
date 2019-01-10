@@ -1,16 +1,16 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable("workOrders", function(tbl) {
+  return knex.schema.createTable('work_orders', function(tbl) {
     tbl.increments();
-    tbl.string("address").notNullable();
-    tbl.string("description").notNullable();
-    tbl.boolean("permission").defaultTo(false);
-    tbl.integer("tenantmobile").notNullable();
-    tbl.boolean("submitted").defaultTo(false);
-    tbl.boolean("inprogress").defaultTo(false);
-    tbl.boolean("completed").defaultTo(false);
+    tbl.string('address').notNullable();
+    tbl.string('description').notNullable();
+    tbl.boolean('permission').defaultTo(false);
+    tbl.integer('tenant_mobile').notNullable();
+    tbl.boolean('submitted').defaultTo(false);
+    tbl.boolean('inprogress').defaultTo(false);
+    tbl.boolean('completed').defaultTo(false);
   });
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable("workOrders");
+  return knex.schema.dropTable('work_orders');
 };
