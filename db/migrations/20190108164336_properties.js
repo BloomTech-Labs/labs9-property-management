@@ -1,34 +1,20 @@
-
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('properties', function(tbl) {
-      tbl.increments();
-      tbl.string('ownerfirstname', 64)
+    tbl.increments();
+    tbl.string('address', 128).notNullable();
+    tbl.integer('bedrooms', 64).notNullable();
+    tbl.integer('bathrooms', 64).notNullable();
+    tbl.integer('max_occupants', 64).notNullable();
+    tbl.integer('square_footage', 64).notNullable();
+    tbl.integer('year_built', 64).notNullable();
+    tbl
+      .integer('owner_id')
+      .references('id')
+      .inTable('users')
       .notNullable();
-      tbl.string('ownerlastname', 64)
-      .notNullable();
-      tbl.integer('ownermobile')
-      .notNullable()
-      .unique('ownermobile');
-      tbl.string('owneremail', 64)
-      .notNullable()
-      .unique('owneremail');
-      tbl.string('owneraddress', 128)
-      .notNullable();
-      tbl.string('propertyaddress', 128)
-      .notNullable();
-      tbl.integer('propertybedrooms', 64)
-      .notNullable();
-      tbl.integer('propertybadrooms', 64)
-      .notNullable();
-      tbl.integer('maxoccupants', 64)
-      .notNullable();
-      tbl.integer('squarefootage', 64)
-      .notNullable();
-      tbl.integer('yearbuilt', 64)
-      .notNullable();
-  })
+  });
 };
 
 exports.down = function(knex, Promise) {
-    return knex.schema.dropTable('properties');
+  return knex.schema.dropTable('properties');
 };
