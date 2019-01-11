@@ -1,26 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const styles = theme => ({
   card: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
     maxWidth: 400,
-    minHeight: 384
+    minHeight: 420
   },
   actions: {
-    display: 'flex',
-    justifyContent: 'center'
+    display: "flex",
+    justifyContent: "center"
   },
   button: {
     margin: theme.spacing.unit
@@ -33,7 +33,7 @@ class Properties extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={this.props.detailedViewOn ? 6 : 4}>
         <Card className={classes.card}>
           <CardContent>
             <Typography variant="h5" component="h2">

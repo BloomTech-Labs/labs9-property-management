@@ -1,34 +1,35 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Business from '@material-ui/icons/Business';
-import Assignment from '@material-ui/icons/Assignment';
-import SupervisorAccount from '@material-ui/icons/SupervisorAccount';
-import Settings from '@material-ui/icons/Settings';
-import CreditCard from '@material-ui/icons/CreditCard';
-import Button from '@material-ui/core/Button';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Business from "@material-ui/icons/Business";
+import Assignment from "@material-ui/icons/Assignment";
+import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
+import Settings from "@material-ui/icons/Settings";
+import CreditCard from "@material-ui/icons/CreditCard";
+import Button from "@material-ui/core/Button";
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
-    display: 'flex'
+    display: "flex"
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0
+    flexShrink: 0,
+    zIndex:100
   },
   drawerPaper: {
     width: drawerWidth
@@ -44,6 +45,9 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20
+  },
+  signOut: {
+    justifyContent: "space-between"
   }
 });
 
@@ -54,7 +58,7 @@ class SidebarAdmin extends Component {
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
+          <Toolbar className={classes.signOut}>
             <Typography variant="h6" color="inherit" noWrap>
               PropertEAZY
             </Typography>
@@ -70,44 +74,44 @@ class SidebarAdmin extends Component {
         >
           <div className={classes.toolbar} />
           <List>
-            <Link style={{ textDecoration: 'none' }} to="/Properties">
-              <ListItem button key={'Properties'}>
+            <Link style={{ textDecoration: "none" }} to="/admin/properties">
+              <ListItem button key={"Properties"}>
                 <ListItemIcon>
                   <Business />
                 </ListItemIcon>
-                <ListItemText primary={'Properties'} />
+                <ListItemText primary={"Properties"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: 'none' }} to="/Work Orders">
-              <ListItem button key={'Work Orders'}>
+            <Link style={{ textDecoration: "none" }} to="/admin/work-orders">
+              <ListItem button key={"Work Orders"}>
                 <ListItemIcon>
                   <Assignment />
                 </ListItemIcon>
-                <ListItemText primary={'Work Orders'} />
+                <ListItemText primary={"Work Orders"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: 'none' }} to="/Tenants">
-              <ListItem button key={'Tenants'}>
+            <Link style={{ textDecoration: "none" }} to="/admin/tenants">
+              <ListItem button key={"Tenants"}>
                 <ListItemIcon>
                   <SupervisorAccount />
                 </ListItemIcon>
-                <ListItemText primary={'Tenants'} />
+                <ListItemText primary={"Tenants"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: 'none' }} to="/Billing">
-              <ListItem button key={'Billing'}>
+            <Link style={{ textDecoration: "none" }} to="/admin/billing">
+              <ListItem button key={"Billing"}>
                 <ListItemIcon>
                   <CreditCard />
                 </ListItemIcon>
-                <ListItemText primary={'Billing'} />
+                <ListItemText primary={"Billing"} />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: 'none' }} to="/Settings">
-              <ListItem button key={'Settings'}>
+            <Link style={{ textDecoration: "none" }} to="/admin/settings">
+              <ListItem button key={"Settings"}>
                 <ListItemIcon>
                   <Settings />
                 </ListItemIcon>
-                <ListItemText primary={'Settings'} />
+                <ListItemText primary={"Settings"} />
               </ListItem>
             </Link>
           </List>
