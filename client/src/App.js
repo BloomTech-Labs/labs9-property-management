@@ -24,11 +24,12 @@ class App extends Component {
     return (
       <div className="App">
         <CssBaseline />
-        {/* <Admin /> */}
+        <Admin />
         <div>
-          <Route exact path="/test-home" render={props => <Home />} />
+
+          {/* <Route exact path="/test-home" render={props => <Home />} />
           <Route exact path="/login" render={props => <Login />} />
-          <Route exact path="/signup" render={props => <Signup />} />
+          <Route exact path="/signup" render={props => <Signup />} /> */}
 
           {/*<Route exact path='/orders' render={props => </>}/>*/}
           {/*<Route exact path='/tenants' render={props => </>}/>*/}

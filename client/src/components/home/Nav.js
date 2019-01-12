@@ -112,7 +112,7 @@ class Header extends React.Component {
                 <HeaderLink desktop to="/login">
                   Login
                 </HeaderLink>
-                <SignUpLink desktop to="/">
+                <SignUpLink desktop to="/signup">
                   Sign Up
                 </SignUpLink>
                 <MobileMenuLink onClick={""} mobile>

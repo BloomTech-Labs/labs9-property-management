@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+// put arrow and logo inside link that is inside a BacktoHomeGroup
+// then add a max-width on the container of 800px to match nav 
+
 export const BackToHomeContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr;
   justify-content: start;
+  padding: 32px;
 `;
 
 export const BackToHomeLink = styled(Link)`
