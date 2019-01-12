@@ -60,7 +60,8 @@ export const HeroGroupH1 = styled.h1`
 `;
 export const HeroP = styled.p`
   color: rgba(73, 76, 87, 1);
-  line-height: 1.2;
+  line-height: 1.4;
+  font-weight: 400;
   font-size: 2rem;
   padding: 0 0 16px 0;
   animation: ${HeroAnimation} 2s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
