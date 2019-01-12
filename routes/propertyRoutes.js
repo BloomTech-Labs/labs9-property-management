@@ -6,7 +6,6 @@ const router = express.Router();
 router.use(express.json());
 
 // Get all the properties
-
 router.get("/", (req, res) => {
   db("properties")
     .then(properties => {
@@ -20,7 +19,6 @@ router.get("/", (req, res) => {
 });
 
 // Get the specified property
-
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   db("properties")
@@ -36,17 +34,8 @@ router.get("/:id", (req, res) => {
 });
 
 // Add a property
-
 router.post("/", (req, res) => {
-  const newProp = req.body;
-  const { ownerfirstname, owneremail } = req.body;
-  if (!ownerfirstname || !owneremail) {
-    res
-      .status(400)
-      .json({ errorMessage: "The owner name and email are required" });
-    return;
-  }
-  db.insert(newProp)
+  db.insert(req.body)
     .into("properties")
     .then(ids => {
       res.status(201).json(ids);
@@ -55,7 +44,6 @@ router.post("/", (req, res) => {
 });
 
 // Delete a property
-
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
