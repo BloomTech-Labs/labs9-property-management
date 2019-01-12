@@ -4,7 +4,7 @@ import testlogo from "../../images/test-logo.svg";
 import styled from "styled-components";
 import MobileNav from "./MobileNav";
 
-const HeaderContainer = styled.div`
+export const HeaderContainer = styled.div`
   position: fixed;
   width: 100%;
   padding: ${props => (props.scrolled ? `20px 0` : `40px 0`)};
@@ -109,7 +109,7 @@ class Header extends React.Component {
                 <HeaderLink desktop to="/pricing">
                   Pricing
                 </HeaderLink>
-                <HeaderLink desktop to="/pricing">
+                <HeaderLink desktop to="/login">
                   Login
                 </HeaderLink>
                 <SignUpLink desktop to="/">
