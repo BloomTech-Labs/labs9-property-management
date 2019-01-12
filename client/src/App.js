@@ -26,6 +26,11 @@ class App extends Component {
         <CssBaseline />
         <Admin />
         <div>
+
+          {/* <Route exact path="/test-home" render={props => <Home />} />
+          <Route exact path="/login" render={props => <Login />} />
+          <Route exact path="/signup" render={props => <Signup />} /> */}
+
           {/*<Route exact path='/orders' render={props => </>}/>*/}
           {/*<Route exact path='/tenants' render={props => </>}/>*/}
           {/*<Route exact path='/billing' render={props => </>}/>*/}
