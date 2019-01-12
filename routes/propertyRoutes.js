@@ -62,4 +62,30 @@ router.delete("/:id", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+// Returns Properties that a specific admin owns
+router.get("/admin/:id", (req, res) => {
+  const { id } = req.params;
+  let results = [];
+
+  db("properties")
+    .where("owner_id", id)
+    .select()
+    .then(properties => {
+      res.status(200).json(properties);
+    })
+    .catch(error => res.status(500).json(error));
+});
+
+router.get("/:id/tenants", (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  db("users")
+    .innerJoin("properties", "properties.id", "users.property_id")
+    .where("properties.id", id)
+    .select("users.first_name", "users.last_name", "users.mobile")
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(error => res.status(500).json(error));
+});
 module.exports = router;
