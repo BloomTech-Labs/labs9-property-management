@@ -42,7 +42,10 @@ const MobileNav = props => (
       <HeaderLink to="/">
         <Logo src={testlogo} alt="logo" width="20" />
       </HeaderLink>
-      <CloseNav onClick={() => props.handleMenuToggle()} to="/">
+      {/* <CloseNav onClick={() => props.handleMenuToggle()} to="/">
+        Close
+      </CloseNav> */}
+      <CloseNav>
         Close
       </CloseNav>
     </MobileNavGroup>
