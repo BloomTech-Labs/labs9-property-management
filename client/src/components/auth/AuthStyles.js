@@ -2,12 +2,17 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 // put arrow and logo inside link that is inside a BacktoHomeGroup
-// then add a max-width on the container of 800px to match nav 
+// then add a max-width on the container of 800px to match nav
 
 export const BackToHomeContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 36px 0;
+  @media (max-width: 500px) {
+      padding: 36px 20px;
+  }
 `;
 
 export const BackToHomeLink = styled(Link)`
@@ -20,5 +25,5 @@ export const BackToHomeLink = styled(Link)`
 `;
 
 export const LoginOrSignupFormLink = styled.span`
-    color: #5f29ff;
-`
+  color: #5f29ff;
+`;

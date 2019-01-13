@@ -10,7 +10,11 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { BackToHomeContainer, BackToHomeLink, LoginOrSignupFormLink  } from "./AuthStyles";
+import {
+  BackToHomeContainer,
+  BackToHomeLink,
+  LoginOrSignupFormLink
+} from "./AuthStyles";
 
 const styles = theme => ({
   main: {
@@ -52,7 +56,10 @@ const Signup = props => {
     <>
       <BackToHomeContainer>
         <BackToHomeLink to="/">Back arrow and logo</BackToHomeLink>
-        <BackToHomeLink to="/login">Have an account? <LoginOrSignupFormLink>Login here</LoginOrSignupFormLink></BackToHomeLink>
+        <BackToHomeLink to="/login">
+          Have an account?{" "}
+          <LoginOrSignupFormLink>Login here</LoginOrSignupFormLink>
+        </BackToHomeLink>
       </BackToHomeContainer>
       <main className={classes.main}>
         <CssBaseline />
