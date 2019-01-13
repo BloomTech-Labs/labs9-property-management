@@ -1,44 +1,26 @@
 import React, { Component } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { withStyles } from "@material-ui/core/styles";
-import "typeface-roboto";
 import Admin from "./components/admin/Admin";
-import Home from "./components/home/Home";
-import Login from "./components/auth/Login";
-import Signup from "./components/auth/Signup";
-import { Route } from "react-router-dom";
-
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit
-  },
-  input: {
-    display: "none"
-  }
-});
+import Tenant from "./components/tenant/Tenant";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import "typeface-roboto";
 
 class App extends Component {
+  state = {
+    isAuthenticated: false,
+    isAdmin: true
+  };
+
   render() {
     console.log(this.props);
+    let route = this.state.isAdmin ? <Admin /> : <Tenant />;
 
     return (
       <div className="App">
         <CssBaseline />
-        <Admin />
-        <div>
-
-          {/* <Route exact path="/test-home" render={props => <Home />} />
-          <Route exact path="/login" render={props => <Login />} />
-          <Route exact path="/signup" render={props => <Signup />} /> */}
-
-          {/*<Route exact path='/orders' render={props => </>}/>*/}
-          {/*<Route exact path='/tenants' render={props => </>}/>*/}
-          {/*<Route exact path='/billing' render={props => </>}/>*/}
-          {/*<Route exact path='/settings' render={props => </>}/>*/}
-        </div>
+        {route}
       </div>
     );
   }
 }
 
-export default withStyles(styles, { withTheme: true })(App);
+export default App;

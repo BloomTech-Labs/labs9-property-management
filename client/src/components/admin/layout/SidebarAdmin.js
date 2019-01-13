@@ -100,7 +100,7 @@ class SidebarAdmin extends Component {
             <Link
               key={index}
               style={{ textDecoration: "none" }}
-              to={`admin/${link.url}`}
+              to={`/admin/${link.url}`}
             >
               <ListItem button>
                 <ListItemIcon>{link.icon}</ListItemIcon>
