@@ -68,8 +68,8 @@ class Login extends Component {
         <BackToHomeContainer>
           <BackToHomeLink to="/">Back arrow and logo</BackToHomeLink>
           <BackToHomeLink to="/signup">
-            New user?{" "}
-            <LoginOrSignupFormLink>Sign up here</LoginOrSignupFormLink>
+            New user?
+            <LoginOrSignupFormLink> Sign up here</LoginOrSignupFormLink>
           </BackToHomeLink>
         </BackToHomeContainer>
         <main className={classes.main}>

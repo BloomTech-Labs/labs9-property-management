@@ -57,8 +57,8 @@ const Signup = props => {
       <BackToHomeContainer>
         <BackToHomeLink to="/">Back arrow and logo</BackToHomeLink>
         <BackToHomeLink to="/login">
-          Have an account?{" "}
-          <LoginOrSignupFormLink>Login here</LoginOrSignupFormLink>
+          Have an account?
+          <LoginOrSignupFormLink> Login here</LoginOrSignupFormLink>
         </BackToHomeLink>
       </BackToHomeContainer>
       <main className={classes.main}>
