@@ -103,19 +103,22 @@ class Header extends React.Component {
               <MobileNav handleMenuToggle={this.handleMenuToggle} />
             ) : (
               <>
-                <HeaderLink desktop to="/product">
+                <HeaderLink desktop="true" to="/product">
                   Product
                 </HeaderLink>
-                <HeaderLink desktop to="/pricing">
+                <HeaderLink desktop="true" to="/pricing">
                   Pricing
                 </HeaderLink>
-                <HeaderLink desktop to="/login">
+                <HeaderLink desktop="true" to="/login">
                   Login
                 </HeaderLink>
-                <SignUpLink desktop to="/signup">
+                <SignUpLink desktop="true" to="/signup">
                   Sign Up
                 </SignUpLink>
-                <MobileMenuLink onClick={""} mobile>
+                {/* <MobileMenuLink onClick={""} mobile>
+                  Menu
+                </MobileMenuLink> */}
+                <MobileMenuLink mobile>
                   Menu
                 </MobileMenuLink>
               </>

@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import styled from "styled-components";
 
 // Global styles injection - see Home render for implementation info
 export const GlobalStyle = createGlobalStyle`
