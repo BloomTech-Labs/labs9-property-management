@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Nav from "./Nav";
-
 import {
   Hero,
   HeroGroup,
@@ -23,7 +22,8 @@ class Home extends Component {
           <HeroGroup>
             <HeroGroupH1>insanely simple property management</HeroGroupH1>
             <HeroP>
-            Leasefront redefines the lightweight app – so that you can spend less time managing your property.
+              Leasefront redefines the lightweight app – so that you can spend
+              less time managing your property.
             </HeroP>
             <HeroA href="/">Watch the video</HeroA>
             <AppImageContainer>

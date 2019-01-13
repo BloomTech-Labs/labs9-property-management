@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Layout from "./layout/Layout";
 import { Route } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import Properties from "./properties/Properties";
 import WorkOrders from "./workorders/WorkOrders";
 import Settings from "./settings/Settings";
@@ -12,19 +13,12 @@ class Admin extends Component {
   render() {
     return (
       <Layout>
-        <Route
-          exact
-          path="/admin/properties"
-          render={props => <Properties />}
-        />
-        <Route
-          exact
-          path="/admin/work-orders"
-          render={props => <WorkOrders />}
-        />
-        <Route exact path="/admin/tenants" render={props => <NewTenant />} />
-        <Route exact path="/admin/settings" render={props => <Settings />} />
-        <Route exact path="/admin/billing" render={props => <Billing />} />
+        <CssBaseline />
+        <Route exact path="/admin/properties" component={Properties} />
+        <Route exact path="/admin/work-orders" component={WorkOrders} />
+        <Route exact path="/admin/tenants" component={NewTenant} />
+        <Route exact path="/admin/settings" component={Settings} />
+        <Route exact path="/admin/billing" component={Billing} />
       </Layout>
     );
   }
