@@ -24,10 +24,12 @@ import AddPropertyCard from "./AddPropertyCard";
 import Modal from "@material-ui/core/Modal";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const styles = theme => ({
   container: {
-    marginTop: 100
+    marginTop: 100,
+    marginLeft: 0
   },
   root: {
     width: "100%",
@@ -50,6 +52,11 @@ const styles = theme => ({
     height: "80vh",
     margin: "auto",
     marginTop: 50
+  },
+  absolute: {
+    position: "absolute",
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3
   }
 });
 
@@ -127,119 +134,130 @@ class Properties extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Grid container className={classes.container} spacing={16}>
-        <Grid item xs={12} lg={this.state.detailedViewOn ? 8 : 12}>
-          <Grid container justify="center" spacing={16}>
-            {this.state.properties.map((entry, index) => (
-              <Grid
-                key={index}
-                item
-                xs={12}
-                sm={6}
-                md={this.state.detailedViewOn ? 6 : 4}
-              >
-                <Card className={classes.card}>
-                  <CardActions className={classes.actions} disableActionSpacing>
-                    <IconButton
-                      aria-label="Edit Property"
-                      onClick={this.toggleEditProperty}
+      <main>
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} lg={this.state.detailedViewOn ? 8 : 12}>
+            <Grid container justify="center" spacing={16}>
+              {this.state.properties.map((entry, index) => (
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  sm={6}
+                  md={this.state.detailedViewOn ? 6 : 4}
+                >
+                  <Card className={classes.card}>
+                    <CardActions
+                      className={classes.actions}
+                      disableActionSpacing
                     >
-                      <Edit />
-                    </IconButton>
-                    <IconButton
-                      aria-label="Delete Property"
-                      onClick={this.toggleRemoveProperty}
-                    >
-                      <Delete />
-                    </IconButton>
-                  </CardActions>
-                  <CardContent>
-                    <List className={classes.root}>
-                      <ListItem>
-                        <Avatar>
-                          <Home />
-                        </Avatar>
-                        <ListItemText
-                          primary="Address"
-                          secondary={entry.address}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <Avatar>
-                          <Person />
-                        </Avatar>
-                        <ListItemText
-                          primary="Tenant"
-                          secondary={entry.tenants.join(", ")}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <Avatar>
-                          <DateRange />
-                        </Avatar>
-                        <ListItemText
-                          primary="Lease"
-                          secondary={entry.leaseDate}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <Avatar>
-                          <CheckCircleOutline />
-                        </Avatar>
-                        <ListItemText
-                          primary="Contract Signed"
-                          secondary={entry.contract.toString().toUpperCase()}
-                        />
-                      </ListItem>
-                    </List>
-                    <Grid container justify="center">
-                      <Button
-                        data-id={index}
-                        onClick={this.viewMore}
-                        variant="outlined"
-                      >
-                        View More Info
-                      </Button>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-            <AddPropertyCard detailedViewOn={this.state.detailedViewOn} />
+                      <Tooltip title="Edit">
+                        <IconButton
+                          aria-label="Edit Property"
+                          onClick={this.toggleEditProperty}
+                        >
+                          <Edit />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete">
+                        <IconButton
+                          aria-label="Delete Property"
+                          onClick={this.toggleRemoveProperty}
+                        >
+                          <Delete />
+                        </IconButton>
+                      </Tooltip>
+                    </CardActions>
+                    <CardContent>
+                      <List className={classes.root}>
+                        <ListItem>
+                          <Avatar>
+                            <Home />
+                          </Avatar>
+                          <ListItemText
+                            primary="Address"
+                            secondary={entry.address}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <Avatar>
+                            <Person />
+                          </Avatar>
+                          <ListItemText
+                            primary="Tenant"
+                            secondary={entry.tenants.join(", ")}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <Avatar>
+                            <DateRange />
+                          </Avatar>
+                          <ListItemText
+                            primary="Lease"
+                            secondary={entry.leaseDate}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <Avatar>
+                            <CheckCircleOutline />
+                          </Avatar>
+                          <ListItemText
+                            primary="Contract Signed"
+                            secondary={entry.contract.toString().toUpperCase()}
+                          />
+                        </ListItem>
+                      </List>
+                      <Grid container justify="center">
+                        <Button
+                          data-id={index}
+                          onClick={this.viewMore}
+                          variant="outlined"
+                        >
+                          View More Info
+                        </Button>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+              <AddPropertyCard detailedViewOn={this.state.detailedViewOn} />
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            className={this.state.detailedViewOn ? "" : classes.displayNone}
+          >
+            <Grid container>
+              <Tooltip title="Close">
+                <IconButton onClick={this.closeDetailedView}>
+                  <Close />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+            <Modal
+              open={this.state.editModalOpen}
+              onClose={this.toggleEditProperty}
+            >
+              <Paper className={classes.paper}>
+                <Typography variant="h5" component="p">
+                  Edit
+                </Typography>
+              </Paper>
+            </Modal>
+            <Modal
+              open={this.state.trashModalOpen}
+              onClose={this.toggleRemoveProperty}
+            >
+              <Paper className={classes.paper}>
+                <Typography variant="h5" component="p">
+                  Remove
+                </Typography>
+              </Paper>
+            </Modal>
           </Grid>
         </Grid>
-        <Grid
-          item
-          xs={4}
-          className={this.state.detailedViewOn ? "" : classes.displayNone}
-        >
-          <Grid container>
-            <IconButton onClick={this.closeDetailedView}>
-              <Close />
-            </IconButton>
-          </Grid>
-          <Modal
-            open={this.state.editModalOpen}
-            onClose={this.toggleEditProperty}
-          >
-            <Paper className={classes.paper}>
-              <Typography variant="h5" component="p">
-                Edit
-              </Typography>
-            </Paper>
-          </Modal>
-          <Modal
-            open={this.state.trashModalOpen}
-            onClose={this.toggleRemoveProperty}
-          >
-            <Paper className={classes.paper}>
-              <Typography variant="h5" component="p">
-                Remove
-              </Typography>
-            </Paper>
-          </Modal>
-        </Grid>
-      </Grid>
+      </main>
     );
   }
 }

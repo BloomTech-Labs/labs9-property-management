@@ -6,13 +6,13 @@ class Layout extends Component {
   state = {};
   render() {
     return (
-      <Grid container>
-        <Grid item xs={2}>
-          <SidebarAdmin />
-        </Grid>
-        <Grid item xs={9}>
+      <Grid container justify="center" spacing={16}>
+        <SidebarAdmin />
+
+        <Grid item xs={10}>
           {this.props.children}
         </Grid>
+
         <Footer />
       </Grid>
     );
