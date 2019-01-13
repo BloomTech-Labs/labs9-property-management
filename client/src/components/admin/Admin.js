@@ -5,6 +5,7 @@ import Properties from "./properties/Properties";
 import WorkOrders from "./workorders/WorkOrders";
 import Settings from "./settings/Settings";
 import Billing from "./billing/Billing";
+import NewTenant from "./tenants/NewTenants";
 
 class Admin extends Component {
   state = {};
@@ -21,6 +22,7 @@ class Admin extends Component {
           path="/admin/work-orders"
           render={props => <WorkOrders />}
         />
+        <Route exact path="/admin/tenants" render={props => <NewTenant />} />
         <Route exact path="/admin/settings" render={props => <Settings />} />
         <Route exact path="/admin/billing" render={props => <Billing />} />
       </Layout>
