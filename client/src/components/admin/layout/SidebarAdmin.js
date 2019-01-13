@@ -12,12 +12,17 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Business from "@material-ui/icons/Business";
 import Assignment from "@material-ui/icons/Assignment";
-import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
+import People from "@material-ui/icons/People";
 import Settings from "@material-ui/icons/Settings";
 import CreditCard from "@material-ui/icons/CreditCard";
 import Button from "@material-ui/core/Button";
+import Avatar from "@material-ui/core/Avatar";
+import Divider from "@material-ui/core/Divider";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const styles = theme => ({
   root: {
@@ -26,10 +31,17 @@ const styles = theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1
   },
+  appName: {
+    display: "none",
+    [theme.breakpoints.up("lg")]: {
+      display: "inline-block"
+    }
+  },
   drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    zIndex:100
+    [theme.breakpoints.up("md")]: {
+      width: drawerWidth,
+      flexShrink: 0
+    }
   },
   drawerPaper: {
     width: drawerWidth
@@ -39,83 +51,116 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3
   },
   toolbar: theme.mixins.toolbar,
-  grow: {
-    flexGrow: 1
+  appToolbar: {
+    justifyContent: "space-between"
+  },
+  divider: {
+    marginTop: 10
   },
   menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  },
-  signOut: {
-    justifyContent: "space-between"
+    marginRight: 20,
+    [theme.breakpoints.up("lg")]: {
+      display: "none"
+    }
   }
 });
 
 class SidebarAdmin extends Component {
+  state = {
+    mobileOpen: false
+  };
+
+  handleDrawerToggle = () => {
+    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, theme } = this.props;
+
+    const links = [
+      { name: "Properties", url: "properties", icon: <Business /> },
+      { name: "Work Orders", url: "work-orders", icon: <Assignment /> },
+      { name: "Tenants", url: "tenants", icon: <People /> },
+      { name: "Billing", url: "billing", icon: <CreditCard /> },
+      { name: "Settings", url: "settings", icon: <Settings /> }
+    ];
+
+    const drawer = (
+      <>
+        <List>
+          <Hidden mdDown implementation="css">
+            <div className={classes.toolbar} />
+          </Hidden>
+          <ListItem>
+            <Avatar>PE</Avatar>
+            <ListItemText>Name Here</ListItemText>
+          </ListItem>
+          <Divider className={classes.divider} />
+          {links.map((link, index) => (
+            <Link
+              key={index}
+              style={{ textDecoration: "none" }}
+              to={`admin/${link.url}`}
+            >
+              <ListItem button>
+                <ListItemIcon>{link.icon}</ListItemIcon>
+                <ListItemText primary={`${link.name}`} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+      </>
+    );
 
     return (
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar className={classes.signOut}>
-            <Typography variant="h6" color="inherit" noWrap>
+          <Toolbar className={classes.appToolbar}>
+            <Typography
+              className={classes.appName}
+              variant="h5"
+              color="inherit"
+              noWrap
+            >
               PropertEAZY
+            </Typography>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" component="p">
+              Page Name
             </Typography>
             <Button color="inherit">Sign Out</Button>
           </Toolbar>
         </AppBar>
-        <Drawer
-          className={classes.drawer}
-          variant="permanent"
-          classes={{
-            paper: classes.drawerPaper
-          }}
-        >
-          <div className={classes.toolbar} />
-          <List>
-            <Link style={{ textDecoration: "none" }} to="/admin/properties">
-              <ListItem button key={"Properties"}>
-                <ListItemIcon>
-                  <Business />
-                </ListItemIcon>
-                <ListItemText primary={"Properties"} />
-              </ListItem>
-            </Link>
-            <Link style={{ textDecoration: "none" }} to="/admin/work-orders">
-              <ListItem button key={"Work Orders"}>
-                <ListItemIcon>
-                  <Assignment />
-                </ListItemIcon>
-                <ListItemText primary={"Work Orders"} />
-              </ListItem>
-            </Link>
-            <Link style={{ textDecoration: "none" }} to="/admin/tenants">
-              <ListItem button key={"Tenants"}>
-                <ListItemIcon>
-                  <SupervisorAccount />
-                </ListItemIcon>
-                <ListItemText primary={"Tenants"} />
-              </ListItem>
-            </Link>
-            <Link style={{ textDecoration: "none" }} to="/admin/billing">
-              <ListItem button key={"Billing"}>
-                <ListItemIcon>
-                  <CreditCard />
-                </ListItemIcon>
-                <ListItemText primary={"Billing"} />
-              </ListItem>
-            </Link>
-            <Link style={{ textDecoration: "none" }} to="/admin/settings">
-              <ListItem button key={"Settings"}>
-                <ListItemIcon>
-                  <Settings />
-                </ListItemIcon>
-                <ListItemText primary={"Settings"} />
-              </ListItem>
-            </Link>
-          </List>
-        </Drawer>
+        <nav className={classes.drawer}>
+          <Hidden mdDown implementation="css">
+            <Drawer
+              variant="permanent"
+              classes={{
+                paper: classes.drawerPaper
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+          <Hidden mdUp implementation="css">
+            <Drawer
+              container={this.props.container}
+              variant="temporary"
+              anchor={theme.direction === "rtl" ? "right" : "left"}
+              open={this.state.mobileOpen}
+              onClose={this.handleDrawerToggle}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
+        </nav>
       </div>
     );
   }
@@ -125,4 +170,4 @@ SidebarAdmin.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SidebarAdmin);
+export default withStyles(styles, { withTheme: true })(SidebarAdmin);
