@@ -11,7 +11,11 @@ class Admin extends Component {
   render() {
     return (
       <Layout>
-        <Route exact path="/" render={props => <Properties />} />
+        <Route
+          exact
+          path="/admin/properties"
+          render={props => <Properties />}
+        />
         <Route
           exact
           path="/admin/work-orders"
