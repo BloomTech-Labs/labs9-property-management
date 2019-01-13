@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -45,55 +46,66 @@ const styles = theme => ({
   }
 });
 
-const Login = props => {
-  const { classes } = props;
+class Login extends Component {
+  state = {
+    loggedIn: false
+  };
 
-  return (
-    <>
-      <BackToHomeContainer>
-        <BackToHomeLink to="/">Back arrow and logo</BackToHomeLink>
-      </BackToHomeContainer>
-      <main className={classes.main}>
-        <CssBaseline />
-        <Paper className={classes.paper}>
-          {/* <img src={testlogo} width="32" /> */}
-          <Typography component="h1" variant="h5">
-            Login
-          </Typography>
-          <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                name="password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={props.login}
-            >
+  login = () => {
+    this.setState({ loggedIn: true });
+  };
+
+  render() {
+    const { classes } = this.props;
+    if (this.state.loggedIn) return <Redirect to="/admin" />;
+
+    return (
+      <>
+        <BackToHomeContainer>
+          <BackToHomeLink to="/">Back arrow and logo</BackToHomeLink>
+        </BackToHomeContainer>
+        <main className={classes.main}>
+          <CssBaseline />
+          <Paper className={classes.paper}>
+            {/* <img src={testlogo} width="32" /> */}
+            <Typography component="h1" variant="h5">
               Login
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    </>
-  );
-};
+            </Typography>
+            <form className={classes.form}>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="email">Email Address</InputLabel>
+                <Input id="email" name="email" autoComplete="email" autoFocus />
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  name="password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              </FormControl>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={this.login}
+              >
+                Login
+              </Button>
+            </form>
+          </Paper>
+        </main>
+      </>
+    );
+  }
+}
 
 Login.propTypes = {
   classes: PropTypes.object.isRequired
