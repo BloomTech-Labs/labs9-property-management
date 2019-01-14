@@ -10,11 +10,6 @@ import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Business from "@material-ui/icons/Business";
-import Assignment from "@material-ui/icons/Assignment";
-import People from "@material-ui/icons/People";
-import Settings from "@material-ui/icons/Settings";
-import CreditCard from "@material-ui/icons/CreditCard";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
@@ -75,15 +70,7 @@ class SidebarAdmin extends Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
-
-    const links = [
-      { name: "Properties", url: "properties", icon: <Business /> },
-      { name: "Work Orders", url: "work-orders", icon: <Assignment /> },
-      { name: "Tenants", url: "tenants", icon: <People /> },
-      { name: "Billing", url: "billing", icon: <CreditCard /> },
-      { name: "Settings", url: "settings", icon: <Settings /> }
-    ];
+    const { classes, theme, links } = this.props;
 
     const drawer = (
       <>
