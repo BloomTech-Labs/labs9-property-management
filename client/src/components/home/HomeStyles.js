@@ -72,7 +72,7 @@ export const HeroA = styled.button`
   font-weight: 600;
   color: white;
   text-transform: none;
-  background: #6142d2;
+  background: #5f29ff;
   box-shadow: 0 2px 0 0 #6416d0;
   padding: 1.6rem 2.4rem 1.4rem;
   text-decoration: none;
@@ -89,7 +89,7 @@ export const HeroA = styled.button`
   transition: 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   &:hover {
     transform: translateY(-1px);
-    background: #7325df;
+    background: #4d1fd6;
   }
 `;
 

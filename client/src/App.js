@@ -6,6 +6,26 @@ import Signup from "./components/auth/Signup";
 import Admin from "./components/admin/Admin";
 import Tenant from "./components/tenant/Tenant";
 import "typeface-roboto";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { createMuiTheme } from "@material-ui/core/styles";
+
+// testing theme initialization 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#b394ff",
+      main: "#5f29ff",
+      dark: "#4d1fd6",
+      contrastText: "#fff"
+    }
+    // secondary: {
+    //   light: '#ff7961',
+    //   main: '#f44336',
+    //   dark: '#ba000d',
+    //   contrastText: '#000',
+    // },
+  }
+});
 
 class App extends Component {
   constructor(props) {
@@ -20,10 +40,12 @@ class App extends Component {
     return (
       <div className="auth">
         <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/admin" component={Admin} />
-        <Route path="/tenant" component={Tenant} />
+        <MuiThemeProvider theme={theme}>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/admin" component={Admin} />
+          <Route path="/tenant" component={Tenant} />
+        </MuiThemeProvider>
         {/* <Route path="/product" component={Product} /> 
             <Route path="/pricing" component={Pricing} />
         */}

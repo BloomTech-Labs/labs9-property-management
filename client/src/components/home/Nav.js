@@ -76,6 +76,10 @@ class Header extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
   handleScroll = event => {
     const scrollTop = window.pageYOffset;
 
