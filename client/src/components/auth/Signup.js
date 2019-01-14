@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -18,7 +18,6 @@ import {
 } from "./AuthStyles";
 import { KeyboardBackspace, ArrowBackIos } from "@material-ui/icons";
 import testlogo from "../../images/test-logo.svg";
-
 
 const styles = theme => ({
   main: {
@@ -53,60 +52,104 @@ const styles = theme => ({
   }
 });
 
-const Signup = props => {
-  const { classes } = props;
-
-  return (
-    <>
-      <BackToHomeContainer>
-        <BackToHomeLink to="/">
-          <KeyboardBackspace />
-          <AuthLogo src={testlogo} width="32" />
-        </BackToHomeLink>
-        <BackToHomeLink to="/login">
-          Have an account?
-          <LoginOrSignupFormLink> Login here</LoginOrSignupFormLink>
-        </BackToHomeLink>
-      </BackToHomeContainer>
-      <main className={classes.main}>
-        <CssBaseline />
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
-          <form className={classes.form}>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus />
-            </FormControl>
-            <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
-              <Input
-                name="password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign Up
-            </Button>
-          </form>
-        </Paper>
-      </main>
-    </>
-  );
+const INTIAL_STATE = {
+  username: "",
+  email: "",
+  passwordOne: "",
+  passwordTwo: "",
+  error: null
 };
+
+class Signup extends Component {
+  state = { ...INTIAL_STATE };
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { name, email, passwordOne, passwordTwo, error } = this.state;
+
+    return (
+      <>
+        <BackToHomeContainer>
+          <BackToHomeLink to="/">
+            <KeyboardBackspace />
+            <AuthLogo src={testlogo} width="32" />
+          </BackToHomeLink>
+          <BackToHomeLink to="/login">
+            Have an account?
+            <LoginOrSignupFormLink> Login here</LoginOrSignupFormLink>
+          </BackToHomeLink>
+        </BackToHomeContainer>
+        <main className={classes.main}>
+          <CssBaseline />
+          <Paper className={classes.paper}>
+            <Typography component="h1" variant="h5">
+              Sign Up
+            </Typography>
+            <form className={classes.form}>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="name">Full Name</InputLabel>
+                <Input
+                  id="name"
+                  name="name"
+                  autoComplete="Name"
+                  autoFocus
+                  onChange={this.onChange}
+                />
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="email">Email Address</InputLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={this.onChange}
+                />
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="passwordOne">Password</InputLabel>
+                <Input
+                  name="passwordOne"
+                  type="password"
+                  id="passwordOne"
+                  autoComplete="current-password"
+                  onChange={this.onChange}
+                />
+              </FormControl>
+              <FormControl margin="normal" required fullWidth>
+                <InputLabel htmlFor="passwordOne">Confirm Password</InputLabel>
+                <Input
+                  name="passwordTwo"
+                  type="password"
+                  id="passwordTwo"
+                  autoComplete="current-password"
+                  onChange={this.onChange}
+                />
+              </FormControl>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign Up
+              </Button>
+            </form>
+          </Paper>
+        </main>
+      </>
+    );
+  }
+}
 
 Signup.propTypes = {
   classes: PropTypes.object.isRequired
