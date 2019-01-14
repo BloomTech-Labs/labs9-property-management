@@ -8,7 +8,7 @@ const StripeTest = () => {
    
     const onToken = token => {
       const body = {
-        amount: 999,
+        amount: 72500,
         token: token
     };
     axios
