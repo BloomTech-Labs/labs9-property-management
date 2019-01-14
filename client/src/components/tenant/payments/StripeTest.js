@@ -28,7 +28,7 @@ const StripeTest = () => {
         name="Property Mgmt" //Modal Header
         description="Pay rent today."
         panelLabel="Pay rent" //Submit button in modal
-        amount={999} //Amount in cents $9.99
+        amount={72500} //Amount in cents $9.99
         token={onToken}
         stripeKey={publishableKey}
         image={testlogo} //Pop-in header image
