@@ -30,8 +30,8 @@ class Footer extends Component {
         <CssBaseline />
         <AppBar position="static" color="primary" className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
-            <Typography variant="h9" color="inherit" noWrap>
-            © 2019 PropertEAZY 
+            <Typography variant="h6" color="inherit" noWrap>
+              © 2019 PropertEAZY
             </Typography>
             <div>
               <IconButton color="inherit">

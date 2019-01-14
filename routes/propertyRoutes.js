@@ -6,7 +6,6 @@ const router = express.Router();
 router.use(express.json());
 
 // Get all the properties
-
 router.get("/", (req, res) => {
   db("properties")
     .then(properties => {
@@ -20,7 +19,6 @@ router.get("/", (req, res) => {
 });
 
 // Get the specified property
-
 router.get("/:id", (req, res) => {
   const { id } = req.params;
   db("properties")
@@ -36,17 +34,8 @@ router.get("/:id", (req, res) => {
 });
 
 // Add a property
-
 router.post("/", (req, res) => {
-  const newProp = req.body;
-  const { ownerfirstname, owneremail } = req.body;
-  if (!ownerfirstname || !owneremail) {
-    res
-      .status(400)
-      .json({ errorMessage: "The owner name and email are required" });
-    return;
-  }
-  db.insert(newProp)
+  db.insert(req.body)
     .into("properties")
     .then(ids => {
       res.status(201).json(ids);
@@ -55,7 +44,6 @@ router.post("/", (req, res) => {
 });
 
 // Delete a property
-
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
@@ -74,4 +62,30 @@ router.delete("/:id", (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+// Returns Properties that a specific admin owns
+router.get("/admin/:id", (req, res) => {
+  const { id } = req.params;
+  let results = [];
+
+  db("properties")
+    .where("owner_id", id)
+    .select()
+    .then(properties => {
+      res.status(200).json(properties);
+    })
+    .catch(error => res.status(500).json(error));
+});
+
+router.get("/:id/tenants", (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  db("users")
+    .innerJoin("properties", "properties.id", "users.property_id")
+    .where("properties.id", id)
+    .select("users.first_name", "users.last_name", "users.mobile")
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(error => res.status(500).json(error));
+});
 module.exports = router;

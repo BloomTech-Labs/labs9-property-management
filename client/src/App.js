@@ -1,39 +1,57 @@
 import React, { Component } from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { withStyles } from "@material-ui/core/styles";
-import "typeface-roboto";
-import Admin from "./components/admin/Admin";
+import { Route } from "react-router-dom";
 import Home from "./components/home/Home";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
-import { Route } from "react-router-dom";
+import Admin from "./components/admin/Admin";
+import Tenant from "./components/tenant/Tenant";
+import "typeface-roboto";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { createMuiTheme } from "@material-ui/core/styles";
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit
-  },
-  input: {
-    display: "none"
+// testing theme initialization 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#b394ff",
+      main: "#5f29ff",
+      dark: "#4d1fd6",
+      contrastText: "#fff"
+    }
+    // secondary: {
+    //   light: '#ff7961',
+    //   main: '#f44336',
+    //   dark: '#ba000d',
+    //   contrastText: '#000',
+    // },
   }
 });
 
 class App extends Component {
-  render() {
-    console.log(this.props);
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: false,
+      user: ""
+    };
+  }
 
+  render() {
     return (
-      <div className="App">
-        <CssBaseline />
-        <Admin />
-        <div>
-          {/*<Route exact path='/orders' render={props => </>}/>*/}
-          {/*<Route exact path='/tenants' render={props => </>}/>*/}
-          {/*<Route exact path='/billing' render={props => </>}/>*/}
-          {/*<Route exact path='/settings' render={props => </>}/>*/}
-        </div>
+      <div className="auth">
+        <Route exact path="/" component={Home} />
+        <MuiThemeProvider theme={theme}>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/admin" component={Admin} />
+          <Route path="/tenant" component={Tenant} />
+        </MuiThemeProvider>
+        {/* <Route path="/product" component={Product} /> 
+            <Route path="/pricing" component={Pricing} />
+        */}
       </div>
     );
   }
 }
 
-export default withStyles(styles, { withTheme: true })(App);
+export default App;

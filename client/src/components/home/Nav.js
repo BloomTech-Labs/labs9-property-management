@@ -4,7 +4,7 @@ import testlogo from "../../images/test-logo.svg";
 import styled from "styled-components";
 import MobileNav from "./MobileNav";
 
-const HeaderContainer = styled.div`
+export const HeaderContainer = styled.div`
   position: fixed;
   width: 100%;
   padding: ${props => (props.scrolled ? `20px 0` : `40px 0`)};
@@ -76,6 +76,10 @@ class Header extends React.Component {
     window.addEventListener("scroll", this.handleScroll);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
   handleScroll = event => {
     const scrollTop = window.pageYOffset;
 
@@ -103,19 +107,22 @@ class Header extends React.Component {
               <MobileNav handleMenuToggle={this.handleMenuToggle} />
             ) : (
               <>
-                <HeaderLink desktop to="/product">
+                <HeaderLink desktop="true" to="/product">
                   Product
                 </HeaderLink>
-                <HeaderLink desktop to="/pricing">
+                <HeaderLink desktop="true" to="/pricing">
                   Pricing
                 </HeaderLink>
-                <HeaderLink desktop to="/pricing">
+                <HeaderLink desktop="true" to="/login">
                   Login
                 </HeaderLink>
-                <SignUpLink desktop to="/">
+                <SignUpLink desktop="true" to="/signup">
                   Sign Up
                 </SignUpLink>
-                <MobileMenuLink onClick={""} mobile>
+                {/* <MobileMenuLink onClick={""} mobile>
+                  Menu
+                </MobileMenuLink> */}
+                <MobileMenuLink mobile>
                   Menu
                 </MobileMenuLink>
               </>
