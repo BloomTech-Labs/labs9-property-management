@@ -14,8 +14,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {
   BackToHomeContainer,
   BackToHomeLink,
-  LoginOrSignupFormLink
+  LoginOrSignupFormLink,
+  AuthLogo
 } from "./AuthStyles";
+import { KeyboardBackspace, ArrowBackIos } from "@material-ui/icons";
+import testlogo from "../../images/test-logo.svg";
 
 const styles = theme => ({
   main: {
@@ -66,7 +69,10 @@ class Login extends Component {
     return (
       <>
         <BackToHomeContainer>
-          <BackToHomeLink to="/">Back arrow and logo</BackToHomeLink>
+          <BackToHomeLink to="/">
+            <KeyboardBackspace />
+            <AuthLogo src={testlogo} width="32" />
+          </BackToHomeLink>
           <BackToHomeLink to="/signup">
             New user?
             <LoginOrSignupFormLink> Sign up here</LoginOrSignupFormLink>
