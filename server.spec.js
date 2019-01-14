@@ -1,13 +1,12 @@
 const request = require("supertest");
-const server = require("./server.js");
+const server = require("./server");
 
+//testing server connection
  describe("server.js", () => {
-  describe("server route", () => {
-
-     it("should return a JSON object fron the index route", async () => {
-      const expectedBody = { api: "running" };
-      const response = await request(server).get("/");
-      expect(response.body).toEqual(expectedBody);
+  describe("/ route", () => {
+    it("Should return status 200", async () => {
+      let res = await request(server).get("/");
+      expect(res.status).toBe(200);
     });
   });
 });
