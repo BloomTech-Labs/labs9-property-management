@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     tbl.string("first_name", 64).notNullable();
     tbl.string("middle_name", 64);
     tbl.string("last_name", 64).notNullable();
-    tbl.string("user_type", 24).notNullable();
+    tbl.string("display_name", 64).notNullable();
     tbl
       .string("email", 64)
       .notNullable()
@@ -14,11 +14,8 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .unique("mobile");
     tbl.string("password", 128).notNullable();
-    tbl.boolean("get_texts").defaultTo(false);
-    tbl.boolean("get_emails").defaultTo(false);
-
-    //For Tenant/Property relationship
-    tbl.integer("property_id").defaultTo(null);
+    tbl.boolean("admin_user").defaultTo(false);
+    tbl.string("home_address").notNullable();
   });
 };
 
