@@ -3,11 +3,12 @@ import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
+/*
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
+import InputLabel from "@material-ui/core/InputLabel"; */
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -55,17 +56,28 @@ const styles = theme => ({
 
 class Login extends Component {
   state = {
-    loggedIn: false
+    error: null
   };
 
-  login = () => {
-    this.setState({ loggedIn: true });
+  loginGoogle = event => {
+    this.props.firebase
+      .doSignInWithGoogle()
+      .then(socialAuthUser => {
+        this.setState({ error: null });
+        this.props.history.push("/admin");
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+
+    event.preventDefault();
   };
 
   render() {
     const { classes } = this.props;
-    if (this.state.loggedIn) return <Redirect to="/admin" />;
+    const { error } = this.state;
 
+    console.log(error);
     return (
       <>
         <BackToHomeContainer>
@@ -86,7 +98,7 @@ class Login extends Component {
               Login
             </Typography>
             <form className={classes.form}>
-              <FormControl margin="normal" required fullWidth>
+              {/*            <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>
                 <Input id="email" name="email" autoComplete="email" autoFocus />
               </FormControl>
@@ -101,17 +113,17 @@ class Login extends Component {
               </FormControl>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+                label="Remember me" /> 
+*/}
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={this.login}
+                onClick={this.loginGoogle}
               >
-                Login
+                Google
               </Button>
             </form>
           </Paper>
