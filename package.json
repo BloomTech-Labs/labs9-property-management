@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/labs9-property-management#readme",
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "supertest": "^3.3.0",
+    "jest": "^23.6.0"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -29,13 +31,12 @@
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "helmet": "^3.15.0",
-    "jest": "^23.6.0",
+
     "jsonwebtoken": "^8.4.0",
     "knex": "^0.16.3",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "pg": "^7.7.1",
-    "sqlite3": "^4.0.4",
-    "supertest": "^3.3.0"
+    "sqlite3": "^4.0.4"
   }
 }
