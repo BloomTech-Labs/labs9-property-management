@@ -2,17 +2,23 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({
   container: {
@@ -56,13 +62,45 @@ const styles = theme => ({
     maxWidth: 300,
     marginTop: 50,
     paddingLeft: 30
+  },
+  root: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 220,
+    marginTop: 30,
+    marginLeft: 30
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2
+  },
+  rootTable: {
+    // width: "100%",
+    overflowX: "auto",
+    marginTop: 30
+  },
+  table: {
+    minWidth: 150
+  },
+  tableTitle: {
+    marginLeft: 10
   }
 });
 
 class Billing extends Component {
   state = {
-    anchorEl: null,
-    selectedProperty: "171 N 600 E",
+    property: "171 N 600 E",
+    cc: "1234567812345678",
+    exp: "09/20",
+    cvv: "***",
+    history: [
+      { date: "1/2/2018", amount: "$350.00" },
+      { date: "2/1/2018", amount: "$350.00" },
+      { date: "3/3/2018", amount: "$350.00" },
+      { date: "4/3/2018", amount: "$350.00" }
+    ],
     properties: [
       {
         id: 1,
@@ -70,12 +108,12 @@ class Billing extends Component {
         cc: "1234567812345678",
         exp: "09/19",
         cvv: "***",
-        history: {
-          Jan: "$350.00",
-          Feb: "$350.00",
-          Mar: "$350.00",
-          Apr: "$350.00"
-        }
+        history: [
+          { date: "1/2/2018", amount: "$350.00" },
+          { date: "2/1/2018", amount: "$350.00" },
+          { date: "3/3/2018", amount: "$350.00" },
+          { date: "4/3/2018", amount: "$350.00" }
+        ]
       },
       {
         id: 2,
@@ -83,12 +121,13 @@ class Billing extends Component {
         cc: "1123445677650989",
         exp: "07/19",
         cvv: "***",
-        history: {
-          Jan: "$350.00",
-          Feb: "$350.00",
-          Mar: "$350.00",
-          Apr: "$350.00"
-        }
+        history: [
+          { date: "1/2/2018", amount: "$390.00" },
+          { date: "2/2/2018", amount: "$390.00" },
+          { date: "3/2/2018", amount: "$390.00" },
+          { date: "4/4/2018", amount: "$390.00" },
+          { date: "5/1/2018", amount: "$390.00" }
+        ]
       },
       {
         id: 3,
@@ -96,123 +135,112 @@ class Billing extends Component {
         cc: "1455445677650989",
         exp: "08/19",
         cvv: "***",
-        history: {
-          Jan: "$350.00",
-          Feb: "$350.00",
-          Mar: "$350.00",
-          Apr: "$350.00"
-        }
+        history: [
+          { date: "1/3/2018", amount: "$440.00" },
+          { date: "2/2/2018", amount: "$440.00" },
+          { date: "3/3/2018", amount: "$440.00" },
+          { date: "4/2/2018", amount: "$440.00" },
+          { date: "5/3/2018", amount: "$440.00" }
+        ]
       }
     ]
   };
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value,
+      cc: this.state.properties.find(
+        entry => entry.address == event.target.value
+      ).cc,
+      exp: this.state.properties.find(
+        entry => entry.address == event.target.value
+      ).exp,
+      cvv: this.state.properties.find(
+        entry => entry.address == event.target.value
+      ).cvv,
+      history: this.state.properties.find(
+        entry => entry.address == event.target.value
+      ).history
+    });
+    console.log(
+      this.state.properties.find(entry => entry.address == event.target.value)
+    );
+    console.log(
+      this.state.properties.find(entry => entry.address == event.target.value)
+        .cc
+    );
+    console.log(event.target.value);
   };
 
   render() {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
 
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid className={classes.leftColumn} spacing={16}>
-          <Button
-            className={classes.menu}
-            aria-owns={anchorEl ? "simple-menu" : undefined}
-            aria-haspopup="true"
-            onClick={this.handleClick}
-          >
-            Property
-          </Button>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={this.handleClose}
-          >
-            <MenuItem onClick={this.handleClose}>
-              {this.state.properties[0].address}
-            </MenuItem>
-            <MenuItem onClick={this.handleClose}>
-              {this.state.properties[1].address}
-            </MenuItem>
-            <MenuItem onClick={this.handleClose}>
-              {this.state.properties[2].address}
-            </MenuItem>
-          </Menu>
+          <form className={classes.root} autoComplete="off">
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel>Property</InputLabel>
+              <Select
+                value={this.state.property}
+                onChange={this.handleChange}
+                input={<OutlinedInput name="property" id="outlined-simple" />}
+              >
+                {/* <MenuItem value="">
+                  <em>None</em>
+                </MenuItem> */}
+                {this.state.properties.map((addr, index) => (
+                  <MenuItem key={index} value={addr.address}>
+                    {addr.address}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </form>
           <Card className={classes.card}>
             <CardContent>
               <List className={classes.root}>
                 <ListItem>
-                  <ListItemText
-                    primary="CC#"
-                    secondary={this.state.properties[0].cc}
-                  />
+                  <ListItemText primary="CC#" secondary={this.state.cc} />
                 </ListItem>
                 <ListItem>
-                  <ListItemText
-                    primary="EXP"
-                    secondary={this.state.properties[0].exp}
-                  />
+                  <ListItemText primary="EXP" secondary={this.state.exp} />
                 </ListItem>
                 <ListItem>
-                  <ListItemText
-                    primary="CVV"
-                    secondary={this.state.properties[0].cvv}
-                  />
+                  <ListItemText primary="CVV" secondary={this.state.cvv} />
                 </ListItem>
               </List>
             </CardContent>
           </Card>
         </Grid>
         <Grid className={classes.rightColumn} spacing={16}>
-          <Card className={classes.card}>
-            <Typography component="h1" variant="h6">
-              Date
+          <Paper className={classes.rootTable}>
+            <Typography
+              className={classes.tableTitle}
+              component="h5"
+              variant="h6"
+            >
+              Rent History
             </Typography>
-            <CardContent>
-              <List className={classes.root}>
-                <ListItem>
-                  <ListItemText primary="1/2/2018" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="2/2/2018" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="3/2/2018" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="4/2/2018" />
-                </ListItem>
-              </List>
-            </CardContent>
-          </Card>
-          <Card className={classes.card}>
-            <Typography component="h1" variant="h6">
-              Amount Paid
-            </Typography>
-            <CardContent>
-              <List className={classes.root}>
-                <ListItem>
-                  <ListItemText primary="$350.00" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="$350.00" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="$350.00" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="$350.00" />
-                </ListItem>
-              </List>
-            </CardContent>
-          </Card>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date</TableCell>
+                  <TableCell align="right">Amount Paid</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.state.history.map((entry, index) => (
+                  <TableRow key={index}>
+                    <TableCell component="th" scope="row">
+                      {entry.date}
+                    </TableCell>
+                    <TableCell align="right">{entry.amount}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
         </Grid>
       </Grid>
     );
