@@ -46,4 +46,5 @@ Welcome to our Property Management Application.
 # API Documentation
 ## Back-End API
 ## Third-Party API
+### Firebase Auth
 ### Stripe

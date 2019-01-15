@@ -5,11 +5,12 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Admin from "./components/admin/Admin";
 import Tenant from "./components/tenant/Tenant";
-import "typeface-roboto";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { withFirebase } from "./components/firebase";
+import "typeface-roboto";
 
-// testing theme initialization 
+// testing theme initialization
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -41,7 +42,7 @@ class App extends Component {
       <div className="auth">
         <Route exact path="/" component={Home} />
         <MuiThemeProvider theme={theme}>
-          <Route path="/login" component={Login} />
+          <Route path="/login" component={withFirebase(Login)} />
           <Route path="/signup" component={Signup} />
           <Route path="/admin" component={Admin} />
           <Route path="/tenant" component={Tenant} />
