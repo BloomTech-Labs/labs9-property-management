@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import { withFirebase } from "../firebase";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -63,6 +65,7 @@ class Login extends Component {
     this.props.firebase
       .doSignInWithGoogle()
       .then(socialAuthUser => {
+        console.log("login: ", socialAuthUser);
         this.setState({ error: null });
         this.props.history.push("/admin");
       })
@@ -75,9 +78,7 @@ class Login extends Component {
 
   render() {
     const { classes } = this.props;
-    const { error } = this.state;
 
-    console.log(error);
     return (
       <>
         <BackToHomeContainer>
@@ -133,8 +134,14 @@ class Login extends Component {
   }
 }
 
+const LoginPage = compose(
+  withFirebase,
+  withRouter,
+  withStyles(styles)
+)(Login);
+
 Login.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Login);
+export default LoginPage;
