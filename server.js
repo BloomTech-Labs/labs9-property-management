@@ -5,6 +5,21 @@ const cors = require("cors");
 const morgan = require("morgan");
 const db = require("./db/dbConfig");
 const faker = require("faker");
+var twilio = require('twilio');
+
+//====TWILIO CODE==============================
+var accountSid = 'ACe248433955612d15f21279b5c533591a'; // Your Account SID from www.twilio.com/console
+var authToken = 'eb38dcd8c7df7d7e93d58f953627ac79';   // Your Auth Token from www.twilio.com/console
+
+var twilio = require('twilio');
+var client = new twilio(accountSid, authToken);
+
+client.messages.create({
+    body: 'Hello from Node',
+    to: '+13125040020',  // Text this number
+    from: '+13125040020' // From a valid Twilio number
+})
+.then((message) => console.log(message.sid));
 
 server.use(express.json());
 server.use(cors());
@@ -30,5 +45,6 @@ server.get("/", (req, res) => {
       res.status(500).json({ errorMessage: "Data could not be retrieved." })
     );
 });
+
 
 module.exports = server;
