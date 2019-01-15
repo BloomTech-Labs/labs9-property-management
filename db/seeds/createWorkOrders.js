@@ -25,14 +25,14 @@ const createWorkOrder = () => {
     tenant_id: tenantId,
     house_id: faker.random.number({
       min: 1,
-      max: 100
+      max: 15
     })
   };
 };
 
 exports.seed = async function(knex, Promise) {
   const WorkOrders = [];
-  const totalWorkOrders = 100;
+  const totalWorkOrders = 25;
 
   for (let i = 0; i < totalWorkOrders; i++) {
     WorkOrders.push(createWorkOrder());

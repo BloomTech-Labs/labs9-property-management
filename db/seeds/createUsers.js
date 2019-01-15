@@ -1,13 +1,13 @@
 const faker = require("faker");
 
 const createFakeUser = () => {
-  const userType =
-    faker.random.number({
-      min: 1,
-      max: 2
-    }) === 1
-      ? true
-      : false;
+  // const userType =
+  // faker.random.number({
+  //   min: 1,
+  //   max: 2
+  // }) === 1
+  //   ? true
+  //   : false;
 
   // const propertyId =
   //   userType === "admin"
@@ -28,13 +28,13 @@ const createFakeUser = () => {
       faker.address.streetAddress() +
       faker.address.city() +
       faker.address.country(),
-    is_admin: userType
+    is_admin: false
   };
 };
 
 exports.seed = async function(knex, Promise) {
   const fakeUsers = [];
-  const totalFakeUsers = 100;
+  const totalFakeUsers = 10;
 
   for (let i = 0; i < totalFakeUsers; i++) {
     fakeUsers.push(createFakeUser());
