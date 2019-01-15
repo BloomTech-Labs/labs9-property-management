@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import Home from "./components/home/Home";
-import Login from "./components/auth/Login";
+import LoginPage from "./components/auth/LoginPage";
 import Signup from "./components/auth/Signup";
 import Admin from "./components/admin/Admin";
 import Tenant from "./components/tenant/Tenant";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { withFirebase } from "./components/firebase";
+import { withAuthentication } from "./components/session";
 import "typeface-roboto";
 
 // testing theme initialization
@@ -29,20 +29,12 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loggedIn: false,
-      user: ""
-    };
-  }
-
   render() {
     return (
       <div className="auth">
         <Route exact path="/" component={Home} />
         <MuiThemeProvider theme={theme}>
-          <Route path="/login" component={withFirebase(Login)} />
+          <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={Signup} />
           <Route path="/admin" component={Admin} />
           <Route path="/tenant" component={Tenant} />
@@ -55,4 +47,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withAuthentication(App);

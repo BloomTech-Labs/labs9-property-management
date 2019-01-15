@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import { withFirebase } from "../firebase";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -133,8 +135,14 @@ class Login extends Component {
   }
 }
 
+const LoginPage = compose(
+  withFirebase,
+  withRouter,
+  withStyles(styles)
+)(Login);
+
 Login.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Login);
+export default LoginPage;
