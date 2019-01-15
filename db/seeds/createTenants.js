@@ -17,7 +17,9 @@ const createFakeTenants = () => {
   return {
     // tenant_id: tenantId,
     get_texts: tenantFunctions,
-    get_emails: tenantFunctions
+    get_emails: tenantFunctions,
+    leased_start_date: "Jan 2018",
+    end_date: "Dec 2020"
   };
 };
 

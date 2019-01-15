@@ -4,20 +4,16 @@ exports.up = function(knex, Promise) {
     tbl.string("address").notNullable();
     tbl.string("description", 500).notNullable();
     tbl.boolean("property_access").defaultTo(false);
-    tbl.boolean("submitted").defaultTo(false);
-    tbl.boolean("in_progress").defaultTo(false);
-    tbl.boolean("completed").defaultTo(false);
+    tbl.boolean("work_order_status").defaultTo(false);
     tbl.string("work_order_image", 250);
     tbl
       .integer("tenant_id")
       .unsigned()
-      .notNullable()
       .references("tenant_id")
       .inTable("tenants");
     tbl
       .integer("house_id")
       .unsigned()
-      .notNullable()
       .references("house_id")
       .inTable("house_properties");
   });

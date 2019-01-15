@@ -21,6 +21,7 @@ exports.up = function(knex, Promise) {
     tbl.string("profile_pic_url", 250);
     tbl.string("recovery_token", 250);
     tbl.boolean("is_admin").defaultTo(false);
+    tbl.string("role", 64);
   });
 };
 

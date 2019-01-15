@@ -3,10 +3,8 @@ exports.up = function(knex, Promise) {
     tbl
       .integer("user_id")
       .unsigned()
-      .notNullable()
       .references("id")
-      .inTable("users")
-      .primary();
+      .inTable("users");
     tbl.string("stripe_token", 250);
   });
 };

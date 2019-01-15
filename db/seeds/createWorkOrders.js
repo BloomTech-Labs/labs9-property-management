@@ -21,9 +21,7 @@ const createWorkOrder = () => {
       faker.address.country(),
     description: faker.lorem.paragraph(),
     property_access: trueFalse,
-    submitted: false,
-    completed: trueFalse,
-    in_progress: false,
+    work_order_status: "in progress",
     tenant_id: tenantId,
     house_id: faker.random.number({
       min: 1,

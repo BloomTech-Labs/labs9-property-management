@@ -1,6 +1,9 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("house_properties", function(tbl) {
-    tbl.increments("house_id").primary();
+    tbl
+      .increments("house_id")
+      .unique()
+      .primary();
     tbl
       .string("address")
       .notNullable()
@@ -14,7 +17,6 @@ exports.up = function(knex, Promise) {
     tbl
       .integer("owner_id")
       .unsigned()
-      .notNullable()
       .references("user_id")
       .inTable("users");
   });
