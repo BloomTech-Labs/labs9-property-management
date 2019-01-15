@@ -1,14 +1,20 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("tenants", function(tbl) {
-    tbl.increments();
-    tbl.boolean("get_texts").defaultTo(false);
-    tbl.boolean("get_emails").defaultTo(false);
     tbl
-      .integer("user_id")
+      .increments("tenant_id")
       .unsigned()
       .notNullable()
-      .references("id")
+      .references("user_id")
       .inTable("users");
+    tbl.boolean("get_texts").defaultTo(false);
+    tbl.boolean("get_emails").defaultTo(false);
+    tbl.string("leased_start_date", 64);
+    tbl.string("end_date", 64);
+    tbl
+      .integer("house_id")
+      .unsigned()
+      .references("house_id")
+      .inTable("house_properties");
   });
 };
 

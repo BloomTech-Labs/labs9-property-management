@@ -6,25 +6,29 @@ const createFakeUser = () => {
       min: 1,
       max: 2
     }) === 1
-      ? "admin"
-      : "tenant";
+      ? true
+      : false;
 
-  const propertyId =
-    userType === "admin"
-      ? null
-      : faker.random.number({
-          min: 1,
-          max: 50
-        });
+  // const propertyId =
+  //   userType === "admin"
+  //     ? null
+  //     : faker.random.number({
+  //         min: 1,
+  //         max: 50
+  //       });
 
   return {
     first_name: faker.name.firstName(),
     last_name: faker.name.lastName(),
+    username: faker.internet.userName(),
     email: faker.internet.email(),
     mobile: faker.phone.phoneNumber(),
     password: faker.internet.password(),
-    user_type: userType,
-    property_id: propertyId
+    home_address:
+      faker.address.streetAddress() +
+      faker.address.city() +
+      faker.address.country(),
+    is_admin: userType
   };
 };
 
