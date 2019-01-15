@@ -32,14 +32,14 @@ const createFakeProperty = () => {
     }),
     owner_id: faker.random.number({
       min: 1,
-      max: 25
+      max: 3
     })
   };
 };
 
 exports.seed = async function(knex, Promise) {
   const fakeProperties = [];
-  const totalFakeProperties = 100;
+  const totalFakeProperties = 15;
 
   for (let i = 0; i < totalFakeProperties; i++) {
     fakeProperties.push(createFakeProperty());
