@@ -1,10 +1,33 @@
-const db = require("../db/dbConfig");
+const db = require("../dbConfig.js");
 
 module.exports = {
-  getUserProperties: function(userId) {
-    return db("properties as p")
-      .join("users as u", "u.id", "p.user_id")
-      .select("u.first_name", "u.last_name", "p.id", "p.address", "p.bedrooms")
-      .where("p.user_id", userId);
+  get: function(id) {
+    let query = db("users");
+    if (id) {
+      query.where("id", Number(id)).first();
+    }
+
+    return query;
+  },
+  getUserPosts: function(userId) {
+    return db("posts as p")
+      .join("users as u", "u.id", "p.userId")
+      .select("p.id", "p.text", "u.name as postedBy")
+      .where("p.userId", userId);
+  },
+  insert: function(user) {
+    return db("users")
+      .insert(user)
+      .then(ids => ({ id: ids[0] }));
+  },
+  update: function(id, user) {
+    return db("users")
+      .where("id", id)
+      .update(user);
+  },
+  remove: function(id) {
+    return db("users")
+      .where("id", id)
+      .del();
   }
 };
