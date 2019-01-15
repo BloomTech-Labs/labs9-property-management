@@ -65,6 +65,7 @@ class Login extends Component {
     this.props.firebase
       .doSignInWithGoogle()
       .then(socialAuthUser => {
+        console.log("login: ", socialAuthUser);
         this.setState({ error: null });
         this.props.history.push("/admin");
       })
@@ -77,9 +78,7 @@ class Login extends Component {
 
   render() {
     const { classes } = this.props;
-    const { error } = this.state;
 
-    console.log(error);
     return (
       <>
         <BackToHomeContainer>
