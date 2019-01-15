@@ -10,12 +10,12 @@ import Typography from "@material-ui/core/Typography";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import SignOutButton from "./SignOutButton";
 
 const drawerWidth = 200;
 
@@ -122,7 +122,7 @@ class SidebarAdmin extends Component {
             <Typography variant="h6" color="inherit" component="p">
               Page Name
             </Typography>
-            <Button color="inherit">Sign Out</Button>
+            <SignOutButton />
           </Toolbar>
         </AppBar>
         <nav className={classes.drawer}>

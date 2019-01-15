@@ -1,10 +1,13 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("users", function(tbl) {
-    tbl.increments();
+    tbl
+      .increments("user_id")
+      .primary()
+      .unique();
     tbl.string("first_name", 64).notNullable();
     tbl.string("middle_name", 64);
     tbl.string("last_name", 64).notNullable();
-    tbl.string("user_type", 24).notNullable();
+    tbl.string("username", 64).notNullable();
     tbl
       .string("email", 64)
       .notNullable()
@@ -13,12 +16,12 @@ exports.up = function(knex, Promise) {
       .integer("mobile")
       .notNullable()
       .unique("mobile");
-    tbl.string("password", 128).notNullable();
-    tbl.boolean("get_texts").defaultTo(false);
-    tbl.boolean("get_emails").defaultTo(false);
-
-    //For Tenant/Property relationship
-    tbl.integer("property_id").defaultTo(null);
+    tbl.string("password", 250).notNullable();
+    tbl.string("home_address").notNullable();
+    tbl.string("profile_pic_url", 250);
+    tbl.string("recovery_token", 250);
+    tbl.boolean("is_admin").defaultTo(false);
+    tbl.string("role", 64);
   });
 };
 
