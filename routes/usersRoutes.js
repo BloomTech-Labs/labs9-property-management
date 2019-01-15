@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("../db/dbConfig");
+const userDB = require("../helpers/userDb");
 
 const router = express.Router();
 
@@ -29,15 +30,6 @@ router.post("/login", (req, res) => {
       } else {
         res.status(401).json({ errorMessage: "Wrong credentials!" });
       }
-    })
-    .catch(err => res.status(500).send(err));
-});
-
-// Get all users
-router.get("/", (req, res) => {
-  db("users")
-    .then(users => {
-      res.status(200).send(users);
     })
     .catch(err => res.status(500).send(err));
 });

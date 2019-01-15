@@ -2,6 +2,10 @@ const faker = require("faker");
 
 const createFakeProperty = () => {
   return {
+    // house_id: faker.random.number({
+    //   min: 1,
+    //   max: 25
+    // }),
     address:
       faker.address.streetAddress() +
       faker.address.city() +
@@ -28,7 +32,7 @@ const createFakeProperty = () => {
     }),
     owner_id: faker.random.number({
       min: 1,
-      max: 50
+      max: 25
     })
   };
 };
@@ -40,5 +44,5 @@ exports.seed = async function(knex, Promise) {
   for (let i = 0; i < totalFakeProperties; i++) {
     fakeProperties.push(createFakeProperty());
   }
-  await knex("properties").insert(fakeProperties);
+  await knex("house_properties").insert(fakeProperties);
 };
