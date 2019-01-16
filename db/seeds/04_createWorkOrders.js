@@ -1,28 +1,28 @@
-const faker = require("faker");
+const faker = require('faker');
 
 const createWorkOrder = () => {
   const tenantId = faker.random.number({
     min: 4,
-    max: 10
+    max: 10,
   });
 
-  const trueFalse =
+  const propertyAccess =
     faker.random.number({
       min: 1,
-      max: 2
+      max: 2,
     }) === 1
       ? true
       : false;
 
   return {
-    description: faker.lorem.paragraph(),
-    property_access: trueFalse,
-    work_order_status: "in progress",
+    description: faker.lorem.sentence(),
+    property_access: propertyAccess,
+    work_order_status: 'in progress',
     tenant_id: tenantId,
     house_id: faker.random.number({
       min: 1,
-      max: 15
-    })
+      max: 15,
+    }),
   };
 };
 
@@ -33,5 +33,5 @@ exports.seed = async function(knex, Promise) {
   for (let i = 0; i < totalWorkOrders; i++) {
     WorkOrders.push(createWorkOrder());
   }
-  await knex("work_orders").insert(WorkOrders);
+  await knex('work_orders').insert(WorkOrders);
 };
