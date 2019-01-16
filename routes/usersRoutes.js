@@ -33,13 +33,4 @@ router.post("/login", (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
-// Get all users
-router.get("/", (req, res) => {
-  db("users")
-    .then(users => {
-      res.status(200).send(users);
-    })
-    .catch(err => res.status(500).send(err));
-});
-
 module.exports = router;

@@ -16,7 +16,7 @@ import {
   LoginOrSignupFormLink,
   AuthLogo
 } from "./AuthStyles";
-import { KeyboardBackspace, ArrowBackIos } from "@material-ui/icons";
+import { KeyboardBackspace } from "@material-ui/icons";
 import testlogo from "../../images/test-logo.svg";
 
 const styles = theme => ({
@@ -69,7 +69,7 @@ class Signup extends Component {
 
   render() {
     const { classes } = this.props;
-    const { name, email, passwordOne, passwordTwo, error } = this.state;
+    //const { name, email, passwordOne, passwordTwo, error } = this.state;
 
     return (
       <>
@@ -86,9 +86,7 @@ class Signup extends Component {
         <main className={classes.main}>
           <CssBaseline />
           <Paper className={classes.paper}>
-            <Typography component="h1" variant="h5">
-              Sign Up
-            </Typography>
+            <Typography component="h1">Sign Up</Typography>
             <form className={classes.form}>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="name">Full Name</InputLabel>
