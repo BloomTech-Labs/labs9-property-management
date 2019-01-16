@@ -6,8 +6,8 @@
     command = "yarn build"
 
 [[redirects]]
-  from = "/*"
+    from = "/*"
 
-  to = "/index.html"
-  
-  status = 200
+    to = "/index.html"
+
+    status = 200
