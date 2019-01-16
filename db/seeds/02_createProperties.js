@@ -44,7 +44,5 @@ exports.seed = async function(knex, Promise) {
   for (let i = 0; i < totalFakeProperties; i++) {
     fakeProperties.push(createFakeProperty());
   }
-  await knex('house_properties')
-    .truncate()
-    .insert(fakeProperties);
+  await knex('house_properties').insert(fakeProperties);
 };
