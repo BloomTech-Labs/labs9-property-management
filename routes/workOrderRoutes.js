@@ -1,5 +1,6 @@
 const express = require("express");
 const db = require("../db/dbConfig");
+const Promise = require("bluebird");
 
 const router = express.Router();
 
@@ -36,20 +37,126 @@ router.get("/", (req, res) => {
     );
 });
 
-// TRYING TO GET THE JOIN LOGIC RIGHT. CURRENTLY RETURNING REPEATED DATA.
-router.get("/:id", (req, res) => {
+// TRYING TO GET THE LOGIC RIGHT. CURRENTLY RETURNING REPEATED DATA.
+router.get("/:id/properties/workorders", (req, res) => {
   const { id } = req.params;
   console.log(id);
 
-  db("users")
-    .where("user_id", id)
-    .where("is_admin", 1)
-    .join("house_properties", "house_properties.owner_id", "users.user_id")
-    .join("work_orders", "work_orders.house_id", "house_properties.house_id")
-    .then(user => {
-      res.status(201).json(user);
+  db("house_properties as h")
+    .join("users", "user_id", "h.owner_id")
+    .select(
+      "h.owner_id",
+      "h.house_id",
+      "h.address",
+      "h.bedrooms",
+      "h.max_occupants",
+      "h.square_footage",
+      "h.year_built",
+      "h.house_image_url"
+    )
+    .where("h.owner_id", id)
+    .then(function(rows) {
+      const promises = rows.map(function(element) {
+        return db
+          .table("work_orders as w")
+          .select(
+            "w.work_order_id",
+            "w.address as work_order_address",
+            // "w.description as work_order_description",
+            "w.property_access",
+            "w.work_order_status",
+            "w.work_order_image"
+          )
+          .where("house_id", element.house_id)
+          .then(function(workOrders) {
+            element["work_orders"] = workOrders;
+            return element;
+          });
+      });
+      return Promise.all(promises);
+    })
+    .then(function(elements) {
+      res.json(elements);
     })
     .catch(err => res.status(500).send(err));
 });
+
+router.get("/:id/properties/tenants", (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  db("house_properties as h")
+    .where("h.owner_id", id)
+    .join("tenants as t", "h.house_id", "t.house_id")
+    .select(
+      "h.owner_id",
+      "h.house_id",
+      "h.address",
+      "h.bedrooms",
+      "h.max_occupants",
+      "h.square_footage",
+      "h.year_built",
+      "h.house_image_url"
+    )
+    // .where("h.owner_id", id)
+    .then(function(rows) {
+      const promises = rows.map(function(element) {
+        return db
+          .table("tenants as t")
+          .join("users as u", "t.tenant_id", "u.user_id")
+          .select(
+            "u.first_name",
+            "t.tenant_id",
+            "t.get_texts",
+            "t.get_emails",
+            "t.leased_start_date",
+            "t.end_date"
+          )
+          .where("house_id", element.house_id)
+          .where("t.tenant_id", "u.user_id")
+          .then(function(tenantUsers) {
+            element["tenants"] = tenantUsers;
+            return element;
+          });
+      });
+      return Promise.all(promises);
+    })
+    .then(function(elements) {
+      res.json(elements);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
+// router.get("/:id/properties", (req, res) => {
+//   const { id } = req.params;
+//   db.table("users")
+//     .select("user_id")
+//     .where("user_id", id)
+//     .then(function(rows) {
+//       const promises = rows.map(function(element) {
+//         return db
+//           .table("house_properties as h")
+//           .select(
+//             "h.owner_id",
+//             "h.house_id",
+//             "h.address",
+//             "h.bedrooms",
+//             "h.max_occupants",
+//             "h.square_footage",
+//             "h.year_built",
+//             "h.house_image_url"
+//           )
+//           .where("owner_id", element.user_id)
+//           .then(function(properties) {
+//             element["properties"] = properties;
+//             return element;
+//           });
+//       });
+//       return Promise.all(promises);
+//     })
+//     .then(function(elements) {
+//       res.json(elements);
+//     });
+// });
 
 module.exports = router;
