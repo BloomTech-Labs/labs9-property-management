@@ -6,14 +6,14 @@ const router = express.Router();
 
 router.use(express.json());
 
-//will place a work order
+// Place a work order
 router.post('/', (req, res) => {
   const required = req.body;
   const { address, description } = req.body;
   if (!address || !description) {
     res
       .status(400)
-      .json({ errorMessage: 'Please enter adress and description' });
+      .json({ errorMessage: 'Please enter address and description' });
     return;
   }
   db.insert(required)
@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-//will get list of all work orders
+// Get list of all work orders
 router.get('/', (req, res) => {
   db('work_orders')
     .then(work_orders => {
@@ -37,54 +37,8 @@ router.get('/', (req, res) => {
     );
 });
 
-// TRYING TO GET THE LOGIC RIGHT. CURRENTLY RETURNING REPEATED DATA.
-router.get('/:id/properties/ts', (req, res) => {
-  const { id } = req.params;
-  console.log(id);
-
-  db('house_properties as h')
-    .join('users as u', 'u.user_id', 'h.owner_id')
-    .select(
-      'h.owner_id',
-      'h.house_id',
-      'h.address',
-      'h.bedrooms',
-      'h.max_occupants',
-      'h.square_footage',
-      'h.year_built',
-      'h.house_image_url'
-    )
-    .where('h.owner_id', id)
-    .where('u.is_admin', true)
-    .then(function(rows) {
-      const promises = rows.map(function(element) {
-        return db
-          .table('tenants as t')
-          .join('users as u', 't.tenant_id', 'u.user_id')
-          .select(
-            't.tenant_id',
-            'u.first_name as tenant_first_name',
-            'u.last_name as tenant_last_name',
-            't.get_texts',
-            't.get_emails',
-            't.leased_start_date',
-            't.end_date'
-          )
-          .where('house_id', element.house_id)
-          .then(function(tenantUsers) {
-            element['tenants'] = tenantUsers;
-            return element;
-          });
-      });
-      return Promise.all(promises);
-    })
-    .then(function(elements) {
-      res.json(elements);
-    })
-    .catch(err => res.status(500).send(err));
-});
-
-router.get('/:id/properties/workorders', (req, res) => {
+// Retrieve all workorders for a given owner organized by property
+router.get('/:id/workOrdersByProp', (req, res) => {
   const { id } = req.params;
   console.log(id);
 
