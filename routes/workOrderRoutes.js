@@ -36,4 +36,19 @@ router.get("/", (req, res) => {
     );
 });
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  db("users")
+    .where("user_id", id)
+    .where("is_admin", 1)
+    .join("house_properties", "house_properties.owner_id", "users.user_id")
+    .join("work_orders", "work_orders.house_id", "house_properties.house_id")
+    .then(user => {
+      res.status(201).json(user);
+    })
+    .catch(err => res.status(500).send(err));
+});
+
 module.exports = router;
