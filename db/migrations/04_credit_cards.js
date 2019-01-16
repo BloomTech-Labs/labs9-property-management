@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     tbl
       .integer("user_id")
       .unsigned()
-      .references("id")
+      .references("user_id")
       .inTable("users");
     tbl.string("stripe_token", 250);
   });
