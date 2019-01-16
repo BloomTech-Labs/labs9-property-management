@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     tbl
       .integer('tenant_id')
       .unsigned()
+      .unique()
       .references('user_id')
       .inTable('users');
     tbl.boolean('get_texts').defaultTo(false);
