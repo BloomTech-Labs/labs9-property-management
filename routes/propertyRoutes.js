@@ -99,8 +99,11 @@ router.get('/:id/properties/tenants', (req, res) => {
       const promises = rows.map(function(element) {
         return db
           .table('tenants as t')
+          .join('users as u', 't.tenant_id', 'u.user_id')
           .select(
             't.tenant_id',
+            'u.first_name as tenant_first_name',
+            'u.last_name as tenant_last_name',
             't.get_texts',
             't.get_emails',
             't.leased_start_date',
