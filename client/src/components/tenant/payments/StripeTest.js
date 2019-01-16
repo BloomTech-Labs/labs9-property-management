@@ -12,7 +12,7 @@ const StripeTest = () => {
         token: token
     };
     axios
-        .post("http://localhost:4000/api/payment", body)
+        .post("http://localhost:4000/api/payments", body)
         .then(response => {
           console.log(response);
           alert("Payment Success");

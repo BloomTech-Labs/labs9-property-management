@@ -88,4 +88,25 @@ router.get("/:id/tenants", (req, res) => {
     })
     .catch(error => res.status(500).json(error));
 });
+
+// get properties by owner id with their tenants
+
+router.get("/:id/proptens", (req, res) => {
+  const { id } = req.params;
+  db("house_properties")
+    .where("owner_id", id)
+    .join("tenants", "house_properties.house_id", "tenants.house_id")
+    .join("users", "tenants.tenant_id", "users.user_id")
+    .select(
+      "house_properties.address",
+      "users.last_name",
+      "house_properties.house_id",
+      "house_properties.owner_id"
+    )
+    .then(properties => {
+      res.status(200).json(properties);
+    })
+    .catch(error => res.status(500).json(error));
+});
+
 module.exports = router;
