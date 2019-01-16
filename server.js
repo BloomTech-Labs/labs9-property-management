@@ -5,17 +5,16 @@ const cors = require("cors");
 const morgan = require("morgan");
 const db = require("./db/dbConfig");
 const faker = require("faker");
-var twilio = require('twilio');
-const dotenv = require('dotenv');
-dotenv.load()
+var twilio = require("twilio");
+const dotenv = require("dotenv");
+dotenv.load();
 
 //====TWILIO CODE==============================
 var accountSid = process.env.twilio_accountSid; // Your Account SID from www.twilio.com/console
 var authToken = process.env.twilio_authToken; // Your Account token from www.twilio.com/console
 
-var twilio = require('twilio');
+var twilio = require("twilio");
 var client = new twilio(accountSid, authToken);
-
 
 server.use(express.json());
 server.use(cors());
@@ -42,17 +41,15 @@ server.get("/", (req, res) => {
     );
 });
 
-server.get("/text", (req,res) => {
-  
+server.get("/text", (req, res) => {
   client.messages
-  .create({
-     body: 'hello',
-     to: '+receiving number',  // Text this number
-     from: '+12245058863' // From a valid Twilio number
-   })
-  .then(message => console.log(message.sid))
-  .done();
+    .create({
+      body: "hello",
+      to: "+receiving number", // Text this number
+      from: "+12245058863" // From a valid Twilio number
+    })
+    .then(message => console.log(message.sid))
+    .done();
 });
-
 
 module.exports = server;
