@@ -1,5 +1,6 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('tenants', function(tbl) {
+    tbl.increments();
     tbl
       .integer('tenant_id')
       .unsigned()
