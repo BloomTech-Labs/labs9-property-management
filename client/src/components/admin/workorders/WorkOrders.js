@@ -1,38 +1,34 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import Avatar from "@material-ui/core/Avatar";
 import {
   Home,
   Build,
   Call,
   InsertPhoto,
-  CheckCircleOutline,
-  FormatClear
-} from '@material-ui/icons';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import Radio from '@material-ui/core/Radio';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+  CheckCircleOutline
+} from "@material-ui/icons";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 const styles = theme => ({
   container: {
     marginTop: 100
   },
   root: {
-    width: '100%',
+    width: "100%",
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper
   },
@@ -41,12 +37,12 @@ const styles = theme => ({
     minHeight: 384
   },
   actions: {
-    display: 'flex',
-    justifyContent: 'flex-end'
+    display: "flex",
+    justifyContent: "flex-end"
   },
   description: {
-    marginRight: '25%',
-    transform: 'translateX(25%)'
+    marginRight: "25%",
+    transform: "translateX(25%)"
   }
 });
 
@@ -55,35 +51,35 @@ class WorkOrders extends Component {
     workOrders: [
       {
         id: 1,
-        address: '171 N 600 E',
-        description: 'Clogged Drain',
+        address: "171 N 600 E",
+        description: "Clogged Drain",
         permission: true,
-        phone: '801-432-5674',
-        status: 'submitted'
+        phone: "801-432-5674",
+        status: "submitted"
       },
       {
         id: 2,
-        address: '171 N 600 E',
-        description: 'Clogged Drain',
+        address: "171 N 600 E",
+        description: "Clogged Drain",
         permission: true,
-        phone: '801-432-5674',
-        status: 'submitted'
+        phone: "801-432-5674",
+        status: "submitted"
       },
       {
         id: 3,
-        address: '171 N 600 E',
-        description: 'Clogged Drain',
+        address: "171 N 600 E",
+        description: "Clogged Drain",
         permission: true,
-        phone: '801-432-5674',
-        status: 'submitted'
+        phone: "801-432-5674",
+        status: "submitted"
       },
       {
         id: 4,
-        address: '171 N 600 E',
-        description: 'Clogged Drain',
+        address: "171 N 600 E",
+        description: "Clogged Drain",
         permission: true,
-        phone: '801-432-5674',
-        status: 'submitted'
+        phone: "801-432-5674",
+        status: "submitted"
       }
     ]
   };
@@ -136,7 +132,7 @@ class WorkOrders extends Component {
                         </Avatar>
                         <ListItemText
                           primary="Permission to Enter Property"
-                          secondary={entry.permission ? 'YES' : 'NO'}
+                          secondary={entry.permission ? "YES" : "NO"}
                         />
                       </ListItem>
                       <ListItem>
@@ -146,11 +142,7 @@ class WorkOrders extends Component {
                         <ListItemText primary="Phone" secondary={entry.phone} />
                       </ListItem>
                     </List>
-                    <FormControl
-                      classes={{ display: 'flex', justifyContent: 'center' }}
-                      component="fieldset"
-                      fullWidth={true}
-                    >
+                    <FormControl component="fieldset" fullWidth={true}>
                       <RadioGroup
                         aria-label="status"
                         name="status"
@@ -161,7 +153,7 @@ class WorkOrders extends Component {
                           value="submitted"
                           control={
                             <Radio
-                              checked={entry.status === 'submitted'}
+                              checked={entry.status === "submitted"}
                               name="work-order-status"
                               aria-label="submitted"
                             />
@@ -173,7 +165,7 @@ class WorkOrders extends Component {
                           value="in-progress"
                           control={
                             <Radio
-                              checked={entry.status === 'in-progress'}
+                              checked={entry.status === "in-progress"}
                               name="work-order-status"
                               aria-label="In Progress"
                             />
@@ -185,7 +177,7 @@ class WorkOrders extends Component {
                           value="completed"
                           control={
                             <Radio
-                              checked={entry.status === 'completed'}
+                              checked={entry.status === "completed"}
                               name="work-order-status"
                               aria-label="Completed"
                             />
