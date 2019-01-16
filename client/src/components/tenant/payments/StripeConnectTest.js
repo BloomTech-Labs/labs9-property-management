@@ -10,9 +10,7 @@ const StripeButton = styled.img`
 const StripeConnectTest = () => (
   <Link
     target="_blank"
-    to={
-      "//connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_ELLhp2vnlFHBpk0AVDL7PVxBzrsk2NXz&scope=read_write"
-    }
+    to={"//connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_ELLhp2vnlFHBpk0AVDL7PVxBzrsk2NXz&scope=read_write"}
   >
     <StripeButton src={connectwstripe} />
   </Link>
