@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
       .notNullable()
       .unique('email');
     tbl
-      .string('mobile')
+      .integer('mobile')
       .notNullable()
       .unique('mobile');
     tbl.string('password', 250).notNullable();

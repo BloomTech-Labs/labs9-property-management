@@ -52,7 +52,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
@@ -65,7 +68,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
@@ -78,7 +84,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
@@ -91,7 +100,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
@@ -104,7 +116,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
@@ -117,7 +132,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
@@ -130,7 +148,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
@@ -143,7 +164,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
@@ -156,7 +180,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
@@ -169,7 +196,10 @@ exports.seed = function(knex, Promise) {
           last_name: faker.name.lastName(),
           username: faker.internet.userName(),
           email: faker.internet.email(),
-          mobile: faker.phone.phoneNumber(),
+          mobile: faker.random.number({
+            min: 11111111,
+            max: 33333333,
+          }),
           password: faker.internet.password(),
           home_address:
             faker.address.streetAddress() +
