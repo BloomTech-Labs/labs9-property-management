@@ -20,7 +20,7 @@ import {
   LoginOrSignupFormLink,
   AuthLogo
 } from "./AuthStyles";
-import { KeyboardBackspace, ArrowBackIos } from "@material-ui/icons";
+import { KeyboardBackspace } from "@material-ui/icons";
 import testlogo from "../../images/test-logo.svg";
 
 const styles = theme => ({
@@ -95,9 +95,7 @@ class Login extends Component {
           <CssBaseline />
           <Paper className={classes.paper}>
             {/* <img src={testlogo} width="32" /> */}
-            <Typography component="h1" variant="h5">
-              Login
-            </Typography>
+            <Typography component="h1">Login</Typography>
             <form className={classes.form}>
               {/*            <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>

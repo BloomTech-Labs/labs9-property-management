@@ -150,23 +150,23 @@ class Billing extends Component {
     this.setState({
       [event.target.name]: event.target.value,
       cc: this.state.properties.find(
-        entry => entry.address == event.target.value
+        entry => entry.address === event.target.value
       ).cc,
       exp: this.state.properties.find(
-        entry => entry.address == event.target.value
+        entry => entry.address === event.target.value
       ).exp,
       cvv: this.state.properties.find(
-        entry => entry.address == event.target.value
+        entry => entry.address === event.target.value
       ).cvv,
       history: this.state.properties.find(
-        entry => entry.address == event.target.value
+        entry => entry.address === event.target.value
       ).history
     });
     console.log(
-      this.state.properties.find(entry => entry.address == event.target.value)
+      this.state.properties.find(entry => entry.address === event.target.value)
     );
     console.log(
-      this.state.properties.find(entry => entry.address == event.target.value)
+      this.state.properties.find(entry => entry.address === event.target.value)
         .cc
     );
     console.log(event.target.value);
@@ -177,14 +177,20 @@ class Billing extends Component {
 
     return (
       <Grid container className={classes.container} spacing={16}>
-        <Grid className={classes.leftColumn} spacing={16}>
+        <Grid className={classes.leftColumn}>
           <form className={classes.root} autoComplete="off">
             <FormControl variant="outlined" className={classes.formControl}>
               <InputLabel>Property</InputLabel>
               <Select
                 value={this.state.property}
                 onChange={this.handleChange}
-                input={<OutlinedInput name="property" id="outlined-simple" />}
+                input={
+                  <OutlinedInput
+                    name="property"
+                    id="outlined-simple"
+                    labelWidth={2}
+                  />
+                }
               >
                 {/* <MenuItem value="">
                   <em>None</em>
@@ -213,7 +219,7 @@ class Billing extends Component {
             </CardContent>
           </Card>
         </Grid>
-        <Grid className={classes.rightColumn} spacing={16}>
+        <Grid className={classes.rightColumn}>
           <Paper className={classes.rootTable}>
             <Typography
               className={classes.tableTitle}
