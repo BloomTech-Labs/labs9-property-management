@@ -33,5 +33,7 @@ exports.seed = async function(knex, Promise) {
   for (let i = 0; i < totalWorkOrders; i++) {
     WorkOrders.push(createWorkOrder());
   }
-  await knex('work_orders').insert(WorkOrders);
+  await knex('work_orders')
+    .truncate()
+    .insert(WorkOrders);
 };
