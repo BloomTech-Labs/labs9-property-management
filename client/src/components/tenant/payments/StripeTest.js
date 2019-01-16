@@ -54,7 +54,7 @@ class StripeTest extends React.Component {
           name="Property Mgmt" //Modal Header
           description="Pay rent today."
           panelLabel="Pay rent" //Submit button in modal
-          amount={this.state.paymentAmount} //Amount in cents $9.99
+          amount={this.state.paymentAmount} //Default state amount in cents $725.00
           token={this.onToken}
           stripeKey={publishableKey}
           image={testlogo} //Pop-in header image
