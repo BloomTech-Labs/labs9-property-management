@@ -2,8 +2,8 @@ const faker = require("faker");
 
 const createWorkOrder = () => {
   const tenantId = faker.random.number({
-    min: 26,
-    max: 100
+    min: 4,
+    max: 10
   });
 
   const trueFalse =
@@ -15,10 +15,6 @@ const createWorkOrder = () => {
       : false;
 
   return {
-    address:
-      faker.address.streetAddress() +
-      faker.address.city() +
-      faker.address.country(),
     description: faker.lorem.paragraph(),
     property_access: trueFalse,
     work_order_status: "in progress",
