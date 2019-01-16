@@ -45,6 +45,7 @@ const faker = require('faker');
 exports.seed = function(knex, Promise) {
   return knex('users')
     .del() // delete existing posts
+    .truncate()
     .then(function() {
       return knex('users').insert([
         {
