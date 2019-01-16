@@ -86,8 +86,7 @@ router.get("/:id/properties/tenants", (req, res) => {
   console.log(id);
 
   db("house_properties as h")
-    .where("h.owner_id", id)
-    .join("tenants as t", "h.house_id", "t.house_id")
+    .join("users", "user_id", "h.owner_id")
     .select(
       "h.owner_id",
       "h.house_id",
@@ -98,14 +97,12 @@ router.get("/:id/properties/tenants", (req, res) => {
       "h.year_built",
       "h.house_image_url"
     )
-    // .where("h.owner_id", id)
+    .where("h.owner_id", id)
     .then(function(rows) {
       const promises = rows.map(function(element) {
         return db
           .table("tenants as t")
-          .join("users as u", "t.tenant_id", "u.user_id")
           .select(
-            "u.first_name",
             "t.tenant_id",
             "t.get_texts",
             "t.get_emails",
@@ -113,7 +110,6 @@ router.get("/:id/properties/tenants", (req, res) => {
             "t.end_date"
           )
           .where("house_id", element.house_id)
-          .where("t.tenant_id", "u.user_id")
           .then(function(tenantUsers) {
             element["tenants"] = tenantUsers;
             return element;
@@ -127,36 +123,50 @@ router.get("/:id/properties/tenants", (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
-// router.get("/:id/properties", (req, res) => {
-//   const { id } = req.params;
-//   db.table("users")
-//     .select("user_id")
-//     .where("user_id", id)
-//     .then(function(rows) {
-//       const promises = rows.map(function(element) {
-//         return db
-//           .table("house_properties as h")
-//           .select(
-//             "h.owner_id",
-//             "h.house_id",
-//             "h.address",
-//             "h.bedrooms",
-//             "h.max_occupants",
-//             "h.square_footage",
-//             "h.year_built",
-//             "h.house_image_url"
-//           )
-//           .where("owner_id", element.user_id)
-//           .then(function(properties) {
-//             element["properties"] = properties;
-//             return element;
-//           });
-//       });
-//       return Promise.all(promises);
-//     })
-//     .then(function(elements) {
-//       res.json(elements);
-//     });
-// });
+router.get("/:id/properties/ws", (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  db("house_properties as h")
+    .join("users", "user_id", "h.owner_id")
+    .select(
+      "h.owner_id",
+      "h.house_id",
+      "h.address",
+      "h.bedrooms",
+      "h.max_occupants",
+      "h.square_footage",
+      "h.year_built",
+      "h.house_image_url"
+    )
+    .where("h.owner_id", id)
+    .then(function(rows) {
+      const promises = rows.map(function(element) {
+        return db
+          .table("work_orders as w")
+          .join("users as u", "w.tenant_id", "u.user_id")
+          .select(
+            "w.work_order_id",
+            "u.first_name as tenant_name",
+            "u.last_name as tenant_last_name",
+            "u.mobile",
+            "w.description as work_order_description",
+            "w.property_access",
+            "w.work_order_status",
+            "w.work_order_image"
+          )
+          .where("house_id", element.house_id)
+          .then(function(workOrders) {
+            element["work_orders"] = workOrders;
+            return element;
+          });
+      });
+      return Promise.all(promises);
+    })
+    .then(function(elements) {
+      res.json(elements);
+    })
+    .catch(err => res.status(500).send(err));
+});
 
 module.exports = router;
