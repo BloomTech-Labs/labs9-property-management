@@ -17,13 +17,13 @@ class StripeTest extends React.Component {
     axios
       .post('http://localhost:4000/api/payments', body)
       .then(response => {
-        console.log(response);
+        console.log('response', response.data);
         alert('Payment Success');
         this.setState(prevState => {
           return {
             payments: prevState.payments.concat({
               amount: (body.amount / 100).toFixed(2),
-              date: Date.now(),
+              timestamp: Date.now(),
             }),
           };
         });
@@ -54,7 +54,7 @@ class StripeTest extends React.Component {
           name="Property Mgmt" //Modal Header
           description="Pay rent today."
           panelLabel="Pay rent" //Submit button in modal
-          amount={this.state.paymentAmount} //Default state amount in cents $725.00
+          amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
           token={this.onToken}
           stripeKey={publishableKey}
           image={testlogo} //Pop-in header image
@@ -64,6 +64,7 @@ class StripeTest extends React.Component {
           <input
             placeholder="Amount to pay"
             name="paymentAmount"
+            type="number"
             value={this.state.paymentAmount}
             onChange={this.handleChange}
           />
@@ -71,9 +72,9 @@ class StripeTest extends React.Component {
         </form>
         <h3>Payments</h3>
         {this.state.payments.map(payment => (
-          <ul>
+          <ul key={Date.now()}>
             <li>
-              Date: {payment.date} | Amount: {payment.amount}
+              Date: {payment.timestamp} | Amount: {payment.amount}
             </li>
           </ul>
         ))}
