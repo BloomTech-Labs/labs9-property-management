@@ -39,6 +39,22 @@ admin.initializeApp({
   databaseURL: process.env.FIREBASE_DB_URL,
 });
 
+// Verify the Firebase token
+server.use(async (req, res) => {
+  const idToken = req.headers.authorization;
+  try {
+    await admin
+      .auth()
+      .verifyIdToken(idToken)
+      .then(decodedToken => {
+        req.body.uid = decodedToken.uid;
+        return req.next();
+      });
+  } catch (e) {
+    return res.status(401).send('You are not authorized!');
+  }
+});
+
 //==== ROUTES ====
 const usersRoutes = require('./routes/usersRoutes');
 const propertyRoutes = require('./routes/propertyRoutes');
@@ -54,11 +70,7 @@ server.use('/api/payments', paymentRoutes);
 
 //==== TESTING API END POINT ====
 server.get('/', (req, res) => {
-  res
-    .send('API Running...')
-    .catch(err =>
-      res.status(500).json({ errorMessage: 'Data could not be retrieved.' })
-    );
+  res.send('API Running...');
 });
 
 server.get('/text', (req, res) => {
@@ -74,19 +86,5 @@ server.get('/text', (req, res) => {
     .done();
 });
 
-server.post('/verify', (req, res) => {
-  const { idToken } = req.body;
-
-  admin
-    .auth()
-    .verifyIdToken(idToken)
-    .then(decodedToken => {
-      const uid = decodedToken.uid;
-      console.log(uid);
-      res.status(200).json({ uid: uid });
-    })
-    .catch(error => {
-      res.status(400).json({ message: 'Error verifying token' });
-    });
-});
+// server.post('/verify', (req, res) => {});
 module.exports = server;
