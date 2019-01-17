@@ -1,8 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import testlogo from "../../images/test-logo.svg";
-import styled from "styled-components";
-import MobileNav from "./MobileNav";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import testlogo from '../../images/test-logo.svg';
+import styled from 'styled-components';
+import MobileNav from './MobileNav';
 
 export const HeaderContainer = styled.div`
   position: fixed;
@@ -25,7 +25,7 @@ const MobileMenuLink = styled.span`
   text-decoration: none;
   display: none;
   @media (max-width: 500px) {
-    display: ${props => (props.mobile ? "flex" : "none")};
+    display: ${props => (props.mobile ? 'flex' : 'none')};
   }
 `;
 const SignUpLink = styled(Link)`
@@ -35,7 +35,7 @@ const SignUpLink = styled(Link)`
   font-size: 1.6rem;
   text-decoration: none;
   @media (max-width: 500px) {
-    display: ${props => (props.desktop ? "none" : "relative")};
+    display: ${props => (props.desktop ? 'none' : 'relative')};
   }
 `;
 export const HeaderGroup = styled.div`
@@ -59,7 +59,7 @@ export const HeaderLink = styled(Link)`
   justify-items: center;
   font-size: 1.6rem;
   @media (max-width: 500px) {
-    display: ${props => (props.desktop ? "none" : "relative")};
+    display: ${props => (props.desktop ? 'none' : 'relative')};
   }
 `;
 
@@ -68,16 +68,16 @@ class Header extends React.Component {
     super(props);
     this.state = {
       hasScrolled: false,
-      menuIsOpen: false
+      menuIsOpen: false,
     };
   }
 
   componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   handleScroll = event => {
@@ -122,9 +122,7 @@ class Header extends React.Component {
                 {/* <MobileMenuLink onClick={""} mobile>
                   Menu
                 </MobileMenuLink> */}
-                <MobileMenuLink mobile>
-                  Menu
-                </MobileMenuLink>
+                <MobileMenuLink mobile>Menu</MobileMenuLink>
               </>
             )}
           </HeaderGroup>
