@@ -9,6 +9,21 @@ class TestingEndpoints extends Component {
     };
   }
 
+  componentDidMount() {
+    const endpoint =
+      'https://property-management-dev.herokuapp.com/api/work-orders/3/workOrdersByProp';
+
+    axios
+      .get(endpoint)
+      .then(response => {
+        this.setState(() => ({ userData: response.data }));
+        console.log('Heroku data: ', this.state.userData);
+      })
+      .catch(error => {
+        console.error('Server Error', error);
+      });
+  }
+
   render() {
     return (
       <div>
