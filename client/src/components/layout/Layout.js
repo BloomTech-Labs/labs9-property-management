@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import SidebarAdmin from "./SidebarAdmin";
-import Grid from "@material-ui/core/Grid";
-import Footer from "./Footer";
+import React, { Component } from 'react';
+import SidebarAdmin from './SidebarAdmin';
+import Grid from '@material-ui/core/Grid';
 
 class Layout extends Component {
   render() {
@@ -12,8 +11,6 @@ class Layout extends Component {
         <Grid item xs={10}>
           {this.props.children}
         </Grid>
-
-        <Footer />
       </Grid>
     );
   }

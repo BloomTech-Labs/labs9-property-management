@@ -1,34 +1,37 @@
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
-import Home from "./components/home/Home";
-import LoginPage from "./components/auth/LoginPage";
-import Signup from "./components/auth/Signup";
-import Admin from "./components/admin/Admin";
-import Tenant from "./components/tenant/Tenant";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { withAuthentication } from "./components/session";
-import "typeface-roboto";
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import Home from './components/home/Home';
+import LoginPage from './components/auth/LoginPage';
+import Signup from './components/auth/Signup';
+import Admin from './components/admin/Admin';
+import Tenant from './components/tenant/Tenant';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { withAuthentication } from './components/session';
+import 'typeface-roboto';
 
 // testing theme initialization
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: "#b394ff",
-      main: "#5f29ff",
-      dark: "#4d1fd6",
-      contrastText: "#fff"
-    }
+      light: '#b394ff',
+      main: '#5f29ff',
+      dark: '#4d1fd6',
+      contrastText: '#fff',
+    },
     // secondary: {
     //   light: '#ff7961',
     //   main: '#f44336',
     //   dark: '#ba000d',
     //   contrastText: '#000',
     // },
-  }
+  },
 });
 
 class App extends Component {
+  componentDidMount() {
+    console.log(this.props);
+  }
   render() {
     return (
       <div className="auth">
