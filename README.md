@@ -24,6 +24,7 @@ Welcome to our Property Management Application.
         - [Helmet](#helmet)
         - [Morgan](#morgan)
         - [Faker](#faker)
+        - [Bluebird](#bluebird)
 - [API Documentation](#api-documentation)
     - [Back-End API](#back-end-api)
     - [Third-Party APIs](#third-party-apis)
@@ -43,6 +44,7 @@ Welcome to our Property Management Application.
 ### Helmet
 ### Morgan
 ### Faker
+### Bluebird
 # API Documentation
 ## Back-End API
 ## Third-Party API
