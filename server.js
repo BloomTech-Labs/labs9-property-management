@@ -27,7 +27,7 @@ admin.initializeApp({
     type: process.env.FIREBASE_TYPE,
     project_id: process.env.FIREBASE_PROJECT_ID,
     private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-    private_key: process.env.FIREBASE_PRIVATE_KEY,
+    private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
     client_email: process.env.FIREBASE_CLIENT_EMAIL,
     client_id: process.env.FIREBASE_CLIENT_ID,
     auth_uri: process.env.FIREBASE_AUTH_URI,
@@ -61,16 +61,14 @@ server.get('/', (req, res) => {
     );
 });
 
-
-server.get("/text", (req, res) => {
-
-  const { receiver, text} = req.query;
+server.get('/text', (req, res) => {
+  const { receiver, text } = req.query;
   //sends the texts to number
   client.messages
     .create({
-      body: "Work order status updated",
-      to: "+13123207318", // Text this number
-      from: "+12245058863" // From a valid Twilio number
+      body: 'Work order status updated',
+      to: '+13123207318', // Text this number
+      from: '+12245058863', // From a valid Twilio number
     })
     .then(message => console.log(message.sid))
     .done();
