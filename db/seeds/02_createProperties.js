@@ -2,10 +2,6 @@ const faker = require('faker');
 
 const createFakeProperty = () => {
   return {
-    // house_id: faker.random.number({
-    //   min: 1,
-    //   max: 25
-    // }),
     address:
       faker.address.streetAddress() +
       faker.address.city() +
