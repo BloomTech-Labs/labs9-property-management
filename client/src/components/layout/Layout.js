@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SidebarAdmin from './SidebarAdmin';
+import SidebarAdmin from './Sidebar';
 import Grid from '@material-ui/core/Grid';
 
 class Layout extends Component {
