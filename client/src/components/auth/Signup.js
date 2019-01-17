@@ -8,7 +8,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {
   BackToHomeContainer,
@@ -19,7 +18,6 @@ import {
 } from './AuthStyles';
 import { KeyboardBackspace } from '@material-ui/icons';
 import testlogo from '../../images/test-logo.svg';
-import styled from 'styled-components';
 
 const styles = theme => ({
   main: {
