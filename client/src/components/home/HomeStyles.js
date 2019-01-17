@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 const HeroAnimation = keyframes`
 0% {
@@ -100,7 +100,10 @@ export const AppImageContainer = styled.div`
 `;
 
 export const AppImage = styled.img`
-  max-width: 680px;
+  max-width: 100%;
   padding: 6rem;
+  @media (max-width: 736px) {
+    padding: 6rem 2rem;
+  }
 `;
 // End Hero

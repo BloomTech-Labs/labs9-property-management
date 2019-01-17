@@ -20,9 +20,13 @@ import {
   BackToHomeLink,
   LoginOrSignupFormLink,
   AuthLogo,
+  StyledH1,
+  GoogleContainer,
+  GoogleLogo,
 } from './AuthStyles';
 import { KeyboardBackspace } from '@material-ui/icons';
 import testlogo from '../../images/test-logo.svg';
+import google from '../../images/google.svg';
 
 const styles = theme => ({
   main: {
@@ -98,7 +102,7 @@ class Login extends Component {
                 <CssBaseline />
                 <Paper className={classes.paper}>
                   {/* <img src={testlogo} width="32" /> */}
-                  <Typography component="h1">Login</Typography>
+                  <StyledH1>Login</StyledH1>
                   <form className={classes.form}>
                     {/*            <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>
@@ -125,7 +129,10 @@ class Login extends Component {
                       className={classes.submit}
                       onClick={this.loginGoogle}
                     >
-                      Google
+                      <GoogleContainer>
+                        <GoogleLogo src={google} height="16px" />
+                      </GoogleContainer>
+                      Login with Google
                     </Button>
                   </form>
                 </Paper>
