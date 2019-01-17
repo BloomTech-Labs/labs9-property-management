@@ -61,4 +61,19 @@ server.get('/text', (req, res) => {
     .done();
 });
 
+server.post('/verify', (req, res) => {
+  const { idToken } = req.body;
+
+  admin
+    .auth()
+    .verifyIdToken(idToken)
+    .then(decodedToken => {
+      const uid = decodedToken.uid;
+      console.log(uid);
+      res.status(200).json({ uid: uid });
+    })
+    .catch(error => {
+      res.status(400).json({ message: 'Error verifying token' });
+    });
+});
 module.exports = server;

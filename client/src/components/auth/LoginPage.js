@@ -68,7 +68,6 @@ class Login extends Component {
       .then(socialAuthUser => {
         console.log('login: ', socialAuthUser);
         this.setState({ error: null });
-        this.props.history.push('/admin');
       })
       .catch(error => {
         this.setState({ error });
@@ -82,7 +81,7 @@ class Login extends Component {
 
     return (
       <AuthUserContext.Consumer>
-        {authUser =>
+        {(authUser, verified) =>
           !authUser ? (
             <>
               <BackToHomeContainer>
