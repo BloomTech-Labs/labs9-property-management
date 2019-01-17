@@ -61,12 +61,16 @@ server.get('/', (req, res) => {
     );
 });
 
-server.get('/text', (req, res) => {
+
+server.get("/text", (req, res) => {
+
+  const { receiver, text} = req.query;
+  //sends the texts to number
   client.messages
     .create({
-      body: 'hello',
-      to: '+receiving number', // Text this number
-      from: '+12245058863', // From a valid Twilio number
+      body: "Work order status updated",
+      to: "+13123207318", // Text this number
+      from: "+12245058863" // From a valid Twilio number
     })
     .then(message => console.log(message.sid))
     .done();
