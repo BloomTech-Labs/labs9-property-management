@@ -1,6 +1,7 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 // Global styles injection - see Home render for implementation info
+// add to html to prevent page jumping margin-left: calc(100vw - 100%);
 export const GlobalStyle = createGlobalStyle`
 html {
     font-size: 62.5%;
@@ -13,6 +14,7 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: white;
+    margin-left: calc(100vw - 100%);
 }
 
 body {
