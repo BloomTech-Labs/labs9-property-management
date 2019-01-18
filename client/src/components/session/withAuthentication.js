@@ -16,13 +16,10 @@ const withAuthentication = Component => {
       this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
         if (authUser) {
           this.props.firebase.auth.currentUser.getIdToken().then(idToken => {
-            axios.post('/verify', { idToken: idToken }).then(response => {
-              if (response.data.uid) {
-                console.log(response.data.uid);
-                localStorage.setItem('authUser', JSON.stringify(authUser));
-                this.setState({ authUser });
-              }
-            });
+            console.log('Auth Token: ', idToken);
+            axios.defaults.headers.common['Authorization'] = idToken;
+            localStorage.setItem('authUser', JSON.stringify(authUser));
+            this.setState({ authUser });
           });
         } else {
           localStorage.setItem('authUser', null);

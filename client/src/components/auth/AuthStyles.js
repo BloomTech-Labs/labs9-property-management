@@ -11,9 +11,9 @@ export const BackToHomeContainer = styled.div`
   align-items: center;
   max-width: 800px;
   margin: 0 auto;
-  padding: 36px 0;
-  @media (max-width: 500px) {
-    padding: 36px 20px;
+  padding: 32px 0;
+  @media (max-width: 800px) {
+    padding: 32px 20px;
   }
 `;
 

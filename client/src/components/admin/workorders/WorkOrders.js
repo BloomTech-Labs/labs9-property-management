@@ -84,9 +84,9 @@ class WorkOrders extends Component {
       }
     ]
   };
-	sendAlert = _ => {
+	sendAlert = () => {
 		fetch(
-			(`http://localhost:4000/text`)
+			('http://property-management-dev.herokuapp.com/text')
           )
     .catch(err => console.error(err));
   };
