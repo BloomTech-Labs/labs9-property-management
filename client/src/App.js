@@ -7,6 +7,7 @@ import Admin from './components/admin/Admin';
 import Tenant from './components/tenant/Tenant';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { withAuthentication } from './components/session';
 import 'typeface-roboto';
 
@@ -26,6 +27,9 @@ const theme = createMuiTheme({
     //   contrastText: '#000',
     // },
   },
+  typography: {
+    useNextVariants: true, // Required to prevent Material-UI deprecation warning
+  },
 });
 
 class App extends Component {
@@ -37,6 +41,7 @@ class App extends Component {
       <div className="auth">
         <Route exact path="/" component={Home} />
         <MuiThemeProvider theme={theme}>
+          <CssBaseline />
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={Signup} />
           <Route path="/admin" component={Admin} />
