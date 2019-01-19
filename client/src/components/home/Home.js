@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
+import Footer from './Footer';
 import {
   Hero,
   HeroGroup,
@@ -31,6 +32,7 @@ class Home extends Component {
             </AppImageContainer>
           </HeroGroup>
         </Hero>
+        <Footer />
       </>
     );
   }

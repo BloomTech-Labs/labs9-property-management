@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Nav from '../Nav';
+import Footer from '../Footer';
 import { Hero, HeroGroup, HeroGroupH1, HeroP } from '../HomeStyles';
 import { GlobalStyle } from '../../../styles/Styles';
 
@@ -49,6 +50,7 @@ class Pricing extends Component {
             <PricingCard />
           </PricingCardContainer>
         </Hero>
+        <Footer />
       </>
     );
   }

@@ -21,7 +21,6 @@ export const LogoAnimation = keyframes`
 // Hero
 export const Hero = styled.div`
   background: white;
-  height: 500px;
   background-size: cover;
   background-position: center;
   margin: 0;
