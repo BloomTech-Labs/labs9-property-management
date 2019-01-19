@@ -9,7 +9,7 @@ class Layout extends Component {
         <SidebarAdmin links={this.props.links} />
 
         <Grid item xs={10}>
-          {this.props.children}
+          <main>{this.props.children}</main>
         </Grid>
       </Grid>
     );

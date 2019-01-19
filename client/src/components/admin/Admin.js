@@ -16,12 +16,20 @@ import CreditCard from '@material-ui/icons/CreditCard';
 import { AuthUserContext } from '../session';
 
 const links = [
-  { name: 'Dashboard', url: '', icon: <Dashboard /> },
-  { name: 'Properties', url: 'properties', icon: <Business /> },
-  { name: 'Work Orders', url: 'work-orders', icon: <Assignment /> },
-  { name: 'Tenants', url: 'tenants', icon: <People /> },
-  { name: 'Billing', url: 'billing', icon: <CreditCard /> },
-  { name: 'Settings', url: 'settings', icon: <Settings /> },
+  { name: 'Dashboard', url: '', icon: <Dashboard color="secondary" /> },
+  {
+    name: 'Properties',
+    url: 'properties',
+    icon: <Business color="secondary" />,
+  },
+  {
+    name: 'Work Orders',
+    url: 'work-orders',
+    icon: <Assignment color="secondary" />,
+  },
+  { name: 'Tenants', url: 'tenants', icon: <People color="secondary" /> },
+  { name: 'Billing', url: 'billing', icon: <CreditCard color="secondary" /> },
+  { name: 'Settings', url: 'settings', icon: <Settings color="secondary" /> },
 ];
 
 class Admin extends Component {

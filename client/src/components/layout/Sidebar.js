@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AuthUserContext } from '../session';
 import { withStyles } from '@material-ui/core/styles';
@@ -17,6 +17,7 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SignOutButton from './SignOutButton';
+import property from '../../images/property.jpg';
 
 const drawerWidth = 200;
 
@@ -41,6 +42,9 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(25,25,25,0.7)), url(${property})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
   content: {
     flexGrow: 1,
@@ -52,6 +56,10 @@ const styles = theme => ({
   },
   divider: {
     marginTop: 10,
+    backgroundColor: '#D4D4D4',
+    width: '80%',
+    marginLeft: '10%',
+    marginBottom: '10%',
   },
   menuButton: {
     marginRight: 20,
@@ -65,12 +73,14 @@ const styles = theme => ({
   },
   displayName: {
     textAlign: 'center',
+    color: '#D4D4D4',
   },
 });
 
 class Sidebar extends Component {
   state = {
     mobileOpen: false,
+    link: 'Dashboard',
   };
 
   handleDrawerToggle = () => {
@@ -92,22 +102,32 @@ class Sidebar extends Component {
                 src={authUser.photoURL}
                 className={classes.avatar}
               />
-              <ListItemText className={classes.displayName}>
-                {authUser.displayName}
+              <ListItemText className={classes.displayName} disableTypography>
+                <Typography color="inherit">{authUser.displayName}</Typography>
               </ListItemText>
             </ListItem>
             <Divider className={classes.divider} />
             {links.map((link, index) => (
-              <Link
+              <NavLink
                 key={index}
-                style={{ textDecoration: 'none' }}
+                style={{
+                  textDecoration: 'none',
+                  color: '#D4D4D4',
+                }}
                 to={`/admin/${link.url}`}
+                onClick={() =>
+                  this.setState({
+                    link: `${link.name === '' ? 'Dashboard' : link.name}`,
+                  })
+                }
               >
                 <ListItem button>
                   <ListItemIcon>{link.icon}</ListItemIcon>
-                  <ListItemText primary={`${link.name}`} />
+                  <ListItemText disableTypography>
+                    <Typography color="inherit">{link.name}</Typography>
+                  </ListItemText>
                 </ListItem>
-              </Link>
+              </NavLink>
             ))}
           </List>
         )}
@@ -135,7 +155,7 @@ class Sidebar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" component="p">
-              Page Name
+              {this.state.link}
             </Typography>
             <SignOutButton />
           </Toolbar>

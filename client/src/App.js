@@ -20,15 +20,15 @@ const theme = createMuiTheme({
       dark: '#4d1fd6',
       contrastText: '#fff',
     },
-    // secondary: {
-    //   light: '#ff7961',
-    //   main: '#f44336',
-    //   dark: '#ba000d',
-    //   contrastText: '#000',
-    // },
+    secondary: {
+      main: '#D4D4D4',
+    },
   },
   typography: {
     useNextVariants: true, // Required to prevent Material-UI deprecation warning
+  },
+  textSecondary: {
+    color: '#D4D4D4',
   },
 });
 
