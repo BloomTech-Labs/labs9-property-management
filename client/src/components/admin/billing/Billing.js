@@ -1,149 +1,149 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import MenuItem from "@material-ui/core/MenuItem";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import MenuItem from '@material-ui/core/MenuItem';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
     marginTop: 50,
-    minHeight: "400px"
+    minHeight: '400px',
     // border: "1px solid orange"
   },
   leftColumn: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     // border: "1px solid black",
-    flexDirection: "column"
+    flexDirection: 'column',
   },
   rightColumn: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "flex-start"
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200
+    width: 200,
   },
   dense: {
-    marginTop: 19
+    marginTop: 19,
   },
   menu: {
     width: 200,
     marginTop: 66,
-    marginBottom: 30
+    marginBottom: 30,
   },
   button: {
     width: 200,
-    marginTop: 38
+    marginTop: 38,
   },
   card: {
     maxWidth: 300,
     marginTop: 50,
-    paddingLeft: 30
+    paddingLeft: 30,
   },
   root: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 220,
     marginTop: 30,
-    marginLeft: 30
+    marginLeft: 30,
   },
   selectEmpty: {
-    marginTop: theme.spacing.unit * 2
+    marginTop: theme.spacing.unit * 2,
   },
   rootTable: {
     // width: "100%",
-    overflowX: "auto",
-    marginTop: 30
+    overflowX: 'auto',
+    marginTop: 30,
   },
   table: {
-    minWidth: 150
+    minWidth: 150,
   },
   tableTitle: {
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 });
 
 class Billing extends Component {
   state = {
-    property: "171 N 600 E",
-    cc: "1234567812345678",
-    exp: "09/20",
-    cvv: "***",
+    property: '171 N 600 E',
+    cc: '1234567812345678',
+    exp: '09/20',
+    cvv: '***',
     history: [
-      { date: "1/2/2018", amount: "$350.00" },
-      { date: "2/1/2018", amount: "$350.00" },
-      { date: "3/3/2018", amount: "$350.00" },
-      { date: "4/3/2018", amount: "$350.00" }
+      { date: '1/2/2018', amount: '$350.00' },
+      { date: '2/1/2018', amount: '$350.00' },
+      { date: '3/3/2018', amount: '$350.00' },
+      { date: '4/3/2018', amount: '$350.00' },
     ],
     properties: [
       {
         id: 1,
-        address: "171 N 600 E",
-        cc: "1234567812345678",
-        exp: "09/19",
-        cvv: "***",
+        address: '171 N 600 E',
+        cc: '1234567812345678',
+        exp: '09/19',
+        cvv: '***',
         history: [
-          { date: "1/2/2018", amount: "$350.00" },
-          { date: "2/1/2018", amount: "$350.00" },
-          { date: "3/3/2018", amount: "$350.00" },
-          { date: "4/3/2018", amount: "$350.00" }
-        ]
+          { date: '1/2/2018', amount: '$350.00' },
+          { date: '2/1/2018', amount: '$350.00' },
+          { date: '3/3/2018', amount: '$350.00' },
+          { date: '4/3/2018', amount: '$350.00' },
+        ],
       },
       {
         id: 2,
-        address: "990 Smith Ave",
-        cc: "1123445677650989",
-        exp: "07/19",
-        cvv: "***",
+        address: '990 Smith Ave',
+        cc: '1123445677650989',
+        exp: '07/19',
+        cvv: '***',
         history: [
-          { date: "1/2/2018", amount: "$390.00" },
-          { date: "2/2/2018", amount: "$390.00" },
-          { date: "3/2/2018", amount: "$390.00" },
-          { date: "4/4/2018", amount: "$390.00" },
-          { date: "5/1/2018", amount: "$390.00" }
-        ]
+          { date: '1/2/2018', amount: '$390.00' },
+          { date: '2/2/2018', amount: '$390.00' },
+          { date: '3/2/2018', amount: '$390.00' },
+          { date: '4/4/2018', amount: '$390.00' },
+          { date: '5/1/2018', amount: '$390.00' },
+        ],
       },
       {
         id: 3,
-        address: "124 Elm Ave",
-        cc: "1455445677650989",
-        exp: "08/19",
-        cvv: "***",
+        address: '124 Elm Ave',
+        cc: '1455445677650989',
+        exp: '08/19',
+        cvv: '***',
         history: [
-          { date: "1/3/2018", amount: "$440.00" },
-          { date: "2/2/2018", amount: "$440.00" },
-          { date: "3/3/2018", amount: "$440.00" },
-          { date: "4/2/2018", amount: "$440.00" },
-          { date: "5/3/2018", amount: "$440.00" }
-        ]
-      }
-    ]
+          { date: '1/3/2018', amount: '$440.00' },
+          { date: '2/2/2018', amount: '$440.00' },
+          { date: '3/3/2018', amount: '$440.00' },
+          { date: '4/2/2018', amount: '$440.00' },
+          { date: '5/3/2018', amount: '$440.00' },
+        ],
+      },
+    ],
   };
 
   handleChange = event => {
@@ -160,7 +160,7 @@ class Billing extends Component {
       ).cvv,
       history: this.state.properties.find(
         entry => entry.address === event.target.value
-      ).history
+      ).history,
     });
     console.log(
       this.state.properties.find(entry => entry.address === event.target.value)
@@ -254,7 +254,7 @@ class Billing extends Component {
 }
 
 Billing.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Billing);
