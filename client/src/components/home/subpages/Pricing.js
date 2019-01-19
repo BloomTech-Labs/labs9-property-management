@@ -9,6 +9,10 @@ const PricingCardContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   padding-bottom: 48px;
+  @media (max-width: 680px) {
+    flex-direction: ${props => (props.mobile ? 'column' : 'row')};
+    align-items: center;
+  }
 `;
 
 const PricingCard = styled.div`
@@ -40,7 +44,7 @@ class Pricing extends Component {
               less time managing your property.
             </HeroP>
           </HeroGroup>
-          <PricingCardContainer>
+          <PricingCardContainer mobile>
             <PricingCard bestvalue />
             <PricingCard />
           </PricingCardContainer>
