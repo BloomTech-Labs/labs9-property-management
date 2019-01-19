@@ -29,11 +29,13 @@ export const Hero = styled.div`
 export const HeroGroup = styled.div`
   margin: 0 auto;
   max-width: 600px;
-  padding: 175px 50px 150px;
+  padding: ${props =>
+    props.pricing ? '175px 50px 0px 50px' : '175px 50px 150px'};
   text-align: center;
   @media (max-width: 600px) {
     margin: 0 auto;
-    padding: 150px 24px;
+    padding: ${props =>
+      props.pricing ? '150px 24px 24px 24px' : '150px 24px'};
     text-align: center;
   }
 `;
