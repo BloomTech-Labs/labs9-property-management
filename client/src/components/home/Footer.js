@@ -94,7 +94,7 @@ const Footer = () => (
       </WaveTop>
       <FooterGroup>
         <FooterLink justifyStart mobileDisplayNone to="/">
-          Hello
+          Home
         </FooterLink>
         <FooterLink className="justifyCenter" exact to="/">
           Terms
