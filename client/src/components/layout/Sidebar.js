@@ -17,7 +17,6 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SignOutButton from './SignOutButton';
-import property from '../../images/property.jpg';
 
 const drawerWidth = 200;
 
