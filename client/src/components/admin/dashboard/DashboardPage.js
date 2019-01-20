@@ -19,11 +19,20 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   card: {
+    marginTop: 25,
     position: 'relative',
     overflow: 'visible',
-    minWidth: 400,
+    minWidth: '40%',
     minHeight: 350,
     zIndex: 0,
+  },
+  longCard: {
+    position: 'relative',
+    overflow: 'visible',
+    minWidth: '80%',
+    minHeight: 350,
+    zIndex: 0,
+    marginTop: 50,
   },
   cardTop: {
     padding: '15px',
@@ -65,43 +74,50 @@ class DashBoard extends Component {
   render() {
     const { classes, theme } = this.props;
     console.log(theme);
-    console.log(this.props);
+
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
-            <Card className={classes.card}>
-              <CardHeader
-                title="Rent Summary"
-                subheader="Current Month's Rent Details"
-                className={classes.cardTop}
-                titleTypographyProps={{
-                  component: 'h4',
-                  variant: 'body1',
-                  color: 'inherit',
-                }}
-                subheaderTypographyProps={{
-                  variant: 'overline',
-                  color: 'secondary',
-                }}
-              />
-            </Card>
-            <Card className={classes.card}>
-              <CardHeader
-                title="Work Order Summary"
-                subheader="Most Recent Work Order"
-                className={classes.cardTop}
-                titleTypographyProps={{
-                  component: 'h4',
-                  variant: 'body1',
-                  color: 'inherit',
-                }}
-                subheaderTypographyProps={{
-                  variant: 'overline',
-                  color: 'secondary',
-                }}
-              />
-            </Card>
+            <Grid item xs={12} md={5}>
+              <Card className={classes.card}>
+                <CardHeader
+                  title="Rent Summary"
+                  subheader="Current Month's Rent Details"
+                  className={classes.cardTop}
+                  titleTypographyProps={{
+                    component: 'h4',
+                    variant: 'body1',
+                    color: 'inherit',
+                  }}
+                  subheaderTypographyProps={{
+                    variant: 'overline',
+                    color: 'secondary',
+                  }}
+                />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={5}>
+              <Card className={classes.card}>
+                <CardHeader
+                  title="Work Order Summary"
+                  subheader="Most Recent Work Order"
+                  className={classes.cardTop}
+                  titleTypographyProps={{
+                    component: 'h4',
+                    variant: 'body1',
+                    color: 'inherit',
+                  }}
+                  subheaderTypographyProps={{
+                    variant: 'overline',
+                    color: 'secondary',
+                  }}
+                />
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={11}>
+              <Card className={classes.longCard} />
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

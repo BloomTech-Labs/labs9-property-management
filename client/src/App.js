@@ -23,6 +23,9 @@ const theme = createMuiTheme({
     secondary: {
       main: '#D4D4D4',
     },
+    background: {
+      default: '#EDEDEE',
+    },
   },
   typography: {
     useNextVariants: true, // Required to prevent Material-UI deprecation warning
@@ -36,6 +39,7 @@ class App extends Component {
   componentDidMount() {
     console.log(this.props);
   }
+
   render() {
     return (
       <div className="auth">

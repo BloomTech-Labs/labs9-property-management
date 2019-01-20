@@ -18,8 +18,11 @@ const withAuthentication = Component => {
           this.props.firebase.auth.currentUser.getIdToken().then(idToken => {
             console.log('Auth Token: ', idToken);
             axios.defaults.headers.common['Authorization'] = idToken;
-            localStorage.setItem('authUser', JSON.stringify(authUser));
-            this.setState({ authUser });
+            axios.get('/api/users/verifyregistration').then(role => {
+              authUser.role = role;
+              localStorage.setItem('authUser', JSON.stringify(authUser));
+              this.setState({ authUser });
+            });
           });
         } else {
           localStorage.setItem('authUser', null);
