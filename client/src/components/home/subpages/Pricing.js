@@ -27,9 +27,9 @@ const PricingCard = styled.div`
   border-radius: 4px;
   background: ${props => (props.bestvalue ? 'white' : '#f9f9f9')};
 `;
-const PricingTextLine = styled.div`
-  display: block;
-`;
+// const PricingTextLine = styled.div`
+//   display: block;
+// `;
 
 class Pricing extends Component {
   render() {
