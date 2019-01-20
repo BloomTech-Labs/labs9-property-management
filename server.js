@@ -42,6 +42,7 @@ admin.initializeApp({
 // Verify the Firebase token
 server.use(async (req, res) => {
   const idToken = req.headers.authorization;
+
   try {
     await admin
       .auth()
