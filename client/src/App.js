@@ -4,6 +4,7 @@ import Home from './components/home/Home';
 import Pricing from './components/home/subpages/Pricing';
 import LoginPage from './components/auth/LoginPage';
 import Signup from './components/auth/Signup';
+import Setup from './components/auth/Setup';
 import Admin from './components/admin/Admin';
 import Tenant from './components/tenant/Tenant';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
@@ -50,6 +51,7 @@ class App extends Component {
           <CssBaseline />
           <Route path="/login" component={LoginPage} />
           <Route path="/signup" component={Signup} />
+          <Route path="/setup" component={Setup} />
           <Route path="/admin" component={Admin} />
           <Route path="/tenant" component={Tenant} />
         </MuiThemeProvider>

@@ -5,7 +5,6 @@ import { compose } from 'recompose';
 import { withFirebase } from '../firebase';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 /*
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -99,7 +98,6 @@ class Login extends Component {
                   </BackToHomeLink>
                 </BackToHomeContainer>
                 <main className={classes.main}>
-                  <CssBaseline />
                   <Paper className={classes.paper}>
                     {/* <img src={testlogo} width="32" /> */}
                     <StyledH1>Login</StyledH1>

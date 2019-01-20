@@ -15,6 +15,7 @@ router.get('/verifyregistration', (req, res) => {
     .catch(error => {
       res.status(200).json({ role: null });
     });
+});
 
 // Register user
 router.post('/register', (req, res) => {
@@ -27,7 +28,7 @@ router.post('/register', (req, res) => {
     .catch(err =>
       res.status(500).json({ errorMessage: 'Could not register the user!' })
     );
-
+});
 
 // Basic Login User
 router.post('/login', (req, res) => {
