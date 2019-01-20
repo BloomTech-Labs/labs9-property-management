@@ -9,8 +9,16 @@ const withAuthentication = Component => {
       super(props);
       this.state = {
         authUser: JSON.parse(localStorage.getItem('authUser')),
+        updateAuthUserRole: this.updateAuthUserRole,
       };
     }
+
+    updateAuthUserRole = role => {
+      const authUser = { ...this.state.authUser, role: role };
+
+      localStorage.setItem('authUser', JSON.stringify(authUser));
+      this.setState({ authUser: authUser });
+    };
 
     componentDidMount() {
       this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
@@ -37,7 +45,7 @@ const withAuthentication = Component => {
 
     render() {
       return (
-        <AuthUserContext.Provider value={this.state.authUser}>
+        <AuthUserContext.Provider value={this.state}>
           <Component {...this.props} />
         </AuthUserContext.Provider>
       );

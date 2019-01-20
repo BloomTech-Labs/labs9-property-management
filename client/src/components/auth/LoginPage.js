@@ -83,7 +83,7 @@ class Login extends Component {
 
     return (
       <AuthUserContext.Consumer>
-        {authUser => {
+        {({ authUser }) => {
           if (!authUser) {
             return (
               <>

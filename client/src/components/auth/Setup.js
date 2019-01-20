@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { AuthUserContext } from '../session';
+import { Redirect } from 'react-router-dom';
+import { withAuthUser } from '../session';
+import { compose } from 'recompose';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -67,6 +69,7 @@ class Setup extends Component {
   state = {
     accountType: '',
     openSnackbar: false,
+    errorMessage: '',
   };
 
   handleChange = name => event => {
@@ -76,94 +79,120 @@ class Setup extends Component {
   handleSubmit = event => {
     event.preventDefault();
     if (this.state.accountType === '') {
-      this.setState({ openSnackbar: true });
+      this.setState({
+        openSnackbar: true,
+        errorMessage: 'Please select an account type!',
+      });
+    } else {
+      axios
+        .post('/api/users/register', { role: this.state.accountType })
+        .then(response => {
+          this.props.updateAuthUserRole(this.state.accountType);
+        })
+        .catch(error => {
+          this.setState({
+            openSnackbar: true,
+            errorMessage: 'There was an error setting up your account.',
+          });
+        });
     }
   };
 
   snackbarClose = () => {
-    this.setState({ openSnackbar: false });
+    this.setState({ openSnackbar: false, errorMessage: '' });
   };
 
   render() {
-    const { classes } = this.props;
-    return (
-      <AuthUserContext.Consumer>
-        {authUser => (
-          <main className={classes.main}>
-            <Paper className={classes.paper}>
-              <Avatar
-                alt="Profile Photo"
-                src={authUser.photoURL}
-                className={classes.avatar}
-              />
-              <Typography component="h1" variant="h5">
-                Account Setup
-              </Typography>
-              <form className={classes.form}>
-                <FormControl className={classes.formControl} required>
-                  <InputLabel htmlFor="account-type-native-required">
-                    Select Account Type
-                  </InputLabel>
-                  <Select
-                    native
-                    name="accountType"
-                    inputProps={{ id: 'account-type-native-required' }}
-                    onChange={this.handleChange('accountType')}
-                  >
-                    <option value="" />
-                    <option value="admin">Owner</option>
-                    <option value="tenant">Tenant</option>
-                  </Select>
-                  <FormHelperText>Required</FormHelperText>
-                </FormControl>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={this.handleSubmit}
-                >
-                  Submit
-                </Button>
-              </form>
-            </Paper>
+    const { classes, authUser } = this.props;
+    console.log(this.props);
+    console.log(this.state);
+    if (!authUser) {
+      return <Redirect to="/login" />;
+    } else if (authUser.role === 'admin') {
+      return <Redirect to="/admin" />;
+    } else if (authUser.role === 'tenant') {
+      return <Redirect to="/tenant" />;
+    }
 
-            <Snackbar
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              open={this.state.openSnackbar}
-              autoHideDuration={6000}
-              onClose={this.snackbarClose}
+    return (
+      <main className={classes.main}>
+        <Paper className={classes.paper}>
+          <Avatar
+            alt="Profile Photo"
+            src={this.props.authUser.photoURL}
+            className={classes.avatar}
+          />
+          <Typography component="h1" variant="h5">
+            Account Setup
+          </Typography>
+          <form className={classes.form}>
+            <FormControl className={classes.formControl} required>
+              <InputLabel htmlFor="account-type-native-required">
+                Select Account Type
+              </InputLabel>
+              <Select
+                native
+                name="accountType"
+                inputProps={{ id: 'account-type-native-required' }}
+                onChange={this.handleChange('accountType')}
+              >
+                <option value="" />
+                <option value="admin">Owner</option>
+                <option value="tenant">Tenant</option>
+              </Select>
+              <FormHelperText>Required</FormHelperText>
+            </FormControl>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={this.handleSubmit}
             >
-              <SnackbarContent
-                className={classes.error}
-                aria-describedby="snackbarError"
-                message={
-                  <span id="snackbarError" className={classes.message}>
-                    <Error className={classes.icon} />
-                    {'Please select an account type!'}
-                  </span>
-                }
-                action={[
-                  <IconButton
-                    key="close"
-                    aria-label="Close"
-                    color="inherit"
-                    onClick={this.snackbarClose}
-                  >
-                    <Close />
-                  </IconButton>,
-                ]}
-              />
-            </Snackbar>
-          </main>
-        )}
-      </AuthUserContext.Consumer>
+              Submit
+            </Button>
+          </form>
+        </Paper>
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.openSnackbar}
+          autoHideDuration={6000}
+          onClose={this.snackbarClose}
+        >
+          <SnackbarContent
+            className={classes.error}
+            aria-describedby="snackbarError"
+            message={
+              <span id="snackbarError" className={classes.message}>
+                <Error className={classes.icon} />
+                {this.state.errorMessage}
+              </span>
+            }
+            action={[
+              <IconButton
+                key="close"
+                aria-label="Close"
+                color="inherit"
+                onClick={this.snackbarClose}
+              >
+                <Close />
+              </IconButton>,
+            ]}
+          />
+        </Snackbar>
+      </main>
     );
   }
 }
 
-export default withStyles(styles)(Setup);
+const SetupPage = compose(
+  withAuthUser,
+  withStyles(styles)
+)(Setup);
+
+export default SetupPage;
