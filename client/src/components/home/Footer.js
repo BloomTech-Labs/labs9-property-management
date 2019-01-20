@@ -10,10 +10,10 @@ const FooterContainer = styled.div`
   background: black;
   bottom: 0;
 `;
-const WaveBottom = styled.div`
-  width: 100%;
-  bottom: 0;
-`;
+// const WaveBottom = styled.div`
+//   width: 100%;
+//   bottom: 0;
+// `;
 
 const WaveTop = styled.div`
   width: 100%;
@@ -40,17 +40,14 @@ const FooterLink = styled(Link)`
   font-weight: 500;
   font-size: 1.6rem;
   display: grid;
-  justify-items: ${props => (props.justifyStart ? 'start' : 'end')};
+  justify-items: ${props => (props.justifystart ? 'start' : 'end')};
   @media (max-width: 600px) {
-    display: ${props => props.mobileDisplayNone && 'none'};
+    display: ${props => props.mobiledisplaynone && 'none'};
     justify-items: center;
   }
   &.justifyCenter {
     justify-items: center;
   }
-`;
-const Logo = styled.img`
-  justify-self: start;
 `;
 const SocialLink = styled(Link)`
   justify-self: end;
@@ -93,10 +90,10 @@ const Footer = () => (
         </svg>
       </WaveTop>
       <FooterGroup>
-        <FooterLink justifyStart mobileDisplayNone to="/">
+        <FooterLink justifystart="true" mobiledisplaynone="true" to="/">
           Home
         </FooterLink>
-        <FooterLink className="justifyCenter" exact to="/">
+        <FooterLink className="justifyCenter" to="/">
           Terms
         </FooterLink>
         <FooterLink className="justifyCenter" to="/">
