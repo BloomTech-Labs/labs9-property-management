@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('house_properties', function(tbl) {
     tbl.increments('house_id');
-    tbl.string('property_names');
+    tbl.string('property_names', 250);
     tbl.string('address').notNullable();
     tbl.integer('bedrooms').notNullable();
     tbl.integer('bathrooms').notNullable();
