@@ -42,9 +42,6 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(25,25,25,0.7)), url(${property})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
   },
   content: {
     flexGrow: 1,
@@ -56,10 +53,6 @@ const styles = theme => ({
   },
   divider: {
     marginTop: 10,
-    backgroundColor: '#D4D4D4',
-    width: '80%',
-    marginLeft: '10%',
-    marginBottom: '10%',
   },
   menuButton: {
     marginRight: 20,
@@ -73,7 +66,6 @@ const styles = theme => ({
   },
   displayName: {
     textAlign: 'center',
-    color: '#D4D4D4',
   },
 });
 
@@ -102,8 +94,8 @@ class Sidebar extends Component {
                 src={authUser.photoURL}
                 className={classes.avatar}
               />
-              <ListItemText className={classes.displayName} disableTypography>
-                <Typography color="inherit">{authUser.displayName}</Typography>
+              <ListItemText className={classes.displayName}>
+                {authUser.displayName}
               </ListItemText>
             </ListItem>
             <Divider className={classes.divider} />
@@ -112,7 +104,6 @@ class Sidebar extends Component {
                 key={index}
                 style={{
                   textDecoration: 'none',
-                  color: '#D4D4D4',
                 }}
                 to={`/admin/${link.url}`}
                 onClick={() =>
@@ -123,9 +114,7 @@ class Sidebar extends Component {
               >
                 <ListItem button>
                   <ListItemIcon>{link.icon}</ListItemIcon>
-                  <ListItemText disableTypography>
-                    <Typography color="inherit">{link.name}</Typography>
-                  </ListItemText>
+                  <ListItemText primary={`${link.name}`} />
                 </ListItem>
               </NavLink>
             ))}
