@@ -91,7 +91,7 @@ class Sidebar extends Component {
     const { classes, theme, links } = this.props;
     const drawer = (
       <AuthUserContext.Consumer>
-        {authUser => (
+        {({ authUser }) => (
           <List>
             <Hidden mdDown implementation="css">
               <div className={classes.toolbar} />

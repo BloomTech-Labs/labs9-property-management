@@ -36,7 +36,7 @@ class Admin extends Component {
   render() {
     return (
       <AuthUserContext.Consumer>
-        {authUser =>
+        {({ authUser }) =>
           authUser ? (
             <Layout links={links}>
               <Switch>

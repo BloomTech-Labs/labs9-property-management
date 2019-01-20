@@ -83,7 +83,7 @@ class Login extends Component {
 
     return (
       <AuthUserContext.Consumer>
-        {({ authUser }) => {
+        {({ authUser, authUserRole }) => {
           if (!authUser) {
             return (
               <>
@@ -137,9 +137,9 @@ class Login extends Component {
                 </main>
               </>
             );
-          } else if (authUser.role === 'admin') {
+          } else if (authUserRole === 'admin') {
             return <Redirect to="/admin" />;
-          } else if (authUser.role === 'tenant') {
+          } else if (authUserRole === 'tenant') {
             return <Redirect to="/tenant" />;
           } else {
             return <Redirect to="/setup" />;

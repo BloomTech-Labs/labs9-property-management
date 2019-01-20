@@ -87,9 +87,11 @@ class Setup extends Component {
       axios
         .post('/api/users/register', { role: this.state.accountType })
         .then(response => {
+          console.log('register response: ', response);
           this.props.updateAuthUserRole(this.state.accountType);
         })
         .catch(error => {
+          console.log('register error: ', error);
           this.setState({
             openSnackbar: true,
             errorMessage: 'There was an error setting up your account.',
@@ -103,14 +105,14 @@ class Setup extends Component {
   };
 
   render() {
-    const { classes, authUser } = this.props;
+    const { classes, authUser, authUserRole } = this.props;
     console.log(this.props);
     console.log(this.state);
     if (!authUser) {
       return <Redirect to="/login" />;
-    } else if (authUser.role === 'admin') {
+    } else if (authUserRole === 'admin') {
       return <Redirect to="/admin" />;
-    } else if (authUser.role === 'tenant') {
+    } else if (authUserRole === 'tenant') {
       return <Redirect to="/tenant" />;
     }
 

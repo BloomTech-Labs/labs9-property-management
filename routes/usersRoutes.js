@@ -9,25 +9,33 @@ router.get('/verifyregistration', (req, res) => {
 
   db('users')
     .where({ uid: uid })
-    .then(user => {
-      res.status(200).json({ role: user.role });
+    .then(users => {
+      console.log(users);
+      if (!users[0]) {
+        res.status(200).json({ role: null });
+      } else {
+        res.status(200).json({ role: users[0].role });
+      }
     })
     .catch(error => {
-      res.status(200).json({ role: null });
+      res.status(500).json(error);
     });
 });
 
 // Register user
 router.post('/register', (req, res) => {
+  console.log(req.body);
   const creds = req.body;
   db.insert(creds)
     .into('users')
     .then(id => {
+      console.log(id);
       res.status(201).json(id);
     })
-    .catch(err =>
-      res.status(500).json({ errorMessage: 'Could not register the user!' })
-    );
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ errorMessage: 'Could not register the user!' });
+    });
 });
 
 // Basic Login User

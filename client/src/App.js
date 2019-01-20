@@ -4,7 +4,7 @@ import Home from './components/home/Home';
 import Pricing from './components/home/subpages/Pricing';
 import LoginPage from './components/auth/LoginPage';
 import Signup from './components/auth/Signup';
-import SetupPage from './components/auth/Setup';
+import SetupPage from './components/auth/SetupPage';
 import Admin from './components/admin/Admin';
 import Tenant from './components/tenant/Tenant';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
