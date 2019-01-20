@@ -15,7 +15,19 @@ router.get('/verifyregistration', (req, res) => {
     .catch(error => {
       res.status(200).json({ role: null });
     });
-});
+
+// Register user
+router.post('/register', (req, res) => {
+  const creds = req.body;
+  db.insert(creds)
+    .into('users')
+    .then(id => {
+      res.status(201).json(id);
+    })
+    .catch(err =>
+      res.status(500).json({ errorMessage: 'Could not register the user!' })
+    );
+
 
 // Basic Login User
 router.post('/login', (req, res) => {
@@ -32,6 +44,18 @@ router.post('/login', (req, res) => {
       }
     })
     .catch(err => res.status(500).send(err));
+});
+
+// Admin Settings info
+router.get('/:id/settings', (req, res) => {
+  const { id } = req.params;
+  db('users as u')
+    .where('u.user_id', id)
+    .select('u.first_name', 'u.last_name', 'u.email', 'u.mobile')
+    .then(user => {
+      res.status(200).json(user);
+    })
+    .catch(err => res.status(500).json(err));
 });
 
 module.exports = router;

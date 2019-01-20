@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Home from './components/home/Home';
+import Pricing from './components/home/subpages/Pricing';
 import LoginPage from './components/auth/LoginPage';
 import Signup from './components/auth/Signup';
 import Admin from './components/admin/Admin';
@@ -44,6 +45,7 @@ class App extends Component {
     return (
       <div className="auth">
         <Route exact path="/" component={Home} />
+        <Route exact path="/pricing" component={Pricing} />
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <Route path="/login" component={LoginPage} />
