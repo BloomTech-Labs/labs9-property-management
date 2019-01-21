@@ -17,6 +17,7 @@ Welcome to our Property Management Application.
         - [Material-UI](#material-ui)
         - [Styled Components](#styled-components)
         - [Typeface Roboto](#typeface-roboto)
+        - [Recompose](#recompose)
     - [Back-End](#back-end)
         - [Node.js](#node.js)
         - [Express](#express)
@@ -27,6 +28,7 @@ Welcome to our Property Management Application.
         - [Bluebird](#bluebird)
 - [API Documentation](#api-documentation)
     - [Back-End API](#back-end-api)
+        - [Endpoints](#endpoints)
     - [Third-Party APIs](#third-party-apis)
         - [Stripe](#stripe)
         
@@ -37,6 +39,7 @@ Welcome to our Property Management Application.
 ### Material-UI
 ### Styled Components
 ### Typeface Roboto
+### Recompose
 ## Back-End
 ### Node.js
 ### Express
@@ -47,6 +50,26 @@ Welcome to our Property Management Application.
 ### Bluebird
 # API Documentation
 ## Back-End API
+
+Every request from the client has an authorization header containing a token given by firebase upon login. Every request from the client passes through a middleware function that verifies the token in the authorization header. If the token is verified, the middleware function attaches the returned user's Firebase UID to the request body. As a result, **every request will contain the user's UID**. This allows us to always have a way to reference the user in the database without having to pass the user's ID as a parameter in the URL. If needed, the uid can be accessed in each endpoint like so, 
+```
+router.post('/example-path', (req, res) => {
+    const { uid } = req.body;
+
+    /* The rest of the code */
+})
+```
+### Endpoints
+
+**GET** `/api/users/verifyregistration`
+
+Upon logging in, the client sends a request to this path. This endpoint checks if the user is already registered in the database and returns their `role` which could be `'admin'`, `'tenant'` or `null`.
+If the user doesn't exist, a `role` of `null` is returned so the client can redirect the user to the account setup page.
+
+**POST** `/api/users/register`
+
+Called when a user submits their chosen account type in the account setup page. This endpoint inserts a user's Firebase UID and chosen account type (`role`) into the database.
+
 ## Third-Party API
 ### Firebase Auth
 ### Stripe
