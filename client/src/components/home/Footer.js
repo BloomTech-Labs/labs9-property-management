@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const FooterContainer = styled.div`
   width: 100%;
   padding: 50px 0;
-  height: 200px;
+  height: 100%;
   z-index: 100;
   background: #1d2229;
   bottom: 0;
@@ -29,7 +29,9 @@ const FooterGroup = styled.div`
   margin: 0 auto;
   max-width: 800px;
   font-weight: 500;
-  padding: 0 2rem;
+  @media (max-width: 860px) {
+    padding: 0 2rem;
+  }
   @media (max-width: 600px) {
     grid-template-columns: repeat(4, 1fr);
   }
