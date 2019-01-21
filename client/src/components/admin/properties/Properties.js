@@ -25,6 +25,11 @@ import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+
 
 const styles = theme => ({
   container: {
@@ -57,6 +62,10 @@ const styles = theme => ({
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 3,
+  },
+  dialog: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 
@@ -244,11 +253,26 @@ class Properties extends React.Component {
             open={this.state.trashModalOpen}
             onClose={this.toggleRemoveProperty}
           >
-            <Paper className={classes.paper}>
-              <Typography variant="h5" component="p">
-                Remove
-              </Typography>
-            </Paper>
+            <Dialog
+            open={this.state.trashModalOpen}
+            onClose={this.toggleRemoveProperty}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Are you sure you would like to delete this property?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions className={classes.dialog}>
+              <Button onClick={this.toggleRemoveProperty} color="primary">
+                Delete
+              </Button>
+              <Button onClick={this.toggleRemoveProperty} color="primary" autoFocus>
+                No
+              </Button>
+            </DialogActions>
+            </Dialog>
           </Modal>
         </Grid>
       </Grid>
