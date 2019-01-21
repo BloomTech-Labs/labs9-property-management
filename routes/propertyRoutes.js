@@ -61,9 +61,9 @@ router.post('/', (req, res) => {
 
   db.insert(property)
     .into('house_properties')
-    .then(ids => {
-      console.log('POST property result: ', ids);
-      res.status(201).json(ids);
+    .then(id => {
+      console.log('POST property result: ', id[0]);
+      res.status(201).json(id);
     })
     .catch(err => res.status(500).json(err));
 });
