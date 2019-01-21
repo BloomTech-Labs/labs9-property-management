@@ -64,12 +64,12 @@ router.delete('/:id', (req, res) => {
 });
 
 // Returns Properties that a specific admin owns
-router.get('/admin/:id', (req, res) => {
-  const { id } = req.params;
+router.get('/admin', (req, res) => {
+  const { uid } = req.body;
   let results = [];
 
   db('house_properties')
-    .where('owner_id', id)
+    .where('owner_uid', uid)
     .select()
     .then(properties => {
       res.status(200).json(properties);
@@ -78,14 +78,14 @@ router.get('/admin/:id', (req, res) => {
 });
 
 // get properties by owner id with their tenants using bluebird nesting
-router.get('/:id/properties/tenants', (req, res) => {
-  const { id } = req.params;
-  console.log(id);
+router.get('/properties/tenants', (req, res) => {
+  const { uid } = req.body;
+  console.log(uid);
 
   db('house_properties as h')
-    .join('users', 'user_id', 'h.owner_id')
+    .join('users', 'uid', 'h.owner_uid')
     .select(
-      'h.owner_id',
+      'h.owner_uid',
       'h.house_id',
       'h.address',
       'h.bedrooms',
@@ -94,12 +94,12 @@ router.get('/:id/properties/tenants', (req, res) => {
       'h.year_built',
       'h.house_image_url'
     )
-    .where('h.owner_id', id)
+    .where('h.owner_uid', uid)
     .then(function(rows) {
       const promises = rows.map(function(element) {
         return db
           .table('tenants as t')
-          .join('users as u', 't.tenant_id', 'u.user_id')
+          .join('users as u', 't.tenant_id', 'u.uid')
           .select(
             't.tenant_id',
             'u.first_name as tenant_first_name',
