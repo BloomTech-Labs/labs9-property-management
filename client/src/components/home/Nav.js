@@ -9,6 +9,7 @@ const SignUpArrow = styled(KeyboardBackspace)`
   color: #5f29ff;
   transform: rotate(180deg);
   margin-left: 4px;
+  font-size: 20px !important;
 `;
 export const HeaderContainer = styled.div`
   position: fixed;

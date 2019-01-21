@@ -7,12 +7,10 @@ import { GlobalStyle } from '../../../styles/Styles';
 import { Check } from '@material-ui/icons';
 
 const CheckMark = styled(Check)`
-  color: #5f29ff;
+  color: ${props => (props.basic ? '#1b1b1b' : '#5f29ff')};
   margin-right: 4px;
-  padding-bottom: 4px;
-  & path {
-    width: 4px;
-  }
+  padding-bottom: 3px;
+  font-size: 18px !important;
 `;
 
 const PricingCardContainer = styled.div`

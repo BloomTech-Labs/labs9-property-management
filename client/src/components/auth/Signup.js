@@ -15,8 +15,8 @@ import {
   LoginOrSignupFormLink,
   AuthLogo,
   StyledH1,
+  BackArrow,
 } from './AuthStyles';
-import { KeyboardBackspace } from '@material-ui/icons';
 import testlogo from '../../images/test-logo.svg';
 
 const styles = theme => ({
@@ -75,7 +75,7 @@ class Signup extends Component {
       <>
         <BackToHomeContainer>
           <BackToHomeLink to="/">
-            <KeyboardBackspace />
+            <BackArrow />
             <AuthLogo src={testlogo} width="32" />
           </BackToHomeLink>
           <BackToHomeLink to="/login">
