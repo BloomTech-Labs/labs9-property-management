@@ -25,12 +25,25 @@ router.get('/verifyregistration', (req, res) => {
 // Register user
 router.post('/register', (req, res) => {
   console.log(req.body);
-  const creds = req.body;
-  db.insert(creds)
+  const data = req.body;
+  db.insert(data)
     .into('users')
     .then(id => {
-      console.log(id);
-      res.status(201).json(id);
+      if (data.role === 'admin') {
+        db.insert({ admin_uid: data.uid })
+          .into('admins')
+          .then(data => {
+            console.log('Admin registered');
+          });
+        res.status(201).json(id);
+      } else {
+        db.insert({ tenant_uid: data.uid })
+          .into('tenants')
+          .then(data => {
+            console.log('Tenant registered');
+          });
+        res.status(201).json(id);
+      }
     })
     .catch(err => {
       console.log(err);
@@ -38,6 +51,20 @@ router.post('/register', (req, res) => {
     });
 });
 
+// Get all admins in admins table
+router.get('/admins', (req, res) => {
+  db('admins')
+    .select()
+    .then(results => {
+      res.status(200).json(results);
+    });
+});
+
+router.get('/tenants', (req, res) => {
+  db('tenants').then(results => {
+    res.status(200).json(results);
+  });
+});
 // Basic Login User
 router.post('/login', (req, res) => {
   const creds = req.body;
