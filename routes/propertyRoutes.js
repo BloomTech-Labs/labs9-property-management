@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
     );
 });
 
-// Get the specified property
+/*// Get the specified property
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   db('house_properties')
@@ -33,13 +33,37 @@ router.get('/:id', (req, res) => {
     })
     .catch(err => res.status(500).json(err));
 });
+*/
 
-// Add a property
+// Add a property: Called by admins
 router.post('/', (req, res) => {
-  db.insert(req.body)
-    .into('properties')
-    .then(ids => {
-      res.status(201).json(ids);
+  const {
+    uid,
+    name,
+    address,
+    bedrooms,
+    bathrooms,
+    maxOccupants,
+    squareFootage,
+    yearBuilt,
+  } = req.body;
+
+  const property = {
+    owner_uid: uid,
+    property_name: name,
+    address: address,
+    bedrooms: bedrooms,
+    bathrooms: bathrooms,
+    max_occupants: maxOccupants,
+    square_footage: squareFootage,
+    year_built: yearBuilt,
+  };
+
+  db.insert(property)
+    .into('house_properties')
+    .then(id => {
+      console.log('POST property result: ', id[0]);
+      res.status(201).json(id);
     })
     .catch(err => res.status(500).json(err));
 });
@@ -66,7 +90,6 @@ router.delete('/:id', (req, res) => {
 // Returns Properties that a specific admin owns
 router.get('/admin', (req, res) => {
   const { uid } = req.body;
-  let results = [];
 
   db('house_properties')
     .where('owner_uid', uid)
@@ -77,8 +100,8 @@ router.get('/admin', (req, res) => {
     .catch(error => res.status(500).json(error));
 });
 
-// get properties by owner id with their tenants using bluebird nesting
-router.get('/properties/tenants', (req, res) => {
+// get properties that an admin owns along with tenants using bluebird nesting
+router.get('/admin/alldata', (req, res) => {
   const { uid } = req.body;
   console.log(uid);
 
