@@ -1,20 +1,15 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('users', function(tbl) {
     tbl.increments('user_id').unique();
-    tbl.string('first_name', 64).notNullable();
+    tbl.string('uid', 250);
+    tbl.string('first_name', 64);
     tbl.string('middle_name', 64);
-    tbl.string('last_name', 64).notNullable();
-    tbl.string('username', 64).notNullable();
-    tbl
-      .string('email', 64)
-      .notNullable()
-      .unique('email');
-    tbl
-      .integer('mobile')
-      .notNullable()
-      .unique('mobile');
-    tbl.string('password', 250).notNullable();
-    tbl.string('home_address').notNullable();
+    tbl.string('last_name', 64);
+    tbl.string('username', 64);
+    tbl.string('email', 64).unique('email');
+    tbl.integer('mobile').unique('mobile');
+    tbl.string('password', 250);
+    tbl.string('home_address');
     tbl.string('profile_pic_url', 250);
     tbl.string('recovery_token', 250);
     tbl.boolean('is_admin').defaultTo(false);

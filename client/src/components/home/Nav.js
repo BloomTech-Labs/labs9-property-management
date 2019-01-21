@@ -3,7 +3,14 @@ import { Link } from 'react-router-dom';
 import testlogo from '../../images/test-logo.svg';
 import styled from 'styled-components';
 import MobileNav from './MobileNav';
+import { KeyboardBackspace } from '@material-ui/icons';
 
+const SignUpArrow = styled(KeyboardBackspace)`
+  color: #5f29ff;
+  transform: rotate(180deg);
+  margin-left: 4px;
+  font-size: 20px !important;
+`;
 export const HeaderContainer = styled.div`
   position: fixed;
   width: 100%;
@@ -32,6 +39,8 @@ const SignUpLink = styled(Link)`
   justify-self: center;
   color: #5f29ff;
   font-weight: 500;
+  display: flex;
+  align-items: center;
   font-size: 1.6rem;
   text-decoration: none;
   @media (max-width: 500px) {
@@ -107,7 +116,7 @@ class Header extends React.Component {
               <MobileNav handleMenuToggle={this.handleMenuToggle} />
             ) : (
               <>
-                <HeaderLink desktop="true" to="/product">
+                <HeaderLink desktop="true" to="/">
                   Product
                 </HeaderLink>
                 <HeaderLink desktop="true" to="/pricing">
@@ -118,6 +127,7 @@ class Header extends React.Component {
                 </HeaderLink>
                 <SignUpLink desktop="true" to="/signup">
                   Sign Up
+                  <SignUpArrow />
                 </SignUpLink>
                 {/* <MobileMenuLink onClick={""} mobile>
                   Menu

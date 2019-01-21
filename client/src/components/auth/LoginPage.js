@@ -5,7 +5,6 @@ import { compose } from 'recompose';
 import { withFirebase } from '../firebase';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 /*
 import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -22,8 +21,8 @@ import {
   StyledH1,
   GoogleContainer,
   GoogleLogo,
+  BackArrow,
 } from './AuthStyles';
-import { KeyboardBackspace } from '@material-ui/icons';
 import testlogo from '../../images/test-logo.svg';
 import google from '../../images/google.svg';
 
@@ -84,26 +83,26 @@ class Login extends Component {
 
     return (
       <AuthUserContext.Consumer>
-        {(authUser, verified) =>
-          !authUser ? (
-            <>
-              <BackToHomeContainer>
-                <BackToHomeLink to="/">
-                  <KeyboardBackspace />
-                  <AuthLogo src={testlogo} width="32" />
-                </BackToHomeLink>
-                <BackToHomeLink to="/signup">
-                  New user?
-                  <LoginOrSignupFormLink> Sign up here</LoginOrSignupFormLink>
-                </BackToHomeLink>
-              </BackToHomeContainer>
-              <main className={classes.main}>
-                <CssBaseline />
-                <Paper className={classes.paper}>
-                  {/* <img src={testlogo} width="32" /> */}
-                  <StyledH1>Login</StyledH1>
-                  <form className={classes.form}>
-                    {/*            <FormControl margin="normal" required fullWidth>
+        {({ authUser, authUserRole }) => {
+          if (!authUser) {
+            return (
+              <>
+                <BackToHomeContainer>
+                  <BackToHomeLink to="/">
+                    <BackArrow />
+                    <AuthLogo src={testlogo} width="32" />
+                  </BackToHomeLink>
+                  <BackToHomeLink to="/signup">
+                    New user?
+                    <LoginOrSignupFormLink> Sign up here</LoginOrSignupFormLink>
+                  </BackToHomeLink>
+                </BackToHomeContainer>
+                <main className={classes.main}>
+                  <Paper className={classes.paper}>
+                    {/* <img src={testlogo} width="32" /> */}
+                    <StyledH1>Login</StyledH1>
+                    <form className={classes.form}>
+                      {/*            <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>
                 <Input id="email" name="email" autoComplete="email" autoFocus />
               </FormControl>
@@ -120,27 +119,32 @@ class Login extends Component {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me" /> 
 */}
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                      onClick={this.loginGoogle}
-                    >
-                      <GoogleContainer>
-                        <GoogleLogo src={google} height="16px" />
-                      </GoogleContainer>
-                      Login with Google
-                    </Button>
-                  </form>
-                </Paper>
-              </main>
-            </>
-          ) : (
-            <Redirect to="/admin" />
-          )
-        }
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={this.loginGoogle}
+                      >
+                        <GoogleContainer>
+                          <GoogleLogo src={google} height="16px" />
+                        </GoogleContainer>
+                        Login with Google
+                      </Button>
+                    </form>
+                  </Paper>
+                </main>
+              </>
+            );
+          } else if (authUserRole === 'admin') {
+            return <Redirect to="/admin" />;
+          } else if (authUserRole === 'tenant') {
+            return <Redirect to="/tenant" />;
+          } else {
+            return <Redirect to="/setup" />;
+          }
+        }}
       </AuthUserContext.Consumer>
     );
   }
