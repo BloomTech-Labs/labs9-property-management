@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const FooterContainer = styled.div`
   width: 100%;
   padding: 50px 0;
-  height: 200px;
+  height: 100%;
   z-index: 100;
   background: #1d2229;
   bottom: 0;
