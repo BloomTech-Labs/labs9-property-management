@@ -50,162 +50,102 @@ exports.seed = function(knex, Promise) {
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: true,
         },
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: true,
         },
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: true,
         },
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: false,
         },
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: false,
         },
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: false,
         },
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: false,
         },
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: false,
         },
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: false,
         },
         {
           first_name: faker.name.firstName(),
           last_name: faker.name.lastName(),
-          username: faker.internet.userName(),
           email: faker.internet.email(),
           mobile: faker.random.number({
             min: 11111111,
             max: 33333333,
           }),
           password: faker.internet.password(),
-          home_address:
-            faker.address.streetAddress() +
-            faker.address.city() +
-            faker.address.country(),
-          is_admin: false,
         },
       ]);
     });

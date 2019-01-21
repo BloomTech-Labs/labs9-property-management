@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('house_properties', function(tbl) {
     tbl.increments('house_id');
-    tbl.string('property_names', 250);
+    tbl.string('property_name', 250);
     tbl.string('address').notNullable();
     tbl.integer('bedrooms').notNullable();
     tbl.integer('bathrooms').notNullable();
@@ -10,9 +10,8 @@ exports.up = function(knex, Promise) {
     tbl.integer('year_built').notNullable();
     tbl.string('house_image_url', 250);
     tbl
-      .integer('owner_id')
-      .unsigned()
-      .references('user_id')
+      .string('owner_uid')
+      .references('uid')
       .inTable('users');
   });
 };
