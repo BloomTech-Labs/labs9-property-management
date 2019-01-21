@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Logo } from '../home/Nav';
-
+import { KeyboardBackspace } from '@material-ui/icons';
 // put arrow and logo inside link that is inside a BacktoHomeGroup
 // then add a max-width on the container of 800px to match nav
 
@@ -17,13 +17,19 @@ export const BackToHomeContainer = styled.div`
   }
 `;
 
+export const BackArrow = styled(KeyboardBackspace)`
+  font-size: 20px !important;
+`;
+
 export const BackToHomeLink = styled(Link)`
   font-weight: 500;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: rgba(73, 76, 87, 1);
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
   text-decoration: none;
+  display: flex;
+  align-items: center;
 `;
 
 export const LoginOrSignupFormLink = styled.span`
@@ -32,7 +38,7 @@ export const LoginOrSignupFormLink = styled.span`
 
 export const AuthLogo = styled(Logo)`
   width: 32px;
-  margin-left: 12px;
+  margin-left: 8px;
 `;
 
 export const StyledH1 = styled.h1`

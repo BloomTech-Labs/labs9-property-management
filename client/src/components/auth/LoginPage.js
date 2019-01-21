@@ -21,8 +21,8 @@ import {
   StyledH1,
   GoogleContainer,
   GoogleLogo,
+  BackArrow,
 } from './AuthStyles';
-import { KeyboardBackspace } from '@material-ui/icons';
 import testlogo from '../../images/test-logo.svg';
 import google from '../../images/google.svg';
 
@@ -89,7 +89,7 @@ class Login extends Component {
               <>
                 <BackToHomeContainer>
                   <BackToHomeLink to="/">
-                    <KeyboardBackspace />
+                    <BackArrow />
                     <AuthLogo src={testlogo} width="32" />
                   </BackToHomeLink>
                   <BackToHomeLink to="/signup">

@@ -4,6 +4,14 @@ import Nav from '../Nav';
 import Footer from '../Footer';
 import { Hero, HeroGroup, HeroGroupH1, HeroP } from '../HomeStyles';
 import { GlobalStyle } from '../../../styles/Styles';
+import { Check } from '@material-ui/icons';
+
+const CheckMark = styled(Check)`
+  color: ${props => (props.basic ? '#1b1b1b' : '#5f29ff')};
+  margin-right: 4px;
+  padding-bottom: 3px;
+  font-size: 18px !important;
+`;
 
 const PricingCardContainer = styled.div`
   display: flex;
@@ -33,6 +41,8 @@ const PricingCard = styled.div`
 const PricingTextLine = styled.div`
   display: block;
   color: #333;
+  display: flex;
+  align-items: center;
   &.planName {
     font-size: 32px;
     font-weight: 700;
@@ -78,16 +88,16 @@ class Pricing extends Component {
                 Free
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                Unlimited queries
+                <CheckMark /> Unlimited queries
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                No scheduled reports for email
+                <CheckMark /> No scheduled reports for email
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                Up to 10 properties
+                <CheckMark /> Up to 10 properties
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                SMS maintenance alerts
+                <CheckMark /> SMS maintenance alerts
               </PricingTextLine>
             </PricingCard>
             <PricingCard>
@@ -96,28 +106,28 @@ class Pricing extends Component {
                 $10 / admin / month
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                Unlimited queries
+                <CheckMark /> Unlimited queries
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                No scheduled reports for email
+                <CheckMark /> No scheduled reports for email
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                Up to 10 properties
+                <CheckMark /> Up to 10 properties
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                SMS maintenance alerts
+                <CheckMark /> SMS maintenance alerts
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                Some more info here
+                <CheckMark /> Some more info here
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                Another great free feature
+                <CheckMark /> Another great free feature
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                SMS maintenance alerts
+                <CheckMark /> SMS maintenance alerts
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                Some more info here
+                <CheckMark /> Some more info here
               </PricingTextLine>
             </PricingCard>
           </PricingCardContainer>

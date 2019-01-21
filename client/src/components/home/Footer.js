@@ -7,7 +7,7 @@ const FooterContainer = styled.div`
   padding: 50px 0;
   height: 200px;
   z-index: 100;
-  background: black;
+  background: #1d2229;
   bottom: 0;
 `;
 // const WaveBottom = styled.div`
