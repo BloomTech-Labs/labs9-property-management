@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AuthUserContext } from '../session';
 import { withStyles } from '@material-ui/core/styles';
@@ -71,6 +71,7 @@ const styles = theme => ({
 class Sidebar extends Component {
   state = {
     mobileOpen: false,
+    link: 'Dashboard',
   };
 
   handleDrawerToggle = () => {
@@ -81,7 +82,7 @@ class Sidebar extends Component {
     const { classes, theme, links } = this.props;
     const drawer = (
       <AuthUserContext.Consumer>
-        {authUser => (
+        {({ authUser }) => (
           <List>
             <Hidden mdDown implementation="css">
               <div className={classes.toolbar} />
@@ -98,16 +99,23 @@ class Sidebar extends Component {
             </ListItem>
             <Divider className={classes.divider} />
             {links.map((link, index) => (
-              <Link
+              <NavLink
                 key={index}
-                style={{ textDecoration: 'none' }}
+                style={{
+                  textDecoration: 'none',
+                }}
                 to={`/admin/${link.url}`}
+                onClick={() =>
+                  this.setState({
+                    link: `${link.name === '' ? 'Dashboard' : link.name}`,
+                  })
+                }
               >
                 <ListItem button>
                   <ListItemIcon>{link.icon}</ListItemIcon>
                   <ListItemText primary={`${link.name}`} />
                 </ListItem>
-              </Link>
+              </NavLink>
             ))}
           </List>
         )}
@@ -135,7 +143,7 @@ class Sidebar extends Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" component="p">
-              Page Name
+              {this.state.link}
             </Typography>
             <SignOutButton />
           </Toolbar>
