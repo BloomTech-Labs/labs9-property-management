@@ -29,7 +29,9 @@ const FooterGroup = styled.div`
   margin: 0 auto;
   max-width: 800px;
   font-weight: 500;
-  padding: 0 2rem;
+  @media (max-width: 860px) {
+    padding: 0 2rem;
+  }
   @media (max-width: 600px) {
     grid-template-columns: repeat(4, 1fr);
   }

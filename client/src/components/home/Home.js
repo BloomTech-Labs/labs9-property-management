@@ -27,10 +27,10 @@ class Home extends Component {
               less time managing your property.
             </HeroP>
             <HeroA href="/">Watch the video</HeroA>
-            <AppImageContainer>
-              <AppImage src={appshot} />
-            </AppImageContainer>
           </HeroGroup>
+          <AppImageContainer>
+            <AppImage src={appshot} />
+          </AppImageContainer>
         </Hero>
         <Footer />
       </>

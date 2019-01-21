@@ -52,9 +52,11 @@ export const HeaderGroup = styled.div`
   grid-template-columns: minmax(auto, 1fr) repeat(4, 10rem);
   align-items: center;
   margin: 0 auto;
-  padding: 0 2rem;
   max-width: 800px;
   font-weight: 500;
+  @media (max-width: 860px) {
+    padding: 0 2rem;
+  }
   @media (max-width: 500px) {
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
