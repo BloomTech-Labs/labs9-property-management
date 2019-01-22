@@ -9,8 +9,8 @@ import { Check } from '@material-ui/icons';
 const CheckMark = styled(Check)`
   color: ${props => (props.basic ? '#1b1b1b' : '#5f29ff')};
   margin-right: 4px;
-  padding-bottom: 3px;
-  font-size: 18px !important;
+  padding-bottom: 2px;
+  font-size: 22px !important;
 `;
 
 const PricingCardContainer = styled.div`
@@ -29,11 +29,10 @@ const PricingCardContainer = styled.div`
 const PricingCard = styled.div`
   display: flex;
   border: 1px solid #eee;
-  padding: 24px;
+  padding: 20px 24px;
   flex-direction: column;
-  height: 375px;
-  width: 275px;
-  padding: 24px;
+  height: 450px;
+  width: 325px;
   margin: 16px;
   border-radius: 4px;
   background: ${props => (props.bestvalue ? 'white' : '#fbfbfb')};
@@ -57,7 +56,7 @@ const PricingTextLine = styled.div`
     font-size: 16px;
     font-weight: 400;
     color: #2c303b;
-    line-height: 2.2;
+    line-height: 2.4 !important;
   }
 `;
 

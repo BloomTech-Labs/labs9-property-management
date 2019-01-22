@@ -25,17 +25,45 @@ router.get('/verifyregistration', (req, res) => {
 // Register user
 router.post('/register', (req, res) => {
   console.log(req.body);
-  const creds = req.body;
-  db.insert(creds)
+  const data = req.body;
+  db.insert(data)
     .into('users')
     .then(id => {
-      console.log(id);
-      res.status(201).json(id);
+      if (data.role === 'owner') {
+        db.insert({ owner_id: data.uid })
+          .into('owners')
+          .then(data => {
+            console.log('Owner registered');
+          });
+        res.status(201).json(id);
+      } else {
+        db.insert({ tenant_uid: data.uid })
+          .into('tenants')
+          .then(data => {
+            console.log('Tenant registered');
+          });
+        res.status(201).json(id);
+      }
     })
     .catch(err => {
       console.log(err);
       res.status(500).json({ errorMessage: 'Could not register the user!' });
     });
+});
+
+// Get all owners in owners table
+router.get('/owners', (req, res) => {
+  db('owners')
+    .select()
+    .then(results => {
+      res.status(200).json(results);
+    });
+});
+
+router.get('/tenants', (req, res) => {
+  db('tenants').then(results => {
+    res.status(200).json(results);
+  });
 });
 
 // Basic Login User

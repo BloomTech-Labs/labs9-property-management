@@ -137,7 +137,7 @@ class Login extends Component {
                 </main>
               </>
             );
-          } else if (authUserRole === 'admin') {
+          } else if (authUserRole === 'owner') {
             return <Redirect to="/admin" />;
           } else if (authUserRole === 'tenant') {
             return <Redirect to="/tenant" />;

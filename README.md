@@ -70,6 +70,19 @@ If the user doesn't exist, a `role` of `null` is returned so the client can redi
 
 Called when a user submits their chosen account type in the account setup page. This endpoint inserts a user's Firebase UID and chosen account type (`role`) into the database.
 
+**POST** `/api/properties`
+
+Called by property owners when adding a property. Returns the id of the newly added property
+
+**GET** `/api/properties/admin`
+
+Returns all the properties that an owner owns
+
+**GET** `/api/properites/admin/alldata`
+
+Returns all of an owner's properties along with their tenants
+
 ## Third-Party API
 ### Firebase Auth
 ### Stripe
+### Twilio

@@ -85,7 +85,10 @@ class Setup extends Component {
       });
     } else {
       axios
-        .post('/api/users/register', { role: this.state.accountType })
+        .post('/api/users/register', {
+          role: this.state.accountType,
+          email: this.props.authUser.email,
+        })
         .then(response => {
           console.log('register response: ', response);
           this.props.updateAuthUserRole(this.state.accountType);
@@ -110,7 +113,7 @@ class Setup extends Component {
     console.log(this.state);
     if (!authUser) {
       return <Redirect to="/login" />;
-    } else if (authUserRole === 'admin') {
+    } else if (authUserRole === 'owner') {
       return <Redirect to="/admin" />;
     } else if (authUserRole === 'tenant') {
       return <Redirect to="/tenant" />;
@@ -139,7 +142,7 @@ class Setup extends Component {
                 onChange={this.handleChange('accountType')}
               >
                 <option value="" />
-                <option value="admin">Owner</option>
+                <option value="owner">Owner</option>
                 <option value="tenant">Tenant</option>
               </Select>
               <FormHelperText>Required</FormHelperText>

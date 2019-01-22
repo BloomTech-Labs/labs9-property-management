@@ -21,20 +21,17 @@ export const LogoAnimation = keyframes`
 // Hero
 export const Hero = styled.div`
   background: white;
-  background-size: cover;
-  background-position: center;
-  margin: 0;
 `;
 export const HeroGroup = styled.div`
   margin: 0 auto;
   max-width: 600px;
   padding: ${props =>
-    props.pricing ? '175px 50px 0px 50px' : '175px 50px 150px'};
+    props.pricing ? '175px 50px 0px 50px' : '175px 50px 75px'};
   text-align: center;
   @media (max-width: 600px) {
     margin: 0 auto;
     padding: ${props =>
-      props.pricing ? '150px 24px 24px 24px' : '150px 24px'};
+      props.pricing ? '150px 24px 24px 24px' : '150px 24px 48px 24px'};
     text-align: center;
   }
 `;
@@ -97,14 +94,16 @@ export const HeroA = styled.button`
 export const AppImageContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const AppImage = styled.img`
   max-width: 100%;
-  padding: 6rem;
-  @media (max-width: 736px) {
-    padding: 6rem 2rem;
+  width: 704px;
+  padding: 0 24px 76px 24px;
+  @media (max-width: 600px) {
+    padding: 0px 24px 100px 24px;
   }
 `;
 // End Hero

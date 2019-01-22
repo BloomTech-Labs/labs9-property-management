@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
     );
 });
 
-// Get the specified property
+/*// Get the specified property
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   db('house_properties')
@@ -33,13 +33,37 @@ router.get('/:id', (req, res) => {
     })
     .catch(err => res.status(500).json(err));
 });
+*/
 
-// Add a property
+// Add a property: Called by admins
 router.post('/', (req, res) => {
-  db.insert(req.body)
-    .into('properties')
-    .then(ids => {
-      res.status(201).json(ids);
+  const {
+    uid,
+    name,
+    address,
+    bedrooms,
+    bathrooms,
+    maxOccupants,
+    squareFootage,
+    yearBuilt,
+  } = req.body;
+
+  const property = {
+    owner_uid: uid,
+    property_name: name,
+    address: address,
+    bedrooms: bedrooms,
+    bathrooms: bathrooms,
+    max_occupants: maxOccupants,
+    square_footage: squareFootage,
+    year_built: yearBuilt,
+  };
+
+  db.insert(property)
+    .into('house_properties')
+    .then(id => {
+      console.log('POST property result: ', id[0]);
+      res.status(201).json(id);
     })
     .catch(err => res.status(500).json(err));
 });
@@ -64,12 +88,11 @@ router.delete('/:id', (req, res) => {
 });
 
 // Returns Properties that a specific admin owns
-router.get('/admin/:id', (req, res) => {
-  const { id } = req.params;
-  let results = [];
+router.get('/admin', (req, res) => {
+  const { uid } = req.body;
 
   db('house_properties')
-    .where('owner_id', id)
+    .where('owner_uid', uid)
     .select()
     .then(properties => {
       res.status(200).json(properties);
@@ -77,15 +100,15 @@ router.get('/admin/:id', (req, res) => {
     .catch(error => res.status(500).json(error));
 });
 
-// get properties by owner id with their tenants using bluebird nesting
-router.get('/:id/properties/tenants', (req, res) => {
-  const { id } = req.params;
-  console.log(id);
+// get properties that an admin owns along with tenants using bluebird nesting
+router.get('/admin/alldata', (req, res) => {
+  const { uid } = req.body;
+  console.log(uid);
 
   db('house_properties as h')
-    .join('users', 'user_id', 'h.owner_id')
+    .join('users', 'uid', 'h.owner_uid')
     .select(
-      'h.owner_id',
+      'h.owner_uid',
       'h.house_id',
       'h.address',
       'h.bedrooms',
@@ -94,12 +117,12 @@ router.get('/:id/properties/tenants', (req, res) => {
       'h.year_built',
       'h.house_image_url'
     )
-    .where('h.owner_id', id)
+    .where('h.owner_uid', uid)
     .then(function(rows) {
       const promises = rows.map(function(element) {
         return db
           .table('tenants as t')
-          .join('users as u', 't.tenant_id', 'u.user_id')
+          .join('users as u', 't.tenant_id', 'u.uid')
           .select(
             't.tenant_id',
             'u.first_name as tenant_first_name',

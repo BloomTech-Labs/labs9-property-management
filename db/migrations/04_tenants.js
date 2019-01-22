@@ -2,10 +2,9 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('tenants', function(tbl) {
     tbl.increments();
     tbl
-      .integer('tenant_id')
-      .unsigned()
+      .string('tenant_id')
       .unique()
-      .references('user_id')
+      .references('uid')
       .inTable('users');
     tbl.boolean('get_texts').defaultTo(false);
     tbl.boolean('get_emails').defaultTo(false);
