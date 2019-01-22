@@ -85,7 +85,10 @@ class Setup extends Component {
       });
     } else {
       axios
-        .post('/api/users/register', { role: this.state.accountType })
+        .post('/api/users/register', {
+          role: this.state.accountType,
+          email: this.props.authUser.email,
+        })
         .then(response => {
           console.log('register response: ', response);
           this.props.updateAuthUserRole(this.state.accountType);
