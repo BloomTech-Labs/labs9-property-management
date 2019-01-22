@@ -9,10 +9,12 @@ exports.up = function(knex, Promise) {
     tbl.integer('square_footage').notNullable();
     tbl.integer('year_built').notNullable();
     tbl.string('house_image_url', 250);
+    tbl.integer('office_ph');
+    tbl.integer('maintenance_ph');
     tbl
-      .string('owner_uid')
-      .references('uid')
-      .inTable('users');
+      .string('owner_id')
+      .references('owner_id')
+      .inTable('owners');
   });
 };
 
