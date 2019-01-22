@@ -62,12 +62,14 @@ const propertyRoutes = require('./routes/propertyRoutes');
 const workOrderRoutes = require('./routes/workOrderRoutes');
 const tenantRoutes = require('./routes/tenantRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const tenantDash = require('./routes/tenantDashboard');
 
 server.use('/api/users', usersRoutes);
 server.use('/api/properties', propertyRoutes);
 server.use('/api/work-orders', workOrderRoutes);
 server.use('/api/tenants', tenantRoutes);
 server.use('/api/payments', paymentRoutes);
+server.use('/api/tenant-dash', tenantDash);
 
 //==== TESTING API END POINT ====
 server.get('/', (req, res) => {
