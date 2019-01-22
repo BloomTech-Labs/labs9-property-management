@@ -1,8 +1,8 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('admins', function(tbl) {
+  return knex.schema.createTable('owners', function(tbl) {
     tbl.increments();
     tbl
-      .string('admin_uid')
+      .string('owner_id')
       .unique()
       .references('uid')
       .inTable('users')
@@ -12,5 +12,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('admins');
+  return knex.schema.dropTable('owners');
 };
