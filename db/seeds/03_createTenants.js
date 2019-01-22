@@ -33,7 +33,7 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       return knex('tenants').insert([
         {
-          tenant_id: 4,
+          tenant_uid: 4,
           leased_start_date: 'December 2018',
           end_date: 'January 2020',
           house_id: faker.random.number({
@@ -42,7 +42,7 @@ exports.seed = function(knex, Promise) {
           }),
         },
         {
-          tenant_id: 5,
+          tenant_uid: 5,
           leased_start_date: 'December 2018',
           end_date: 'January 2020',
           house_id: faker.random.number({
@@ -51,7 +51,7 @@ exports.seed = function(knex, Promise) {
           }),
         },
         {
-          tenant_id: 6,
+          tenant_uid: 6,
           leased_start_date: 'December 2018',
           end_date: 'January 2020',
           house_id: faker.random.number({
@@ -60,7 +60,7 @@ exports.seed = function(knex, Promise) {
           }),
         },
         {
-          tenant_id: 7,
+          tenant_uid: 7,
           leased_start_date: 'December 2018',
           end_date: 'January 2020',
           house_id: faker.random.number({
@@ -69,7 +69,7 @@ exports.seed = function(knex, Promise) {
           }),
         },
         {
-          tenant_id: 8,
+          tenant_uid: 8,
           leased_start_date: 'December 2018',
           end_date: 'January 2020',
           house_id: faker.random.number({
@@ -78,7 +78,7 @@ exports.seed = function(knex, Promise) {
           }),
         },
         {
-          tenant_id: 9,
+          tenant_uid: 9,
           leased_start_date: 'December 2018',
           end_date: 'January 2020',
           house_id: faker.random.number({
@@ -87,7 +87,7 @@ exports.seed = function(knex, Promise) {
           }),
         },
         {
-          tenant_id: 10,
+          tenant_uid: 10,
           leased_start_date: 'December 2018',
           end_date: 'January 2020',
           house_id: faker.random.number({

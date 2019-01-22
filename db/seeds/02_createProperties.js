@@ -26,7 +26,7 @@ const createFakeProperty = () => {
       min: 1940,
       max: 2019,
     }),
-    owner_id: faker.random.number({
+    owner_uid: faker.random.number({
       min: 1,
       max: 3,
     }),
