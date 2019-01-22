@@ -35,10 +35,9 @@ router.get('/:id', (req, res) => {
 });
 */
 
-// Add a property: Called by admins
+// Add a property: Called by owners
 router.post('/', (req, res) => {
   const {
-    uid,
     name,
     address,
     bedrooms,
@@ -46,10 +45,10 @@ router.post('/', (req, res) => {
     maxOccupants,
     squareFootage,
     yearBuilt,
+    uid,
   } = req.body;
 
   const property = {
-    owner_uid: uid,
     property_name: name,
     address: address,
     bedrooms: bedrooms,
@@ -57,6 +56,7 @@ router.post('/', (req, res) => {
     max_occupants: maxOccupants,
     square_footage: squareFootage,
     year_built: yearBuilt,
+    owner_id: uid,
   };
 
   db.insert(property)
@@ -92,7 +92,7 @@ router.get('/admin', (req, res) => {
   const { uid } = req.body;
 
   db('house_properties')
-    .where('owner_uid', uid)
+    .where('owner_id', uid)
     .select()
     .then(properties => {
       res.status(200).json(properties);
@@ -103,12 +103,12 @@ router.get('/admin', (req, res) => {
 // get properties that an admin owns along with tenants using bluebird nesting
 router.get('/admin/alldata', (req, res) => {
   const { uid } = req.body;
-  console.log(uid);
+  console.log('This is the uid ', uid);
 
   db('house_properties as h')
-    .join('users', 'uid', 'h.owner_uid')
+    .join('users', 'uid', 'h.owner_id')
     .select(
-      'h.owner_uid',
+      'h.owner_id',
       'h.house_id',
       'h.address',
       'h.bedrooms',
@@ -117,7 +117,7 @@ router.get('/admin/alldata', (req, res) => {
       'h.year_built',
       'h.house_image_url'
     )
-    .where('h.owner_uid', uid)
+    .where('h.owner_id', uid)
     .then(function(rows) {
       const promises = rows.map(function(element) {
         return db
