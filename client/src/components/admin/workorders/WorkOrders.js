@@ -109,7 +109,8 @@ class WorkOrders extends Component {
                     >
                       {`Work order #${entry.id}`}
                     </Typography>
-                    <IconButton aria-label="View Image">
+                    <IconButton aria-label="View Image"
+                    >
                       <InsertPhoto />
                     </IconButton>
                   </CardActions>
