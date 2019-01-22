@@ -37,7 +37,7 @@ router.post('/register', (req, res) => {
           });
         res.status(201).json(id);
       } else {
-        db.insert({ tenant_uid: data.uid })
+        db.insert({ tenant_id: data.uid })
           .into('tenants')
           .then(data => {
             console.log('Tenant registered');
