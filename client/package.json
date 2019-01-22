@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.0",
     "@material-ui/icons": "^3.0.2",
+    "@uppy/react": "^0.29.1",
     "axios": "^0.18.0",
     "firebase": "^5.8.0",
     "react": "^16.7.0",
@@ -17,7 +18,8 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.1.3",
-    "typeface-roboto": "0.0.54"
+    "typeface-roboto": "0.0.54",
+    "uppy": "^0.29.1"
   },
   "scripts": {
     "start": "react-scripts start",
