@@ -25,7 +25,9 @@ const withAuthentication = Component => {
         if (authUser) {
           this.props.firebase.auth.currentUser.getIdToken().then(idToken => {
             console.log('Auth Token: ', idToken);
+
             axios.defaults.headers.common['Authorization'] = idToken;
+
             axios.get('/api/users/verifyregistration').then(response => {
               localStorage.setItem('authUser', JSON.stringify(authUser));
               localStorage.setItem(

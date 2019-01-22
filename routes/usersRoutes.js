@@ -29,11 +29,11 @@ router.post('/register', (req, res) => {
   db.insert(data)
     .into('users')
     .then(id => {
-      if (data.role === 'admin') {
+      if (data.role === 'owner') {
         db.insert({ owner_id: data.uid })
           .into('owners')
           .then(data => {
-            console.log('Admin registered');
+            console.log('Owner registered');
           });
         res.status(201).json(id);
       } else {
@@ -51,9 +51,9 @@ router.post('/register', (req, res) => {
     });
 });
 
-// Get all admins in admins table
-router.get('/admins', (req, res) => {
-  db('admins')
+// Get all owners in owners table
+router.get('/owners', (req, res) => {
+  db('owners')
     .select()
     .then(results => {
       res.status(200).json(results);
@@ -65,6 +65,7 @@ router.get('/tenants', (req, res) => {
     res.status(200).json(results);
   });
 });
+
 // Basic Login User
 router.post('/login', (req, res) => {
   const creds = req.body;

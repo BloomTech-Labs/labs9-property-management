@@ -110,7 +110,7 @@ class Setup extends Component {
     console.log(this.state);
     if (!authUser) {
       return <Redirect to="/login" />;
-    } else if (authUserRole === 'admin') {
+    } else if (authUserRole === 'owner') {
       return <Redirect to="/admin" />;
     } else if (authUserRole === 'tenant') {
       return <Redirect to="/tenant" />;
@@ -139,7 +139,7 @@ class Setup extends Component {
                 onChange={this.handleChange('accountType')}
               >
                 <option value="" />
-                <option value="admin">Owner</option>
+                <option value="owner">Owner</option>
                 <option value="tenant">Tenant</option>
               </Select>
               <FormHelperText>Required</FormHelperText>
