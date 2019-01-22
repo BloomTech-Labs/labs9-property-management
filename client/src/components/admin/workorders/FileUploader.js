@@ -28,7 +28,6 @@ class FileUploader extends React.Component {
   }
 
   componentWillUnmount () {
-    this.uppy.close()
     this.uppy2.close()
   }
 
