@@ -43,6 +43,11 @@ admin.initializeApp({
 server.use(async (req, res) => {
   const idToken = req.headers.authorization;
 
+  // Unprotect this route for testing
+  if (req.path == '/anyRoute') {
+    return req.next();
+  }
+
   try {
     await admin
       .auth()
