@@ -71,6 +71,11 @@ server.use('/api/tenants', tenantRoutes);
 server.use('/api/payments', paymentRoutes);
 server.use('/api/tenant-dash', tenantDash);
 
+//==== TESTING STRIPE CONNECT ====
+server.get('/anyRoute', (req, res) => {
+  console.log(req);
+});
+
 //==== TESTING API END POINT ====
 server.get('/', (req, res) => {
   res.send('API Running...');
