@@ -73,7 +73,7 @@ server.use('/api/payments', paymentRoutes);
 server.get('/', (req, res) => {
   res.send('API Running...');
 });
-
+//======TWILO TEXT CODE============
 server.get('/text', (req, res) => {
   const { receiver, text } = req.query;
   //sends the texts to number

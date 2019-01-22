@@ -102,6 +102,7 @@ class WorkOrders extends Component {
               <Grid key={index} item xs={12} sm={6} lg={4}>
                 <Card className={classes.card}>
                   <CardActions className={classes.actions} disableActionSpacing>
+                  <FirebaseStorage/>
                     <Typography
                       className={classes.description}
                       variant="h5"
@@ -109,7 +110,8 @@ class WorkOrders extends Component {
                     >
                       {`Work order #${entry.id}`}
                     </Typography>
-                    <IconButton aria-label="View Image">
+                    <IconButton aria-label="View Image"
+                    >
                       <InsertPhoto />
                     </IconButton>
                   </CardActions>
