@@ -30,15 +30,20 @@ class StripeConnectTest extends React.Component {
   componentDidMount() {
     console.log('props', this.props);
     if (this.props.location.search) {
-      let stripeAuthCode = {
-        stripeAuthCode: this.props.location.search.substring(23),
+      console.log('BINGO', this.props.location.search.substring(23));
+      let computedCode = this.props.location.search.substring(23);
+      const stripeAuthCode = {
+        computedCode,
       };
-
-      console.log('BINGO', stripeAuthCode);
-      axios
-        .post('http://localhost:4000/api/stripe-connect', stripeAuthCode)
-        .then(response => console.log('response'))
-        .catch(err => console.log(err));
+      console.log(stripeAuthCode);
+      setTimeout(
+        () =>
+          axios
+            .post('http://localhost:4000/api/stripe-connect', stripeAuthCode)
+            .then(response => console.log('response'))
+            .catch(err => console.log(err)),
+        2000
+      );
 
       /*
       Stripe frontend post request initial logic
@@ -56,6 +61,10 @@ class StripeConnectTest extends React.Component {
         })
         .catch(err => console.log(err));
       */
+
+      // remove the else block before going live
+    } else {
+      console.log('Error getting stripe auth code back from stripe');
     }
   }
 
