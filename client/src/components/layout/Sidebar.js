@@ -104,7 +104,7 @@ class Sidebar extends Component {
                 style={{
                   textDecoration: 'none',
                 }}
-                to={`/admin/${link.url}`}
+                to={`/${link.url}`}
                 onClick={() =>
                   this.setState({
                     link: `${link.name === '' ? 'Dashboard' : link.name}`,
