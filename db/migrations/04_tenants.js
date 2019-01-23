@@ -1,8 +1,8 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('tenants', function(tbl) {
-    tbl.increments();
+    tbl.increments('tenant_id');
     tbl
-      .string('tenant_id')
+      .string('tenant_uid')
       .unique()
       .references('uid')
       .inTable('users');

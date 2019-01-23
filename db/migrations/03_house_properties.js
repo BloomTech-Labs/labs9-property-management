@@ -12,8 +12,12 @@ exports.up = function(knex, Promise) {
     tbl.integer('office_ph');
     tbl.integer('maintenance_ph');
     tbl
-      .string('owner_id')
+      .integer('owner_id')
       .references('owner_id')
+      .inTable('owners');
+    tbl
+      .string('owner_uid')
+      .references('owner_uid')
       .inTable('owners');
   });
 };
