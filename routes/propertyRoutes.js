@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
     max_occupants,
     square_footage,
     year_built,
-    owner_id,
+    // owner_id,  // ====== USING FOR TESTING
     owner_uid,
   } = req.body;
 
@@ -57,7 +57,7 @@ router.post('/', (req, res) => {
     max_occupants: max_occupants,
     square_footage: square_footage,
     year_built: year_built,
-    owner_id: owner_id,
+    // owner_id: owner_id,  // ====== USING FOR TESTING
     owner_uid: owner_uid,
   };
 
