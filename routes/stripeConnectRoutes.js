@@ -19,9 +19,9 @@ router.post('/', (req, res) => {
       const { stripe_user_id } = response.data;
       const stripe_info = { stripe_user_id: stripe_user_id };
       /*console.log('RESPONSE:', response.data, req.body.uid)*/
-      db.insert(stripe_info)
-        .into('owners')
+      db('owners')
         .where('owners.owner_uid', uid)
+        .update(stripe_info)
         .then(owner => {
           if (!owner) {
             res.status(401).json({ message: 'Owner does not exist' });
