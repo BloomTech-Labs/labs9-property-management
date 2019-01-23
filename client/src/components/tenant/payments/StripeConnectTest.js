@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const StripeButton = styled.img`
   width: 144px;
+  margin-top: 200px;
 `;
 
 /*
