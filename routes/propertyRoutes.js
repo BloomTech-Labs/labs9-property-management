@@ -38,25 +38,27 @@ router.get('/:id', (req, res) => {
 // Add a property: Called by owners
 router.post('/', (req, res) => {
   const {
-    name,
+    property_name,
     address,
     bedrooms,
     bathrooms,
-    maxOccupants,
-    squareFootage,
-    yearBuilt,
-    uid,
+    max_occupants,
+    square_footage,
+    year_built,
+    owner_id,
+    owner_uid,
   } = req.body;
 
   const property = {
-    property_name: name,
+    property_name: property_name,
     address: address,
     bedrooms: bedrooms,
     bathrooms: bathrooms,
-    max_occupants: maxOccupants,
-    square_footage: squareFootage,
-    year_built: yearBuilt,
-    owner_id: uid,
+    max_occupants: max_occupants,
+    square_footage: square_footage,
+    year_built: year_built,
+    owner_id: owner_id,
+    owner_uid: owner_uid,
   };
 
   db.insert(property)
@@ -91,11 +93,12 @@ router.delete('/:id', (req, res) => {
 router.get('/admin', (req, res) => {
   const { uid } = req.body;
 
-  db('house_properties')
-    .where('owner_id', uid)
+  db('house_properties as h')
+    .join('owners as o', 'o.owner_id', 'h.owner_id')
     .select()
+    .where('o.owner_uid', uid)
     .then(properties => {
-      res.status(200).json(properties);
+      res.status(200).json({ properties });
     })
     .catch(error => res.status(500).json(error));
 });
@@ -103,12 +106,14 @@ router.get('/admin', (req, res) => {
 // get properties that an admin owns along with tenants using bluebird nesting
 router.get('/admin/alldata', (req, res) => {
   const { uid } = req.body;
-  console.log('This is the uid ', uid);
+  console.log('This is the id ', uid);
 
   db('house_properties as h')
-    .join('users', 'uid', 'h.owner_id')
+    .join('owners as o', 'o.owner_id', 'h.owner_id')
     .select(
+      'o.owner_uid',
       'h.owner_id',
+      'h.property_name',
       'h.house_id',
       'h.address',
       'h.bedrooms',
@@ -117,12 +122,12 @@ router.get('/admin/alldata', (req, res) => {
       'h.year_built',
       'h.house_image_url'
     )
-    .where('h.owner_id', uid)
+    .where('o.owner_uid', uid)
     .then(function(rows) {
       const promises = rows.map(function(element) {
         return db
           .table('tenants as t')
-          .join('users as u', 't.tenant_id', 'u.uid')
+          .join('users as u', 't.tenant_id', 'u.user_id')
           .select(
             't.tenant_id',
             'u.first_name as tenant_first_name',

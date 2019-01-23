@@ -56,6 +56,7 @@ exports.seed = function(knex, Promise) {
             max: 33333333,
           }),
           password: faker.internet.password(),
+          role: 'owner',
         },
         {
           first_name: faker.name.firstName(),
@@ -66,6 +67,7 @@ exports.seed = function(knex, Promise) {
             max: 33333333,
           }),
           password: faker.internet.password(),
+          role: 'owner',
         },
         {
           first_name: faker.name.firstName(),
@@ -76,6 +78,7 @@ exports.seed = function(knex, Promise) {
             max: 33333333,
           }),
           password: faker.internet.password(),
+          role: 'owner',
         },
         {
           first_name: faker.name.firstName(),
