@@ -88,6 +88,11 @@ class Properties extends React.Component {
     });
   }
 
+  addPropertyHandler = property => {
+    let properties = [...this.state.properties, property];
+    this.setState({ properties: properties });
+  };
+
   viewMore = event => {
     console.log(event.currentTarget.getAttribute('data-id'));
 
@@ -176,7 +181,11 @@ class Properties extends React.Component {
                         </Avatar>
                         <ListItemText
                           primary="Tenant"
-                          secondary={entry.tenants.join(', ')}
+                          secondary={
+                            entry.tenants
+                              ? entry.tenants.join(', ')
+                              : 'No Tenants'
+                          }
                         />
                       </ListItem>
                       <ListItem>
@@ -194,7 +203,11 @@ class Properties extends React.Component {
                         </Avatar>
                         <ListItemText
                           primary="Contract Signed"
-                          secondary={entry.contract.toString().toUpperCase()}
+                          secondary={
+                            entry.contract
+                              ? entry.contract.toString().toUpperCase()
+                              : 'No Data'
+                          }
                         />
                       </ListItem>
                     </List>
@@ -228,6 +241,7 @@ class Properties extends React.Component {
           <AddPropertyModal
             open={this.state.addPropertyModalOpen}
             onClose={this.toggleAddProperty}
+            addPropertyHandler={this.addPropertyHandler}
           />
           <Modal
             open={this.state.editModalOpen}

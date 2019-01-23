@@ -3,6 +3,9 @@ exports.up = function(knex, Promise) {
     tbl.increments('house_id');
     tbl.string('property_name', 250);
     tbl.string('address').notNullable();
+    tbl.string('city').notNullable();
+    tbl.string('state').notNullable();
+    tbl.string('zip_code').notNullable();
     tbl.integer('bedrooms').notNullable();
     tbl.integer('bathrooms').notNullable();
     tbl.integer('max_occupants').notNullable();

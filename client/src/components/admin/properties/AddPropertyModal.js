@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
+import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import states from './states';
 
@@ -17,6 +18,7 @@ const styles = theme => ({
     height: '80vh',
     margin: 'auto',
     marginTop: 50,
+    backgroundColor: 'white',
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -26,6 +28,9 @@ const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
     minWidth: 100,
+  },
+  button: {
+    margin: theme.spacing.unit,
   },
 });
 
@@ -41,12 +46,59 @@ class AddPropertyModal extends Component {
     max_occupants: 0,
     square_footage: 0,
     year_built: 2019,
+    office_ph: 0,
+    maintanence_ph: 0,
   };
 
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
+  };
+
+  addProperty = event => {
+    event.preventDefault();
+    console.log('added property');
+
+    const {
+      name,
+      address,
+      city,
+      state,
+      zip_code,
+      bedrooms,
+      bathrooms,
+      max_occupants,
+      square_footage,
+      year_built,
+      office_ph,
+      maintanence_ph,
+    } = this.state;
+
+    const request = {
+      property_name: name,
+      address: address,
+      city: city,
+      state: state,
+      zip_code: zip_code,
+      bedrooms: bedrooms,
+      bathrooms: bathrooms,
+      max_occupants: max_occupants,
+      square_footage: square_footage,
+      year_built: year_built,
+      office_ph: office_ph,
+      maintanence_ph: maintanence_ph,
+    };
+
+    axios
+      .post('/api/properties', request)
+      .then(id => {
+        this.props.addPropertyHandler({ id: id, ...request });
+        console.log('success');
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -124,7 +176,7 @@ class AddPropertyModal extends Component {
             <TextField
               id="maxOccupants"
               label="Max. Occupants"
-              value={this.state.bathrooms}
+              value={this.state.max_occupants}
               onChange={this.handleChange('max_occupants')}
               type="number"
               className={classes.textField}
@@ -145,6 +197,25 @@ class AddPropertyModal extends Component {
               type="number"
               className={classes.textField}
             />
+            <TextField
+              id="officePhone"
+              label="Office Phone"
+              value={this.state.bedrooms}
+              onChange={this.handleChange('office_ph')}
+              type="number"
+              className={classes.textField}
+            />
+            <TextField
+              id="maintenancePhone"
+              label="Maintenence Phone"
+              value={this.state.bedrooms}
+              onChange={this.handleChange('maintenance_ph')}
+              type="number"
+              className={classes.textField}
+            />
+            <Button onClick={this.addProperty} variant="outlined">
+              Add Property
+            </Button>
           </form>
         </Paper>
       </Modal>
