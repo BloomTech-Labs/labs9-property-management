@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { withAuthUser } from '../../session';
+import { compose } from 'recompose';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -83,9 +85,23 @@ class Properties extends React.Component {
   };
 
   componentDidMount() {
-    axios.get('/api/properties/admin/alldata').then(properties => {
-      this.setState({ properties: properties.data });
-    });
+    if (this.props.authTokenRecieved) {
+      axios.get('/api/properties/admin/alldata').then(properties => {
+        this.setState({ properties: properties.data });
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('update');
+    if (
+      this.props.authTokenRecieved &&
+      this.props.authTokenRecieved !== prevProps.authTokenRecieved
+    ) {
+      axios.get('/api/properties/admin/alldata').then(properties => {
+        this.setState({ properties: properties.data });
+      });
+    }
   }
 
   addPropertyHandler = property => {
@@ -124,6 +140,7 @@ class Properties extends React.Component {
   render() {
     const { classes } = this.props;
     console.log('properties', this.state.properties);
+    console.log(this.props);
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
@@ -288,8 +305,13 @@ class Properties extends React.Component {
   }
 }
 
+const PropertiesPage = compose(
+  withAuthUser,
+  withStyles(styles)
+)(Properties);
+
 Properties.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Properties);
+export default PropertiesPage;
