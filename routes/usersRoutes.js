@@ -30,7 +30,7 @@ router.post('/register', (req, res) => {
     .into('users')
     .then(id => {
       if (data.role === 'owner') {
-        db.insert({ owner_id: data.uid })
+        db.insert({ owner_uid: data.uid })
           .into('owners')
           .then(data => {
             console.log('Owner registered');
