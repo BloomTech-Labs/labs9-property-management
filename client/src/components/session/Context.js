@@ -4,11 +4,12 @@ const AuthUserContext = React.createContext(null);
 
 export const withAuthUser = Component => props => (
   <AuthUserContext.Consumer>
-    {({ authUser, authUserRole, updateAuthUserRole }) => (
+    {({ authUser, authUserRole, updateAuthUserRole, authTokenRecieved }) => (
       <Component
         {...props}
         authUser={authUser}
         authUserRole={authUserRole}
+        authTokenRecieved={authTokenRecieved}
         updateAuthUserRole={updateAuthUserRole}
       />
     )}

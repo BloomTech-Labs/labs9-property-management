@@ -10,6 +10,7 @@ const withAuthentication = Component => {
       this.state = {
         authUser: JSON.parse(localStorage.getItem('authUser')),
         authUserRole: JSON.parse(localStorage.getItem('authUserRole')),
+        authTokenRecieved: false,
         updateAuthUserRole: this.updateAuthUserRole,
       };
     }
@@ -37,6 +38,7 @@ const withAuthentication = Component => {
               this.setState({
                 authUser: authUser,
                 authUserRole: response.data.role,
+                authTokenRecieved: true,
               });
             });
           });

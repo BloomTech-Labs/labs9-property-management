@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { withAuthUser } from '../../session';
+import { compose } from 'recompose';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -20,7 +22,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
-import AddPropertyCard from './AddPropertyCard';
+import AddPropertyModal from './AddPropertyModal';
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -29,7 +31,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-
+import axios from 'axios';
 
 const styles = theme => ({
   container: {
@@ -67,51 +69,44 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  button: {
+    margin: theme.spacing.unit,
+  },
 });
 
 class Properties extends React.Component {
   state = {
     detailedViewOn: false,
     selectedProperty: {},
+    addPropertyModalOpen: false,
     editModalOpen: false,
     trashModalOpen: false,
-    properties: [
-      {
-        id: 1,
-        address: '171 N 600 E Provo, UT 84606',
-        tenants: ['Laura Carver', 'Tyler Carver'],
-        leaseDate: '6/13/17-6/23/18',
-        contract: true,
-      },
-      {
-        id: 2,
-        address: '171 N 600 E Provo, UT 84606',
-        tenants: ['Laura Carver', 'Tyler Carver'],
-        leaseDate: '6/13/17-6/23/18',
-        contract: true,
-      },
-      {
-        id: 3,
-        address: '171 N 600 E Provo, UT 84606',
-        tenants: ['Laura Carver', 'Tyler Carver'],
-        leaseDate: '6/13/17-6/23/18',
-        contract: true,
-      },
-      {
-        id: 4,
-        address: '171 N 600 E Provo, UT 84606',
-        tenants: ['Laura Carver', 'Tyler Carver'],
-        leaseDate: '6/13/17-6/23/18',
-        contract: true,
-      },
-      {
-        id: 5,
-        address: '171 N 600 E Provo, UT 84606',
-        tenants: ['Laura Carver', 'Tyler Carver'],
-        leaseDate: '6/13/17-6/23/18',
-        contract: true,
-      },
-    ],
+    properties: [],
+  };
+
+  componentDidMount() {
+    if (this.props.authTokenRecieved) {
+      axios.get('/api/properties/admin/alldata').then(properties => {
+        this.setState({ properties: properties.data });
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('update');
+    if (
+      this.props.authTokenRecieved &&
+      this.props.authTokenRecieved !== prevProps.authTokenRecieved
+    ) {
+      axios.get('/api/properties/admin/alldata').then(properties => {
+        this.setState({ properties: properties.data });
+      });
+    }
+  }
+
+  addPropertyHandler = property => {
+    let properties = [...this.state.properties, property];
+    this.setState({ properties: properties });
   };
 
   viewMore = event => {
@@ -138,11 +133,25 @@ class Properties extends React.Component {
     this.setState({ trashModalOpen: !this.state.trashModalOpen });
   };
 
+  toggleAddProperty = () => {
+    this.setState({ addPropertyModalOpen: !this.state.addPropertyModalOpen });
+  };
+
   render() {
     const { classes } = this.props;
-
+    console.log('properties', this.state.properties);
+    console.log(this.props);
     return (
       <Grid container className={classes.container} spacing={16}>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            className={classes.button}
+            onClick={this.toggleAddProperty}
+          >
+            Add Property
+          </Button>
+        </Grid>
         <Grid item xs={12} lg={this.state.detailedViewOn ? 8 : 12}>
           <Grid container justify="center" spacing={16}>
             {this.state.properties.map((entry, index) => (
@@ -189,7 +198,11 @@ class Properties extends React.Component {
                         </Avatar>
                         <ListItemText
                           primary="Tenant"
-                          secondary={entry.tenants.join(', ')}
+                          secondary={
+                            entry.tenants
+                              ? entry.tenants.join(', ')
+                              : 'No Tenants'
+                          }
                         />
                       </ListItem>
                       <ListItem>
@@ -207,7 +220,11 @@ class Properties extends React.Component {
                         </Avatar>
                         <ListItemText
                           primary="Contract Signed"
-                          secondary={entry.contract.toString().toUpperCase()}
+                          secondary={
+                            entry.contract
+                              ? entry.contract.toString().toUpperCase()
+                              : 'No Data'
+                          }
                         />
                       </ListItem>
                     </List>
@@ -224,7 +241,6 @@ class Properties extends React.Component {
                 </Card>
               </Grid>
             ))}
-            <AddPropertyCard detailedViewOn={this.state.detailedViewOn} />
           </Grid>
         </Grid>
         <Grid
@@ -239,6 +255,11 @@ class Properties extends React.Component {
               </IconButton>
             </Tooltip>
           </Grid>
+          <AddPropertyModal
+            open={this.state.addPropertyModalOpen}
+            onClose={this.toggleAddProperty}
+            addPropertyHandler={this.addPropertyHandler}
+          />
           <Modal
             open={this.state.editModalOpen}
             onClose={this.toggleEditProperty}
@@ -254,24 +275,28 @@ class Properties extends React.Component {
             onClose={this.toggleRemoveProperty}
           >
             <Dialog
-            open={this.state.trashModalOpen}
-            onClose={this.toggleRemoveProperty}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
+              open={this.state.trashModalOpen}
+              onClose={this.toggleRemoveProperty}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
             >
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Are you sure you would like to delete this property?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions className={classes.dialog}>
-              <Button onClick={this.toggleRemoveProperty} color="primary">
-                Delete
-              </Button>
-              <Button onClick={this.toggleRemoveProperty} color="primary" autoFocus>
-                No
-              </Button>
-            </DialogActions>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Are you sure you would like to delete this property?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions className={classes.dialog}>
+                <Button onClick={this.toggleRemoveProperty} color="primary">
+                  Delete
+                </Button>
+                <Button
+                  onClick={this.toggleRemoveProperty}
+                  color="primary"
+                  autoFocus
+                >
+                  No
+                </Button>
+              </DialogActions>
             </Dialog>
           </Modal>
         </Grid>
@@ -280,8 +305,13 @@ class Properties extends React.Component {
   }
 }
 
+const PropertiesPage = compose(
+  withAuthUser,
+  withStyles(styles)
+)(Properties);
+
 Properties.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Properties);
+export default PropertiesPage;
