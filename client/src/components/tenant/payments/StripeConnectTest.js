@@ -36,10 +36,14 @@ class StripeConnectTest extends React.Component {
         computedCode,
       };
       console.log(stripeAuthCode);
-      axios
-        .post('http://localhost:4000/api/stripe-connect', stripeAuthCode)
-        .then(response => console.log('response'))
-        .catch(err => console.log(err));
+      setTimeout(
+        () =>
+          axios
+            .post('http://localhost:4000/api/stripe-connect', stripeAuthCode)
+            .then(response => console.log('response'))
+            .catch(err => console.log(err)),
+        2000
+      );
 
       /*
       Stripe frontend post request initial logic
