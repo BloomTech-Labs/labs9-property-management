@@ -3,6 +3,9 @@ exports.up = function(knex, Promise) {
     tbl.increments('house_id');
     tbl.string('property_name', 250);
     tbl.string('address').notNullable();
+    tbl.string('city').notNullable();
+    tbl.string('state').notNullable();
+    tbl.string('zip_code').notNullable();
     tbl.integer('bedrooms').notNullable();
     tbl.integer('bathrooms').notNullable();
     tbl.integer('max_occupants').notNullable();
@@ -12,8 +15,12 @@ exports.up = function(knex, Promise) {
     tbl.integer('office_ph');
     tbl.integer('maintenance_ph');
     tbl
-      .string('owner_id')
+      .integer('owner_id')
       .references('owner_id')
+      .inTable('owners');
+    tbl
+      .string('owner_uid')
+      .references('owner_uid')
       .inTable('owners');
   });
 };

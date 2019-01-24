@@ -35,28 +35,40 @@ router.get('/:id', (req, res) => {
 });
 */
 
-// Add a property: Called by admins
+// Add a property: Called by owners
 router.post('/', (req, res) => {
   const {
-    uid,
-    name,
+    property_name,
     address,
+    city,
+    state,
+    zip_code,
     bedrooms,
     bathrooms,
-    maxOccupants,
-    squareFootage,
-    yearBuilt,
+    max_occupants,
+    square_footage,
+    year_built,
+    office_ph,
+    maintenance_ph,
+    // owner_id,  // ====== USING FOR TESTING
+    uid, // <-- This is not supposed to be owner_uid!
   } = req.body;
 
   const property = {
-    owner_uid: uid,
-    property_name: name,
+    property_name: property_name,
     address: address,
+    city: city,
+    state: state,
+    zip_code: zip_code,
     bedrooms: bedrooms,
     bathrooms: bathrooms,
-    max_occupants: maxOccupants,
-    square_footage: squareFootage,
-    year_built: yearBuilt,
+    max_occupants: max_occupants,
+    square_footage: square_footage,
+    year_built: year_built,
+    office_ph: office_ph,
+    maintenance_ph: maintenance_ph,
+    // owner_id: owner_id,  // ====== USING FOR TESTING
+    owner_uid: uid,
   };
 
   db.insert(property)
@@ -65,7 +77,10 @@ router.post('/', (req, res) => {
       console.log('POST property result: ', id[0]);
       res.status(201).json(id);
     })
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // Delete a property
@@ -91,11 +106,12 @@ router.delete('/:id', (req, res) => {
 router.get('/admin', (req, res) => {
   const { uid } = req.body;
 
-  db('house_properties')
-    .where('owner_uid', uid)
+  db('house_properties as h')
+    .join('owners as o', 'o.owner_id', 'h.owner_id')
     .select()
+    .where('o.owner_uid', uid)
     .then(properties => {
-      res.status(200).json(properties);
+      res.status(200).json({ properties });
     })
     .catch(error => res.status(500).json(error));
 });
@@ -103,28 +119,35 @@ router.get('/admin', (req, res) => {
 // get properties that an admin owns along with tenants using bluebird nesting
 router.get('/admin/alldata', (req, res) => {
   const { uid } = req.body;
-  console.log(uid);
+  console.log('This is the id ', uid);
 
   db('house_properties as h')
-    .join('users', 'uid', 'h.owner_uid')
+    .join('owners as o', 'o.owner_uid', 'h.owner_uid')
     .select(
+      'o.owner_uid',
       'h.owner_uid',
+      'h.property_name',
       'h.house_id',
       'h.address',
+      'h.city',
+      'h.state',
+      'h.zip_code',
       'h.bedrooms',
       'h.max_occupants',
       'h.square_footage',
       'h.year_built',
+      'h.maintenance_ph',
+      'h.office_ph',
       'h.house_image_url'
     )
-    .where('h.owner_uid', uid)
+    .where('o.owner_uid', uid)
     .then(function(rows) {
       const promises = rows.map(function(element) {
         return db
           .table('tenants as t')
-          .join('users as u', 't.tenant_id', 'u.uid')
+          .join('users as u', 't.tenant_uid', 'u.uid')
           .select(
-            't.tenant_id',
+            't.tenant_uid',
             'u.first_name as tenant_first_name',
             'u.last_name as tenant_last_name',
             't.get_texts',
@@ -143,7 +166,10 @@ router.get('/admin/alldata', (req, res) => {
     .then(function(elements) {
       res.json(elements);
     })
-    .catch(err => res.status(500).send(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 });
 
 module.exports = router;

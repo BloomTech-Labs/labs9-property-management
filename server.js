@@ -43,6 +43,11 @@ admin.initializeApp({
 server.use(async (req, res) => {
   const idToken = req.headers.authorization;
 
+  // Unprotect this route for testing
+  // if (req.path == '/api/stripe-connect') {
+  //   return req.next();
+  // }
+
   try {
     await admin
       .auth()
@@ -63,6 +68,7 @@ const workOrderRoutes = require('./routes/workOrderRoutes');
 const tenantRoutes = require('./routes/tenantRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const tenantDash = require('./routes/tenantDashboard');
+const stripeConnectRoutes = require('./routes/stripeConnectRoutes');
 
 server.use('/api/users', usersRoutes);
 server.use('/api/properties', propertyRoutes);
@@ -70,6 +76,7 @@ server.use('/api/work-orders', workOrderRoutes);
 server.use('/api/tenants', tenantRoutes);
 server.use('/api/payments', paymentRoutes);
 server.use('/api/tenant-dash', tenantDash);
+server.use('/api/stripe-connect', stripeConnectRoutes);
 
 //==== TESTING API END POINT ====
 server.get('/', (req, res) => {

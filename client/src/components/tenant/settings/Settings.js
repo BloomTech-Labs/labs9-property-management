@@ -1,52 +1,52 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const styles = theme => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap",
-    marginTop: 50
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginTop: 50,
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 300
+    width: 300,
   },
   dense: {
-    marginTop: 19
+    marginTop: 19,
   },
   menu: {
-    width: 200
+    width: 200,
   },
   button: {
     width: 200,
-    marginTop: 36
+    marginTop: 36,
   },
   checkboxContainer: {
-    marginTop: 24
-  }
+    marginTop: 24,
+  },
 });
 
 class Settings extends React.Component {
   state = {
-    email: "",
-    phone: "",
+    email: '',
+    phone: '',
     gettexts: false,
     getemails: false,
-    oldpassword: "",
-    newpassword: ""
+    oldpassword: '',
+    newpassword: '',
   };
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value
+      [name]: event.target.value,
     });
   };
 
@@ -57,7 +57,12 @@ class Settings extends React.Component {
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={16}>
-            <form className={classes.container} noValidate autoComplete="off">
+            <form
+              onSubmit={''}
+              className={classes.container}
+              noValidate
+              autoComplete="off"
+            >
               <Grid container justify="center">
                 <Typography component="h1" variant="h5">
                   Tenant settings
@@ -70,7 +75,7 @@ class Settings extends React.Component {
                   className={classes.textField}
                   margin="normal"
                   value={this.state.email}
-                  onChange={this.handleChange("email")}
+                  onChange={this.handleChange('email')}
                 />
               </Grid>
               <Grid container justify="center">
@@ -80,7 +85,7 @@ class Settings extends React.Component {
                   className={classes.textField}
                   margin="normal"
                   value={this.state.phone}
-                  onChange={this.handleChange("phone")}
+                  onChange={this.handleChange('phone')}
                 />
               </Grid>
               <Grid container justify="center">
@@ -116,7 +121,7 @@ class Settings extends React.Component {
                   className={classes.textField}
                   margin="normal"
                   value={this.state.oldpassword}
-                  onChange={this.handleChange("oldpassword")}
+                  onChange={this.handleChange('oldpassword')}
                 />
               </Grid>
               <Grid container justify="center">
@@ -126,7 +131,7 @@ class Settings extends React.Component {
                   className={classes.textField}
                   margin="normal"
                   value={this.state.newpassword}
-                  onChange={this.handleChange("newpassword")}
+                  onChange={this.handleChange('newpassword')}
                 />
               </Grid>
               <Grid container justify="center">
@@ -149,7 +154,7 @@ class Settings extends React.Component {
 }
 
 Settings.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Settings);
