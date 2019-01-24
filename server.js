@@ -67,6 +67,7 @@ const propertyRoutes = require('./routes/propertyRoutes');
 const workOrderRoutes = require('./routes/workOrderRoutes');
 const tenantRoutes = require('./routes/tenantRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const invitationRoutes = require('./routes/invitationRoutes');
 const tenantDash = require('./routes/tenantDashboard');
 const stripeConnectRoutes = require('./routes/stripeConnectRoutes');
 
@@ -75,6 +76,7 @@ server.use('/api/properties', propertyRoutes);
 server.use('/api/work-orders', workOrderRoutes);
 server.use('/api/tenants', tenantRoutes);
 server.use('/api/payments', paymentRoutes);
+server.use('/api/invitations', invitationRoutes);
 server.use('/api/tenant-dash', tenantDash);
 server.use('/api/stripe-connect', stripeConnectRoutes);
 
