@@ -10,6 +10,8 @@ import CreditCard from '@material-ui/icons/CreditCard';
 import Maintenance from '@material-ui/icons/PanTool';
 import { AuthUserContext } from '../session';
 import DashboardPage from './dashboard/Dashboard';
+import SettingsPage from './settings/Settings';
+import MaintenancePage from './maintenance/Maintenance';
 
 const links = [
   { name: 'Dashboard', url: 'tenant', icon: <Dashboard /> },
@@ -50,6 +52,12 @@ class Tenant extends Component {
                   path="/tenant/testing"
                   component={TestingEndpoints}
                 />
+                <Route
+                  exact
+                  path="/tenant/maintenance"
+                  component={MaintenancePage}
+                />
+                <Route exact path="/tenant/settings" component={SettingsPage} />
               </Switch>
             </Layout>
           ) : (
