@@ -1,77 +1,62 @@
 import React, { Component } from 'react';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
+import { withAuthUser } from '../../session';
+import { compose } from 'recompose';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-
-const styles = theme => ({
-  container: {
-    marginTop: 100,
-    marginLeft: 0,
-  },
-  header: {
-    marginBottom: theme.spacing.unit * 5,
-  },
-  root: {
-    width: '100%',
-    maxWidth: 400,
-    backgroundColor: theme.palette.background.paper,
-  },
-  card: {
-    marginTop: 25,
-    position: 'relative',
-    overflow: 'visible',
-    minWidth: '40%',
-    minHeight: 350,
-    zIndex: 0,
-  },
-  longCard: {
-    position: 'relative',
-    overflow: 'visible',
-    minWidth: '80%',
-    minHeight: 350,
-    zIndex: 0,
-    marginTop: 50,
-  },
-  cardTop: {
-    padding: '15px',
-    width: '90%',
-    backgroundColor: '#5f29ff',
-    zIndex: '2000',
-    top: '-6%',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    position: 'absolute',
-    boxShadow:
-      '0px 5px 5px -3px rgba(81,71,255,0.2), 0px 8px 10px 1px rgba(81,71,255,0.2), 0px 3px 14px 2px rgba(81,71,255,0.2)',
-    borderRadius: '4px',
-    color: 'white',
-  },
-  actions: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  displayNone: {
-    display: 'none',
-  },
-  paper: {
-    width: '80%',
-    height: '80vh',
-    margin: 'auto',
-    marginTop: 50,
-  },
-  absolute: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 3,
-  },
-});
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import styles from './styles';
+import axios from 'axios';
 
 class Tenants extends Component {
+  state = {
+    email: '',
+    leaseStart: new Date(),
+    leaseEnd: new Date(),
+    properties: [],
+    property: '', // Selected property
+  };
+
+  componentDidMount() {
+    if (this.props.authTokenRecieved) {
+      axios.get('/api/properties/admin').then(response => {
+        this.setState({ properties: response.data.properties });
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('update');
+    if (
+      this.props.authTokenRecieved &&
+      this.props.authTokenRecieved !== prevProps.authTokenRecieved
+    ) {
+      axios.get('/api/properties/admin').then(response => {
+        console.log(response.data.properties);
+        this.setState({ properties: response.data.properties });
+      });
+    }
+  }
+
+  handleChange = prop => date => {
+    this.setState({ [prop]: date });
+  };
+
+  inviteTenant = event => {
+    event.preventDefault();
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -131,6 +116,50 @@ class Tenants extends Component {
                     color: 'secondary',
                   }}
                 />
+                <CardContent>
+                  <form style={{ marginTop: 50 }}>
+                    <TextField id="TenantEmail" label="Tenant Email" required />
+                    <FormControl required className={classes.formControl}>
+                      <InputLabel htmlFor="property-native-required">
+                        Property
+                      </InputLabel>
+                      <Select
+                        native
+                        value={this.state.property}
+                        onChange={this.handleChange('property')}
+                        name="Property"
+                        inputProps={{
+                          id: 'property-native-required',
+                        }}
+                      >
+                        <option value="" />
+                        {this.state.properties.map((property, index) => (
+                          <option key={index} value={property.house_id}>
+                            {property.property_name}
+                          </option>
+                        ))}
+                      </Select>
+                      <FormHelperText>Required</FormHelperText>
+                    </FormControl>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <DatePicker
+                        margin="normal"
+                        label="Lease Start Date"
+                        value={this.state.leaseStart}
+                        onChange={this.handleChange('leaseStart')}
+                        format={'MM/dd/yyyy'}
+                      />
+                      <DatePicker
+                        margin="normal"
+                        label="Lease End Date"
+                        value={this.state.leaseEnd}
+                        onChange={this.handleChange('leaseEnd')}
+                        format={'MM/dd/yyyy'}
+                      />
+                    </MuiPickersUtilsProvider>
+                    <Button variant="outlined">Send Invite</Button>
+                  </form>
+                </CardContent>
               </Card>
             </Grid>
           </Grid>
@@ -140,4 +169,9 @@ class Tenants extends Component {
   }
 }
 
-export default withStyles(styles)(Tenants);
+const TenantsPage = compose(
+  withAuthUser,
+  withStyles(styles)
+)(Tenants);
+
+export default TenantsPage;
