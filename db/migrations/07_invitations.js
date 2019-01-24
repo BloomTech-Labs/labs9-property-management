@@ -1,13 +1,12 @@
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('tenants', function(tbl) {
-    tbl.increments('tenant_id');
+  return knex.schema.createTable('invitations', function(tbl) {
+    tbl.increments('id');
     tbl
       .string('tenant_uid')
       .unique()
-      .references('uid')
-      .inTable('users');
-    tbl.boolean('get_texts').defaultTo(false);
-    tbl.boolean('get_emails').defaultTo(false);
+      .references('tenant_uid')
+      .inTable('tenants');
+    tbl.string('owner_uid');
     tbl.string('lease_start_date', 64);
     tbl.string('lease_end_date', 64);
     tbl
@@ -19,5 +18,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('tenants');
+  return knex.schema.dropTable('invitations');
 };

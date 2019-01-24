@@ -6,7 +6,7 @@ import PropertiesPage from './properties/Properties';
 import WorkOrders from './workorders/WorkOrders';
 import SettingsPage from './settings/SettingsPage';
 import Billing from './billing/Billing';
-import NewTenant from './tenants/NewTenants';
+import Tenants from './tenants/Tenants';
 import Dashboard from '@material-ui/icons/Dashboard';
 import Business from '@material-ui/icons/Business';
 import Assignment from '@material-ui/icons/Assignment';
@@ -47,7 +47,7 @@ class Admin extends Component {
                   component={PropertiesPage}
                 />
                 <Route exact path="/admin/work-orders" component={WorkOrders} />
-                <Route exact path="/admin/tenants" component={NewTenant} />
+                <Route exact path="/admin/tenants" component={Tenants} />
                 <Route exact path="/admin/settings" component={SettingsPage} />
                 <Route exact path="/admin/billing" component={Billing} />
               </Switch>
