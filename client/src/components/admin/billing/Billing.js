@@ -163,7 +163,7 @@ class Billing extends Component {
         axios
           .get('/api/stripe-connect')
           .then(response =>
-            response.data.hasStripeID
+            response.data.hasStripeID === true
               ? this.setState({ hasStripeID: true, fetchingStripeID: false })
               : this.setState({ hasStripeID: false, fetchingStripeID: false })
           )

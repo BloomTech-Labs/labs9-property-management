@@ -47,14 +47,14 @@ router.post('/', (req, res) => {
 router.get('/', (req, res) => {
   const { uid } = req.body;
   db('owners')
+    .select('owners.stripe_user_id', 'owners.owner_uid')
     .where('owners.owner_uid', uid)
-    .select('stripe_user_id')
-    .then(stripeID => {
-      if (!stripeID) {
-        res.json({ hasStripeID: false });
-        return;
-      } else res.json({ hasStripeID: true });
-    });
+    .then(stripeUID => {
+      if (!stripeUID.stripe_user_id) {
+        res.status(200).json({ hasStripeID: false });
+      } else res.status(200).json({ hasStripeID: true });
+    })
+    .catch(error => res.status(500).json(error));
 });
 
 module.exports = router;
