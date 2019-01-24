@@ -21,7 +21,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 350,
+    width: '100%',
   },
   textFieldHeight: {
     height: 200,
@@ -103,8 +103,8 @@ class Maintenance extends React.Component {
             </Typography>
             <Divider component="li" />
           </List>
-          <div className={classes.box}>
-            <div className={classes.section}>
+          <List className={classes.box}>
+            <ListItem className={classes.blockElement}>
               <ListItem>
                 <Mobile />
                 <ListItem className={classes.blockElement}>
@@ -141,8 +141,8 @@ class Maintenance extends React.Component {
                 margin="dense"
                 variant="outlined"
               />
-            </div>
-            <div>
+            </ListItem>
+            <ListItem className={classes.blockElement}>
               <TextField
                 id="outlined-dense"
                 label="Upload photo -> CHANGE THIS!!!"
@@ -150,8 +150,8 @@ class Maintenance extends React.Component {
                 margin="dense"
                 variant="outlined"
               />
-            </div>
-          </div>
+            </ListItem>
+          </List>
           <div className={classes.center}>
             <FormControlLabel
               label="Permission to enter premises without tenant home"
