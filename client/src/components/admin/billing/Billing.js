@@ -99,8 +99,8 @@ const styles = theme => ({
 
 class Billing extends Component {
   state = {
-    hasStripeID: true,
-    fetchingStripeID: null,
+    hasStripeID: null,
+    fetchingStripeID: true,
     property: '171 N 600 E',
     cc: '1234567812345678',
     exp: '09/20',
@@ -158,11 +158,10 @@ class Billing extends Component {
   componentDidMount() {
     console.log('props', this.props);
     // check to see if owner has stripe account connected
-    this.setState({ fetchingStripeID: true });
     setTimeout(
       () =>
         axios
-          .get('http://localhost:4000/api/stripe-connect')
+          .get('/api/stripe-connect')
           .then(response =>
             response.data.hasStripeID
               ? this.setState({ hasStripeID: true, fetchingStripeID: false })
@@ -182,7 +181,7 @@ class Billing extends Component {
       setTimeout(
         () =>
           axios
-            .post('http://localhost:4000/api/stripe-connect', stripeAuthCode)
+            .post('/api/stripe-connect', stripeAuthCode)
             .then(response => console.log('response'))
             .catch(err => console.log(err)),
         3000
@@ -219,6 +218,28 @@ class Billing extends Component {
   render() {
     const { classes } = this.props;
     console.log('STATE', this.state.hasStripeID);
+    let stripeConnectionDetails;
+
+    if (this.state.hasStripeID) {
+      stripeConnectionDetails = (
+        <Typography className={classes.tableTitle} component="h5" variant="h6">
+          Connected to Stripe
+        </Typography>
+      );
+    } else {
+      stripeConnectionDetails = (
+        <Link
+          target="_blank"
+          to={
+            '//connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_ELLhp2vnlFHBpk0AVDL7PVxBzrsk2NXz&scope=read_write'
+          }
+        >
+          {' '}
+          <StripeButton src={connectwstripe} />
+        </Link>
+      );
+    }
+
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid className={classes.leftColumn}>
@@ -249,24 +270,16 @@ class Billing extends Component {
           </form>
           <Card className={classes.card}>
             <CardContent>
-              {!this.state.hasStripeID ? (
-                <Link
-                  target="_blank"
-                  to={
-                    '//connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_ELLhp2vnlFHBpk0AVDL7PVxBzrsk2NXz&scope=read_write'
-                  }
-                >
-                  {' '}
-                  <StripeButton src={connectwstripe} />
-                </Link>
-              ) : (
+              {this.state.fetchingStripeID ? (
                 <Typography
                   className={classes.tableTitle}
-                  component="h5"
+                  component="h6"
                   variant="h6"
                 >
-                  Connected to Stripe
+                  Loading stripe details...
                 </Typography>
+              ) : (
+                stripeConnectionDetails
               )}
               <List className={classes.root}>
                 <ListItem>
