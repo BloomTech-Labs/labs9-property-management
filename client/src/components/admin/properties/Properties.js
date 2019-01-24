@@ -189,7 +189,12 @@ class Properties extends React.Component {
                         </Avatar>
                         <ListItemText
                           primary="Address"
-                          secondary={entry.address}
+                          secondary={[
+                            entry.address,
+                            entry.city,
+                            entry.state,
+                            entry.zip_code,
+                          ].join(' ')}
                         />
                       </ListItem>
                       <ListItem>
@@ -197,9 +202,9 @@ class Properties extends React.Component {
                           <Person />
                         </Avatar>
                         <ListItemText
-                          primary="Tenant"
+                          primary="Tenant(s)"
                           secondary={
-                            entry.tenants
+                            entry.tenants.length > 0
                               ? entry.tenants.join(', ')
                               : 'No Tenants'
                           }
