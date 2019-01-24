@@ -10,19 +10,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Mobile from '@material-ui/icons/Phone';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
     padding: 20,
     marginTop: 70,
-    justifyContent: 'center',
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 300,
+    width: 350,
   },
   textFieldHeight: {
     height: 200,
@@ -66,6 +65,16 @@ const styles = theme => ({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
+  blockElement: {
+    display: 'block',
+  },
+  noPadding: {
+    padding: 0,
+  },
+  button: {
+    width: 200,
+    marginTop: 20,
+  },
 });
 
 class Maintenance extends React.Component {
@@ -81,16 +90,34 @@ class Maintenance extends React.Component {
     const { classes } = this.props;
 
     return (
-      <form className={classes.container} noValidate autoComplete="off">
+      <form
+        onSubmit={''}
+        className={classes.container}
+        noValidate
+        autoComplete="off"
+      >
         <div className={classes.title}>
           <List className={classes.root}>
-            <ListItem>
-              <ListItemText primary="Submit a Work Order" />
-            </ListItem>
+            <Typography component="h1" variant="h5">
+              Submit a Work Order
+            </Typography>
             <Divider component="li" />
           </List>
           <div className={classes.box}>
             <div className={classes.section}>
+              <ListItem>
+                <Mobile />
+                <ListItem className={classes.blockElement}>
+                  <ListItemText
+                    className={classes.noPadding}
+                    primary="24/7 Maintenance"
+                  />
+                  <ListItemText
+                    className={classes.noPadding}
+                    primary="1-800-123-9876"
+                  />
+                </ListItem>
+              </ListItem>
               <TextField
                 id="outlined-dense"
                 label="Address"
@@ -140,8 +167,11 @@ class Maintenance extends React.Component {
           </div>
           <div className={classes.center}>
             <Button
-              color="inherit"
-              className={classNames(classes.button, classes.submit)}
+              type="submit"
+              variant="contained"
+              fullWidth
+              color="primary"
+              className={classes.button}
             >
               Submit
             </Button>

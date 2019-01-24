@@ -10,6 +10,7 @@ import CreditCard from '@material-ui/icons/CreditCard';
 import Maintenance from '@material-ui/icons/PanTool';
 import { AuthUserContext } from '../session';
 import DashboardPage from './dashboard/Dashboard';
+import PaymentPage from './payments/Payments';
 import SettingsPage from './settings/Settings';
 import MaintenancePage from './maintenance/Maintenance';
 
@@ -37,6 +38,7 @@ class Tenant extends Component {
             <Layout links={links}>
               <Switch>
                 <Route exact path="/tenant" component={DashboardPage} />
+                <Route exact path="/tenant/payments" component={PaymentPage} />
                 <Route
                   exact
                   path="/tenant/stripe-test"
