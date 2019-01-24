@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
+import InvitesTable from './InvitesTable';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
@@ -25,7 +24,7 @@ class Tenants extends Component {
     leaseStart: new Date(),
     leaseEnd: new Date(),
     properties: [],
-    property: '', // Selected property
+    house_id: 0, // Selected property
   };
 
   componentDidMount() {
@@ -49,39 +48,41 @@ class Tenants extends Component {
     }
   }
 
-  handleChange = prop => date => {
+  handleInputChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
+  handleDateChange = prop => date => {
     this.setState({ [prop]: date });
   };
 
-  inviteTenant = event => {
+  sendInvite = event => {
     event.preventDefault();
+
+    const property = {
+      email: this.state.email,
+      lease_start_date: this.state.leaseStart,
+      lease_end_date: this.state.leaseEnd,
+      house_id: this.state.house_id,
+    };
+
+    console.log('property: ', property);
+    axios
+      .post('/api/invitations', property)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => console.log(err));
   };
 
   render() {
     const { classes } = this.props;
-
+    console.log(this.state.properties);
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
-            <Grid item xs={12} md={5}>
-              <Card className={classes.card}>
-                <CardHeader
-                  title="Pending Invites"
-                  subheader="Invites you have sent"
-                  className={classes.cardTop}
-                  titleTypographyProps={{
-                    component: 'h4',
-                    variant: 'body1',
-                    color: 'inherit',
-                  }}
-                  subheaderTypographyProps={{
-                    variant: 'overline',
-                    color: 'secondary',
-                  }}
-                />
-              </Card>
-            </Grid>
+            <Grid item xs={12} md={5} />
             <Grid item xs={12} md={5}>
               <Card className={classes.card}>
                 <CardHeader
@@ -118,15 +119,21 @@ class Tenants extends Component {
                 />
                 <CardContent>
                   <form style={{ marginTop: 50 }}>
-                    <TextField id="TenantEmail" label="Tenant Email" required />
+                    <TextField
+                      id="email"
+                      label="Tenant Email"
+                      value={this.state.email}
+                      onChange={this.handleInputChange('email')}
+                      required
+                    />
                     <FormControl required className={classes.formControl}>
                       <InputLabel htmlFor="property-native-required">
                         Property
                       </InputLabel>
                       <Select
                         native
-                        value={this.state.property}
-                        onChange={this.handleChange('property')}
+                        value={this.state.house_id}
+                        onChange={this.handleInputChange('house_id')}
                         name="Property"
                         inputProps={{
                           id: 'property-native-required',
@@ -146,18 +153,20 @@ class Tenants extends Component {
                         margin="normal"
                         label="Lease Start Date"
                         value={this.state.leaseStart}
-                        onChange={this.handleChange('leaseStart')}
+                        onChange={this.handleDateChange('leaseStart')}
                         format={'MM/dd/yyyy'}
                       />
                       <DatePicker
                         margin="normal"
                         label="Lease End Date"
                         value={this.state.leaseEnd}
-                        onChange={this.handleChange('leaseEnd')}
+                        onChange={this.handleDateChange('leaseEnd')}
                         format={'MM/dd/yyyy'}
                       />
                     </MuiPickersUtilsProvider>
-                    <Button variant="outlined">Send Invite</Button>
+                    <Button onClick={this.sendInvite} variant="outlined">
+                      Send Invite
+                    </Button>
                   </form>
                 </CardContent>
               </Card>
