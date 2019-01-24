@@ -99,6 +99,8 @@ const styles = theme => ({
 
 class Billing extends Component {
   state = {
+    hasStripeID: true,
+    fetchingStripeID: null,
     property: '171 N 600 E',
     cc: '1234567812345678',
     exp: '09/20',
@@ -155,6 +157,21 @@ class Billing extends Component {
   };
   componentDidMount() {
     console.log('props', this.props);
+    // check to see if owner has stripe account connected
+    this.setState({ fetchingStripeID: true });
+    setTimeout(
+      () =>
+        axios
+          .get('http://localhost:4000/api/stripe-connect')
+          .then(response =>
+            response.data.hasStripeID
+              ? this.setState({ hasStripeID: true, fetchingStripeID: false })
+              : this.setState({ hasStripeID: false, fetchingStripeID: false })
+          )
+          .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err)),
+      2000
+    );
+    // check to see if auth code is provided
     if (this.props.location.search) {
       console.log('BINGO', this.props.location.search.substring(23));
       let computedCode = this.props.location.search.substring(23);
@@ -168,7 +185,7 @@ class Billing extends Component {
             .post('http://localhost:4000/api/stripe-connect', stripeAuthCode)
             .then(response => console.log('response'))
             .catch(err => console.log(err)),
-        2000
+        3000
       );
     }
   }
@@ -201,7 +218,7 @@ class Billing extends Component {
 
   render() {
     const { classes } = this.props;
-
+    console.log('STATE', this.state.hasStripeID);
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid className={classes.leftColumn}>
@@ -232,14 +249,25 @@ class Billing extends Component {
           </form>
           <Card className={classes.card}>
             <CardContent>
-              <Link
-                target="_blank"
-                to={
-                  '//connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_ELLhp2vnlFHBpk0AVDL7PVxBzrsk2NXz&scope=read_write'
-                }
-              >
-                <StripeButton src={connectwstripe} />
-              </Link>
+              {!this.state.hasStripeID ? (
+                <Link
+                  target="_blank"
+                  to={
+                    '//connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_ELLhp2vnlFHBpk0AVDL7PVxBzrsk2NXz&scope=read_write'
+                  }
+                >
+                  {' '}
+                  <StripeButton src={connectwstripe} />
+                </Link>
+              ) : (
+                <Typography
+                  className={classes.tableTitle}
+                  component="h5"
+                  variant="h6"
+                >
+                  Connected to Stripe
+                </Typography>
+              )}
               <List className={classes.root}>
                 <ListItem>
                   <ListItemText primary="CC#" secondary={this.state.cc} />
