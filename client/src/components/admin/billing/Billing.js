@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import connectwstripe from '../../../images/connect-with-stripe@2x.png';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -19,6 +23,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+
+const StripeButton = styled.img`
+  width: 144px;
+`;
 
 const styles = theme => ({
   container: {
@@ -145,6 +153,25 @@ class Billing extends Component {
       },
     ],
   };
+  componentDidMount() {
+    console.log('props', this.props);
+    if (this.props.location.search) {
+      console.log('BINGO', this.props.location.search.substring(23));
+      let computedCode = this.props.location.search.substring(23);
+      const stripeAuthCode = {
+        computedCode,
+      };
+      console.log(stripeAuthCode);
+      setTimeout(
+        () =>
+          axios
+            .post('http://localhost:4000/api/stripe-connect', stripeAuthCode)
+            .then(response => console.log('response'))
+            .catch(err => console.log(err)),
+        2000
+      );
+    }
+  }
 
   handleChange = event => {
     this.setState({
@@ -205,6 +232,14 @@ class Billing extends Component {
           </form>
           <Card className={classes.card}>
             <CardContent>
+              <Link
+                target="_blank"
+                to={
+                  '//connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_ELLhp2vnlFHBpk0AVDL7PVxBzrsk2NXz&scope=read_write'
+                }
+              >
+                <StripeButton src={connectwstripe} />
+              </Link>
               <List className={classes.root}>
                 <ListItem>
                   <ListItemText primary="CC#" secondary={this.state.cc} />

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import Layout from '../layout/Layout';
 import StripeTest from './payments/StripeTest';
-import StripeConnectTest from './payments/StripeConnectTest';
 import TestingEndpoints from './testing/TestingEndpoints'; // test component
 import Dashboard from '@material-ui/icons/Dashboard';
 import Settings from '@material-ui/icons/Settings';
@@ -43,10 +42,6 @@ class Tenant extends Component {
                   exact
                   path="/tenant/stripe-test"
                   component={StripeTest}
-                />
-                <Route
-                  path="/tenant/stripe-connect-test"
-                  component={StripeConnectTest}
                 />
                 <Route exact path="/tenant/" component={Dashboard} />
                 <Route
