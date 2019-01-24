@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -78,12 +79,57 @@ const styles = theme => ({
 });
 
 class Maintenance extends React.Component {
-  state = {};
+  state = {
+    // address: '',
+    description: '',
+    // phoneNumber: '',
+    permission: true,
+    // photo: '',
+    // house_data: [],
+  };
 
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
+  // componentDidMount() {
+  //   const endpoint = 'https://mynotespal.herokuapp.com/api/notes';  <==== ENDPOINT SHOULD RETRIEVE PROPERTY OWNER INFO
+  //   axios
+  //     .get(endpoint)
+  //     .then(response => {
+  //       this.setState(() => ({ house_data: response.data }));
+  //     })
+  //     .catch(error => {
+  //       console.error('Server Error: ', error);
+  //     });
+  // }
+
+  submitWorkOrder = event => {
+    event.preventDefault();
+    // const endpoint = 'http://localhost:4000/api/work-orders/';
+    axios
+      .post('/api/work-orders/', {
+        // addess: this.state.address,
+        description: this.state.description,
+        property_access: this.state.permission,
+      })
+      .then(res => {
+        console.log('register response: ', res);
+        // this.props.history.push('/tenant');
+      })
+      .catch(error => {
+        console.error('Axios response: ', error);
+        // this.props.history.push('/tenant');
+      });
+  };
+
+  handleCheckedBox = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
+
+  handleInputChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onClick = event => {
+    event.preventDefault();
+    console.log('state', this.state);
   };
 
   render() {
@@ -91,7 +137,7 @@ class Maintenance extends React.Component {
 
     return (
       <form
-        onSubmit={''}
+        onSubmit={this.submitWorkOrder}
         className={classes.container}
         noValidate
         autoComplete="off"
@@ -124,6 +170,10 @@ class Maintenance extends React.Component {
                 className={classNames(classes.textField, classes.dense)}
                 margin="dense"
                 variant="outlined"
+                onChange={this.handleInputChange}
+                value={this.state.address}
+                type="text"
+                name="address"
               />
               <TextField
                 id="outlined-multiline-static"
@@ -133,6 +183,10 @@ class Maintenance extends React.Component {
                 multiline
                 margin="dense"
                 variant="outlined"
+                onChange={this.handleInputChange}
+                value={this.state.description}
+                type="text"
+                name="description"
               />
               <TextField
                 id="outlined-dense"
@@ -140,9 +194,14 @@ class Maintenance extends React.Component {
                 className={classNames(classes.textField, classes.dense)}
                 margin="dense"
                 variant="outlined"
+                onChange={this.handleInputChange}
+                value={this.state.phoneNumber}
+                type="integer"
+                name="phoneNumber"
               />
             </ListItem>
             <ListItem className={classes.blockElement}>
+              <button onClick={this.onClick}>click me to see state</button>
               <TextField
                 id="outlined-dense"
                 label="Upload photo -> CHANGE THIS!!!"
@@ -157,9 +216,9 @@ class Maintenance extends React.Component {
               label="Permission to enter premises without tenant home"
               control={
                 <Checkbox
-                  // checked={this.state.checkedB}
-                  // onChange={this.handleChange("checkedB")}
-                  value="checkedB"
+                  checked={this.state.permission}
+                  onChange={this.handleCheckedBox('permission')}
+                  value="permission"
                   color="primary"
                 />
               }

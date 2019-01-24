@@ -8,15 +8,19 @@ router.use(express.json());
 
 // Place a work order
 router.post('/', (req, res) => {
-  const required = req.body;
-  const { address, description } = req.body;
-  if (!address || !description) {
+  // const required = req.body;
+  const { description, property_access } = req.body;
+  const workOrder = {
+    description: description,
+    property_access: property_access,
+  };
+  if (!description) {
     res
       .status(400)
       .json({ errorMessage: 'Please enter address and description' });
     return;
   }
-  db.insert(required)
+  db.insert(workOrder)
     .into('work_orders')
     .then(ids => {
       res.status(201).json(ids);
