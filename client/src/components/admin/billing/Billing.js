@@ -25,7 +25,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 const StripeButton = styled.img`
-  width: 144px;
+  width: 200px;
 `;
 
 const styles = theme => ({
