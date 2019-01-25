@@ -7,24 +7,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
 const StripeButton = styled.img`
   width: 200px;
@@ -70,7 +56,8 @@ const styles = theme => ({
   },
   card: {
     maxWidth: 300,
-    marginTop: 200,
+    marginTop: 100,
+    marginLeft: 30,
     paddingLeft: 30,
   },
   root: {
@@ -111,9 +98,12 @@ class Billing extends Component {
       axios
         .get('/api/stripe-connect')
         .then(response => {
-          console.log('SERVER STRIPE ID:', response.data);
+          console.log('RESPONSE:', response.data);
           if (response.data.hasStripeID === true) {
+            console.log('SERVER STRIPE ID:', response.data);
             this.setState({ hasStripeID: true, fetchingStripeID: false });
+          } else {
+            this.setState({ hasStripeID: false, fetchingStripeID: false });
           }
           // check to see if auth code is provided
           if (this.props.location.search) {

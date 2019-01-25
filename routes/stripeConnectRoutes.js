@@ -50,7 +50,8 @@ router.get('/', (req, res) => {
     .select('owners.stripe_user_id', 'owners.owner_uid')
     .where('owners.owner_uid', uid)
     .then(stripeUID => {
-      if (!stripeUID.stripe_user_id) {
+      console.log('Stripe', stripeUID[0].stripe_user_id);
+      if (!stripeUID[0].stripe_user_id) {
         res.status(200).json({ hasStripeID: false });
       } else res.status(200).json({ hasStripeID: true });
     })
