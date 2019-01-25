@@ -3,7 +3,7 @@ import Layout from '../layout/Layout';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import DashboardPage from './dashboard/DashboardPage';
 import PropertiesPage from './properties/Properties';
-import WorkOrders from './workorders/WorkOrders';
+import WorkOrdersPage from './workorders/WorkOrders';
 import SettingsPage from './settings/SettingsPage';
 import Billing from './billing/Billing';
 import Tenants from './tenants/Tenants';
@@ -46,7 +46,11 @@ class Admin extends Component {
                   path="/admin/properties"
                   component={PropertiesPage}
                 />
-                <Route exact path="/admin/work-orders" component={WorkOrders} />
+                <Route
+                  exact
+                  path="/admin/work-orders"
+                  component={WorkOrdersPage}
+                />
                 <Route exact path="/admin/tenants" component={Tenants} />
                 <Route exact path="/admin/settings" component={SettingsPage} />
                 <Route exact path="/admin/billing" component={Billing} />
