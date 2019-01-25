@@ -1220,7 +1220,7 @@
   dependencies:
     "@uppy/utils" "0.29.1"
 
-"@uppy/transloadit@0.29.1":
+"@uppy/transloadit@0.29.1", "@uppy/transloadit@^0.29.1":
   version "0.29.1"
   resolved "https://registry.yarnpkg.com/@uppy/transloadit/-/transloadit-0.29.1.tgz#a569a5c28243ec05ba07b96e20e330fc989e1742"
   dependencies:
