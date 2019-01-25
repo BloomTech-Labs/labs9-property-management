@@ -9,10 +9,12 @@ router.use(express.json());
 // Place a work order
 router.post('/', (req, res) => {
   // const required = req.body;
-  const { description, property_access } = req.body;
+  const { description, property_access, tenant_id, house_id } = req.body;
   const workOrder = {
     description: description,
     property_access: property_access,
+    tenant_id: tenant_id,
+    house_id: house_id,
   };
   if (!description) {
     res
@@ -39,6 +41,28 @@ router.get('/', (req, res) => {
         .status(500)
         .json({ errorMessage: 'Work orders could not be retrieved.' })
     );
+});
+
+// Returns all work orders for the owner
+router.get('/owner', (req, res) => {
+  const { uid } = req.body;
+
+  db('house_properties as h')
+    .join('owners as o', 'o.owner_uid', 'h.owner_uid')
+    .where('o.owner_uid', uid)
+    .join('work_orders as w', 'w.house_id', 'h.house_id')
+    .join('users as u', 'u.uid', 'h.owner_uid')
+    .select(
+      'h.address',
+      'w.description',
+      'property_access',
+      'work_order_status',
+      'u.mobile'
+    )
+    .then(orders => {
+      res.status(200).json({ orders });
+    })
+    .catch(error => res.status(500).json(error));
 });
 
 // Retrieve all workorders for a given owner organized by property
