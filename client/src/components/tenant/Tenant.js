@@ -6,7 +6,7 @@ import TestingEndpoints from './testing/TestingEndpoints'; // test component
 import Dashboard from '@material-ui/icons/Dashboard';
 import Settings from '@material-ui/icons/Settings';
 import CreditCard from '@material-ui/icons/CreditCard';
-import Maintenance from '@material-ui/icons/PanTool';
+import Maintenance from '@material-ui/icons/Build';
 import { AuthUserContext } from '../session';
 import DashboardPage from './dashboard/Dashboard';
 import PaymentPage from './payments/Payments';
