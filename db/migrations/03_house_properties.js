@@ -1,6 +1,6 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('house_properties', function(tbl) {
-    tbl.increments('house_id');
+    tbl.increments('house_id').unique();
     tbl.string('property_name', 250);
     tbl.string('address').notNullable();
     tbl.string('city').notNullable();
@@ -14,10 +14,6 @@ exports.up = function(knex, Promise) {
     tbl.string('house_image_url', 250);
     tbl.integer('office_ph');
     tbl.integer('maintenance_ph');
-    tbl
-      .integer('owner_id')
-      .references('owner_id')
-      .inTable('owners');
     tbl
       .string('owner_uid')
       .references('owner_uid')

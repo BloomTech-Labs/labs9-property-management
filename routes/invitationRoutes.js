@@ -6,7 +6,8 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.post('/', (req, res) => {
+// Invitation is created by owner
+router.post('/admin', (req, res) => {
   const { email, lease_start, lease_end, uid, house_id } = req.body;
 
   const invitation = {
@@ -36,7 +37,8 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/', (req, res) => {
+// Owner recieves pending invitations
+router.get('/admin', (req, res) => {
   db('invitations')
     .where('owner_uid', req.body.uid)
     .then(data => {

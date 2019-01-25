@@ -95,6 +95,7 @@ class AddPropertyModal extends Component {
       .then(id => {
         this.props.addPropertyHandler({ id: id, ...request });
         console.log('success');
+        this.props.onClose();
       })
       .catch(err => {
         console.log(err);
@@ -200,7 +201,7 @@ class AddPropertyModal extends Component {
             <TextField
               id="officePhone"
               label="Office Phone"
-              value={this.state.bedrooms}
+              value={this.state.office_ph}
               onChange={this.handleChange('office_ph')}
               type="number"
               className={classes.textField}
@@ -208,7 +209,7 @@ class AddPropertyModal extends Component {
             <TextField
               id="maintenancePhone"
               label="Maintenence Phone"
-              value={this.state.bedrooms}
+              value={this.state.maintanence_ph}
               onChange={this.handleChange('maintenance_ph')}
               type="number"
               className={classes.textField}
