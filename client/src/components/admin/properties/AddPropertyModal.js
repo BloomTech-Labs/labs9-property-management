@@ -95,6 +95,7 @@ class AddPropertyModal extends Component {
       .then(id => {
         this.props.addPropertyHandler({ id: id, ...request });
         console.log('success');
+        this.props.onClose();
       })
       .catch(err => {
         console.log(err);

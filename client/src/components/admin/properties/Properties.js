@@ -204,7 +204,7 @@ class Properties extends React.Component {
                         <ListItemText
                           primary="Tenant(s)"
                           secondary={
-                            entry.tenants.length > 0
+                            entry.tenants && entry.tenants.length > 0
                               ? entry.tenants.join(', ')
                               : 'No Tenants'
                           }
