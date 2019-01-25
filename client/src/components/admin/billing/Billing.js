@@ -184,7 +184,7 @@ class Billing extends Component {
             .post('/api/stripe-connect', stripeAuthCode)
             .then(response => console.log('response'))
             .catch(err => console.log(err)),
-        3000
+        2000
       );
     }
   }
