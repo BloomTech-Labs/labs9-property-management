@@ -1,97 +1,125 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import Avatar from "@material-ui/core/Avatar";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { withAuthUser } from '../../session';
+import { compose } from 'recompose';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import Avatar from '@material-ui/core/Avatar';
 import {
   Home,
   Build,
   Call,
   InsertPhoto,
-  CheckCircleOutline
-} from "@material-ui/icons";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Button from "@material-ui/core/Button";
-import FileUploader from './FileUploader'
+  CheckCircleOutline,
+} from '@material-ui/icons';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+import FileUploader from './FileUploader';
+import axios from 'axios';
 
 const styles = theme => ({
   container: {
-    marginTop: 100
+    marginTop: 100,
   },
   root: {
-    width: "100%",
+    width: '100%',
     maxWidth: 400,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   card: {
     maxWidth: 400,
-    minHeight: 384
+    minHeight: 384,
   },
   actions: {
-    display: "flex",
-    justifyContent: "flex-end"
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
   description: {
-    marginRight: "25%",
-    transform: "translateX(25%)"
-  }
+    marginRight: '25%',
+    transform: 'translateX(25%)',
+  },
 });
 
 class WorkOrders extends Component {
   state = {
+    workOrdersX: [],
     workOrders: [
       {
         id: 1,
-        address: "171 N 600 E",
-        description: "Clogged Drain",
+        address: '171 N 600 E',
+        description: 'Clogged Drain',
         permission: true,
-        phone: "801-432-5674",
-        status: "submitted"
+        phone: '801-432-5674',
+        status: 'submitted',
       },
       {
         id: 2,
-        address: "171 N 600 E",
-        description: "Clogged Drain",
+        address: '171 N 600 E',
+        description: 'Clogged Drain',
         permission: true,
-        phone: "801-432-5674",
-        status: "submitted"
+        phone: '801-432-5674',
+        status: 'submitted',
       },
       {
         id: 3,
-        address: "171 N 600 E",
-        description: "Clogged Drain",
+        address: '171 N 600 E',
+        description: 'Clogged Drain',
         permission: true,
-        phone: "801-432-5674",
-        status: "submitted"
+        phone: '801-432-5674',
+        status: 'submitted',
       },
       {
         id: 4,
-        address: "171 N 600 E",
-        description: "Clogged Drain",
+        address: '171 N 600 E',
+        description: 'Clogged Drain',
         permission: true,
-        phone: "801-432-5674",
-        status: "submitted"
-      }
-    ]
+        phone: '801-432-5674',
+        status: 'submitted',
+      },
+    ],
   };
-	sendAlert = () => {
-		fetch(
-			('http://property-management-dev.herokuapp.com/text')
-          )
-    .catch(err => console.error(err));
+
+  componentDidMount() {
+    console.log(this.props.authTokenRecieved);
+    if (this.props.authTokenRecieved) {
+      axios.get('/api/work-orders/owner').then(orders => {
+        console.log(orders.data);
+        this.setState({ workOrdersX: orders.data });
+      });
+    }
+    console.log('CDM', this.state.workOrdersX);
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('update');
+    if (
+      this.props.authTokenRecieved &&
+      this.props.authTokenRecieved !== prevProps.authTokenRecieved
+    ) {
+      axios.get('/api/work-orders/owner').then(orders => {
+        this.setState({ workOrdersX: orders.data });
+      });
+    }
+    console.log('CDU', this.state.workOrdersX);
+  }
+
+  sendAlert = () => {
+    fetch('http://property-management-dev.herokuapp.com/text').catch(err =>
+      console.error(err)
+    );
   };
-  
+
   render() {
     const { classes } = this.props;
 
@@ -110,9 +138,8 @@ class WorkOrders extends Component {
                     >
                       {`Work order #${entry.id}`}
                     </Typography>
-                    <IconButton aria-label="View Image"
-                    >
-                    <FileUploader/>
+                    <IconButton aria-label="View Image">
+                      <FileUploader />
                     </IconButton>
                   </CardActions>
                   <CardContent>
@@ -141,7 +168,7 @@ class WorkOrders extends Component {
                         </Avatar>
                         <ListItemText
                           primary="Permission to Enter Property"
-                          secondary={entry.permission ? "YES" : "NO"}
+                          secondary={entry.permission ? 'YES' : 'NO'}
                         />
                       </ListItem>
                       <ListItem>
@@ -162,7 +189,7 @@ class WorkOrders extends Component {
                           value="submitted"
                           control={
                             <Radio
-                              checked={entry.status === "submitted"}
+                              checked={entry.status === 'submitted'}
                               name="work-order-status"
                               aria-label="submitted"
                             />
@@ -174,7 +201,7 @@ class WorkOrders extends Component {
                           value="in-progress"
                           control={
                             <Radio
-                              checked={entry.status === "in-progress"}
+                              checked={entry.status === 'in-progress'}
                               name="work-order-status"
                               aria-label="In Progress"
                             />
@@ -186,7 +213,7 @@ class WorkOrders extends Component {
                           value="completed"
                           control={
                             <Radio
-                              checked={entry.status === "completed"}
+                              checked={entry.status === 'completed'}
                               name="work-order-status"
                               aria-label="Completed"
                             />
@@ -210,8 +237,13 @@ class WorkOrders extends Component {
   }
 }
 
+const WorkOrdersPage = compose(
+  withAuthUser,
+  withStyles(styles)
+)(WorkOrders);
+
 WorkOrders.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(WorkOrders);
+export default WorkOrdersPage;
