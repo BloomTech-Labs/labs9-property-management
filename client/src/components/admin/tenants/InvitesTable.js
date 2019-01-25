@@ -58,18 +58,18 @@ const rows = [
     disablePadding: true,
     label: 'Tenant',
   },
-  { id: 'property', numeric: false, disablePadding: false, label: 'property' },
+  { id: 'property', numeric: false, disablePadding: false, label: 'Property' },
   {
     id: 'lease_start',
     numeric: false,
     disablePadding: false,
-    label: 'Lease Start',
+    label: 'Lease Start Date',
   },
   {
     id: 'lease_end',
     numeric: false,
     disablePadding: false,
-    label: 'Lease End',
+    label: 'Lease End Date',
   },
   { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
 ];
@@ -232,7 +232,7 @@ class InvitesTable extends React.Component {
       createData('Oreo', 437, 18.0, 63, 4.0),
     ],
     page: 0,
-    rowsPerPage: 5,
+    rowsPerPage: 4,
   };
 
   handleRequestSort = (event, property) => {
