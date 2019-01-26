@@ -189,7 +189,7 @@ class Billing extends Component {
       <Card className={classes.card}>
         <CardContent>
           {this.state.fetchingStripeID ? (
-            <Skeleton height={30} maxWidth={300} />
+            <Skeleton height={30} />
           ) : (
             stripeConnectionDetails
           )}

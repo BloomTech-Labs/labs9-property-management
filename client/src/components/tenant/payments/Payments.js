@@ -1,4 +1,8 @@
 import React from 'react';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
+import styled from 'styled-components';
+import testlogo from '../../../images/test-logo.svg';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -84,6 +88,40 @@ const styles = theme => ({
 class Payments extends React.Component {
   state = {
     amount: '',
+    payments: [],
+    paymentAmount: 72500,
+  };
+
+  onToken = token => {
+    const body = {
+      amount: this.state.paymentAmount,
+      token: token,
+    };
+    axios
+      .post('/api/payments', body)
+      .then(response => {
+        console.log('response', response.data);
+        alert(
+          'Payment Success: token was received by backend and charge was made.'
+        );
+        this.setState(prevState => {
+          return {
+            payments: prevState.payments.concat({
+              amount: (body.amount / 100).toFixed(2),
+              timestamp: Date.now(),
+            }),
+          };
+        });
+      })
+      .catch(error => {
+        console.log('Payment Error: ', error);
+        alert('Payment Error');
+      });
+  };
+
+  handlePaymentChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
   handleChange = name => event => {
@@ -94,20 +132,22 @@ class Payments extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    const publishableKey = 'pk_test_IiM4lt5m1LYfjZBPfY8wa6Jo';
     return (
       <div className={classes.container}>
         <div className={classes.title}>
           <List className={classes.root}>
             <ListItem className={classes.blockElement}>
-              <Typography component="h1" variant="h5">
-                Outstanding Balance
-              </Typography>
-              <Typography component="h1" variant="h5">
-                -350.00
-              </Typography>
+              {/* <form>
+                <input
+                  placeholder="Amount to pay"
+                  name="paymentAmount"
+                  type="number"
+                  value={this.state.paymentAmount}
+                  onChange={this.handlePaymentChange}
+                />
+              </form> */}
             </ListItem>
-            <Divider component="li" />
           </List>
           <List>
             <ListItem className={classes.center}>
@@ -181,18 +221,21 @@ class Payments extends React.Component {
                   />
                 </ListItem>
               </List>
-              <div className={classes.center}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                  className={classes.button}
-                >
-                  Submit
-                </Button>
-              </div>
+              <div className={classes.center} />
             </form>
+            <div className={classes.center}>
+              <StripeCheckout
+                label="Make payment" //Component button text
+                name="Property Mgmt" //Modal Header
+                description="Make a payment."
+                panelLabel="Make payment" //Submit button in modal
+                amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
+                token={this.onToken}
+                stripeKey={publishableKey}
+                image={testlogo} //Pop-in header image
+                billingAddress={false}
+              />
+            </div>
           </List>
         </div>
       </div>
