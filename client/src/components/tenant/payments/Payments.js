@@ -152,7 +152,7 @@ class Payments extends React.Component {
           <List>
             <ListItem className={classes.center}>
               <Typography component="h1" variant="h5">
-                Payment Details
+                Make a rent payment
               </Typography>
             </ListItem>
             <form onSubmit={''} noValidate autoComplete="off">
@@ -169,59 +169,8 @@ class Payments extends React.Component {
                     margin="dense"
                     variant="outlined"
                   />
-                  <ListItemText
-                    className={classNames(
-                      classes.center,
-                      classes.customPadding
-                    )}
-                    primary="Payment Method"
-                  />
-                </ListItem>
-                <ListItem className={classes.blockElement}>
-                  <ListItemText
-                    className={classNames(classes.center, classes.noPadding)}
-                    primary="Card Information"
-                  />
-                  <TextField
-                    id="outlined-dense"
-                    label="Name on Bank Account"
-                    className={classNames(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                  />
-                  <FormControl className={classes.textField} required>
-                    <InputLabel htmlFor="account-type-native-required">
-                      Select Account Type
-                    </InputLabel>
-                    <Select
-                      native
-                      name="accountType"
-                      inputProps={{ id: 'account-type-native-required' }}
-                      // onChange={this.handleChange('accountType')}
-                    >
-                      <option value="" />
-                      <option value="owner">Credit</option>
-                      <option value="tenant">Debit</option>
-                    </Select>
-                    <FormHelperText>Required</FormHelperText>
-                  </FormControl>
-                  <TextField
-                    id="outlined-dense"
-                    label="Routing Number"
-                    className={classNames(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                  />
-                  <TextField
-                    id="outlined-dense"
-                    label="Accounting Number"
-                    className={classNames(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                  />
                 </ListItem>
               </List>
-              <div className={classes.center} />
             </form>
             <div className={classes.center}>
               <StripeCheckout
