@@ -32,13 +32,14 @@ router.get('/', (req, res) => {
   // asynchronously called
 });
 
-Object.assign(someOb, { hey: 'sup'})
+Object.assign({}, someOb, { hey: 'sup'})
 vs
 {...someOb, hey: 'sup'}
 */
 
 router.post('/', (req, res) => {
   // here we also need to make some db queries to get the associated owner stripe ID
+  // see above reference code about passing the connected stripe account id
   const body = {
     source: req.body.token.id,
     amount: req.body.amount,
