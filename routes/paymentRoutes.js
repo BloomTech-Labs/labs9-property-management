@@ -20,7 +20,25 @@ router.get('/', (req, res) => {
   });
 });
 
+/* REFERENCE CODE https://stripe.com/docs/connect/direct-charges#collecting-fees
+  stripe.charges.create({
+  amount: 1000,
+  currency: "usd",
+  source: "tok_visa",
+  application_fee: 123,
+}, {
+  stripe_account: "{CONNECTED_STRIPE_ACCOUNT_ID}",
+}).then(function(charge) {
+  // asynchronously called
+});
+
+Object.assign(someOb, { hey: 'sup'})
+vs
+{...someOb, hey: 'sup'}
+*/
+
 router.post('/', (req, res) => {
+  // here we also need to make some db queries to get the associated owner stripe ID
   const body = {
     source: req.body.token.id,
     amount: req.body.amount,
