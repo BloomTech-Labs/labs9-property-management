@@ -168,6 +168,8 @@ class Payments extends React.Component {
                     className={classNames(classes.textField, classes.dense)}
                     margin="dense"
                     variant="outlined"
+                    value={this.state.paymentAmount}
+                    onChange={this.handleChange('paymentAmount')}
                   />
                 </ListItem>
               </List>
