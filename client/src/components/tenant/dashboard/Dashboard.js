@@ -9,7 +9,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-
 import Avatar from '@material-ui/core/Avatar';
 import { Home, Call, Email } from '@material-ui/icons';
 import Card from '@material-ui/core/Card';
