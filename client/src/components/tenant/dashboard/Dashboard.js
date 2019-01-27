@@ -1,129 +1,143 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import { Home, Call, Email } from '@material-ui/icons';
+import classNames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import { Home, Call, Email } from '@material-ui/icons';
+import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
   container: {
     padding: 20,
     marginTop: 70,
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+  root: {
     width: '100%',
   },
-  textFieldHeight: {
-    height: 200,
+  card: {
+    marginTop: 25,
+    position: 'relative',
+    overflow: 'visible',
+    minWidth: '40%',
+    minHeight: 350,
+    zIndex: 0,
   },
-  dense: {
-    marginTop: 16,
-  },
-  menu: {
-    width: 200,
-  },
-  section: {
+  actions: {
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
-  box: {
-    display: 'flex',
-    padding: 10,
+  displayNone: {
+    display: 'none',
+  },
+  paper: {
+    width: '80%',
+    height: '80vh',
+    margin: 'auto',
+    marginTop: 50,
+  },
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
   },
   title: {
     display: 'flex',
     flexDirection: 'column',
     marginBottom: 50,
   },
-  root: {
-    width: '100%',
-  },
-  dividerFullWidth: {
-    margin: `2px 0 0 ${theme.spacing.unit * 2}px`,
-  },
-  dividerInset: {
-    margin: `2px 0 0 ${theme.spacing.unit * 9}px`,
-  },
-  submit: {
-    height: 40,
-    width: 70,
-    fontSize: 15,
-    marginTop: 10,
-  },
-  center: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+  noPadding: {
+    padding: 0,
   },
   blockElement: {
     display: 'block',
   },
-  noPadding: {
-    padding: 0,
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: '100%',
+  },
+  dense: {
+    marginTop: 16,
+  },
+  center: {
+    display: 'flex',
+    justifyContent: 'center',
   },
   button: {
     width: '100%',
     padding: 40,
   },
-  marginTop: {
-    marginTop: 40,
+  customPadding: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 0,
+    paddingRight: 0,
   },
   biggerText: {
     fontSize: 20,
   },
-  card: {
-    // minWidth: 275,
+  marginTop: {
+    marginTop: 40,
+  },
+  cardTitle: {
+    fontSize: 14,
   },
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
     transform: 'scale(0.8)',
   },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
+  card: {
+    height: 150,
   },
 });
 
 class Dashboard extends React.Component {
-  makePayment = event => {
-    this.props.history.push('/tenant/payments');
+  state = {
+    amount: '',
   };
 
-  submitWorkorder = event => {
-    this.props.history.push('/tenant/maintenance');
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
   };
 
   render() {
     const { classes } = this.props;
-    const bull = <span className={classes.bullet}>•</span>;
 
     return (
-      <div className={classes.container}>
-        <div className={classes.title}>
+      <Grid container className={classes.container} spacing={16}>
+        <Grid item xs={12} className={classes.title}>
           <List className={classes.root}>
             <Typography component="h1" variant="h5">
-              Outsanding Balance
+              Outstanding Balance
+            </Typography>
+            <Typography component="h1" variant="h5">
+              -350.00
             </Typography>
             <Divider component="li" />
           </List>
-          <List className={classes.box}>
-            <ListItem className={classes.blockElement}>
-              <div>
+          <form onSubmit={''} autoComplete="off">
+            <Grid container justify="space-around" spacing={16}>
+              <Grid item xs={12} md={12}>
+                <List className={classes.center}>
+                  <Typography component="h1" variant="h5">
+                    Payment Details
+                  </Typography>
+                </List>
+              </Grid>
+              <Grid item xs={12} md={5}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -134,8 +148,6 @@ class Dashboard extends React.Component {
                 >
                   Make a Payment
                 </Button>
-              </div>
-              <div>
                 <Button
                   type="submit"
                   variant="contained"
@@ -150,55 +162,55 @@ class Dashboard extends React.Component {
                 >
                   Submit a Work Order
                 </Button>
-              </div>
-              <Card className={classNames(classes.card, classes.marginTop)}>
-                <CardContent>
-                  <ListItemText
-                    className={classes.title}
-                    color="primary"
-                    primary="Alerts"
-                    gutterBottom
-                  />
-                  <Divider component="li" />
-                  <Typography component="p">
-                    Work order #123 completed
-                  </Typography>
-                  <Typography component="p">Rent due 7/5/18</Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small">Learn More</Button>
-                </CardActions>
-              </Card>
-            </ListItem>
-            <ListItem className={classes.blockElement}>
-              <ListItem>
-                <Avatar>
-                  <Home />
-                </Avatar>
-                <ListItemText primary="Address" />
-              </ListItem>
-              <ListItem>
-                <Avatar>
-                  <Call />
-                </Avatar>
-                <ListItemText primary="Office" />
-              </ListItem>
-              <ListItem>
-                <Avatar>
-                  <Email />
-                </Avatar>
-                <ListItemText primary="Email" />
-              </ListItem>
-              <ListItem>
-                <Avatar>
-                  <Call />
-                </Avatar>
-                <ListItemText primary="24/7 Maintenance" />
-              </ListItem>
-            </ListItem>
-          </List>
-        </div>
-      </div>
+                <Card className={classNames(classes.card, classes.marginTop)}>
+                  <CardContent>
+                    <ListItemText
+                      className={classes.cardTitle}
+                      color="primary"
+                      primary="Alerts"
+                      gutterBottom
+                    />
+                    <Divider component="li" />
+                    <Typography component="p">
+                      Work order #123 completed
+                    </Typography>
+                    <Typography component="p">Rent due 7/5/18</Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">Learn More</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={5}>
+                <ListItem>
+                  <Avatar>
+                    <Home />
+                  </Avatar>
+                  <ListItemText primary="Address" />
+                </ListItem>
+                <ListItem>
+                  <Avatar>
+                    <Call />
+                  </Avatar>
+                  <ListItemText primary="Office" />
+                </ListItem>
+                <ListItem>
+                  <Avatar>
+                    <Email />
+                  </Avatar>
+                  <ListItemText primary="Email" />
+                </ListItem>
+                <ListItem>
+                  <Avatar>
+                    <Call />
+                  </Avatar>
+                  <ListItemText primary="24/7 Maintenance" />
+                </ListItem>
+              </Grid>
+            </Grid>
+          </form>
+        </Grid>
+      </Grid>
     );
   }
 }
