@@ -57,4 +57,24 @@ router.get('/admin', (req, res) => {
     });
 });
 
+// Tenant recieves invites from owners
+router.get('/tenant', (req, res) => {
+  db('invitations as i')
+    .where('i.tenant_uid', req.body.uid)
+    .join('owners as o', 'i.owner_uid', 'o.owner_uid')
+    .join('users', 'o.owner_uid', 'users.uid')
+    .join('house_properties as h', 'i.house_id', 'h.house_id')
+    .select(
+      'i.id',
+      'users.display_name',
+      'i.lease_start_date',
+      'i.lease_end_date',
+      'h.property_name'
+    )
+    .then(data => {
+      console.log(data);
+      res.status(200).json(data);
+    });
+});
+
 module.exports = router;
