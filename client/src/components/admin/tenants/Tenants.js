@@ -25,6 +25,7 @@ class Tenants extends Component {
     leaseEnd: new Date(),
     properties: [],
     house_id: 0, // Selected property
+    pending_invites: [],
   };
 
   componentDidMount() {
@@ -32,6 +33,13 @@ class Tenants extends Component {
       axios.get('/api/properties/admin').then(response => {
         this.setState({ properties: response.data.properties });
       });
+
+      axios
+        .get('/api/invitations/admin')
+        .then(response => {
+          this.setState({ pending_invites: response.data });
+        })
+        .catch(error => console.log(error));
     }
   }
 
@@ -45,6 +53,13 @@ class Tenants extends Component {
         console.log(response.data.properties);
         this.setState({ properties: response.data.properties });
       });
+
+      axios
+        .get('/api/invitations/admin')
+        .then(response => {
+          this.setState({ pending_invites: response.data });
+        })
+        .catch(error => console.log(error));
     }
   }
 
@@ -77,13 +92,15 @@ class Tenants extends Component {
 
   render() {
     const { classes } = this.props;
+    const { pending_invites } = this.state;
+
     console.log(this.state.properties);
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
             <Grid item xs={12} md={5}>
-              <InvitesTable />
+              <InvitesTable pending={pending_invites} />
             </Grid>
             <Grid item xs={12} md={5}>
               <Card className={classes.card}>
