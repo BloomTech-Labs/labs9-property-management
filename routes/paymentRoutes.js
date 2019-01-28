@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('../db/dbConfig');
 const router = express.Router();
 
 router.use(express.json());
@@ -40,6 +41,17 @@ vs
 router.post('/', (req, res) => {
   // here we also need to make some db queries to get the associated owner stripe ID
   // see above reference code about passing the connected stripe account id
+  // req will contain uid of tenant
+  // select from houses table where
+  const { uid } = req.body;
+  db('tenants as t')
+    .where('t.tenant_uid', uid)
+    .join('house_properties as h', 'h.house_id', 't.house_id')
+    .join('owners as o', 'o.owner_uid', 'h.owner_uid')
+    .select('o.owner_uid', 'o.stripe_user_id')
+    .then(stripeID => {
+      console.log(stripeID);
+    });
   const body = {
     source: req.body.token.id,
     amount: req.body.amount,
