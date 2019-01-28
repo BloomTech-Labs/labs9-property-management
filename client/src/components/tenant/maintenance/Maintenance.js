@@ -15,6 +15,8 @@ import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FileUploader from '../../admin/workorders/FileUploader';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
   container: {
@@ -201,16 +203,9 @@ class Maintenance extends React.Component {
                   name="phoneNumber"
                 />
               </Grid>
-              <Grid item xs={12} md={5}>
-                <button onClick={this.onClick}>click me to see state</button>
-                <TextField
-                  id="outlined-dense"
-                  label="Upload photo -> CHANGE THIS!!!"
-                  className={classNames(classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                />
-              </Grid>
+              <IconButton>
+                      <FileUploader />
+              </IconButton>
               <Grid item xs={12} md={11}>
                 <div className={classes.center}>
                   <FormControlLabel
