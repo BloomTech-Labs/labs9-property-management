@@ -68,7 +68,7 @@ class Tenants extends Component {
 
     console.log('property: ', property);
     axios
-      .post('/api/invitations', property)
+      .post('/api/invitations/admin', property)
       .then(response => {
         console.log(response);
       })
@@ -82,7 +82,9 @@ class Tenants extends Component {
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
-            <Grid item xs={12} md={5} />
+            <Grid item xs={12} md={5}>
+              <InvitesTable />
+            </Grid>
             <Grid item xs={12} md={5}>
               <Card className={classes.card}>
                 <CardHeader

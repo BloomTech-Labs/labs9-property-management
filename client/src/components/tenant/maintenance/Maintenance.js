@@ -1,76 +1,80 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import { withStyles, withTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Call from '@material-ui/icons/Call';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Avatar from '@material-ui/core/Avatar';
+import classNames from 'classnames';
+import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
-import Mobile from '@material-ui/icons/Phone';
-import Typography from '@material-ui/core/Typography';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FileUploader from '../../admin/workorders/FileUploader';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
   container: {
     padding: 20,
     marginTop: 70,
   },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+  root: {
     width: '100%',
   },
-  textFieldHeight: {
-    height: 200,
+  card: {
+    marginTop: 25,
+    position: 'relative',
+    overflow: 'visible',
+    minWidth: '40%',
+    minHeight: 350,
+    zIndex: 0,
   },
-  dense: {
-    marginTop: 16,
-  },
-  menu: {
-    width: 200,
-  },
-  section: {
+  actions: {
     display: 'flex',
-    flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
-  box: {
-    display: 'flex',
-    padding: 10,
+  displayNone: {
+    display: 'none',
+  },
+  paper: {
+    width: '80%',
+    height: '80vh',
+    margin: 'auto',
+    marginTop: 50,
+  },
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
   },
   title: {
     display: 'flex',
     flexDirection: 'column',
     marginBottom: 50,
   },
-  root: {
-    width: '100%',
-  },
-  dividerFullWidth: {
-    margin: `2px 0 0 ${theme.spacing.unit * 2}px`,
-  },
-  dividerInset: {
-    margin: `2px 0 0 ${theme.spacing.unit * 9}px`,
-  },
-  submit: {
-    height: 40,
-    width: 70,
-    fontSize: 15,
-    marginTop: 10,
-  },
-  center: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+  noPadding: {
+    padding: 0,
   },
   blockElement: {
     display: 'block',
   },
-  noPadding: {
-    padding: 0,
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: '100%',
+  },
+  dense: {
+    marginTop: 16,
+  },
+  center: {
+    display: 'flex',
+    // flexWrap: 'wrap',
+    justifyContent: 'center',
   },
   button: {
     width: 200,
@@ -133,110 +137,107 @@ class Maintenance extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, theme } = this.props;
+    console.log(theme);
 
     return (
-      <form
-        onSubmit={this.submitWorkOrder}
-        className={classes.container}
-        noValidate
-        autoComplete="off"
-      >
-        <div className={classes.title}>
+      <Grid container className={classes.container} spacing={16}>
+        <Grid item xs={12} className={classes.title}>
           <List className={classes.root}>
             <Typography component="h1" variant="h5">
               Submit a Work Order
             </Typography>
             <Divider component="li" />
           </List>
-          <List className={classes.box}>
-            <ListItem className={classes.blockElement}>
-              <ListItem>
-                <Mobile />
-                <ListItem className={classes.blockElement}>
-                  <ListItemText
-                    className={classes.noPadding}
-                    primary="24/7 Maintenance"
-                  />
-                  <ListItemText
-                    className={classes.noPadding}
-                    primary="1-800-123-9876"
-                  />
+          <form onSubmit={this.submitWorkOrder} autoComplete="off">
+            <Grid container justify="space-around" spacing={16}>
+              <Grid item xs={12} md={5}>
+                <ListItem>
+                  <Avatar>
+                    <Call />
+                  </Avatar>
+                  <ListItem className={classes.blockElement}>
+                    <ListItemText
+                      className={classes.noPadding}
+                      primary="24/7 Maintenance"
+                    />
+                    <ListItemText
+                      className={classes.noPadding}
+                      primary="1-800-123-9876"
+                    />
+                  </ListItem>
                 </ListItem>
-              </ListItem>
-              <TextField
-                id="outlined-dense"
-                label="Address"
-                className={classNames(classes.textField, classes.dense)}
-                margin="dense"
-                variant="outlined"
-                onChange={this.handleInputChange}
-                value={this.state.address}
-                type="text"
-                name="address"
-              />
-              <TextField
-                id="outlined-multiline-static"
-                label="Description of Issue"
-                className={classNames(classes.textField, classes.dense)}
-                rows="6"
-                multiline
-                margin="dense"
-                variant="outlined"
-                onChange={this.handleInputChange}
-                value={this.state.description}
-                type="text"
-                name="description"
-              />
-              <TextField
-                id="outlined-dense"
-                label="Phone Number"
-                className={classNames(classes.textField, classes.dense)}
-                margin="dense"
-                variant="outlined"
-                onChange={this.handleInputChange}
-                value={this.state.phoneNumber}
-                type="integer"
-                name="phoneNumber"
-              />
-            </ListItem>
-            <ListItem className={classes.blockElement}>
-              <button onClick={this.onClick}>click me to see state</button>
-              <TextField
-                id="outlined-dense"
-                label="Upload photo -> CHANGE THIS!!!"
-                className={classNames(classes.dense)}
-                margin="dense"
-                variant="outlined"
-              />
-            </ListItem>
-          </List>
-          <div className={classes.center}>
-            <FormControlLabel
-              label="Permission to enter premises without tenant home"
-              control={
-                <Checkbox
-                  checked={this.state.permission}
-                  onChange={this.handleCheckedBox('permission')}
-                  value="permission"
-                  color="primary"
+                <TextField
+                  id="outlined-dense"
+                  label="Address"
+                  className={classNames(classes.textField, classes.dense)}
+                  margin="dense"
+                  variant="outlined"
+                  onChange={this.handleInputChange}
+                  value={this.state.address}
+                  type="text"
+                  name="address"
                 />
-              }
-            />
-          </div>
-          <div className={classes.center}>
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              color="primary"
-              className={classes.button}
-            >
-              Submit
-            </Button>
-          </div>
-        </div>
-      </form>
+                <TextField
+                  id="outlined-multiline-static"
+                  label="Description of Issue"
+                  className={classNames(classes.textField, classes.dense)}
+                  rows="6"
+                  multiline
+                  margin="dense"
+                  variant="outlined"
+                  onChange={this.handleInputChange}
+                  value={this.state.description}
+                  type="text"
+                  name="description"
+                />
+                <TextField
+                  id="outlined-dense"
+                  label="Phone Number"
+                  className={classNames(classes.textField, classes.dense)}
+                  margin="dense"
+                  variant="outlined"
+                  onChange={this.handleInputChange}
+                  value={this.state.phoneNumber}
+                  type="integer"
+                  name="phoneNumber"
+                />
+              </Grid>
+              <IconButton>
+                      <FileUploader />
+              </IconButton>
+              <Grid item xs={12} md={11}>
+                <div className={classes.center}>
+                  <FormControlLabel
+                    label="Permission to enter premises without tenant home"
+                    control={
+                      <Checkbox
+                        checked={this.state.permission}
+                        onChange={this.handleCheckedBox('permission')}
+                        value="permission"
+                        color="primary"
+                      />
+                    }
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} md={11}>
+                <div className={classes.center}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    color="primary"
+                    className={classes.button}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
+          </form>
+        </Grid>
+      </Grid>
     );
   }
 }
