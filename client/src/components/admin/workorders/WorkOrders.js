@@ -54,51 +54,15 @@ const styles = theme => ({
 class WorkOrders extends Component {
   state = {
     workOrders: [],
-    // workOrders: [
-    //   {
-    //     id: 1,
-    //     address: '171 N 600 E',
-    //     description: 'Clogged Drain',
-    //     permission: true,
-    //     phone: '801-432-5674',
-    //     status: 'submitted',
-    //   },
-    //   {
-    //     id: 2,
-    //     address: '171 N 600 E',
-    //     description: 'Clogged Drain',
-    //     permission: true,
-    //     phone: '801-432-5674',
-    //     status: 'submitted',
-    //   },
-    //   {
-    //     id: 3,
-    //     address: '171 N 600 E',
-    //     description: 'Clogged Drain',
-    //     permission: true,
-    //     phone: '801-432-5674',
-    //     status: 'submitted',
-    //   },
-    //   {
-    //     id: 4,
-    //     address: '171 N 600 E',
-    //     description: 'Clogged Drain',
-    //     permission: true,
-    //     phone: '801-432-5674',
-    //     status: 'submitted',
-    //   },
-    // ],
   };
 
   componentDidMount() {
     console.log(this.props.authTokenRecieved);
     if (this.props.authTokenRecieved) {
       axios.get('/api/work-orders/owner').then(orders => {
-        // console.log(orders.data);
         this.setState({ workOrders: orders.data.orders });
       });
     }
-    // console.log('CDM', this.state.workOrdersX);
   }
 
   componentDidUpdate(prevProps) {
@@ -108,12 +72,9 @@ class WorkOrders extends Component {
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
     ) {
       axios.get('/api/work-orders/owner').then(orders => {
-        // console.log('orders.data.orders', orders.data.orders);
         this.setState({ workOrders: orders.data.orders });
       });
     }
-
-    // console.log('CDU', this.state.workOrdersX);
   }
 
   sendAlert = () => {

@@ -9,12 +9,14 @@ router.use(express.json());
 // Place a work order
 router.post('/', (req, res) => {
   // const required = req.body;
-  const { description, property_access, tenant_id, house_id } = req.body;
+  const { description, property_access, tenant_id, house_id, work_order_status, work_order_image} = req.body;
   const workOrder = {
     description: description,
     property_access: property_access,
     tenant_id: tenant_id,
     house_id: house_id,
+    work_order_image: work_order_image,
+    work_order_status: work_order_status
   };
   if (!description) {
     res
