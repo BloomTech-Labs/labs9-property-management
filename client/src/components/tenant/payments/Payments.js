@@ -1,12 +1,12 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import testlogo from '../../../images/test-logo.svg';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -14,10 +14,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
+// import FormControl from '@material-ui/core/FormControl';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+// import Select from '@material-ui/core/Select';
+// import InputLabel from '@material-ui/core/InputLabel';
 
 const styles = theme => ({
   container: {
@@ -139,58 +139,48 @@ class Payments extends React.Component {
     const publishableKey = 'pk_test_IiM4lt5m1LYfjZBPfY8wa6Jo';
     return (
       <>
-        <List className={classes.root}>
-          <ListItem className={classes.blockElement}>
-            {/* <form>
-                <input
-                  placeholder="Amount to pay"
-                  name="paymentAmount"
-                  type="number"
-                  value={this.state.paymentAmount}
-                  onChange={this.handlePaymentChange}
-                />
-              </form> */}
-          </ListItem>
-        </List>
-        <List>
-          <ListItem className={classes.center}>
-            <Typography component="h1" variant="h5">
-              Make a rent payment
-            </Typography>
-          </ListItem>
-          <form onSubmit={''} noValidate autoComplete="off">
-            <List className={classes.box}>
-              <ListItem className={classes.blockElement}>
-                <ListItemText
-                  className={classNames(classes.center, classes.noPadding)}
-                  primary="Payment Amount"
-                />
-                <TextField
-                  id="outlined-dense"
-                  label="Amount"
-                  className={classNames(classes.textField, classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                  value={this.state.paymentAmount}
-                  onChange={this.handleChange('paymentAmount')}
-                />
-              </ListItem>
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} className={classes.title}>
+            <List className={classes.root}>
+              <Typography component="h1" variant="h5">
+                Make a Payment
+              </Typography>
+              <Divider component="li" />
             </List>
-          </form>
-          <div className={classes.center}>
-            <StripeCheckout
-              label="Make payment" //Component button text
-              name="Property Mgmt" //Modal Header
-              description="Make a payment."
-              panelLabel="Make payment" //Submit button in modal
-              amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
-              token={this.onToken}
-              stripeKey={publishableKey}
-              image={testlogo} //Pop-in header image
-              billingAddress={false}
-            />
-          </div>
-        </List>
+            <form onSubmit={''} noValidate autoComplete="off">
+              <List className={classes.box}>
+                <ListItem className={classes.blockElement}>
+                  <ListItemText
+                    className={classNames(classes.center, classes.noPadding)}
+                    primary="Payment Amount"
+                  />
+                  <TextField
+                    id="outlined-dense"
+                    label="Amount"
+                    className={classNames(classes.textField, classes.dense)}
+                    margin="dense"
+                    variant="outlined"
+                    value={this.state.paymentAmount}
+                    onChange={this.handleChange('paymentAmount')}
+                  />
+                </ListItem>
+              </List>
+            </form>
+            <div className={classes.center}>
+              <StripeCheckout
+                label="Make payment" //Component button text
+                name="Property Mgmt" //Modal Header
+                description="Make a payment."
+                panelLabel="Make payment" //Submit button in modal
+                amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
+                token={this.onToken}
+                stripeKey={publishableKey}
+                image={testlogo} //Pop-in header image
+                billingAddress={false}
+              />
+            </div>
+          </Grid>
+        </Grid>
       </>
     );
   }
