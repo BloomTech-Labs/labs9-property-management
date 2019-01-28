@@ -44,13 +44,19 @@ class Settings extends React.Component {
         .catch(error => console.log(error));
     }
   }
+
+  acceptInvite = event => {};
+
   render() {
     const { classes } = this.props;
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={16}>
-            <InviteTable invites={this.state.invites} />
+            <InviteTable
+              invites={this.state.invites}
+              acceptInvite={this.acceptInvite}
+            />
           </Grid>
         </Grid>
       </Grid>
