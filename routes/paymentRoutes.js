@@ -49,8 +49,8 @@ router.post('/', (req, res) => {
     .join('house_properties as h', 'h.house_id', 't.house_id')
     .join('owners as o', 'o.owner_uid', 'h.owner_uid')
     .select('o.owner_uid', 'o.stripe_user_id')
-    .then(stripeID => {
-      console.log(stripeID);
+    .then(stripeUID => {
+      console.log('Stripe', stripeUID[0].stripe_user_id);
     });
   const body = {
     source: req.body.token.id,
