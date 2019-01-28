@@ -88,6 +88,10 @@ class Tenants extends Component {
       .post('/api/invitations/admin', property)
       .then(response => {
         console.log(response);
+        axios.get('/api/invitations/admin').then(response => {
+          console.log(response.data);
+          this.setState({ pending_invites: response.data });
+        });
       })
       .catch(err => console.log(err));
   };
