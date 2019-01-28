@@ -113,6 +113,14 @@ class Dashboard extends React.Component {
     });
   };
 
+  submitWorkorder = event => {
+    this.props.history.push('/tenant/maintenance');
+  };
+
+  makePayment = event => {
+    this.props.history.push('/tenant/payments');
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -128,87 +136,83 @@ class Dashboard extends React.Component {
             </Typography>
             <Divider component="li" />
           </List>
-          <form onSubmit={''} autoComplete="off">
-            <Grid container justify="space-around" spacing={16}>
-              <Grid item xs={12} md={12}>
-                <List className={classes.center}>
-                  <Typography component="h1" variant="h5">
-                    Payment Details
-                  </Typography>
-                </List>
-              </Grid>
-              <Grid item xs={12} md={5}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  color="secondary"
-                  className={classNames(classes.button, classes.biggerText)}
-                  onClick={this.makePayment}
-                >
-                  Make a Payment
-                </Button>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  color="secondary"
-                  className={classNames(
-                    classes.button,
-                    classes.marginTop,
-                    classes.biggerText
-                  )}
-                  onClick={this.submitWorkorder}
-                >
-                  Submit a Work Order
-                </Button>
-                <Card className={classNames(classes.card, classes.marginTop)}>
-                  <CardContent>
-                    <ListItemText
-                      className={classes.cardTitle}
-                      color="primary"
-                      primary="Alerts"
-                      gutterBottom
-                    />
-                    <Divider component="li" />
-                    <Typography component="p">
-                      Work order #123 completed
-                    </Typography>
-                    <Typography component="p">Rent due 7/5/18</Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">Learn More</Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-              <Grid item xs={12} md={5}>
-                <ListItem>
-                  <Avatar>
-                    <Home />
-                  </Avatar>
-                  <ListItemText primary="Address" />
-                </ListItem>
-                <ListItem>
-                  <Avatar>
-                    <Call />
-                  </Avatar>
-                  <ListItemText primary="Office" />
-                </ListItem>
-                <ListItem>
-                  <Avatar>
-                    <Email />
-                  </Avatar>
-                  <ListItemText primary="Email" />
-                </ListItem>
-                <ListItem>
-                  <Avatar>
-                    <Call />
-                  </Avatar>
-                  <ListItemText primary="24/7 Maintenance" />
-                </ListItem>
-              </Grid>
+          <Grid container justify="space-around" spacing={16}>
+            <Grid item xs={12} md={12}>
+              <List className={classes.center}>
+                <Typography component="h1" variant="h5">
+                  Payment Details
+                </Typography>
+              </List>
             </Grid>
-          </form>
+            <Grid item xs={12} md={5}>
+              <Button
+                variant="contained"
+                fullWidth
+                color="secondary"
+                className={classNames(classes.button, classes.biggerText)}
+                onClick={this.makePayment}
+              >
+                Make a Payment
+              </Button>
+              <Button
+                variant="contained"
+                fullWidth
+                color="secondary"
+                className={classNames(
+                  classes.button,
+                  classes.marginTop,
+                  classes.biggerText
+                )}
+                onClick={this.submitWorkorder}
+              >
+                Submit a Work Order
+              </Button>
+              <Card className={classNames(classes.card, classes.marginTop)}>
+                <CardContent>
+                  <ListItemText
+                    className={classes.cardTitle}
+                    color="primary"
+                    primary="Alerts"
+                    gutterBottom
+                  />
+                  <Divider component="li" />
+                  <Typography component="p">
+                    Work order #123 completed
+                  </Typography>
+                  <Typography component="p">Rent due 7/5/18</Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Learn More</Button>
+                </CardActions>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={5}>
+              <ListItem>
+                <Avatar>
+                  <Home />
+                </Avatar>
+                <ListItemText primary="Address" />
+              </ListItem>
+              <ListItem>
+                <Avatar>
+                  <Call />
+                </Avatar>
+                <ListItemText primary="Office" />
+              </ListItem>
+              <ListItem>
+                <Avatar>
+                  <Email />
+                </Avatar>
+                <ListItemText primary="Email" />
+              </ListItem>
+              <ListItem>
+                <Avatar>
+                  <Call />
+                </Avatar>
+                <ListItemText primary="24/7 Maintenance" />
+              </ListItem>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     );
