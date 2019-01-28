@@ -1,6 +1,6 @@
 const styles = theme => ({
   container: {
-    marginTop: 100,
+    marginTop: 75,
     marginLeft: 0,
   },
   header: {

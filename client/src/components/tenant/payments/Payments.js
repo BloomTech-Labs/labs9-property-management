@@ -4,15 +4,15 @@ import axios from 'axios';
 import styled from 'styled-components';
 import testlogo from '../../../images/test-logo.svg';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
+import classNames from 'classnames';
+import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
@@ -23,6 +23,46 @@ const styles = theme => ({
     padding: 20,
     marginTop: 70,
   },
+  root: {
+    width: '100%',
+  },
+  card: {
+    marginTop: 25,
+    position: 'relative',
+    overflow: 'visible',
+    minWidth: '40%',
+    minHeight: 350,
+    zIndex: 0,
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  displayNone: {
+    display: 'none',
+  },
+  paper: {
+    width: '80%',
+    height: '80vh',
+    margin: 'auto',
+    marginTop: 50,
+  },
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
+  },
+  title: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: 50,
+  },
+  noPadding: {
+    padding: 0,
+  },
+  blockElement: {
+    display: 'block',
+  },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -31,47 +71,10 @@ const styles = theme => ({
   dense: {
     marginTop: 16,
   },
-  menu: {
-    width: 200,
-  },
-  section: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  box: {
-    display: 'flex',
-    padding: 10,
-  },
-  title: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 50,
-  },
-  root: {
-    width: '100%',
-  },
-  dividerFullWidth: {
-    margin: `2px 0 0 ${theme.spacing.unit * 2}px`,
-  },
-  dividerInset: {
-    margin: `2px 0 0 ${theme.spacing.unit * 9}px`,
-  },
-  submit: {
-    height: 40,
-    width: 70,
-    fontSize: 15,
-    marginTop: 10,
-  },
   center: {
     display: 'flex',
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
     justifyContent: 'center',
-  },
-  blockElement: {
-    display: 'block',
-  },
-  noPadding: {
-    padding: 0,
   },
   button: {
     width: 200,
