@@ -57,7 +57,8 @@ router.get('/owner', (req, res) => {
       'w.description',
       'property_access',
       'work_order_status',
-      'u.mobile'
+      'u.mobile',
+      'w.work_order_id'
     )
     .then(orders => {
       res.status(200).json({ orders });

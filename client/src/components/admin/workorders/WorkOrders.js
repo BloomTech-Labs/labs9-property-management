@@ -53,52 +53,52 @@ const styles = theme => ({
 
 class WorkOrders extends Component {
   state = {
-    workOrdersX: [],
-    workOrders: [
-      {
-        id: 1,
-        address: '171 N 600 E',
-        description: 'Clogged Drain',
-        permission: true,
-        phone: '801-432-5674',
-        status: 'submitted',
-      },
-      {
-        id: 2,
-        address: '171 N 600 E',
-        description: 'Clogged Drain',
-        permission: true,
-        phone: '801-432-5674',
-        status: 'submitted',
-      },
-      {
-        id: 3,
-        address: '171 N 600 E',
-        description: 'Clogged Drain',
-        permission: true,
-        phone: '801-432-5674',
-        status: 'submitted',
-      },
-      {
-        id: 4,
-        address: '171 N 600 E',
-        description: 'Clogged Drain',
-        permission: true,
-        phone: '801-432-5674',
-        status: 'submitted',
-      },
-    ],
+    workOrders: [],
+    // workOrders: [
+    //   {
+    //     id: 1,
+    //     address: '171 N 600 E',
+    //     description: 'Clogged Drain',
+    //     permission: true,
+    //     phone: '801-432-5674',
+    //     status: 'submitted',
+    //   },
+    //   {
+    //     id: 2,
+    //     address: '171 N 600 E',
+    //     description: 'Clogged Drain',
+    //     permission: true,
+    //     phone: '801-432-5674',
+    //     status: 'submitted',
+    //   },
+    //   {
+    //     id: 3,
+    //     address: '171 N 600 E',
+    //     description: 'Clogged Drain',
+    //     permission: true,
+    //     phone: '801-432-5674',
+    //     status: 'submitted',
+    //   },
+    //   {
+    //     id: 4,
+    //     address: '171 N 600 E',
+    //     description: 'Clogged Drain',
+    //     permission: true,
+    //     phone: '801-432-5674',
+    //     status: 'submitted',
+    //   },
+    // ],
   };
 
   componentDidMount() {
     console.log(this.props.authTokenRecieved);
     if (this.props.authTokenRecieved) {
       axios.get('/api/work-orders/owner').then(orders => {
-        console.log(orders.data);
-        this.setState({ workOrdersX: orders.data });
+        // console.log(orders.data);
+        this.setState({ workOrders: orders.data.orders });
       });
     }
-    console.log('CDM', this.state.workOrdersX);
+    // console.log('CDM', this.state.workOrdersX);
   }
 
   componentDidUpdate(prevProps) {
@@ -108,10 +108,12 @@ class WorkOrders extends Component {
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
     ) {
       axios.get('/api/work-orders/owner').then(orders => {
-        this.setState({ workOrdersX: orders.data });
+        // console.log('orders.data.orders', orders.data.orders);
+        this.setState({ workOrders: orders.data.orders });
       });
     }
-    console.log('CDU', this.state.workOrdersX);
+
+    // console.log('CDU', this.state.workOrdersX);
   }
 
   sendAlert = () => {
@@ -136,7 +138,7 @@ class WorkOrders extends Component {
                       variant="h5"
                       component="p"
                     >
-                      {`Work order #${entry.id}`}
+                      {`Work order #${entry.work_order_id}`}
                     </Typography>
                     <IconButton aria-label="View Image">
                       <FileUploader />
@@ -175,7 +177,10 @@ class WorkOrders extends Component {
                         <Avatar>
                           <Call />
                         </Avatar>
-                        <ListItemText primary="Phone" secondary={entry.phone} />
+                        <ListItemText
+                          primary="Phone"
+                          secondary={entry.mobile}
+                        />
                       </ListItem>
                     </List>
                     <FormControl component="fieldset" fullWidth={true}>
@@ -189,7 +194,7 @@ class WorkOrders extends Component {
                           value="submitted"
                           control={
                             <Radio
-                              checked={entry.status === 'submitted'}
+                              checked={entry.work_order_status === 'submitted'}
                               name="work-order-status"
                               aria-label="submitted"
                             />
@@ -201,7 +206,9 @@ class WorkOrders extends Component {
                           value="in-progress"
                           control={
                             <Radio
-                              checked={entry.status === 'in-progress'}
+                              checked={
+                                entry.work_order_status === 'in-progress'
+                              }
                               name="work-order-status"
                               aria-label="In Progress"
                             />
@@ -213,7 +220,7 @@ class WorkOrders extends Component {
                           value="completed"
                           control={
                             <Radio
-                              checked={entry.status === 'completed'}
+                              checked={entry.work_order_status === 'completed'}
                               name="work-order-status"
                               aria-label="Completed"
                             />
