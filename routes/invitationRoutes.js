@@ -8,11 +8,11 @@ router.use(express.json());
 
 // Invitation is created by owner
 router.post('/admin', (req, res) => {
-  const { email, lease_start, lease_end, uid, house_id } = req.body;
+  const { email, lease_start_date, lease_end_date, uid, house_id } = req.body;
 
   const invitation = {
-    lease_start_date: lease_start,
-    lease_end_date: lease_end,
+    lease_start_date: lease_start_date,
+    lease_end_date: lease_end_date,
     owner_uid: uid,
     house_id: house_id,
   };
@@ -46,7 +46,7 @@ router.get('/admin', (req, res) => {
     .join('house_properties as h', 'i.house_id', 'h.house_id')
     .select(
       'i.id',
-      'users.display_name',
+      'users.email',
       'i.lease_start_date',
       'i.lease_end_date',
       'h.property_name'

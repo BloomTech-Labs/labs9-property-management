@@ -55,11 +55,7 @@ class EnhancedTableHead extends React.Component {
           </TableCell>
           {rows.map(
             row => (
-              <TableCell
-                key={row.id}
-                align={row.numeric ? 'right' : 'left'}
-                padding={row.disablePadding ? 'none' : 'default'}
-              >
+              <TableCell key={row.id} align={'center'} padding={'none'}>
                 {row.label}
               </TableCell>
             ),
@@ -235,12 +231,23 @@ class InvitesTable extends React.Component {
                       <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        {n.display_name}
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        align="justify"
+                        padding="none"
+                      >
+                        {n.email}
                       </TableCell>
-                      <TableCell align="right">{n.property_name}</TableCell>
-                      <TableCell align="right">{n.lease_start_date}</TableCell>
-                      <TableCell align="right">{n.lease_end_date}</TableCell>
+                      <TableCell padding="dense" align="center">
+                        {n.property_name}
+                      </TableCell>
+                      <TableCell padding="dense" align="center">
+                        {n.lease_start_date}
+                      </TableCell>
+                      <TableCell padding="dense" align="center">
+                        {n.lease_end_date}
+                      </TableCell>
                     </TableRow>
                   );
                 })}

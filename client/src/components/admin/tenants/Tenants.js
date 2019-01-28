@@ -78,8 +78,8 @@ class Tenants extends Component {
 
     const property = {
       email: this.state.email,
-      lease_start_date: this.state.leaseStart,
-      lease_end_date: this.state.leaseEnd,
+      lease_start_date: this.state.leaseStart.toDateString(),
+      lease_end_date: this.state.leaseEnd.toDateString(),
       house_id: this.state.house_id,
     };
 
@@ -96,15 +96,15 @@ class Tenants extends Component {
     const { classes } = this.props;
     const { pending_invites } = this.state;
 
-    console.log(this.state.properties);
+    console.log(this.state.leaseStart, ' ', this.state.leaseEnd);
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={6}>
               <InvitesTable pending={pending_invites} />
             </Grid>
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={6}>
               <Card className={classes.card}>
                 <CardHeader
                   title="Tenants"
@@ -122,7 +122,7 @@ class Tenants extends Component {
                 />
               </Card>
             </Grid>
-            <Grid item xs={12} md={11}>
+            <Grid item xs={12} md={12}>
               <Card className={classes.longCard}>
                 <CardHeader
                   title="Add a Tenant"
