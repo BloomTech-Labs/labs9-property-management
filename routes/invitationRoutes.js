@@ -39,8 +39,18 @@ router.post('/admin', (req, res) => {
 
 // Owner recieves pending invitations
 router.get('/admin', (req, res) => {
-  db('invitations')
-    .where('owner_uid', req.body.uid)
+  db('invitations as i')
+    .where('i.owner_uid', req.body.uid)
+    .join('tenants as t', 'i.tenant_uid', 't.tenant_uid')
+    .join('users', 't.tenant_uid', 'users.uid')
+    .join('house_properties as h', 'i.house_id', 'h.house_id')
+    .select(
+      'i.id',
+      'users.display_name',
+      'i.lease_start_date',
+      'i.lease_end_date',
+      'h.property_name'
+    )
     .then(data => {
       console.log(data);
       res.status(200).json(data);

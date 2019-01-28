@@ -236,9 +236,9 @@ class InvitesTable extends React.Component {
                         <Checkbox checked={isSelected} />
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
-                        {n.tenant_uid}
+                        {n.display_name}
                       </TableCell>
-                      <TableCell align="right">{n.house_id}</TableCell>
+                      <TableCell align="right">{n.property_name}</TableCell>
                       <TableCell align="right">{n.lease_start_date}</TableCell>
                       <TableCell align="right">{n.lease_end_date}</TableCell>
                     </TableRow>

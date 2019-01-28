@@ -29,18 +29,21 @@ const withAuthentication = Component => {
 
             axios.defaults.headers.common['Authorization'] = idToken;
 
-            axios.get('/api/users/verifyregistration').then(response => {
-              localStorage.setItem('authUser', JSON.stringify(authUser));
-              localStorage.setItem(
-                'authUserRole',
-                JSON.stringify(response.data.role)
-              );
-              this.setState({
-                authUser: authUser,
-                authUserRole: response.data.role,
-                authTokenRecieved: true,
-              });
-            });
+            axios
+              .get('/api/users/verifyregistration')
+              .then(response => {
+                localStorage.setItem('authUser', JSON.stringify(authUser));
+                localStorage.setItem(
+                  'authUserRole',
+                  JSON.stringify(response.data.role)
+                );
+                this.setState({
+                  authUser: authUser,
+                  authUserRole: response.data.role,
+                  authTokenRecieved: true,
+                });
+              })
+              .catch(error => console.log(error));
           });
         } else {
           localStorage.setItem('authUser', null);

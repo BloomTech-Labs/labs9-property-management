@@ -88,6 +88,7 @@ class Setup extends Component {
         .post('/api/users/register', {
           role: this.state.accountType,
           email: this.props.authUser.email,
+          display_name: this.props.authUser.displayName,
         })
         .then(response => {
           console.log('register response: ', response);

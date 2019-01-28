@@ -37,6 +37,7 @@ class Tenants extends Component {
       axios
         .get('/api/invitations/admin')
         .then(response => {
+          console.log(response.data);
           this.setState({ pending_invites: response.data });
         })
         .catch(error => console.log(error));
@@ -57,6 +58,7 @@ class Tenants extends Component {
       axios
         .get('/api/invitations/admin')
         .then(response => {
+          console.log(response.data);
           this.setState({ pending_invites: response.data });
         })
         .catch(error => console.log(error));
