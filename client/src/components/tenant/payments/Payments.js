@@ -1,19 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
+import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
+// import styled from 'styled-components';
+import testlogo from '../../../images/test-logo.svg';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
 import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
+// import FormControl from '@material-ui/core/FormControl';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+// import Select from '@material-ui/core/Select';
+// import InputLabel from '@material-ui/core/InputLabel';
 
 const styles = theme => ({
   container: {
@@ -88,6 +92,40 @@ const styles = theme => ({
 class Payments extends React.Component {
   state = {
     amount: '',
+    payments: [],
+    paymentAmount: 72500,
+  };
+
+  onToken = token => {
+    const body = {
+      amount: this.state.paymentAmount,
+      token: token,
+    };
+    axios
+      .post('/api/payments', body)
+      .then(response => {
+        console.log('response', response.data);
+        alert(
+          'Payment Success: token was received by backend and charge was made.'
+        );
+        this.setState(prevState => {
+          return {
+            payments: prevState.payments.concat({
+              amount: (body.amount / 100).toFixed(2),
+              timestamp: Date.now(),
+            }),
+          };
+        });
+      })
+      .catch(error => {
+        console.log('Payment Error: ', error);
+        alert('Payment Error');
+      });
+  };
+
+  handlePaymentChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
   handleChange = name => event => {
@@ -98,105 +136,52 @@ class Payments extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    const publishableKey = 'pk_test_IiM4lt5m1LYfjZBPfY8wa6Jo';
     return (
-      <Grid container className={classes.container} spacing={16}>
-        <Grid item xs={12} className={classes.title}>
-          <List className={classes.root}>
-            <Typography component="h1" variant="h5">
-              Outstanding Balance
-            </Typography>
-            <Typography component="h1" variant="h5">
-              -350.00
-            </Typography>
-            <Divider component="li" />
-          </List>
-          <form onSubmit={''} autoComplete="off">
-            <Grid container justify="space-around" spacing={16}>
-              <Grid item xs={12} md={12}>
-                <List className={classes.center}>
-                  <Typography component="h1" variant="h5">
-                    Payment Details
-                  </Typography>
-                </List>
-              </Grid>
-              <Grid item xs={12} md={5}>
-                <ListItemText
-                  className={classNames(classes.center, classes.noPadding)}
-                  primary="Payment Amount"
-                />
-                <TextField
-                  id="outlined-dense"
-                  label="Amount"
-                  className={classNames(classes.textField, classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                />
-                <ListItemText
-                  className={classNames(classes.center, classes.customPadding)}
-                  primary="Payment Method"
-                />
-              </Grid>
-              <Grid item xs={12} md={5}>
-                <ListItemText
-                  className={classNames(classes.center, classes.noPadding)}
-                  primary="Card Information"
-                />
-                <TextField
-                  id="outlined-dense"
-                  label="Name on Bank Account"
-                  className={classNames(classes.textField, classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                />
-                <FormControl className={classes.textField} required>
-                  <InputLabel htmlFor="account-type-native-required">
-                    Select Account Type
-                  </InputLabel>
-                  <Select
-                    native
-                    name="accountType"
-                    inputProps={{ id: 'account-type-native-required' }}
-                    // onChange={this.handleChange('accountType')}
-                  >
-                    <option value="" />
-                    <option value="owner">Credit</option>
-                    <option value="tenant">Debit</option>
-                  </Select>
-                  <FormHelperText>Required</FormHelperText>
-                </FormControl>
-                <TextField
-                  id="outlined-dense"
-                  label="Routing Number"
-                  className={classNames(classes.textField, classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                />
-                <TextField
-                  id="outlined-dense"
-                  label="Accounting Number"
-                  className={classNames(classes.textField, classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={12} md={11}>
-                <div className={classes.center}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Submit
-                  </Button>
-                </div>
-              </Grid>
-            </Grid>
-          </form>
+      <>
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} className={classes.title}>
+            <List className={classes.root}>
+              <Typography component="h1" variant="h5">
+                Make a Payment
+              </Typography>
+              <Divider component="li" />
+            </List>
+            <form onSubmit={''} noValidate autoComplete="off">
+              <List className={classes.box}>
+                <ListItem className={classes.blockElement}>
+                  <ListItemText
+                    className={classNames(classes.center, classes.noPadding)}
+                    primary="Payment Amount"
+                  />
+                  <TextField
+                    id="outlined-dense"
+                    label="Amount"
+                    className={classNames(classes.textField, classes.dense)}
+                    margin="dense"
+                    variant="outlined"
+                    value={this.state.paymentAmount}
+                    onChange={this.handleChange('paymentAmount')}
+                  />
+                </ListItem>
+              </List>
+            </form>
+            <div className={classes.center}>
+              <StripeCheckout
+                label="Make payment" //Component button text
+                name="Property Mgmt" //Modal Header
+                description="Make a payment."
+                panelLabel="Make payment" //Submit button in modal
+                amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
+                token={this.onToken}
+                stripeKey={publishableKey}
+                image={testlogo} //Pop-in header image
+                billingAddress={false}
+              />
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
+      </>
     );
   }
 }

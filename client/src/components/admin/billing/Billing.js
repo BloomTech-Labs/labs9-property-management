@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Skeleton from 'react-loading-skeleton';
 
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
@@ -58,7 +59,10 @@ const styles = theme => ({
     maxWidth: 300,
     marginTop: 100,
     marginLeft: 30,
-    paddingLeft: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   root: {
     display: 'flex',
@@ -185,13 +189,7 @@ class Billing extends Component {
       <Card className={classes.card}>
         <CardContent>
           {this.state.fetchingStripeID ? (
-            <Typography
-              className={classes.tableTitle}
-              component="h6"
-              variant="h6"
-            >
-              Loading stripe details...
-            </Typography>
+            <Skeleton height={30} />
           ) : (
             stripeConnectionDetails
           )}
