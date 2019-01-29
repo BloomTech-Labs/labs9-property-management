@@ -6,87 +6,78 @@ import connectwstripe from '../../../images/connect-with-stripe@2x.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Skeleton from 'react-loading-skeleton';
-
-import Typography from '@material-ui/core/Typography';
+import { withStyles, withTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
 const StripeButton = styled.img`
   width: 200px;
 `;
-
 const styles = theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    marginTop: 200,
-    minHeight: '400px',
-    // border: "1px solid orange"
-  },
-  leftColumn: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    // border: "1px solid black",
-    flexDirection: 'column',
-  },
-  rightColumn: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-    marginTop: 66,
-    marginBottom: 30,
-  },
-  button: {
-    width: 200,
-    marginTop: 38,
-  },
-  card: {
-    maxWidth: 300,
     marginTop: 100,
-    marginLeft: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 20,
-    paddingBottom: 20,
+    marginLeft: 0,
   },
   root: {
+    width: '100%',
+    maxWidth: 400,
+    backgroundColor: theme.palette.background.paper,
+  },
+  card: {
+    marginTop: 25,
+    paddingTop: 75,
+    position: 'relative',
+    overflow: 'visible',
+    minWidth: '40%',
+    minHeight: 350,
+    zIndex: 0,
+  },
+  longCard: {
+    position: 'relative',
+    overflow: 'visible',
+    minWidth: '80%',
+    minHeight: 350,
+    zIndex: 0,
+    marginTop: 50,
+  },
+  cardTop: {
+    padding: '15px',
+    width: '90%',
+    backgroundColor: '#5f29ff',
+    zIndex: '2000',
+    top: '-6%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    position: 'absolute',
+    boxShadow:
+      '0px 5px 5px -3px rgba(81,71,255,0.2), 0px 8px 10px 1px rgba(81,71,255,0.2), 0px 3px 14px 2px rgba(81,71,255,0.2)',
+    borderRadius: '4px',
+    color: 'white',
+  },
+  actions: {
     display: 'flex',
-    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
   },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 220,
-    marginTop: 30,
-    marginLeft: 30,
+  displayNone: {
+    display: 'none',
   },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+  paper: {
+    width: '80%',
+    height: '80vh',
+    margin: 'auto',
+    marginTop: 50,
   },
-  rootTable: {
-    // width: "100%",
-    overflowX: 'auto',
-    marginTop: 30,
-  },
-  table: {
-    minWidth: 150,
-  },
-  tableTitle: {
-    marginLeft: 10,
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
   },
 });
 
@@ -186,15 +177,65 @@ class Billing extends Component {
     }
 
     return (
-      <Card className={classes.card}>
-        <CardContent>
-          {this.state.fetchingStripeID ? (
-            <Skeleton height={30} />
-          ) : (
-            stripeConnectionDetails
-          )}
-        </CardContent>
-      </Card>
+      <>
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12}>
+            <Grid container justify="space-around" spacing={16}>
+              <Grid item xs={12} md={5}>
+                <Card className={classes.card}>
+                  <CardHeader
+                    title="Your Payment Info & Properties"
+                    subheader="Select a property to view Payments"
+                    className={classes.cardTop}
+                    titleTypographyProps={{
+                      component: 'h4',
+                      variant: 'body1',
+                      color: 'inherit',
+                    }}
+                    subheaderTypographyProps={{
+                      variant: 'overline',
+                      color: 'secondary',
+                    }}
+                  />
+
+                  {this.state.fetchingStripeID ? (
+                    <Skeleton height={30} />
+                  ) : (
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {stripeConnectionDetails}
+                      </Typography>
+                      <Typography component="p">
+                        Lizards are a widespread group of squamate reptiles,
+                        with over 6,000 species, ranging across all continents
+                        except Antarctica
+                      </Typography>
+                    </CardContent>
+                  )}
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={5}>
+                <Card className={classes.card}>
+                  <CardHeader
+                    title="Payment History"
+                    subheader="Most Recent Rent Payments"
+                    className={classes.cardTop}
+                    titleTypographyProps={{
+                      component: 'h4',
+                      variant: 'body1',
+                      color: 'inherit',
+                    }}
+                    subheaderTypographyProps={{
+                      variant: 'overline',
+                      color: 'secondary',
+                    }}
+                  />
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </>
     );
   }
 }
