@@ -99,13 +99,15 @@ class Maintenance extends React.Component {
     axios
       .get(endpoint)
       .then(response => {
-        this.setState(() => ({
-          address: response.data[0].address,
-          phoneNumber: response.data[0].mobile,
-          maintenanceNum: response.data[0].maintenance_ph,
-          houseID: response.data[0].house_id,
-          tenantID: response.data[0].tenant_id,
-        }));
+        if (response.data.length > 0) {
+          this.setState(() => ({
+            address: response.data[0].address,
+            phoneNumber: response.data[0].mobile,
+            maintenanceNum: response.data[0].maintenance_ph,
+            houseID: response.data[0].house_id,
+            tenantID: response.data[0].tenant_id,
+          }));
+        }
       })
       .catch(error => {
         console.error('Server Error: ', error);
