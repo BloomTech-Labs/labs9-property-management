@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withAuthUser } from '../../session';
+import { compose } from 'recompose';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -15,6 +17,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { Home, Call, Email } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
+import Skeleton from 'react-loading-skeleton';
 
 const styles = theme => ({
   container: {
@@ -102,10 +105,66 @@ const styles = theme => ({
   },
 });
 
-class Dashboard extends React.Component {
+class Dashboard extends Component {
   state = {
     amount: '',
+    city: '',
+    state: '',
+    zip_code: '',
+    address: '',
+    office_phone: '',
+    maintenance_phone: '',
+    owner_email: '',
   };
+
+  componentDidMount() {
+    if (this.props.authTokenRecieved) {
+      const endpoint = 'api/tenants/dashboard/';
+      axios
+        .get(endpoint)
+        .then(response => {
+          if (response.data.length > 0) {
+            console.log('This is the response: ', response);
+            this.setState(() => ({
+              address: response.data[0].address,
+              city: response.data[0].city,
+              state: response.data[0].state,
+              zip_code: response.data[0].zip_code,
+              office_phone: response.data[0].office_ph,
+              maintenance_phone: response.data[0].maintenance_ph,
+              owner_email: response.data[0].email,
+            }));
+          }
+        })
+        .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err));
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.authTokenRecieved &&
+      this.props.authTokenRecieved !== prevProps.authTokenRecieved
+    ) {
+      const endpoint = 'api/tenants/dashboard/';
+      axios
+        .get(endpoint)
+        .then(response => {
+          if (response.data.length > 0) {
+            console.log('This is the response: ', response);
+            this.setState(() => ({
+              address: response.data[0].address,
+              city: response.data[0].city,
+              state: response.data[0].state,
+              zip_code: response.data[0].zip_code,
+              office_phone: response.data[0].office_ph,
+              maintenance_phone: response.data[0].maintenance_ph,
+              owner_email: response.data[0].email,
+            }));
+          }
+        })
+        .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err));
+    }
+  }
 
   handleChange = name => event => {
     this.setState({
@@ -123,6 +182,65 @@ class Dashboard extends React.Component {
 
   render() {
     const { classes } = this.props;
+    let tenantDetails;
+
+    // ======= renders tenant information if the tenant was assign to a property
+    if (this.state.address) {
+      tenantDetails = (
+        <List>
+          <ListItem>
+            <Avatar>
+              <Home />
+            </Avatar>
+            <ListItemText
+              primary="Address:"
+              secondary={
+                this.state.address +
+                ', ' +
+                this.state.city +
+                ', ' +
+                this.state.state +
+                ', ' +
+                this.state.zip_code
+              }
+            />
+          </ListItem>
+          <ListItem>
+            <Avatar>
+              <Call />
+            </Avatar>
+            <ListItemText
+              primary="Office:"
+              secondary={this.state.office_phone}
+            />
+          </ListItem>
+          <ListItem>
+            <Avatar>
+              <Email />
+            </Avatar>
+            <ListItemText primary="Email:" secondary={this.state.owner_email} />
+          </ListItem>
+          <ListItem>
+            <Avatar>
+              <Call />
+            </Avatar>
+            <ListItemText
+              primary="24/7 Maintenance:"
+              secondary={this.state.maintenance_phone}
+            />
+          </ListItem>
+        </List>
+      );
+    } else {
+      tenantDetails = (
+        <ListItem>
+          <ListItemText
+            primary="No house property assign."
+            secondary="Talk to your administrator."
+          />
+        </ListItem>
+      );
+    }
 
     return (
       <Grid container className={classes.container} spacing={16}>
@@ -187,30 +305,7 @@ class Dashboard extends React.Component {
               </Card>
             </Grid>
             <Grid item xs={12} md={5}>
-              <ListItem>
-                <Avatar>
-                  <Home />
-                </Avatar>
-                <ListItemText primary="Address" />
-              </ListItem>
-              <ListItem>
-                <Avatar>
-                  <Call />
-                </Avatar>
-                <ListItemText primary="Office" />
-              </ListItem>
-              <ListItem>
-                <Avatar>
-                  <Email />
-                </Avatar>
-                <ListItemText primary="Email" />
-              </ListItem>
-              <ListItem>
-                <Avatar>
-                  <Call />
-                </Avatar>
-                <ListItemText primary="24/7 Maintenance" />
-              </ListItem>
+              {tenantDetails}
             </Grid>
           </Grid>
         </Grid>
@@ -223,4 +318,9 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Dashboard);
+const DashboardPage = compose(
+  withAuthUser,
+  withStyles(styles)
+)(Dashboard);
+
+export default DashboardPage;
