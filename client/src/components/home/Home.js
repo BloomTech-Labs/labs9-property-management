@@ -11,6 +11,7 @@ import {
   AppImageContainer,
 } from './HomeStyles';
 import appshot from '../../images/app-shot.svg';
+import appshotmidfi from '../../images/app-shot-mid-fi.svg';
 import { GlobalStyle } from '../../styles/Styles';
 
 class Home extends Component {
