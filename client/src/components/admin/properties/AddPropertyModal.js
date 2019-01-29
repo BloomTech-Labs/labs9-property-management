@@ -49,6 +49,7 @@ class AddPropertyModal extends Component {
     office_ph: 0,
     maintenance_ph: 0,
   };
+  // test
 
   handleChange = name => event => {
     this.setState({
