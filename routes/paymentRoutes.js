@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('../db/dbConfig');
 const router = express.Router();
 
 router.use(express.json());
@@ -21,12 +22,34 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const body = {
-    source: req.body.token.id,
-    amount: req.body.amount,
-    currency: 'usd',
-  };
-  stripe.charges.create(body, stripeChargeCallback(res));
+  // here we also need to make some db queries to get the associated owner stripe ID
+  // see above reference code about passing the connected stripe account id
+  const { uid } = req.body;
+  db('tenants as t')
+    .where('t.tenant_uid', uid)
+    .join('house_properties as h', 'h.house_id', 't.house_id')
+    .join('owners as o', 'o.owner_uid', 'h.owner_uid')
+    .select('o.owner_uid', 'o.stripe_user_id')
+    .then(stripeUID => {
+      console.log('Stripe', stripeUID[0].stripe_user_id);
+      stripe.charges.create(
+        {
+          amount: req.body.amount,
+          source: req.body.token.id,
+          currency: 'usd',
+          source: 'tok_visa',
+          application_fee: 1000,
+        },
+        {
+          stripe_account: stripeUID[0].stripe_user_id,
+        },
+        stripeChargeCallback(res)
+      );
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(err);
+    });
 });
 
 module.exports = router;

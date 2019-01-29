@@ -41,4 +41,54 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+// ====== get tenant info for dashboard view ======
+router.get('/dashboard', (req, res) => {
+  const { uid } = req.body;
+  console.log('Tenant UID', uid);
+
+  db('tenants as t')
+    .join('house_properties as h', 'h.house_id', 't.house_id')
+    .join('users as u', 'h.owner_uid', 'u.owner_uid')
+    .select(
+      'h.address',
+      'h.city',
+      'h.state',
+      'h.zip_code',
+      'u.email',
+      'h.office_ph',
+      'h.maintenance_ph'
+    )
+    .where('t,tenant_uid', uid)
+    .then(tenantInfo => {
+      res.status(200).json(tenantInfo);
+    })
+    .catch(err =>
+      res.status(500).json({ errorMessage: 'Could not retrieved data.' })
+    );
+});
+
+// ====== get tenant info for Tenant Maintenance View ======
+router.get('/maintenanceView', (req, res) => {
+  const { uid } = req.body;
+  console.log('Tenant UID', uid);
+
+  db('tenants as t')
+    .join('house_properties as h', 'h.house_id', 't.house_id')
+    .select(
+      'h.address',
+      'h.city',
+      'h.state',
+      'h.zip_code',
+      'h.office_ph',
+      'h.maintenance_ph'
+    )
+    .where('t.tenant_uid', uid)
+    .then(tenantInfo => {
+      res.status(200).json(tenantInfo);
+    })
+    .catch(err =>
+      res.status(500).json({ errorMessage: 'Could not retrieved data.' })
+    );
+});
+
 module.exports = router;

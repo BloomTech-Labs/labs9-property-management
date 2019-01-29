@@ -1,23 +1,68 @@
 import React from 'react';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
+// import styled from 'styled-components';
+import testlogo from '../../../images/test-logo.svg';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+// import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
+import ListItem from '@material-ui/core/ListItem';
+import classNames from 'classnames';
+import TextField from '@material-ui/core/TextField';
+// import FormControl from '@material-ui/core/FormControl';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+// import Select from '@material-ui/core/Select';
+// import InputLabel from '@material-ui/core/InputLabel';
 
 const styles = theme => ({
   container: {
     padding: 20,
     marginTop: 70,
+  },
+  root: {
+    width: '100%',
+  },
+  card: {
+    marginTop: 25,
+    position: 'relative',
+    overflow: 'visible',
+    minWidth: '40%',
+    minHeight: 350,
+    zIndex: 0,
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  displayNone: {
+    display: 'none',
+  },
+  paper: {
+    width: '80%',
+    height: '80vh',
+    margin: 'auto',
+    marginTop: 50,
+  },
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
+  },
+  title: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginBottom: 50,
+  },
+  noPadding: {
+    padding: 0,
+  },
+  blockElement: {
+    display: 'block',
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -27,47 +72,10 @@ const styles = theme => ({
   dense: {
     marginTop: 16,
   },
-  menu: {
-    width: 200,
-  },
-  section: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  box: {
-    display: 'flex',
-    padding: 10,
-  },
-  title: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 50,
-  },
-  root: {
-    width: '100%',
-  },
-  dividerFullWidth: {
-    margin: `2px 0 0 ${theme.spacing.unit * 2}px`,
-  },
-  dividerInset: {
-    margin: `2px 0 0 ${theme.spacing.unit * 9}px`,
-  },
-  submit: {
-    height: 40,
-    width: 70,
-    fontSize: 15,
-    marginTop: 10,
-  },
   center: {
     display: 'flex',
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
     justifyContent: 'center',
-  },
-  blockElement: {
-    display: 'block',
-  },
-  noPadding: {
-    padding: 0,
   },
   button: {
     width: 200,
@@ -84,6 +92,40 @@ const styles = theme => ({
 class Payments extends React.Component {
   state = {
     amount: '',
+    payments: [],
+    paymentAmount: 72500,
+  };
+
+  onToken = token => {
+    const body = {
+      amount: this.state.paymentAmount,
+      token: token,
+    };
+    axios
+      .post('/api/payments', body)
+      .then(response => {
+        console.log('response', response.data);
+        alert(
+          'Payment Success: token was received by backend and charge was made.'
+        );
+        this.setState(prevState => {
+          return {
+            payments: prevState.payments.concat({
+              amount: (body.amount / 100).toFixed(2),
+              timestamp: Date.now(),
+            }),
+          };
+        });
+      })
+      .catch(error => {
+        console.log('Payment Error: ', error);
+        alert('Payment Error');
+      });
+  };
+
+  handlePaymentChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
   handleChange = name => event => {
@@ -94,27 +136,17 @@ class Payments extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    const publishableKey = 'pk_test_IiM4lt5m1LYfjZBPfY8wa6Jo';
     return (
-      <div className={classes.container}>
-        <div className={classes.title}>
-          <List className={classes.root}>
-            <ListItem className={classes.blockElement}>
+      <>
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} className={classes.title}>
+            <List className={classes.root}>
               <Typography component="h1" variant="h5">
-                Outstanding Balance
+                Make a Payment
               </Typography>
-              <Typography component="h1" variant="h5">
-                -350.00
-              </Typography>
-            </ListItem>
-            <Divider component="li" />
-          </List>
-          <List>
-            <ListItem className={classes.center}>
-              <Typography component="h1" variant="h5">
-                Payment Details
-              </Typography>
-            </ListItem>
+              <Divider component="li" />
+            </List>
             <form onSubmit={''} noValidate autoComplete="off">
               <List className={classes.box}>
                 <ListItem className={classes.blockElement}>
@@ -128,74 +160,28 @@ class Payments extends React.Component {
                     className={classNames(classes.textField, classes.dense)}
                     margin="dense"
                     variant="outlined"
-                  />
-                  <ListItemText
-                    className={classNames(
-                      classes.center,
-                      classes.customPadding
-                    )}
-                    primary="Payment Method"
-                  />
-                </ListItem>
-                <ListItem className={classes.blockElement}>
-                  <ListItemText
-                    className={classNames(classes.center, classes.noPadding)}
-                    primary="Card Information"
-                  />
-                  <TextField
-                    id="outlined-dense"
-                    label="Name on Bank Account"
-                    className={classNames(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                  />
-                  <FormControl className={classes.textField} required>
-                    <InputLabel htmlFor="account-type-native-required">
-                      Select Account Type
-                    </InputLabel>
-                    <Select
-                      native
-                      name="accountType"
-                      inputProps={{ id: 'account-type-native-required' }}
-                      // onChange={this.handleChange('accountType')}
-                    >
-                      <option value="" />
-                      <option value="owner">Credit</option>
-                      <option value="tenant">Debit</option>
-                    </Select>
-                    <FormHelperText>Required</FormHelperText>
-                  </FormControl>
-                  <TextField
-                    id="outlined-dense"
-                    label="Routing Number"
-                    className={classNames(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                  />
-                  <TextField
-                    id="outlined-dense"
-                    label="Accounting Number"
-                    className={classNames(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
+                    value={this.state.paymentAmount}
+                    onChange={this.handleChange('paymentAmount')}
                   />
                 </ListItem>
               </List>
-              <div className={classes.center}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                  className={classes.button}
-                >
-                  Submit
-                </Button>
-              </div>
             </form>
-          </List>
-        </div>
-      </div>
+            <div className={classes.center}>
+              <StripeCheckout
+                label="Make payment" //Component button text
+                name="Property Mgmt" //Modal Header
+                description="Make a payment."
+                panelLabel="Make payment" //Submit button in modal
+                amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
+                token={this.onToken}
+                stripeKey={publishableKey}
+                image={testlogo} //Pop-in header image
+                billingAddress={false}
+              />
+            </div>
+          </Grid>
+        </Grid>
+      </>
     );
   }
 }

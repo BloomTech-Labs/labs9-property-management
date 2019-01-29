@@ -25,6 +25,7 @@ class Tenants extends Component {
     leaseEnd: new Date(),
     properties: [],
     house_id: 0, // Selected property
+    pending_invites: [],
   };
 
   componentDidMount() {
@@ -32,6 +33,14 @@ class Tenants extends Component {
       axios.get('/api/properties/admin').then(response => {
         this.setState({ properties: response.data.properties });
       });
+
+      axios
+        .get('/api/invitations/admin')
+        .then(response => {
+          console.log(response.data);
+          this.setState({ pending_invites: response.data });
+        })
+        .catch(error => console.log(error));
     }
   }
 
@@ -45,6 +54,14 @@ class Tenants extends Component {
         console.log(response.data.properties);
         this.setState({ properties: response.data.properties });
       });
+
+      axios
+        .get('/api/invitations/admin')
+        .then(response => {
+          console.log(response.data);
+          this.setState({ pending_invites: response.data });
+        })
+        .catch(error => console.log(error));
     }
   }
 
@@ -61,29 +78,37 @@ class Tenants extends Component {
 
     const property = {
       email: this.state.email,
-      lease_start_date: this.state.leaseStart,
-      lease_end_date: this.state.leaseEnd,
+      lease_start_date: this.state.leaseStart.toDateString(),
+      lease_end_date: this.state.leaseEnd.toDateString(),
       house_id: this.state.house_id,
     };
 
     console.log('property: ', property);
     axios
-      .post('/api/invitations', property)
+      .post('/api/invitations/admin', property)
       .then(response => {
         console.log(response);
+        axios.get('/api/invitations/admin').then(response => {
+          console.log(response.data);
+          this.setState({ pending_invites: response.data });
+        });
       })
       .catch(err => console.log(err));
   };
 
   render() {
     const { classes } = this.props;
-    console.log(this.state.properties);
+    const { pending_invites } = this.state;
+
+    console.log(this.state.leaseStart, ' ', this.state.leaseEnd);
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
-            <Grid item xs={12} md={5} />
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={6}>
+              <InvitesTable pending={pending_invites} />
+            </Grid>
+            <Grid item xs={12} md={6}>
               <Card className={classes.card}>
                 <CardHeader
                   title="Tenants"
@@ -101,7 +126,7 @@ class Tenants extends Component {
                 />
               </Card>
             </Grid>
-            <Grid item xs={12} md={11}>
+            <Grid item xs={12} md={12}>
               <Card className={classes.longCard}>
                 <CardHeader
                   title="Add a Tenant"
