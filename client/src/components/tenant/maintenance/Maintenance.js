@@ -17,6 +17,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FileUploader from '../../admin/workorders/FileUploader';
 import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   container: {
@@ -80,6 +81,13 @@ const styles = theme => ({
     width: 200,
     marginTop: 20,
   },
+  customPaper: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 11,
+    maxWidth: '60%',
+  },
 });
 
 class Maintenance extends React.Component {
@@ -114,9 +122,9 @@ class Maintenance extends React.Component {
       });
   }
 
-  urlHandler = (props) => {
-    this.setState({})
-  }
+  urlHandler = props => {
+    this.setState({});
+  };
 
   submitWorkOrder = event => {
     event.preventDefault();
@@ -168,95 +176,104 @@ class Maintenance extends React.Component {
             </Typography>
             <Divider component="li" />
           </List>
-          <form onSubmit={this.submitWorkOrder} autoComplete="off">
-            <Grid container justify="space-around" spacing={16}>
-              <Grid item xs={12} md={5}>
-                <ListItem>
-                  <Avatar>
-                    <Call />
-                  </Avatar>
-                  <ListItem className={classes.blockElement}>
-                    <ListItemText
-                      className={classes.noPadding}
-                      primary="24/7 Maintenance"
-                    />
-                    <ListItemText
-                      className={classes.noPadding}
-                      primary={this.state.maintenanceNum}
-                    />
-                  </ListItem>
-                </ListItem>
-                <TextField
-                  id="outlined-dense"
-                  label="Address"
-                  className={classNames(classes.textField, classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                  onChange={this.handleInputChange}
-                  value={this.state.address}
-                  type="text"
-                  name="address"
-                />
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Description of Issue"
-                  className={classNames(classes.textField, classes.dense)}
-                  rows="6"
-                  multiline
-                  margin="dense"
-                  variant="outlined"
-                  onChange={this.handleInputChange}
-                  value={this.state.description}
-                  type="text"
-                  name="description"
-                />
-                <TextField
-                  id="outlined-dense"
-                  label="Phone Number"
-                  className={classNames(classes.textField, classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                  onChange={this.handleInputChange}
-                  value={this.state.phoneNumber}
-                  type="integer"
-                  name="phoneNumber"
-                />
-              </Grid>
-              <IconButton>
-                <FileUploader
-                
-                />
-              </IconButton>
-              <Grid item xs={12} md={11}>
-                <div className={classes.center}>
-                  <FormControlLabel
-                    label="Permission to enter premises without tenant home"
-                    control={
-                      <Checkbox
-                        checked={this.state.permission}
-                        onChange={this.handleCheckedBox('permission')}
-                        value="permission"
-                        color="primary"
+          {this.state.address ? (
+            <form onSubmit={this.submitWorkOrder} autoComplete="off">
+              <Grid container justify="space-around" spacing={16}>
+                <Grid item xs={12} md={5}>
+                  <ListItem>
+                    <Avatar>
+                      <Call />
+                    </Avatar>
+                    <ListItem className={classes.blockElement}>
+                      <ListItemText
+                        className={classes.noPadding}
+                        primary="24/7 Maintenance"
                       />
-                    }
+                      <ListItemText
+                        className={classes.noPadding}
+                        primary={this.state.maintenanceNum}
+                      />
+                    </ListItem>
+                  </ListItem>
+                  <TextField
+                    id="outlined-dense"
+                    label="Address"
+                    className={classNames(classes.textField, classes.dense)}
+                    margin="dense"
+                    variant="outlined"
+                    onChange={this.handleInputChange}
+                    value={this.state.address}
+                    type="text"
+                    name="address"
                   />
-                </div>
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Description of Issue"
+                    className={classNames(classes.textField, classes.dense)}
+                    rows="6"
+                    multiline
+                    margin="dense"
+                    variant="outlined"
+                    onChange={this.handleInputChange}
+                    value={this.state.description}
+                    type="text"
+                    name="description"
+                  />
+                  <TextField
+                    id="outlined-dense"
+                    label="Phone Number"
+                    className={classNames(classes.textField, classes.dense)}
+                    margin="dense"
+                    variant="outlined"
+                    onChange={this.handleInputChange}
+                    value={this.state.phoneNumber}
+                    type="integer"
+                    name="phoneNumber"
+                  />
+                </Grid>
+                <IconButton>
+                  <FileUploader />
+                </IconButton>
+                <Grid item xs={12} md={11}>
+                  <div className={classes.center}>
+                    <FormControlLabel
+                      label="Permission to enter premises without tenant home"
+                      control={
+                        <Checkbox
+                          checked={this.state.permission}
+                          onChange={this.handleCheckedBox('permission')}
+                          value="permission"
+                          color="primary"
+                        />
+                      }
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={11}>
+                  <div className={classes.center}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      fullWidth
+                      color="primary"
+                      className={classes.button}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={11}>
-                <div className={classes.center}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    color="primary"
-                    className={classes.button}
-                  >
-                    Submit
-                  </Button>
-                </div>
-              </Grid>
-            </Grid>
-          </form>
+            </form>
+          ) : (
+            <Paper className={classNames.customPaper}>
+              <ListItem>
+                <ListItemText
+                  primary="Account has no property assigned"
+                  secondary="Cannot make maintenance requests until this is completed.  Please work with your landlord to remedy this."
+                />
+              </ListItem>
+            </Paper>
+          )}
         </Grid>
       </Grid>
     );
