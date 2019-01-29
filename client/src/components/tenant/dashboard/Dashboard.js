@@ -17,6 +17,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { Home, Call, Email } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
+import Paper from '@material-ui/core/Paper';
 import Skeleton from 'react-loading-skeleton';
 
 const styles = theme => ({
@@ -103,6 +104,11 @@ const styles = theme => ({
   card: {
     height: 150,
   },
+  customPaper: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+  },
 });
 
 class Dashboard extends Component {
@@ -187,7 +193,7 @@ class Dashboard extends Component {
     // ======= renders tenant information if the tenant was assign to a property
     if (this.state.address) {
       tenantDetails = (
-        <List>
+        <Paper className={classNames.customPaper}>
           <ListItem>
             <Avatar>
               <Home />
@@ -229,16 +235,18 @@ class Dashboard extends Component {
               secondary={this.state.maintenance_phone}
             />
           </ListItem>
-        </List>
+        </Paper>
       );
     } else {
       tenantDetails = (
-        <ListItem>
-          <ListItemText
-            primary="No house property assign."
-            secondary="Talk to your administrator."
-          />
-        </ListItem>
+        <Paper className={classNames.customPaper}>
+          <ListItem>
+            <ListItemText
+              primary="No house property assign."
+              secondary="Talk to your administrator."
+            />
+          </ListItem>
+        </Paper>
       );
     }
 
@@ -252,6 +260,7 @@ class Dashboard extends Component {
             <Typography component="h1" variant="h5">
               -350.00
             </Typography>
+
             <Divider component="li" />
           </List>
           <Grid container justify="space-around" spacing={16}>
