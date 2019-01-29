@@ -47,8 +47,9 @@ class AddPropertyModal extends Component {
     square_footage: 0,
     year_built: 2019,
     office_ph: 0,
-    maintanence_ph: 0,
+    maintenance_ph: 0,
   };
+  // test
 
   handleChange = name => event => {
     this.setState({
@@ -72,7 +73,7 @@ class AddPropertyModal extends Component {
       square_footage,
       year_built,
       office_ph,
-      maintanence_ph,
+      maintenance_ph,
     } = this.state;
 
     const request = {
@@ -87,7 +88,7 @@ class AddPropertyModal extends Component {
       square_footage: square_footage,
       year_built: year_built,
       office_ph: office_ph,
-      maintanence_ph: maintanence_ph,
+      maintenance_ph: maintenance_ph,
     };
 
     axios
@@ -208,8 +209,8 @@ class AddPropertyModal extends Component {
             />
             <TextField
               id="maintenancePhone"
-              label="Maintenence Phone"
-              value={this.state.maintanence_ph}
+              label="Maintenance Phone"
+              value={this.state.maintenance_ph}
               onChange={this.handleChange('maintenance_ph')}
               type="number"
               className={classes.textField}
