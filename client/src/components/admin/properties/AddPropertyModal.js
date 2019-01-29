@@ -59,7 +59,6 @@ class AddPropertyModal extends Component {
 
   addProperty = event => {
     event.preventDefault();
-    console.log('added property');
 
     const {
       name,
@@ -95,11 +94,11 @@ class AddPropertyModal extends Component {
       .post('/api/properties', request)
       .then(id => {
         this.props.addPropertyHandler({ id: id, ...request });
-        console.log('success');
-        this.props.onClose();
       })
       .catch(err => {
-        console.log(err);
+        this.props.snackbarErrorHandler(
+          'There was an error adding the property!'
+        );
       });
   };
 

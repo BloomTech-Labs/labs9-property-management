@@ -31,6 +31,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import CustomSnackbar from '../../snackbar/CustomSnackbar';
+
 import axios from 'axios';
 
 const styles = theme => ({
@@ -82,6 +84,9 @@ class Properties extends React.Component {
     editModalOpen: false,
     trashModalOpen: false,
     properties: [],
+    openSnackbar: false,
+    snackbarMessage: '',
+    snackbarVariant: '',
   };
 
   componentDidMount() {
@@ -93,7 +98,6 @@ class Properties extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('update');
     if (
       this.props.authTokenRecieved &&
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
@@ -106,7 +110,14 @@ class Properties extends React.Component {
 
   addPropertyHandler = property => {
     let properties = [...this.state.properties, property];
-    this.setState({ properties: properties });
+
+    this.setState({
+      properties: properties,
+      openSnackbar: true,
+      snackbarMessage: 'Successfully Added Property!',
+      snackbarVariant: 'success',
+      addPropertyModalOpen: !this.state.addPropertyModalOpen,
+    });
   };
 
   viewMore = event => {
@@ -137,10 +148,25 @@ class Properties extends React.Component {
     this.setState({ addPropertyModalOpen: !this.state.addPropertyModalOpen });
   };
 
+  toggleSnackbarError = message => {
+    this.setState({
+      openSnackbar: true,
+      snackbarMessage: message,
+      snackbarVariant: 'error',
+      addPropertyModalOpen: !this.state.addPropertyModalOpen,
+    });
+  };
+
+  snackbarClose = () => {
+    this.setState({
+      openSnackbar: false,
+    });
+  };
+
   render() {
     const { classes } = this.props;
     console.log('properties', this.state.properties);
-    console.log(this.props);
+
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
@@ -264,6 +290,7 @@ class Properties extends React.Component {
             open={this.state.addPropertyModalOpen}
             onClose={this.toggleAddProperty}
             addPropertyHandler={this.addPropertyHandler}
+            snackbarErrorHandler={this.toggleSnackbarError}
           />
           <Modal
             open={this.state.editModalOpen}
@@ -305,6 +332,13 @@ class Properties extends React.Component {
             </Dialog>
           </Modal>
         </Grid>
+        <CustomSnackbar
+          open={this.state.openSnackbar}
+          variant={this.state.snackbarVariant}
+          message={this.state.snackbarMessage}
+          onClose={this.snackbarClose}
+          onClick={this.snackbarClose}
+        />
       </Grid>
     );
   }

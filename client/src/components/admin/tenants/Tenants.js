@@ -15,6 +15,7 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import CustomSnackbar from '../../snackbar/CustomSnackbar';
 import styles from './styles';
 import axios from 'axios';
 
@@ -26,6 +27,9 @@ class Tenants extends Component {
     properties: [],
     house_id: 0, // Selected property
     pending_invites: [],
+    openSnackbar: false,
+    snackbarMessage: '',
+    snackbarVariant: '',
   };
 
   componentDidMount() {
@@ -73,8 +77,24 @@ class Tenants extends Component {
     this.setState({ [prop]: date });
   };
 
+  snackbarClose = () => {
+    this.setState({
+      openSnackbar: false,
+    });
+  };
+
   sendInvite = event => {
     event.preventDefault();
+
+    if (this.state.house_id === 0 || this.state.email === '') {
+      this.setState({
+        openSnackbar: true,
+        snackbarMessage: 'Please fill out the form before submitting!',
+        snackbarVariant: 'error',
+      });
+
+      return;
+    }
 
     const property = {
       email: this.state.email,
@@ -93,14 +113,20 @@ class Tenants extends Component {
           this.setState({ pending_invites: response.data });
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({
+          openSnackbar: true,
+          snackbarMessage:
+            'Error sending invite: That account might not exist!',
+          snackbarVariant: 'error',
+        });
+      });
   };
 
   render() {
     const { classes } = this.props;
     const { pending_invites } = this.state;
 
-    console.log(this.state.leaseStart, ' ', this.state.leaseEnd);
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
@@ -164,7 +190,7 @@ class Tenants extends Component {
                           id: 'property-native-required',
                         }}
                       >
-                        <option value="" />
+                        <option value={0} />
                         {this.state.properties.map((property, index) => (
                           <option key={index} value={property.house_id}>
                             {property.property_name}
@@ -196,6 +222,13 @@ class Tenants extends Component {
                 </CardContent>
               </Card>
             </Grid>
+            <CustomSnackbar
+              open={this.state.openSnackbar}
+              variant={this.state.snackbarVariant}
+              message={this.state.snackbarMessage}
+              onClose={this.snackbarClose}
+              onClick={this.snackbarClose}
+            />
           </Grid>
         </Grid>
       </Grid>
