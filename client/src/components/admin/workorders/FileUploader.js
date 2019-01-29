@@ -20,7 +20,8 @@ class FileUploader extends React.Component {
     super(props)
 
     this.state = {
-      open: false
+      open: false,
+      img_url:null,
     }
     
     this.uppy = Uppy({
@@ -29,7 +30,7 @@ class FileUploader extends React.Component {
       autoProceed: false,
       restrictions: {
         maxFileSize: 1000000,
-        maxNumberOfFiles: 3,
+        maxNumberOfFiles: 1,
         minNumberOfFiles: 1
       }
     })
@@ -70,7 +71,8 @@ class FileUploader extends React.Component {
             ],
             "robot": "/google/store",
             "credentials": "propertyApp",
-            "path": "${unique_prefix}/${file.url_name}"
+            "path": "${unique_prefix}/${file.url_name}",
+            "acl": "public-read",
           }
         }
         
@@ -89,9 +91,20 @@ class FileUploader extends React.Component {
         id: 'addUrl',
         serverUrl: 'https://api2.transloadit.com/companion',
         serverPattern: /.transloadit.com$/
-      });
+      })
+      .on('transloadit:complete', (assembly) => {
+        let url = assembly.results[":original"][0].url
+        console.log(url)
+          
+        this.setState({
+          img_url:url
+        });
+      })
+
+
       
       this.handleModalClick = this.handleModalClick.bind(this)
+      this.GetURL = this.GetURL.bind(this)
   }
 
   componentWillUnmount () {
@@ -104,6 +117,10 @@ class FileUploader extends React.Component {
     })
   }
 
+  GetURL(){
+    return this.state.img_url
+  }
+
   render () {
 
     return (
@@ -114,6 +131,7 @@ class FileUploader extends React.Component {
           <DashboardModal
             uppy={this.uppy}
             plugins={['addGoogleDrive', 'addDropbox', 'addUrl']}
+            closeModalOnClickOutside
             open={this.state.open}
             target={document.body}
             onRequestClose={() => this.setState({ open: false })}

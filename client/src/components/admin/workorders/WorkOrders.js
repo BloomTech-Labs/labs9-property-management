@@ -25,7 +25,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
-import FileUploader from './FileUploader';
 import axios from 'axios';
 
 const styles = theme => ({
@@ -102,7 +101,7 @@ class WorkOrders extends Component {
                       {`Work order #${entry.work_order_id}`}
                     </Typography>
                     <IconButton aria-label="View Image">
-                      <FileUploader />
+                    <InsertPhoto/>
                     </IconButton>
                   </CardActions>
                   <CardContent>

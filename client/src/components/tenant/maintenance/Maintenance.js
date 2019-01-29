@@ -114,9 +114,15 @@ class Maintenance extends React.Component {
       });
   }
 
+  urlHandler = (props) => {
+    this.setState({})
+  }
+
   submitWorkOrder = event => {
     event.preventDefault();
 
+    // GetURL() = this.state.photo
+    // console.log(FileUploader.GetURL())
     axios
       .post('/api/work-orders/', {
         description: this.state.description,
@@ -217,7 +223,9 @@ class Maintenance extends React.Component {
                 />
               </Grid>
               <IconButton>
-                <FileUploader />
+                <FileUploader
+                
+                />
               </IconButton>
               <Grid item xs={12} md={11}>
                 <div className={classes.center}>
