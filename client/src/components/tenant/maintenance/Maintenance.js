@@ -176,6 +176,9 @@ class Maintenance extends React.Component {
             </Typography>
             <Divider component="li" />
           </List>
+
+          {/* conditional statement that displays the work order form or a message stating the tenant needs to have a property assigned to their account first */}
+
           {this.state.address ? (
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
