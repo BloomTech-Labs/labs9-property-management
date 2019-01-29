@@ -21,43 +21,35 @@ router.get('/', (req, res) => {
   });
 });
 
-/* REFERENCE CODE https://stripe.com/docs/connect/direct-charges#collecting-fees
-  stripe.charges.create({
-  amount: 1000,
-  currency: "usd",
-  source: "tok_visa",
-  application_fee: 123,
-}, {
-  stripe_account: "{CONNECTED_STRIPE_ACCOUNT_ID}",
-}).then(function(charge) {
-  // asynchronously called
-});
-
-Object.assign({}, someOb, { hey: 'sup'})
-vs
-{...someOb, hey: 'sup'}
-*/
-
 router.post('/', (req, res) => {
   // here we also need to make some db queries to get the associated owner stripe ID
   // see above reference code about passing the connected stripe account id
-  // req will contain uid of tenant
-  // select from houses table where
   const { uid } = req.body;
   db('tenants as t')
     .where('t.tenant_uid', uid)
     .join('house_properties as h', 'h.house_id', 't.house_id')
     .join('owners as o', 'o.owner_uid', 'h.owner_uid')
     .select('o.owner_uid', 'o.stripe_user_id')
-    .then(stripeID => {
-      console.log(stripeID);
+    .then(stripeUID => {
+      console.log('Stripe', stripeUID[0].stripe_user_id);
+      stripe.charges.create(
+        {
+          amount: req.body.amount,
+          source: req.body.token.id,
+          currency: 'usd',
+          source: 'tok_visa',
+          application_fee: 1000,
+        },
+        {
+          stripe_account: stripeUID[0].stripe_user_id,
+        },
+        stripeChargeCallback(res)
+      );
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).send(err);
     });
-  const body = {
-    source: req.body.token.id,
-    amount: req.body.amount,
-    currency: 'usd',
-  };
-  stripe.charges.create(body, stripeChargeCallback(res));
 });
 
 module.exports = router;
