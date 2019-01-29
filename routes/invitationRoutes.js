@@ -77,4 +77,33 @@ router.get('/tenant', (req, res) => {
     });
 });
 
+// Tenant accepts invite and has their data updated
+router.post('/accept', (req, res) => {
+  db('invitations')
+    .where('id', req.body.id)
+    .then(invite => {
+      db('tenants')
+        .where('tenant_uid', req.body.uid)
+        .update({
+          house_id: invite[0].house_id,
+          lease_start_date: invite[0].lease_start_date,
+          lease_end_date: invite[0].lease_end_date,
+        })
+        .then(data => {
+          console.log(data);
+          db('invitations')
+            .where('id', req.body.id)
+            .del()
+            .then(data => {
+              console.log('deleted');
+              res.status(200).json(data);
+            });
+        });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 module.exports = router;

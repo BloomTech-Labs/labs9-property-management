@@ -50,10 +50,14 @@ const InviteTable = props => {
               <TableCell align="center">{invite.lease_start_date}</TableCell>
               <TableCell align="center">{invite.lease_end_date}</TableCell>
               <TableCell align="center">
-                <Button color="primary">Accept</Button>
-                <Button data-id={invite.id} onClick={props.acceptInvite}>
-                  Decline
+                <Button
+                  color="primary"
+                  data-id={invite.id}
+                  onClick={props.acceptInvite}
+                >
+                  Accept
                 </Button>
+                <Button>Decline</Button>
               </TableCell>
             </TableRow>
           ))}

@@ -45,7 +45,17 @@ class Settings extends React.Component {
     }
   }
 
-  acceptInvite = event => {};
+  acceptInvite = event => {
+    const id = event.currentTarget.getAttribute('data-id');
+    console.log('accept');
+    axios
+      .post('/api/invitations/accept', { id: id })
+      .then(response => {
+        console.log(response.data);
+        this.setState({ invites: [] });
+      })
+      .catch(error => console.log(error));
+  };
 
   render() {
     const { classes } = this.props;
