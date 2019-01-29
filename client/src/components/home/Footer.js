@@ -69,7 +69,7 @@ const Footer = () => (
         <svg
           width="100%"
           height="172"
-          viewBox="0 0 100% 172"
+          // viewBox="0 0 100% 172"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >

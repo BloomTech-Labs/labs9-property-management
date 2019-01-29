@@ -3,19 +3,10 @@ const db = require('../db/dbConfig');
 const router = express.Router();
 const axios = require('axios');
 
-/* 
-    remaining steps in stripe connect workflow:
-    make a payment button on tenant side
-    click button
-    make call request to backend to lookup tenants owner's stripe id
-    (select stripe user id  from owners where owners id is equal to owners id in tenant table)
-    join owners table and tenant table to check make sure we are grabbing the right tenant
-*/
-
 router.use(express.json());
 
-// frontend makes a post to /api/stripe-connect with stripe auth code, backend makes a post to stripes oauth token url
-// and passes in the auth code received from the frontend post request
+/* frontend makes a post to /api/stripe-connect with stripe auth code, backend makes a post to stripes oauth token url
+and passes in the auth code received from the frontend post request */
 router.post('/', (req, res) => {
   const { uid } = req.body;
   axios
@@ -27,7 +18,7 @@ router.post('/', (req, res) => {
     }) // stripes response object is an object called data, here we pull off the stripe_user_id provided
     .then(response => {
       const { stripe_user_id } = response.data;
-      // store the stripe_user_id provided in an object formatted for insertion into DB
+      // store the stripe_user_id provided in an object formatted for insertion into DB - we could use desructuring here but in this case it not as readable
       const stripe_info = { stripe_user_id: stripe_user_id };
       // get the owners table and the right owner, then pass in stripe_info object
       db('owners')
