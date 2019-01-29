@@ -54,7 +54,7 @@ const CustomSnackbar = props => {
     >
       <SnackbarContent
         className={snackbarClass}
-        aria-describedby="snackbarError"
+        aria-describedby="snackbar"
         message={
           <span id="snackbar" className={classes.message}>
             {icon}
