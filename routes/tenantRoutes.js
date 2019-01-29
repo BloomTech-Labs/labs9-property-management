@@ -82,7 +82,7 @@ router.get('/maintenanceView', (req, res) => {
       'h.office_ph',
       'h.maintenance_ph'
     )
-    .where('t,tenant_uid', uid)
+    .where('t.tenant_uid', uid)
     .then(tenantInfo => {
       res.status(200).json(tenantInfo);
     })
