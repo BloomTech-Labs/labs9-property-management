@@ -84,34 +84,45 @@ const styles = theme => ({
 
 class Maintenance extends React.Component {
   state = {
-    // address: '',
+    address: '',
     description: '',
-    // phoneNumber: '',
+    phoneNumber: '',
     permission: true,
-    // photo: '',
-    // house_data: [],
+    photo: '',
+    maintenanceNum: '',
+    houseID: '',
+    tenantID: '',
   };
 
-  // componentDidMount() {
-  //   const endpoint = 'https://mynotespal.herokuapp.com/api/notes';  <==== ENDPOINT SHOULD RETRIEVE PROPERTY OWNER INFO
-  //   axios
-  //     .get(endpoint)
-  //     .then(response => {
-  //       this.setState(() => ({ house_data: response.data }));
-  //     })
-  //     .catch(error => {
-  //       console.error('Server Error: ', error);
-  //     });
-  // }
+  componentDidMount() {
+    const endpoint = 'api/tenant-dash/';
+    axios
+      .get(endpoint)
+      .then(response => {
+        this.setState(() => ({
+          address: response.data[0].address,
+          phoneNumber: response.data[0].mobile,
+          maintenanceNum: response.data[0].maintenance_ph,
+          houseID: response.data[0].house_id,
+          tenantID: response.data[0].tenant_id,
+        }));
+      })
+      .catch(error => {
+        console.error('Server Error: ', error);
+      });
+  }
 
   submitWorkOrder = event => {
     event.preventDefault();
-    // const endpoint = 'http://localhost:4000/api/work-orders/';
+
     axios
       .post('/api/work-orders/', {
-        // addess: this.state.address,
         description: this.state.description,
         property_access: this.state.permission,
+        work_order_image: this.state.photo,
+        tenant_id: this.state.tenantID,
+        house_id: this.state.houseID,
+        work_order_status: 'submitted',
       })
       .then(res => {
         console.log('register response: ', res);
@@ -163,7 +174,7 @@ class Maintenance extends React.Component {
                     />
                     <ListItemText
                       className={classes.noPadding}
-                      primary="1-800-123-9876"
+                      primary={this.state.maintenanceNum}
                     />
                   </ListItem>
                 </ListItem>
@@ -204,7 +215,7 @@ class Maintenance extends React.Component {
                 />
               </Grid>
               <IconButton>
-                      <FileUploader />
+                <FileUploader />
               </IconButton>
               <Grid item xs={12} md={11}>
                 <div className={classes.center}>
