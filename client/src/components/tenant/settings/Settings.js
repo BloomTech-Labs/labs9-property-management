@@ -6,7 +6,6 @@ import { compose } from 'recompose';
 import Grid from '@material-ui/core/Grid';
 import InviteTable from './InviteTable';
 import axios from 'axios';
-import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   container: {
@@ -64,7 +63,7 @@ class Settings extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Paper className={classes.root}>
+
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={16}>
@@ -75,7 +74,7 @@ class Settings extends React.Component {
           </Grid>
         </Grid>
       </Grid>
-      </Paper>
+ 
     );
   }
 }
