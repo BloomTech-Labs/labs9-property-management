@@ -5,12 +5,19 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   container: {
     display: "flex",
     flexWrap: "wrap",
     marginTop: 50
+  },
+  root: {
+    padding: 20,
+    width: '100%',
+    maxWidth: 400,
+    backgroundColor: theme.palette.background.paper,
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -48,10 +55,14 @@ class Settings extends React.Component {
     const { classes } = this.props;
 
     return (
+      
       <Grid container className={classes.container} spacing={16}>
+      
         <Grid item xs={12}>
           <Grid container justify="center" spacing={16}>
+          <Paper className={classes.root}>
             <form className={classes.container} noValidate autoComplete="off">
+            
               <Grid container justify="center">
                 <Typography component="h1" variant="h5">
                   Admin settings
@@ -119,9 +130,11 @@ class Settings extends React.Component {
                 </Button>
               </Grid>
             </form>
+            </Paper>
           </Grid>
         </Grid>
       </Grid>
+      
     );
   }
 }
