@@ -6,87 +6,130 @@ import connectwstripe from '../../../images/connect-with-stripe@2x.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Skeleton from 'react-loading-skeleton';
-
-import Typography from '@material-ui/core/Typography';
+import { withStyles, withTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Done } from '@material-ui/icons';
+import Paper from '@material-ui/core/Paper';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
+import FolderIcon from '@material-ui/icons/Folder';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const StripeButton = styled.img`
   width: 200px;
 `;
 
+let id = 0;
+function createData(name, amount) {
+  id += 1;
+  return { id, name, amount };
+}
+
+const rows = [
+  createData('Jan 30', '$625.00'),
+  createData('Jan 22', '$500.00'),
+  createData('Jan 21', '$850.00'),
+  createData('Jan 20', '$800.00'),
+];
+
 const styles = theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    marginTop: 200,
-    minHeight: '400px',
-    // border: "1px solid orange"
+    marginTop: 100,
+    marginLeft: 0,
   },
-  leftColumn: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    // border: "1px solid black",
-    flexDirection: 'column',
+  root: {
+    width: '100%',
+    maxWidth: 400,
+    backgroundColor: theme.palette.background.paper,
+    overflowX: 'auto',
   },
-  rightColumn: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
-    marginTop: 66,
-    marginBottom: 30,
-  },
-  button: {
-    width: 200,
-    marginTop: 38,
+  progress: {
+    margin: theme.spacing.unit * 2,
   },
   card: {
-    maxWidth: 300,
-    marginTop: 100,
-    marginLeft: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
+    marginTop: 25,
+    paddingTop: 75,
+    position: 'relative',
+    overflow: 'visible',
+    minWidth: '40%',
+    minHeight: 350,
+    zIndex: 0,
+  },
+  longCard: {
+    position: 'relative',
+    overflow: 'visible',
+    minWidth: '80%',
+    minHeight: 350,
+    zIndex: 0,
+    marginTop: 50,
+  },
+  cardTop: {
+    padding: '15px',
+    width: '90%',
+    backgroundColor: '#5f29ff',
+    zIndex: '2000',
+    top: '-6%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    position: 'absolute',
+    boxShadow:
+      '0px 5px 5px -3px rgba(81,71,255,0.2), 0px 8px 10px 1px rgba(81,71,255,0.2), 0px 3px 14px 2px rgba(81,71,255,0.2)',
+    borderRadius: '4px',
+    color: 'white',
+  },
+  actions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  displayNone: {
+    display: 'none',
+  },
+  formControl: {
+    width: 300,
+  },
+  paper: {
+    width: '100%',
+    height: '50vh',
+    margin: 'auto',
+    marginTop: 0,
     paddingTop: 20,
     paddingBottom: 20,
   },
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
   },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 220,
-    marginTop: 30,
-    marginLeft: 30,
+  demo: {
+    backgroundColor: theme.palette.background.paper,
   },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
-  },
-  rootTable: {
-    // width: "100%",
-    overflowX: 'auto',
-    marginTop: 30,
+  title: {
+    margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
   },
   table: {
-    minWidth: 150,
-  },
-  tableTitle: {
-    marginLeft: 10,
+    minWidth: 200,
   },
 });
 
@@ -94,6 +137,8 @@ class Billing extends Component {
   state = {
     hasStripeID: false,
     fetchingStripeID: true,
+    properties: [{ property_name: '1101 Deer Valley Ct' }],
+    house_id: 0, // Selected property
   };
   componentDidMount() {
     console.log('props', this.props);
@@ -160,6 +205,9 @@ class Billing extends Component {
         .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err));
     }
   }
+  handleInputChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
 
   render() {
     const { classes } = this.props;
@@ -169,7 +217,7 @@ class Billing extends Component {
     if (this.state.hasStripeID) {
       stripeConnectionDetails = (
         <Typography className={classes.tableTitle} component="h5" variant="h6">
-          Connected to Stripe
+          <Done /> Connected to Stripe
         </Typography>
       );
     } else {
@@ -186,15 +234,87 @@ class Billing extends Component {
     }
 
     return (
-      <Card className={classes.card}>
-        <CardContent>
-          {this.state.fetchingStripeID ? (
-            <Skeleton height={30} />
-          ) : (
-            stripeConnectionDetails
-          )}
-        </CardContent>
-      </Card>
+      <>
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12}>
+            <Grid container justify="space-around" spacing={16}>
+              <Grid item xs={12} md={5}>
+                <Paper className={classes.paper}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6">
+                      Billing Information
+                    </Typography>
+                  </CardContent>
+                  <Divider />
+                  {this.state.fetchingStripeID ? (
+                    <CircularProgress className={classes.progress} />
+                  ) : (
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {stripeConnectionDetails}
+                      </Typography>
+                      <Typography component="p" />
+                    </CardContent>
+                  )}
+                  <CardContent>
+                    <FormControl required className={classes.formControl}>
+                      <InputLabel htmlFor="property-native-required">
+                        Select a property to view payment history
+                      </InputLabel>
+                      <Select
+                        native
+                        value={this.state.house_id}
+                        onChange={this.handleInputChange('house_id')}
+                        name="Property"
+                        inputProps={{
+                          id: 'property-native-required',
+                        }}
+                      >
+                        <option value={0} />
+                        {this.state.properties.map((property, index) => (
+                          <option key={index} value={property.house_id}>
+                            {property.property_name}
+                          </option>
+                        ))}
+                      </Select>
+                      <FormHelperText>Required</FormHelperText>
+                    </FormControl>
+                  </CardContent>
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} md={5}>
+                <Paper className={classes.paper}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6">
+                      Payment History
+                    </Typography>
+                  </CardContent>
+                  <Divider />
+                  <Table className={classes.table}>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Date</TableCell>
+                        <TableCell align="right">Amount</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {rows.map(row => (
+                        <TableRow key={row.id}>
+                          <TableCell component="th" scope="row">
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="right">{row.amount}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </>
     );
   }
 }
