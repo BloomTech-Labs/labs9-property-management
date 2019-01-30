@@ -86,7 +86,7 @@ router.post('/', (req, res) => {
 // Delete a property
 router.delete('/:house_id', (req, res) => {
   const { house_id } = req.params;
-  console.log(req.params);
+
   db('house_properties')
     .where('house_id', house_id)
     .del()

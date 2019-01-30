@@ -125,8 +125,8 @@ class Properties extends React.Component {
 
     if (
       this.state.detailedViewOn !== true &&
-      this.state.selectedProperty.id !==
-        this.state.properties[event.currentTarget.getAttribute('data-id')]
+      this.state.selectedPropertyIndex !==
+        this.state.properties[event.currentTarget.getAttribute('data-index')]
     ) {
       this.setState({ detailedViewOn: true });
     }
@@ -156,26 +156,27 @@ class Properties extends React.Component {
 
   removeProperty = () => {
     let properties = [];
-    this.state.properties.map((property, index) => {
-      if (index !== this.state.selectedPropertyIndex)
-        properties.push({ ...property });
-    });
-
-    const data = {
-      house_id: this.state.selectedPropertyId,
-    };
 
     axios
       .delete(`/api/properties/${this.state.selectedPropertyId}`)
       .then(response => {
+        this.state.properties.map((property, index) => {
+          if (index !== this.state.selectedPropertyIndex)
+            properties.push({ ...property });
+        });
+
         properties.splice(this.state.selectedPropertyIndex, 1);
-        console.log('deleted');
         this.setState({
           properties: properties,
           trashModalOpen: !this.state.trashModalOpen,
+          openSnackbar: true,
+          snackbarMessage: 'Successfully Deleted Property!',
+          snackbarVariant: 'success',
         });
       })
-      .catch(err => {});
+      .catch(err => {
+        this.toggleSnackbarError('Error: Could not delete the property!');
+      });
   };
 
   toggleAddProperty = () => {
@@ -300,7 +301,7 @@ class Properties extends React.Component {
                     </List>
                     <Grid container justify="center">
                       <Button
-                        data-id={index}
+                        data-index={index}
                         onClick={this.viewMore}
                         variant="outlined"
                       >
