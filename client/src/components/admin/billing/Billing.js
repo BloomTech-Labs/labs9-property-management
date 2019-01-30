@@ -16,6 +16,8 @@ import Divider from '@material-ui/core/Divider';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Done } from '@material-ui/icons';
 
 const StripeButton = styled.img`
   width: 200px;
@@ -29,6 +31,9 @@ const styles = theme => ({
     width: '100%',
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
   },
   card: {
     marginTop: 25,
@@ -160,7 +165,7 @@ class Billing extends Component {
     if (this.state.hasStripeID) {
       stripeConnectionDetails = (
         <Typography className={classes.tableTitle} component="h5" variant="h6">
-          Connected to Stripe
+          <Done /> Connected to Stripe
         </Typography>
       );
     } else {
@@ -199,17 +204,13 @@ class Billing extends Component {
                   />
 
                   {this.state.fetchingStripeID ? (
-                    <Skeleton height={30} />
+                    <CircularProgress className={classes.progress} />
                   ) : (
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
                         {stripeConnectionDetails}
                       </Typography>
-                      <Typography component="p">
-                        Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica
-                      </Typography>
+                      <Typography component="p" />
                     </CardContent>
                   )}
                 </Card>
