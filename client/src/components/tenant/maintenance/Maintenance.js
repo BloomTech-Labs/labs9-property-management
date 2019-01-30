@@ -234,9 +234,7 @@ class Maintenance extends React.Component {
                     name="phoneNumber"
                   />
                 </Grid>
-                <IconButton>
                   <FileUploader />
-                </IconButton>
                 <Grid item xs={12} md={11}>
                   <div className={classes.center}>
                     <FormControlLabel

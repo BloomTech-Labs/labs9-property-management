@@ -3,16 +3,33 @@ import '@uppy/dashboard/dist/style.css'
 import '@uppy/progress-bar/dist/style.css'
 import {InsertPhoto} from "@material-ui/icons";
 import Transloadit from '@uppy/transloadit';
+import styled from 'styled-components'
+import Typography from '@material-ui/core/Typography';
+import { withStyles, withTheme } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 const Uppy = require('@uppy/core')
 const GoogleDrive = require('@uppy/google-drive')
 const Dropbox = require('@uppy/dropbox')
 const Url = require('@uppy/url')
 const React = require('react')
 const { DashboardModal } = require('@uppy/react')
-const dotenv = require('dotenv');
 
+const PhotoUploadIcon = styled(InsertPhoto)`
+  color: #999;
+  font-size: 300px !important;
+  cursor: pointer;
+  @media (max-width: 960px) {
+    font-size: 64px;
+  }
+`;
 
-dotenv.load();
+const styles = theme => ({
+  container: {
+    marginLeft: 60,
+    marginBottom: 20,
+  },
+});
+
 
 
 class FileUploader extends React.Component {
@@ -122,12 +139,15 @@ class FileUploader extends React.Component {
   }
 
   render () {
-
+    const { classes } = this.props;
     return (
       <div>
         <div>
-           <InsertPhoto onClick={this.handleModalClick}
+           <PhotoUploadIcon onClick={this.handleModalClick}
           />
+            <Typography className={classes.container} component="h1" variant="h5">
+              Upload a Photo
+            </Typography>
           <DashboardModal
             uppy={this.uppy}
             plugins={['addGoogleDrive', 'addDropbox', 'addUrl']}
@@ -142,6 +162,10 @@ class FileUploader extends React.Component {
     )
   }
 }
+
+FileUploader.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
  
-export default FileUploader;
+export default withStyles(styles)(FileUploader);
 
