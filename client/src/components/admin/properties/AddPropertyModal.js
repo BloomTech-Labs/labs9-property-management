@@ -104,8 +104,11 @@ class AddPropertyModal extends Component {
 
     axios
       .post('/api/properties', request)
-      .then(id => {
-        this.props.addPropertyHandler({ id: id, ...request });
+      .then(response => {
+        this.props.addPropertyHandler({
+          house_id: response.data[0],
+          ...request,
+        });
       })
       .catch(err => {
         this.props.snackbarErrorHandler(
