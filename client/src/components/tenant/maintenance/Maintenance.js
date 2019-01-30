@@ -122,7 +122,7 @@ class Maintenance extends React.Component {
       });
   }
 
-  GetURL = (photo) => this.setState({ photo });
+  GetURL = photo => this.setState({ photo });
 
   submitWorkOrder = event => {
     event.preventDefault();
@@ -161,6 +161,13 @@ class Maintenance extends React.Component {
     console.log('state', this.state);
   };
 
+  phoneConverter = int => {
+    let arr = Array.from(int.toString());
+    arr.splice(6, 0, '-');
+    arr.splice(3, 0, '-');
+    return arr.join('');
+  };
+
   render() {
     const { classes, theme } = this.props;
     console.log(theme);
@@ -192,7 +199,7 @@ class Maintenance extends React.Component {
                       />
                       <ListItemText
                         className={classes.noPadding}
-                        primary={this.state.maintenanceNum}
+                        primary={this.phoneConverter(this.state.maintenanceNum)}
                       />
                     </ListItem>
                   </ListItem>
@@ -232,9 +239,7 @@ class Maintenance extends React.Component {
                     name="phoneNumber"
                   />
                 </Grid>
-                  <FileUploader
-                   GetURL={this.GetURL}
-                  />
+                <FileUploader GetURL={this.GetURL} />
                 <Grid item xs={12} md={11}>
                   <div className={classes.center}>
                     <FormControlLabel
