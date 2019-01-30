@@ -19,10 +19,30 @@ import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Done } from '@material-ui/icons';
 import Paper from '@material-ui/core/Paper';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
+import FolderIcon from '@material-ui/icons/Folder';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const StripeButton = styled.img`
   width: 200px;
 `;
+
+function generate(element) {
+  return [0, 1, 2].map(value =>
+    React.cloneElement(element, {
+      key: value,
+    })
+  );
+}
 const styles = theme => ({
   container: {
     marginTop: 100,
@@ -74,6 +94,9 @@ const styles = theme => ({
   displayNone: {
     display: 'none',
   },
+  formControl: {
+    width: 300,
+  },
   paper: {
     width: '100%',
     height: '50vh',
@@ -87,12 +110,22 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 3,
   },
+  demo: {
+    backgroundColor: theme.palette.background.paper,
+  },
+  title: {
+    margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
+  },
 });
 
 class Billing extends Component {
   state = {
     hasStripeID: false,
     fetchingStripeID: true,
+    properties: [],
+    house_id: 0, // Selected property
+    dense: false,
+    secondary: false,
   };
   componentDidMount() {
     console.log('props', this.props);
@@ -159,6 +192,9 @@ class Billing extends Component {
         .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err));
     }
   }
+  handleInputChange = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
 
   render() {
     const { classes } = this.props;
@@ -184,6 +220,8 @@ class Billing extends Component {
       );
     }
 
+    const { dense, secondary } = this.state;
+
     return (
       <>
         <Grid container className={classes.container} spacing={16}>
@@ -193,7 +231,7 @@ class Billing extends Component {
                 <Paper className={classes.paper}>
                   <CardContent>
                     <Typography gutterBottom variant="h6">
-                      Payment Info & Properties
+                      Billing Information
                     </Typography>
                   </CardContent>
                   <Divider />
@@ -207,6 +245,30 @@ class Billing extends Component {
                       <Typography component="p" />
                     </CardContent>
                   )}
+                  <CardContent>
+                    <FormControl required className={classes.formControl}>
+                      <InputLabel htmlFor="property-native-required">
+                        Select a property to view payment history
+                      </InputLabel>
+                      <Select
+                        native
+                        value={this.state.house_id}
+                        onChange={this.handleInputChange('house_id')}
+                        name="Property"
+                        inputProps={{
+                          id: 'property-native-required',
+                        }}
+                      >
+                        <option value={0} />
+                        {this.state.properties.map((property, index) => (
+                          <option key={index} value={property.house_id}>
+                            {property.property_name}
+                          </option>
+                        ))}
+                      </Select>
+                      <FormHelperText>Required</FormHelperText>
+                    </FormControl>
+                  </CardContent>
                 </Paper>
               </Grid>
 
@@ -218,6 +280,23 @@ class Billing extends Component {
                     </Typography>
                   </CardContent>
                   <Divider />
+                  <CardContent>
+                    <div className={classes.demo}>
+                      <List dense={dense}>
+                        {generate(
+                          <ListItem>
+                            <ListItemIcon>
+                              <FolderIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary="Single-line item"
+                              secondary={secondary ? 'Secondary text' : null}
+                            />
+                          </ListItem>
+                        )}
+                      </List>
+                    </div>
+                  </CardContent>
                 </Paper>
               </Grid>
             </Grid>
