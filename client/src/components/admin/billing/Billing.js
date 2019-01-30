@@ -31,18 +31,29 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const StripeButton = styled.img`
   width: 200px;
 `;
 
-function generate(element) {
-  return [0, 1, 2].map(value =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
+let id = 0;
+function createData(name, amount) {
+  id += 1;
+  return { id, name, amount };
 }
+
+const rows = [
+  createData('Jan 30', '$625.00'),
+  createData('Jan 22', '$500.00'),
+  createData('Jan 21', '$850.00'),
+  createData('Jan 20', '$800.00'),
+];
+
 const styles = theme => ({
   container: {
     marginTop: 100,
@@ -52,6 +63,7 @@ const styles = theme => ({
     width: '100%',
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
+    overflowX: 'auto',
   },
   progress: {
     margin: theme.spacing.unit * 2,
@@ -116,16 +128,17 @@ const styles = theme => ({
   title: {
     margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
   },
+  table: {
+    minWidth: 200,
+  },
 });
 
 class Billing extends Component {
   state = {
     hasStripeID: false,
     fetchingStripeID: true,
-    properties: [],
+    properties: [{ property_name: '1101 Deer Valley Ct' }],
     house_id: 0, // Selected property
-    dense: false,
-    secondary: false,
   };
   componentDidMount() {
     console.log('props', this.props);
@@ -220,8 +233,6 @@ class Billing extends Component {
       );
     }
 
-    const { dense, secondary } = this.state;
-
     return (
       <>
         <Grid container className={classes.container} spacing={16}>
@@ -280,23 +291,24 @@ class Billing extends Component {
                     </Typography>
                   </CardContent>
                   <Divider />
-                  <CardContent>
-                    <div className={classes.demo}>
-                      <List dense={dense}>
-                        {generate(
-                          <ListItem>
-                            <ListItemIcon>
-                              <FolderIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                              primary="Single-line item"
-                              secondary={secondary ? 'Secondary text' : null}
-                            />
-                          </ListItem>
-                        )}
-                      </List>
-                    </div>
-                  </CardContent>
+                  <Table className={classes.table}>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Date</TableCell>
+                        <TableCell align="right">Amount</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {rows.map(row => (
+                        <TableRow key={row.id}>
+                          <TableCell component="th" scope="row">
+                            {row.name}
+                          </TableCell>
+                          <TableCell align="right">{row.amount}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </Paper>
               </Grid>
             </Grid>
