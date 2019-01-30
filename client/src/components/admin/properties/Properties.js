@@ -32,7 +32,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import CustomSnackbar from '../../snackbar/CustomSnackbar';
-
 import axios from 'axios';
 
 const styles = theme => ({
@@ -79,7 +78,8 @@ const styles = theme => ({
 class Properties extends React.Component {
   state = {
     detailedViewOn: false,
-    selectedProperty: {},
+    selectedPropertyId: 0,
+    selectedPropertyIndex: null,
     addPropertyModalOpen: false,
     editModalOpen: false,
     trashModalOpen: false,
@@ -140,8 +140,42 @@ class Properties extends React.Component {
     this.setState({ editModalOpen: !this.state.editModalOpen });
   };
 
-  toggleRemoveProperty = () => {
+  toggleRemovePropertyModal = event => {
+    const id = event.currentTarget.getAttribute('data-id');
+    const index = event.currentTarget.getAttribute('data-index');
+    this.setState({
+      trashModalOpen: !this.state.trashModalOpen,
+      selectedPropertyId: id,
+      selectedPropertyIndex: index,
+    });
+  };
+
+  closeRemovePropertyModal = () => {
     this.setState({ trashModalOpen: !this.state.trashModalOpen });
+  };
+
+  removeProperty = () => {
+    let properties = [];
+    this.state.properties.map((property, index) => {
+      if (index !== this.state.selectedPropertyIndex)
+        properties.push({ ...property });
+    });
+
+    const data = {
+      house_id: this.state.selectedPropertyId,
+    };
+
+    axios
+      .delete(`/api/properties/${this.state.selectedPropertyId}`)
+      .then(response => {
+        properties.splice(this.state.selectedPropertyIndex, 1);
+        console.log('deleted');
+        this.setState({
+          properties: properties,
+          trashModalOpen: !this.state.trashModalOpen,
+        });
+      })
+      .catch(err => {});
   };
 
   toggleAddProperty = () => {
@@ -182,7 +216,7 @@ class Properties extends React.Component {
           <Grid container justify="center" spacing={16}>
             {this.state.properties.map((entry, index) => (
               <Grid
-                key={index}
+                key={entry.house_id}
                 item
                 xs={12}
                 sm={6}
@@ -200,14 +234,19 @@ class Properties extends React.Component {
                     </Tooltip>
                     <Tooltip title="Delete">
                       <IconButton
+                        data-id={entry.house_id}
+                        data-index={index}
                         aria-label="Delete Property"
-                        onClick={this.toggleRemoveProperty}
+                        onClick={this.toggleRemovePropertyModal}
                       >
                         <Delete />
                       </IconButton>
                     </Tooltip>
                   </CardActions>
                   <CardContent>
+                    <Typography variant="h5" align="center" component="h6">
+                      {entry.property_name}
+                    </Typography>
                     <List className={classes.root}>
                       <ListItem>
                         <Avatar>
@@ -318,11 +357,11 @@ class Properties extends React.Component {
                 </DialogContentText>
               </DialogContent>
               <DialogActions className={classes.dialog}>
-                <Button onClick={this.toggleRemoveProperty} color="primary">
+                <Button onClick={this.removeProperty} color="primary">
                   Delete
                 </Button>
                 <Button
-                  onClick={this.toggleRemoveProperty}
+                  onClick={this.closeRemovePropertyModal}
                   color="primary"
                   autoFocus
                 >

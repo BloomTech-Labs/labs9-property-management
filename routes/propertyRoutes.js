@@ -84,11 +84,11 @@ router.post('/', (req, res) => {
 });
 
 // Delete a property
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-
+router.delete('/:house_id', (req, res) => {
+  const { house_id } = req.params;
+  console.log(req.params);
   db('house_properties')
-    .where({ id })
+    .where('house_id', house_id)
     .del()
     .then(count => {
       if (count === 0) {
@@ -99,7 +99,10 @@ router.delete('/:id', (req, res) => {
       }
       res.status(200).json(count);
     })
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // Returns Properties that a specific admin owns
@@ -119,13 +122,10 @@ router.get('/admin', (req, res) => {
 // get properties that an admin owns along with tenants using bluebird nesting
 router.get('/admin/alldata', (req, res) => {
   const { uid } = req.body;
-  console.log('This is the id ', uid);
 
   db('house_properties as h')
     .join('owners as o', 'o.owner_uid', 'h.owner_uid')
     .select(
-      'o.owner_uid',
-      'h.owner_uid',
       'h.property_name',
       'h.house_id',
       'h.address',
@@ -137,8 +137,7 @@ router.get('/admin/alldata', (req, res) => {
       'h.square_footage',
       'h.year_built',
       'h.maintenance_ph',
-      'h.office_ph',
-      'h.house_image_url'
+      'h.office_ph'
     )
     .where('o.owner_uid', uid)
     .then(function(rows) {
@@ -146,15 +145,7 @@ router.get('/admin/alldata', (req, res) => {
         return db
           .table('tenants as t')
           .join('users as u', 't.tenant_uid', 'u.uid')
-          .select(
-            't.tenant_uid',
-            'u.first_name as tenant_first_name',
-            'u.last_name as tenant_last_name',
-            't.get_texts',
-            't.get_emails',
-            't.lease_start_date',
-            't.lease_end_date'
-          )
+          .select('u.display_name', 't.lease_start_date', 't.lease_end_date')
           .where('house_id', element.house_id)
           .then(function(tenantUsers) {
             element['tenants'] = tenantUsers;

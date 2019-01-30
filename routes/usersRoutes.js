@@ -10,7 +10,6 @@ router.get('/verifyregistration', (req, res) => {
   db('users')
     .where({ uid: uid })
     .then(users => {
-      console.log(users);
       if (!users[0]) {
         res.status(200).json({ role: null });
       } else {
@@ -25,7 +24,6 @@ router.get('/verifyregistration', (req, res) => {
 
 // Register user
 router.post('/register', (req, res) => {
-  console.log(req.body);
   const data = req.body;
   db.insert(data)
     .into('users')
