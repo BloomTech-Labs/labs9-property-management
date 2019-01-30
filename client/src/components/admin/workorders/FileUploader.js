@@ -38,9 +38,10 @@ class FileUploader extends React.Component {
 
     this.state = {
       open: false,
-      img_url:null,
     }
     
+    const {GetURL} = this.props;
+
     this.uppy = Uppy({
       id: 'uppy',
       debug: false,
@@ -110,18 +111,11 @@ class FileUploader extends React.Component {
         serverPattern: /.transloadit.com$/
       })
       .on('transloadit:complete', (assembly) => {
-        let url = assembly.results[":original"][0].url
-        console.log(url)
+        GetURL({original:assembly.results[":original"][0].url
+      });  
           
-        this.setState({
-          img_url:url
-        });
-      })
-
-
-      
+      });     
       this.handleModalClick = this.handleModalClick.bind(this)
-      this.GetURL = this.GetURL.bind(this)
   }
 
   componentWillUnmount () {
@@ -134,9 +128,9 @@ class FileUploader extends React.Component {
     })
   }
 
-  GetURL(){
-    return this.state.img_url
-  }
+ // GetURL(){
+ //   return this.state.img_url
+ // }
 
   render () {
     const { classes } = this.props;
@@ -165,6 +159,11 @@ class FileUploader extends React.Component {
 
 FileUploader.propTypes = {
   classes: PropTypes.object.isRequired,
+  GetURL: PropTypes.func,
+};
+
+FileUploader.defaultProps = {
+  GetURL: () => {},
 };
  
 export default withStyles(styles)(FileUploader);

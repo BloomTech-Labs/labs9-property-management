@@ -96,7 +96,7 @@ class Maintenance extends React.Component {
     description: '',
     phoneNumber: '',
     permission: true,
-    photo: '',
+    photo: {},
     maintenanceNum: '',
     houseID: '',
     tenantID: '',
@@ -122,9 +122,7 @@ class Maintenance extends React.Component {
       });
   }
 
-  urlHandler = props => {
-    this.setState({});
-  };
+  GetURL = (photo) => this.setState({ photo });
 
   submitWorkOrder = event => {
     event.preventDefault();
@@ -234,7 +232,9 @@ class Maintenance extends React.Component {
                     name="phoneNumber"
                   />
                 </Grid>
-                  <FileUploader />
+                  <FileUploader
+                   GetURL={this.GetURL}
+                  />
                 <Grid item xs={12} md={11}>
                   <div className={classes.center}>
                     <FormControlLabel
