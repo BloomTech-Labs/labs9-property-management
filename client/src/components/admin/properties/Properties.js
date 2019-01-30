@@ -155,7 +155,17 @@ class Properties extends React.Component {
   };
 
   removeProperty = () => {
+    let selectedProperty = this.state.properties[
+      this.state.selectedPropertyIndex
+    ];
     let properties = [];
+
+    if (selectedProperty.tenants && selectedProperty.tenants.length > 0) {
+      this.toggleSnackbarError(
+        'Error: Please remove tenants before deleting a property!'
+      );
+      return;
+    }
 
     axios
       .delete(`/api/properties/${this.state.selectedPropertyId}`)
@@ -188,7 +198,8 @@ class Properties extends React.Component {
       openSnackbar: true,
       snackbarMessage: message,
       snackbarVariant: 'error',
-      addPropertyModalOpen: !this.state.addPropertyModalOpen,
+      trashModalOpen: false,
+      addPropertyModalOpen: false,
     });
   };
 
