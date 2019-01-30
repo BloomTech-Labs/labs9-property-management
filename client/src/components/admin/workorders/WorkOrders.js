@@ -90,11 +90,13 @@ class WorkOrders extends Component {
     );
   };
 
+  // updateStatus =
+
   handleRadio = (name, index) => event => {
     const workOrdersCopy = this.state.workOrders.slice();
     workOrdersCopy[index][name] = event.target.value;
-    console.log('workorderscopy: ', workOrdersCopy);
-    console.log('workorderscopy[index][name]: ', workOrdersCopy[index][name]);
+    // console.log('workorderscopy: ', workOrdersCopy);
+    // console.log('workorderscopy[index][name]: ', workOrdersCopy[index][name]);
     this.setState({ workOrders: workOrdersCopy });
   };
 
@@ -129,12 +131,12 @@ class WorkOrders extends Component {
                         variant="h5"
                         component="p"
                       >
-                        {`Work order #${entry.work_order_id}`}
+                        {`Work Order # ${entry.work_order_id}`}
                       </Typography>
                       <IconButton aria-label="View Image">
-                        <InsertPhoto 
-                        primary="Image"
-                        secondary={entry.work_order_image}
+                        <InsertPhoto
+                          primary="Image"
+                          secondary={entry.work_order_image}
                         />
                       </IconButton>
                     </CardActions>
@@ -197,6 +199,7 @@ class WorkOrders extends Component {
                                 }
                                 name="work-order-status"
                                 aria-label="submitted"
+                                color="primary"
                               />
                             }
                             label="Submitted"
@@ -211,6 +214,7 @@ class WorkOrders extends Component {
                                 }
                                 name="work-order-status"
                                 aria-label="In Progress"
+                                color="primary"
                               />
                             }
                             label="In Progress"
@@ -225,6 +229,7 @@ class WorkOrders extends Component {
                                 }
                                 name="work-order-status"
                                 aria-label="Completed"
+                                color="primary"
                               />
                             }
                             label="Completed"
@@ -232,9 +237,11 @@ class WorkOrders extends Component {
                           />
                         </RadioGroup>
                       </FormControl>
-                      <Button color="inherit" onClick={this.sendAlert}>
-                        Submit
-                      </Button>
+                      <Grid container justify="center">
+                        <Button color="primary" onClick={this.sendAlert}>
+                          Submit
+                        </Button>
+                      </Grid>
                     </CardContent>
                   </Card>
                 </Grid>
