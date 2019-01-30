@@ -128,10 +128,6 @@ class FileUploader extends React.Component {
     })
   }
 
- // GetURL(){
- //   return this.state.img_url
- // }
-
   render () {
     const { classes } = this.props;
     return (

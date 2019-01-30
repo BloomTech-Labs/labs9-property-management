@@ -96,7 +96,7 @@ class Maintenance extends React.Component {
     description: '',
     phoneNumber: '',
     permission: true,
-    photo: {},
+    photo: '',
     maintenanceNum: '',
     houseID: '',
     tenantID: '',
@@ -122,18 +122,17 @@ class Maintenance extends React.Component {
       });
   }
 
-  GetURL = photo => this.setState({ photo });
+  GetURL = photo => this.setState({ photo: photo });
 
   submitWorkOrder = event => {
     event.preventDefault();
 
-    // GetURL() = this.state.photo
-    // console.log(FileUploader.GetURL())
+    console.log('this.state.photo.original',this.state.photo.original)
     axios
       .post('/api/work-orders/', {
         description: this.state.description,
         property_access: this.state.permission,
-        work_order_image: this.state.photo,
+        work_order_image: this.state.photo.original,
         tenant_id: this.state.tenantID,
         house_id: this.state.houseID,
         work_order_status: 'submitted',
