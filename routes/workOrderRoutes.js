@@ -9,14 +9,21 @@ router.use(express.json());
 // Place a work order
 router.post('/', (req, res) => {
   // const required = req.body;
-  const { description, property_access, tenant_id, house_id, work_order_status, work_order_image} = req.body;
+  const {
+    description,
+    property_access,
+    tenant_id,
+    house_id,
+    work_order_status,
+    work_order_image,
+  } = req.body;
   const workOrder = {
     description: description,
     property_access: property_access,
     tenant_id: tenant_id,
     house_id: house_id,
     work_order_image: work_order_image,
-    work_order_status: work_order_status
+    work_order_status: work_order_status,
   };
   if (!description) {
     res
@@ -60,7 +67,8 @@ router.get('/owner', (req, res) => {
       'property_access',
       'work_order_status',
       'u.mobile',
-      'w.work_order_id'
+      'w.work_order_id',
+      'w.work_order_image'
     )
     .then(orders => {
       res.status(200).json({ orders });
