@@ -18,6 +18,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Done } from '@material-ui/icons';
+import Paper from '@material-ui/core/Paper';
 
 const StripeButton = styled.img`
   width: 200px;
@@ -74,10 +75,12 @@ const styles = theme => ({
     display: 'none',
   },
   paper: {
-    width: '80%',
-    height: '80vh',
+    width: '100%',
+    height: '50vh',
     margin: 'auto',
-    marginTop: 50,
+    marginTop: 0,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   absolute: {
     position: 'absolute',
@@ -187,22 +190,13 @@ class Billing extends Component {
           <Grid item xs={12}>
             <Grid container justify="space-around" spacing={16}>
               <Grid item xs={12} md={5}>
-                <Card className={classes.card}>
-                  <CardHeader
-                    title="Your Payment Info & Properties"
-                    subheader="Select a property to view Payments"
-                    className={classes.cardTop}
-                    titleTypographyProps={{
-                      component: 'h4',
-                      variant: 'body1',
-                      color: 'inherit',
-                    }}
-                    subheaderTypographyProps={{
-                      variant: 'overline',
-                      color: 'secondary',
-                    }}
-                  />
-
+                <Paper className={classes.paper}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6">
+                      Payment Info & Properties
+                    </Typography>
+                  </CardContent>
+                  <Divider />
                   {this.state.fetchingStripeID ? (
                     <CircularProgress className={classes.progress} />
                   ) : (
@@ -213,25 +207,18 @@ class Billing extends Component {
                       <Typography component="p" />
                     </CardContent>
                   )}
-                </Card>
+                </Paper>
               </Grid>
+
               <Grid item xs={12} md={5}>
-                <Card className={classes.card}>
-                  <CardHeader
-                    title="Payment History"
-                    subheader="Most Recent Rent Payments"
-                    className={classes.cardTop}
-                    titleTypographyProps={{
-                      component: 'h4',
-                      variant: 'body1',
-                      color: 'inherit',
-                    }}
-                    subheaderTypographyProps={{
-                      variant: 'overline',
-                      color: 'secondary',
-                    }}
-                  />
-                </Card>
+                <Paper className={classes.paper}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6">
+                      Payment History
+                    </Typography>
+                  </CardContent>
+                  <Divider />
+                </Paper>
               </Grid>
             </Grid>
           </Grid>
