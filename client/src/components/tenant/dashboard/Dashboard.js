@@ -186,6 +186,13 @@ class Dashboard extends Component {
     this.props.history.push('/tenant/payments');
   };
 
+  phoneConverter = int => {
+    let arr = Array.from(int.toString());
+    arr.splice(6, 0, '-');
+    arr.splice(3, 0, '-');
+    return arr.join('');
+  };
+
   render() {
     const { classes } = this.props;
     let tenantDetails;
@@ -217,7 +224,7 @@ class Dashboard extends Component {
             </Avatar>
             <ListItemText
               primary="Office:"
-              secondary={this.state.office_phone}
+              secondary={this.phoneConverter(this.state.office_phone)}
             />
           </ListItem>
           <ListItem>
@@ -232,7 +239,7 @@ class Dashboard extends Component {
             </Avatar>
             <ListItemText
               primary="24/7 Maintenance:"
-              secondary={this.state.maintenance_phone}
+              secondary={this.phoneConverter(this.state.maintenance_phone)}
             />
           </ListItem>
         </Paper>
