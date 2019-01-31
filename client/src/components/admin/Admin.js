@@ -29,7 +29,7 @@ const links = [
   },
   { name: 'Tenants', url: 'admin/tenants', icon: <People /> },
   { name: 'Billing', url: 'admin/billing', icon: <CreditCard /> },
-  { name: 'Settings', url: 'admin/settings', icon: <Settings /> },
+  // { name: 'Settings', url: 'admin/settings', icon: <Settings /> },
 ];
 
 class Admin extends Component {
@@ -52,7 +52,7 @@ class Admin extends Component {
                   component={WorkOrdersPage}
                 />
                 <Route exact path="/admin/tenants" component={Tenants} />
-                <Route exact path="/admin/settings" component={SettingsPage} />
+                {/* <Route exact path="/admin/settings" component={SettingsPage} /> */}
                 <Route exact path="/admin/billing" component={Billing} />
               </Switch>
             </Layout>

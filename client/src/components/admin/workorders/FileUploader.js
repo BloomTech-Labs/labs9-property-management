@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import './FileUploader.css'
 const Uppy = require('@uppy/core')
 const GoogleDrive = require('@uppy/google-drive')
 const Dropbox = require('@uppy/dropbox')
@@ -22,6 +23,8 @@ const PhotoUploadIcon = styled(InsertPhoto)`
     font-size: 64px;
   }
 `;
+
+
 
 const styles = theme => ({
   container: {
@@ -47,7 +50,7 @@ class FileUploader extends React.Component {
       debug: false,
       autoProceed: false,
       restrictions: {
-        maxFileSize: 1000000,
+        maxFileSize: 4000000,
         maxNumberOfFiles: 1,
         minNumberOfFiles: 1
       }

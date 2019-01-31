@@ -111,7 +111,7 @@ router.get('/admin', (req, res) => {
 
   db('house_properties as h')
     .join('owners as o', 'o.owner_uid', 'h.owner_uid')
-    .select('h.house_id', 'h.property_name')
+    .select('h.property_name')
     .where('o.owner_uid', uid)
     .then(properties => {
       res.status(200).json({ properties });

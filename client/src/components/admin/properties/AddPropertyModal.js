@@ -7,7 +7,6 @@ import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -104,8 +103,11 @@ class AddPropertyModal extends Component {
 
     axios
       .post('/api/properties', request)
-      .then(id => {
-        this.props.addPropertyHandler({ id: id, ...request });
+      .then(response => {
+        this.props.addPropertyHandler({
+          house_id: response.data[0],
+          ...request,
+        });
       })
       .catch(err => {
         this.props.snackbarErrorHandler(

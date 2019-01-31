@@ -8,7 +8,7 @@ class Layout extends Component {
       <Grid container justify="center" spacing={16}>
         <Sidebar links={this.props.links} />
 
-        <Grid item xs={10}>
+        <Grid item xs={12} lg={10}>
           <main>{this.props.children}</main>
         </Grid>
       </Grid>
