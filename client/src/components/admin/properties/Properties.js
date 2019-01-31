@@ -100,6 +100,7 @@ const styles = theme => ({
     marginLeft: '50%',
     transform: 'translateX(-50%)',
     padding: theme.spacing.unit * 3,
+    overflowY: 'scroll',
   },
 });
 
