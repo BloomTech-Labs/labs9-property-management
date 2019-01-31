@@ -17,6 +17,7 @@ import ListItem from '@material-ui/core/ListItem';
 import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import CustomSnackbar from '../../snackbar/CustomSnackbar';
+import CardHeader from '@material-ui/core/CardHeader';
 // import FormControl from '@material-ui/core/FormControl';
 // import FormHelperText from '@material-ui/core/FormHelperText';
 // import Select from '@material-ui/core/Select';
@@ -89,6 +90,9 @@ const styles = theme => ({
     paddingBottom: 20,
     paddingLeft: 0,
     paddingRight: 0,
+  },
+  paddingTitle: {
+    padding: 20,
   },
 });
 
@@ -166,32 +170,47 @@ class Payments extends React.Component {
       <>
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
-            <List className={classes.root}>
+            {/* <List className={classes.root}>
               <Typography component="h1" variant="h5">
                 Outstanding Balance -$350.00
               </Typography>
               <Divider component="li" />
-            </List>
+            </List> */}
           </Grid>
         </Grid>
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12}>
             <Grid container justify="space-around" spacing={16}>
               <Grid item xs={12} md={12}>
-                <Paper className={classes.paper}>
-                  <CardContent>
+                <Paper
+                  className={classNames(classes.paper, classes.paddingTitle)}
+                >
+                  <CardHeader
+                    title="Make a Payment"
+                    subheader="Credit/Debit card"
+                    className={classes.cardHeader}
+                    titleTypographyProps={{
+                      component: 'h6',
+                      variant: 'h6',
+                      color: 'inherit',
+                    }}
+                    subheaderTypographyProps={{
+                      variant: 'overline',
+                    }}
+                  />
+                  {/* <CardContent>
                     <Typography gutterBottom variant="h6">
                       Make a Payment
                     </Typography>
                   </CardContent>
-                  <Divider />
+                  <Divider /> */}
                   <CardContent>
                     <form onSubmit={''} noValidate autoComplete="off">
                       <List className={classes.box}>
                         <ListItem className={classes.blockElement}>
                           <ListItemText
                             className={classNames(classes.noPadding)}
-                            primary="Payment Amount"
+                            secondary="Payment Amount:"
                           />
                           <TextField
                             id="standard-name"
