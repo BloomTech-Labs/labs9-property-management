@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import testlogo from '../../images/test-logo.svg';
-import leasefrontblack from '../../images/leasefront-black.svg';
+import testlogo from '../../images/test-logo.svg';
+// import leasefrontblack from '../../images/leasefront-black.svg';
 // import leasefrontcap from '../../images/leasefront-capital.svg';
-import logoplaceholder from '../../images/name.svg';
+// import logoplaceholder from '../../images/name.svg';
 import styled from 'styled-components';
 import MobileNav from './MobileNav';
 import { KeyboardBackspace } from '@material-ui/icons';
@@ -115,11 +115,7 @@ class Header extends React.Component {
         <HeaderContainer scrolled={this.state.hasScrolled}>
           <HeaderGroup>
             <HeaderLink to="/">
-              <Logo
-                src={logoplaceholder}
-                alt="logo"
-                height="22" /* width="32" */
-              />
+              <Logo src={testlogo} alt="logo" width="32" />
             </HeaderLink>
             {this.state.menuIsOpen ? (
               <MobileNav handleMenuToggle={this.handleMenuToggle} />
