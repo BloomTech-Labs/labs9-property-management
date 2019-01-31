@@ -74,7 +74,8 @@ const styles = theme => ({
 class WorkOrders extends Component {
   state = {
     workOrders: [],
-    imageModalOpen:false,
+    imageModalOpen: false,
+    img_src: '',
   };
 
   componentDidMount() {
@@ -97,8 +98,14 @@ class WorkOrders extends Component {
     console.log('CDU state: ', this.state);
   }
 
-  toggleImageModal = () => {
-    this.setState({ imageModalOpen: !this.state.imageModalOpen });
+  toggleImageModal = event => {
+    const src = event.currentTarget.getAttribute('data-src');
+
+    this.setState({ imageModalOpen: !this.state.imageModalOpen, img_src: src });
+  };
+
+  closeImageModal = () => {
+    this.setState({ imageModalOpen: false, img_src: '' });
   };
 
   sendAlert = () => {
@@ -119,6 +126,15 @@ class WorkOrders extends Component {
 
   render() {
     const { classes } = this.props;
+
+    const imageClass = {
+      marginTop: '10vh',
+      marginLeft: '50%',
+      transform: 'translateX(-50%)',
+      height: '80vh',
+      maxWidth: '90%',
+    };
+
     if (this.state.workOrders.length === 0) {
       return (
         <Grid
@@ -143,146 +159,148 @@ class WorkOrders extends Component {
       );
     } else {
       return (
-        <Grid container className={classes.container} spacing={16}>
-          <Grid item xs={12}>
-            <Grid container justify="flex-start" spacing={16}>
-              {this.state.workOrders.map((entry, index) => (
-                <Grid key={index} item xs={12} sm={6} lg={4}>
-                  <Card className={classes.card}>
-                    <CardActions
-                      className={classes.actions}
-                      disableActionSpacing
-                    >
-                      <Typography
-                        className={classes.description}
-                        variant="h5"
-                        component="p"
+        <>
+          <Grid container className={classes.container} spacing={16}>
+            <Grid item xs={12}>
+              <Grid container justify="flex-start" spacing={16}>
+                {this.state.workOrders.map((entry, index) => (
+                  <Grid key={index} item xs={12} sm={6} lg={4}>
+                    <Card className={classes.card}>
+                      <CardActions
+                        className={classes.actions}
+                        disableActionSpacing
                       >
-                        {`Work Order # ${entry.work_order_id}`}
-                      </Typography>
-                      <IconButton aria-label="View Image"
-                      onClick={this.toggleImageModal}
-                      >
-                        <InsertPhoto/>
-                      </IconButton>
-                      <Modal
-                        open={this.state.imageModalOpen}
-                        onClose={this.toggleImageModal}
-                      >
-                        <Paper className={classes.paper}>
-                        <img src={entry.work_order_image}/>
-                        </Paper>
-                     </Modal>
-                    </CardActions>
-                    <CardContent>
-                      <List className={classes.root}>
-                        <ListItem>
-                          <Avatar>
-                            <Home />
-                          </Avatar>
-                          <ListItemText
-                            primary="Address"
-                            secondary={entry.address}
-                          />
-                        </ListItem>
-                        <ListItem>
-                          <Avatar>
-                            <Build />
-                          </Avatar>
-                          <ListItemText
-                            primary="Issue"
-                            secondary={entry.description}
-                          />
-                        </ListItem>
-                        <ListItem>
-                          <Avatar>
-                            <CheckCircleOutline />
-                          </Avatar>
-                          <ListItemText
-                            primary="Permission to Enter Property"
-                            secondary={entry.property_access ? 'YES' : 'NO'}
-                          />
-                        </ListItem>
-                        <ListItem>
-                          <Avatar>
-                            <Call />
-                          </Avatar>
-                          <ListItemText
-                            primary="Phone"
-                            secondary={entry.mobile}
-                          />
-                        </ListItem>
-                      </List>
-                      <FormControl component="fieldset" fullWidth={true}>
-                        <RadioGroup
-                          aria-label="work_order_status"
-                          name="work_order_status"
-                          value={entry.work_order_status}
-                          onChange={this.handleRadio(
-                            'work_order_status',
-                            index
-                          )}
-                          row
+                        <Typography
+                          className={classes.description}
+                          variant="h5"
+                          component="p"
                         >
-                          <FormControlLabel
-                            value="submitted"
-                            control={
-                              <Radio
-                                checked={
-                                  entry.work_order_status === 'submitted'
-                                }
-                                name="work-order-status"
-                                aria-label="submitted"
-                                color="primary"
-                              />
-                            }
-                            label="Submitted"
-                            labelPlacement="top"
-                          />
-                          <FormControlLabel
-                            value="in-progress"
-                            control={
-                              <Radio
-                                checked={
-                                  entry.work_order_status === 'in-progress'
-                                }
-                                name="work-order-status"
-                                aria-label="In Progress"
-                                color="primary"
-                              />
-                            }
-                            label="In Progress"
-                            labelPlacement="top"
-                          />
-                          <FormControlLabel
-                            value="completed"
-                            control={
-                              <Radio
-                                checked={
-                                  entry.work_order_status === 'completed'
-                                }
-                                name="work-order-status"
-                                aria-label="Completed"
-                                color="primary"
-                              />
-                            }
-                            label="Completed"
-                            labelPlacement="top"
-                          />
-                        </RadioGroup>
-                      </FormControl>
-                      <Grid container justify="center">
-                        <Button color="primary" onClick={this.sendAlert}>
-                          Submit
-                        </Button>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
+                          {`Work Order # ${entry.work_order_id}`}
+                        </Typography>
+                        <IconButton
+                          aria-label="View Image"
+                          onClick={this.toggleImageModal}
+                          data-src={entry.work_order_image}
+                        >
+                          <InsertPhoto />
+                        </IconButton>
+                      </CardActions>
+                      <CardContent>
+                        <List className={classes.root}>
+                          <ListItem>
+                            <Avatar>
+                              <Home />
+                            </Avatar>
+                            <ListItemText
+                              primary="Address"
+                              secondary={entry.address}
+                            />
+                          </ListItem>
+                          <ListItem>
+                            <Avatar>
+                              <Build />
+                            </Avatar>
+                            <ListItemText
+                              primary="Issue"
+                              secondary={entry.description}
+                            />
+                          </ListItem>
+                          <ListItem>
+                            <Avatar>
+                              <CheckCircleOutline />
+                            </Avatar>
+                            <ListItemText
+                              primary="Permission to Enter Property"
+                              secondary={entry.property_access ? 'YES' : 'NO'}
+                            />
+                          </ListItem>
+                          <ListItem>
+                            <Avatar>
+                              <Call />
+                            </Avatar>
+                            <ListItemText
+                              primary="Phone"
+                              secondary={entry.mobile}
+                            />
+                          </ListItem>
+                        </List>
+                        <FormControl component="fieldset" fullWidth={true}>
+                          <RadioGroup
+                            aria-label="work_order_status"
+                            name="work_order_status"
+                            value={entry.work_order_status}
+                            onChange={this.handleRadio(
+                              'work_order_status',
+                              index
+                            )}
+                            row
+                          >
+                            <FormControlLabel
+                              value="submitted"
+                              control={
+                                <Radio
+                                  checked={
+                                    entry.work_order_status === 'submitted'
+                                  }
+                                  name="work-order-status"
+                                  aria-label="submitted"
+                                  color="primary"
+                                />
+                              }
+                              label="Submitted"
+                              labelPlacement="top"
+                            />
+                            <FormControlLabel
+                              value="in-progress"
+                              control={
+                                <Radio
+                                  checked={
+                                    entry.work_order_status === 'in-progress'
+                                  }
+                                  name="work-order-status"
+                                  aria-label="In Progress"
+                                  color="primary"
+                                />
+                              }
+                              label="In Progress"
+                              labelPlacement="top"
+                            />
+                            <FormControlLabel
+                              value="completed"
+                              control={
+                                <Radio
+                                  checked={
+                                    entry.work_order_status === 'completed'
+                                  }
+                                  name="work-order-status"
+                                  aria-label="Completed"
+                                  color="primary"
+                                />
+                              }
+                              label="Completed"
+                              labelPlacement="top"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                        <Grid container justify="center">
+                          <Button color="primary" onClick={this.sendAlert}>
+                            Submit
+                          </Button>
+                        </Grid>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+          <Modal
+            open={this.state.imageModalOpen}
+            onClose={this.closeImageModal}
+          >
+            <img style={imageClass} src={this.state.img_src} />
+          </Modal>
+        </>
       );
     }
   }
