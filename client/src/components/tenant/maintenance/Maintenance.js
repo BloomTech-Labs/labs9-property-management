@@ -27,7 +27,7 @@ const styles = theme => ({
     width: '100%',
   },
   imgpaper: {
-    marginTop:25,
+    marginTop: 25,
     padding: 20,
     backgroundColor: theme.palette.background.paper,
   },
@@ -40,7 +40,8 @@ const styles = theme => ({
     zIndex: 0,
   },
   typography: {
-    marginLeft:10,
+    marginLeft: 10,
+    marginTop: 6,
   },
   actions: {
     display: 'flex',
@@ -68,13 +69,13 @@ const styles = theme => ({
   noPadding: {
     padding: 0,
   },
-  blockElement: {
-    display: 'block',
-  },
+  // blockElement: {
+  //   display: 'block',
+  // },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 350
+    width: 350,
   },
   dense: {
     marginTop: 40,
@@ -107,6 +108,7 @@ class Maintenance extends React.Component {
     maintenanceNum: '',
     houseID: '',
     tenantID: '',
+    loading: true,
   };
 
   componentDidMount() {
@@ -121,6 +123,7 @@ class Maintenance extends React.Component {
             maintenanceNum: response.data[0].maintenance_ph,
             houseID: response.data[0].house_id,
             tenantID: response.data[0].tenant_id,
+            loading: false,
           }));
         }
       })
@@ -134,7 +137,7 @@ class Maintenance extends React.Component {
   submitWorkOrder = event => {
     event.preventDefault();
 
-    console.log('this.state.photo.original',this.state.photo.original)
+    console.log('this.state.photo.original', this.state.photo.original);
     axios
       .post('/api/work-orders/', {
         description: this.state.description,
@@ -146,7 +149,7 @@ class Maintenance extends React.Component {
       })
       .then(res => {
         console.log('register response: ', res);
-        // this.props.history.push('/tenant');
+        this.props.history.push('/tenant');
       })
       .catch(error => {
         console.error('Axios response: ', error);
@@ -176,7 +179,7 @@ class Maintenance extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    console.log(theme);
+    // console.log(theme);
 
     return (
       <Grid container className={classes.container} spacing={16}>
@@ -193,28 +196,42 @@ class Maintenance extends React.Component {
           {this.state.address ? (
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
-              <Paper className={classes.imgpaper}>
-                <Grid item xs={12} md={5}>
-                  <ListItem>
+                <Paper className={classes.imgpaper}>
+                  {/* <Grid item xs={12} md={5}> */}
+                  <ListItem className={classes.blockElement}>
                     <Avatar>
                       <Call />
                     </Avatar>
-                    <ListItem className={classes.blockElement}>
-                      <ListItemText
-                        className={classes.noPadding}
-                        primary="24/7 Maintenance"
-                      />
-                      <ListItemText
-                        className={classes.noPadding}
-                        primary={this.phoneConverter(this.state.maintenanceNum)}
-                      />
-                    </ListItem>
+                    {/* <ListItem className={classes.blockElement}> */}
+                    <ListItemText
+                      // className={classes.noPadding}
+                      primary="24/7 Maintenance"
+                      secondary={this.phoneConverter(this.state.maintenanceNum)}
+                    />
+                    {/* <ListItemText
+                          className={classes.noPadding}
+                          primary={this.phoneConverter(
+                            this.state.maintenanceNum
+                          )}
+                        /> */}
                   </ListItem>
-                  <Typography component="h1" variant="h5"
-                   onChange={this.handleInputChange}
-                   className={classes.typography}
-                   >
-                  {this.state.address}
+                  {/* </ListItem> */}
+                  <Typography
+                    component="p"
+                    variant="p"
+                    className={classes.typography}
+                    color="background"
+                  >
+                    Address
+                  </Typography>
+                  <Typography
+                    component="h1"
+                    variant="h5"
+                    // onChange={this.handleInputChange}
+                    className={classes.typography}
+                    color="primary"
+                  >
+                    {this.state.address}
                   </Typography>
                   <TextField
                     id="outlined-multiline-static"
@@ -228,11 +245,11 @@ class Maintenance extends React.Component {
                     value={this.state.description}
                     type="text"
                     name="description"
-                  /> 
-                  </Grid>
-                  </Paper>
+                  />
+                  {/* </Grid> */}
+                </Paper>
                 <Paper className={classes.imgpaper}>
-                <FileUploader GetURL={this.GetURL} />
+                  <FileUploader GetURL={this.GetURL} />
                 </Paper>
                 <Grid item xs={12} md={11}>
                   <div className={classes.center}>
