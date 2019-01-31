@@ -18,6 +18,8 @@ import {
   CheckCircleOutline,
   Close,
 } from '@material-ui/icons';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -31,6 +33,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import Hidden from '@material-ui/core/Hidden';
 import CustomSnackbar from '../../snackbar/CustomSnackbar';
 import axios from 'axios';
 
@@ -39,7 +42,7 @@ const styles = theme => ({
     marginTop: 100,
     marginLeft: 0,
   },
-  root: {
+  list: {
     width: '100%',
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
@@ -67,17 +70,28 @@ const styles = theme => ({
     margin: 'auto',
     marginTop: 50,
   },
-  absolute: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 3,
-  },
   dialog: {
     display: 'flex',
     justifyContent: 'center',
   },
   button: {
     margin: theme.spacing.unit,
+  },
+  searchbar: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: '100%',
+  },
+  input: {
+    marginLeft: 8,
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
+  detailedView: {
+    width: '100%',
   },
 });
 
@@ -90,6 +104,7 @@ class Properties extends React.Component {
     editModalOpen: false,
     trashModalOpen: false,
     properties: [],
+    selectedProperty: {},
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
@@ -127,14 +142,16 @@ class Properties extends React.Component {
   };
 
   viewMore = event => {
-    console.log(event.currentTarget.getAttribute('data-id'));
+    const index = event.currentTarget.getAttribute('data-index');
 
     if (
       this.state.detailedViewOn !== true &&
-      this.state.selectedPropertyIndex !==
-        this.state.properties[event.currentTarget.getAttribute('data-index')]
+      this.state.selectedPropertyIndex !== index
     ) {
-      this.setState({ detailedViewOn: true });
+      this.setState({
+        detailedViewOn: true,
+        selectedProperty: { ...this.state.properties[index] },
+      });
     }
   };
 
@@ -219,19 +236,45 @@ class Properties extends React.Component {
     const { classes } = this.props;
     console.log('properties', this.state.properties);
 
+    const addBtnClass = {
+      display: 'flex',
+      width: '100%',
+      justifyContent: 'center',
+    };
+
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            onClick={this.toggleAddProperty}
-          >
-            Add Property
-          </Button>
+          <Grid container justify="space-between" spacing={0}>
+            <Grid item xs={12} md={4}>
+              <Paper className={classes.searchbar} elevation={1}>
+                <InputBase
+                  className={classes.input}
+                  placeholder="Search by Name"
+                />
+                <IconButton className={classes.iconButton} aria-label="Search">
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </Grid>
+            <Hidden mdDown>
+              <Grid item xs={4} />
+            </Hidden>
+            <Grid item xs={12} md={2}>
+              <div style={addBtnClass}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={this.toggleAddProperty}
+                >
+                  Add Property
+                </Button>
+              </div>
+            </Grid>
+          </Grid>
         </Grid>
-        <Grid item xs={12} lg={this.state.detailedViewOn ? 8 : 12}>
+        <Grid item xs={12} lg={this.state.detailedViewOn ? 4 : 12}>
           <Grid container justify="center" spacing={16}>
             {this.state.properties.map((entry, index) => (
               <Grid
@@ -239,13 +282,14 @@ class Properties extends React.Component {
                 item
                 xs={12}
                 sm={6}
-                md={this.state.detailedViewOn ? 6 : 4}
+                md={this.state.detailedViewOn ? 12 : 4}
               >
                 <div
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
                     width: '100%',
+                    height: '100%',
                   }}
                 >
                   <Card className={classes.card}>
@@ -276,7 +320,7 @@ class Properties extends React.Component {
                       <Typography variant="h5" align="center" component="h6">
                         {entry.property_name}
                       </Typography>
-                      <List className={classes.root}>
+                      <List className={classes.list}>
                         <ListItem>
                           <Avatar>
                             <Home />
@@ -299,7 +343,9 @@ class Properties extends React.Component {
                             primary="Tenant(s)"
                             secondary={
                               entry.tenants && entry.tenants.length > 0
-                                ? entry.tenants.join(', ')
+                                ? entry.tenants.map(
+                                    tenant => tenant.display_name + '\n'
+                                  )
                                 : 'No Tenants'
                             }
                           />
@@ -310,7 +356,17 @@ class Properties extends React.Component {
                           </Avatar>
                           <ListItemText
                             primary="Lease"
-                            secondary={entry.leaseDate}
+                            secondary={
+                              entry.tenants && entry.tenants.length > 0
+                                ? entry.tenants.map(
+                                    tenant =>
+                                      tenant.lease_start_date +
+                                      ' - ' +
+                                      tenant.lease_end_date +
+                                      '\n'
+                                  )
+                                : 'No Data'
+                            }
                           />
                         </ListItem>
                         <ListItem>
@@ -346,15 +402,24 @@ class Properties extends React.Component {
         </Grid>
         <Grid
           item
-          xs={4}
+          xs={8}
           className={this.state.detailedViewOn ? '' : classes.displayNone}
         >
           <Grid container>
-            <Tooltip title="Close">
-              <IconButton onClick={this.closeDetailedView}>
-                <Close />
-              </IconButton>
-            </Tooltip>
+            <Paper className={classes.detailedView}>
+              <Grid item xs={12}>
+                <Tooltip title="Close">
+                  <IconButton onClick={this.closeDetailedView}>
+                    <Close />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography component="h6" align="center" variant="h6">
+                  {this.state.selectedProperty.property_name}
+                </Typography>
+              </Grid>
+            </Paper>
           </Grid>
           <AddPropertyModal
             open={this.state.addPropertyModalOpen}
