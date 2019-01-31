@@ -9,8 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
 import Paper from '@material-ui/core/Paper';
 // import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+// import Typography from '@material-ui/core/Typography';
+// import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
@@ -18,6 +18,8 @@ import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import CustomSnackbar from '../../snackbar/CustomSnackbar';
 import CardHeader from '@material-ui/core/CardHeader';
+import { Payment } from '@material-ui/icons';
+import Avatar from '@material-ui/core/Avatar';
 // import FormControl from '@material-ui/core/FormControl';
 // import FormHelperText from '@material-ui/core/FormHelperText';
 // import Select from '@material-ui/core/Select';
@@ -93,6 +95,12 @@ const styles = theme => ({
   },
   paddingTitle: {
     padding: 20,
+  },
+  padding: {
+    padding: 20,
+  },
+  marginTop: {
+    marginTop: 5,
   },
 });
 
@@ -170,12 +178,27 @@ class Payments extends React.Component {
       <>
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
-            {/* <List className={classes.root}>
-              <Typography component="h1" variant="h5">
-                Outstanding Balance -$350.00
-              </Typography>
-              <Divider component="li" />
-            </List> */}
+            <Paper className={classNames(classes.padding, classes.marginTop)}>
+              <CardHeader
+                title="Amount due"
+                subheader="Keep track of your monthly payments"
+                className={classes.cardHeader}
+                titleTypographyProps={{
+                  component: 'h6',
+                  variant: 'h6',
+                  color: 'inherit',
+                }}
+                subheaderTypographyProps={{
+                  variant: 'overline',
+                }}
+              />
+              <ListItem>
+                <Avatar>
+                  <Payment />
+                </Avatar>
+                <ListItemText primary="Balance:" secondary="$ 0.00" />
+              </ListItem>
+            </Paper>
           </Grid>
         </Grid>
         <Grid container className={classes.container} spacing={16}>
@@ -198,12 +221,6 @@ class Payments extends React.Component {
                       variant: 'overline',
                     }}
                   />
-                  {/* <CardContent>
-                    <Typography gutterBottom variant="h6">
-                      Make a Payment
-                    </Typography>
-                  </CardContent>
-                  <Divider /> */}
                   <CardContent>
                     <form onSubmit={''} noValidate autoComplete="off">
                       <List className={classes.box}>
