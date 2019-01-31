@@ -90,6 +90,9 @@ const styles = theme => ({
   iconButton: {
     padding: 10,
   },
+  detailedView: {
+    width: '100%',
+  },
 });
 
 class Properties extends React.Component {
@@ -101,6 +104,7 @@ class Properties extends React.Component {
     editModalOpen: false,
     trashModalOpen: false,
     properties: [],
+    selectedProperty: {},
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
@@ -138,14 +142,16 @@ class Properties extends React.Component {
   };
 
   viewMore = event => {
-    console.log(event.currentTarget.getAttribute('data-id'));
+    const index = event.currentTarget.getAttribute('data-index');
 
     if (
       this.state.detailedViewOn !== true &&
-      this.state.selectedPropertyIndex !==
-        this.state.properties[event.currentTarget.getAttribute('data-index')]
+      this.state.selectedPropertyIndex !== index
     ) {
-      this.setState({ detailedViewOn: true });
+      this.setState({
+        detailedViewOn: true,
+        selectedProperty: { ...this.state.properties[index] },
+      });
     }
   };
 
@@ -268,7 +274,7 @@ class Properties extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} lg={this.state.detailedViewOn ? 8 : 12}>
+        <Grid item xs={12} lg={this.state.detailedViewOn ? 4 : 12}>
           <Grid container justify="center" spacing={16}>
             {this.state.properties.map((entry, index) => (
               <Grid
@@ -276,13 +282,14 @@ class Properties extends React.Component {
                 item
                 xs={12}
                 sm={6}
-                md={this.state.detailedViewOn ? 6 : 4}
+                md={this.state.detailedViewOn ? 12 : 4}
               >
                 <div
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
                     width: '100%',
+                    height: '100%',
                   }}
                 >
                   <Card className={classes.card}>
@@ -395,15 +402,24 @@ class Properties extends React.Component {
         </Grid>
         <Grid
           item
-          xs={4}
+          xs={8}
           className={this.state.detailedViewOn ? '' : classes.displayNone}
         >
           <Grid container>
-            <Tooltip title="Close">
-              <IconButton onClick={this.closeDetailedView}>
-                <Close />
-              </IconButton>
-            </Tooltip>
+            <Paper className={classes.detailedView}>
+              <Grid item xs={12}>
+                <Tooltip title="Close">
+                  <IconButton onClick={this.closeDetailedView}>
+                    <Close />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography component="h6" align="center" variant="h6">
+                  {this.state.selectedProperty.property_name}
+                </Typography>
+              </Grid>
+            </Paper>
           </Grid>
           <AddPropertyModal
             open={this.state.addPropertyModalOpen}
