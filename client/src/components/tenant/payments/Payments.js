@@ -1,7 +1,7 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import testlogo from '../../../images/test-logo.svg';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -16,19 +16,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
+import CustomSnackbar from '../../snackbar/CustomSnackbar';
 // import FormControl from '@material-ui/core/FormControl';
 // import FormHelperText from '@material-ui/core/FormHelperText';
 // import Select from '@material-ui/core/Select';
 // import InputLabel from '@material-ui/core/InputLabel';
-
-const StyledCheckout = styled(StripeCheckout)`
-  & button {
-    background: none;
-    span {
-      background: none;
-    }
-  }
-`;
 
 const styles = theme => ({
   container: {
@@ -105,6 +97,9 @@ class Payments extends React.Component {
     amount: '',
     payments: [],
     paymentAmount: 72500,
+    openSnackbar: false,
+    snackbarMessage: '',
+    snackbarVariant: '',
   };
 
   onToken = token => {
@@ -116,11 +111,14 @@ class Payments extends React.Component {
       .post('/api/payments', body)
       .then(response => {
         console.log('response', response.data);
-        alert(
-          'Payment Success: token was received by backend and charge was made.'
-        );
+        // alert(
+        //   'Payment Success: token was received by backend and charge was made.'
+        // );
         this.setState(prevState => {
           return {
+            openSnackbar: !prevState.openSnackbar,
+            snackbarMessage: 'Payment was a success. Thank you!',
+            snackbarVariant: 'success',
             payments: prevState.payments.concat({
               amount: (body.amount / 100).toFixed(2),
               timestamp: Date.now(),
@@ -130,7 +128,9 @@ class Payments extends React.Component {
       })
       .catch(error => {
         console.log('Payment Error: ', error);
-        alert('Payment Error');
+        this.toggleSnackbarError(
+          'Error: payment did not go through. Please try another card or contact property manager!'
+        );
       });
   };
 
@@ -142,6 +142,20 @@ class Payments extends React.Component {
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
+    });
+  };
+
+  toggleSnackbarError = message => {
+    this.setState({
+      openSnackbar: true,
+      snackbarMessage: message,
+      snackbarVariant: 'error',
+    });
+  };
+
+  snackbarClose = () => {
+    this.setState({
+      openSnackbar: false,
     });
   };
 
@@ -208,6 +222,13 @@ class Payments extends React.Component {
               </Grid>
             </Grid>
           </Grid>
+          <CustomSnackbar
+            open={this.state.openSnackbar}
+            variant={this.state.snackbarVariant}
+            message={this.state.snackbarMessage}
+            onClose={this.snackbarClose}
+            onClick={this.snackbarClose}
+          />
         </Grid>
       </>
     );
