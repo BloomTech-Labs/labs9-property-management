@@ -15,7 +15,14 @@ import classNames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import { Home, Call, Email, CreditCard, Build } from '@material-ui/icons';
+import {
+  Home,
+  Call,
+  Email,
+  CreditCard,
+  Build,
+  Payment,
+} from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -101,9 +108,6 @@ const styles = theme => ({
     margin: '0 2px',
     transform: 'scale(0.8)',
   },
-  // card: {
-  //   height: 150,
-  // },
   customPaper: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
@@ -278,16 +282,6 @@ class Dashboard extends Component {
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12} className={classes.title}>
-          {/* <List className={classes.root}>
-            <Typography component="h1" variant="h5">
-              Outstanding Balance
-            </Typography>
-            <Typography component="h1" variant="h5">
-              -350.00
-            </Typography>
-
-            <Divider component="li" />
-          </List> */}
           <Grid container justify="space-around" spacing={16}>
             <Grid item xs={12} md={5}>
               <Button
@@ -345,6 +339,33 @@ class Dashboard extends Component {
             <Grid item xs={12} md={5}>
               <Paper
                 className={classNames(classNames.customPaper, classes.padding)}
+              >
+                <CardHeader
+                  title="Amount due"
+                  subheader="Keep track of your monthly payments"
+                  className={classes.cardHeader}
+                  titleTypographyProps={{
+                    component: 'h6',
+                    variant: 'h6',
+                    color: 'inherit',
+                  }}
+                  subheaderTypographyProps={{
+                    variant: 'overline',
+                  }}
+                />
+                <ListItem>
+                  <Avatar>
+                    <Payment />
+                  </Avatar>
+                  <ListItemText primary="Balance:" secondary="$ 0.00" />
+                </ListItem>
+              </Paper>
+              <Paper
+                className={classNames(
+                  classNames.customPaper,
+                  classes.padding,
+                  classes.marginTop
+                )}
               >
                 {tenantDetails}
               </Paper>
