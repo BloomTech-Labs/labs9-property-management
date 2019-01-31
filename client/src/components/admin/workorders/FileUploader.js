@@ -50,7 +50,7 @@ class FileUploader extends React.Component {
       debug: false,
       autoProceed: false,
       restrictions: {
-        maxFileSize: 1000000,
+        maxFileSize: 4000000,
         maxNumberOfFiles: 1,
         minNumberOfFiles: 1
       }

@@ -28,6 +28,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
 import classNames from 'classnames';
+import Modal from '@material-ui/core/Modal';
 
 const styles = theme => ({
   container: {
@@ -37,6 +38,12 @@ const styles = theme => ({
     width: '100%',
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
+  },
+  paper: {
+    width: '30%',
+    height: '80vh',
+    margin: 'auto',
+    marginTop: 50,
   },
   card: {
     maxWidth: 400,
@@ -67,6 +74,7 @@ const styles = theme => ({
 class WorkOrders extends Component {
   state = {
     workOrders: [],
+    imageModalOpen:false,
   };
 
   componentDidMount() {
@@ -88,6 +96,10 @@ class WorkOrders extends Component {
     }
     console.log('CDU state: ', this.state);
   }
+
+  toggleImageModal = () => {
+    this.setState({ imageModalOpen: !this.state.imageModalOpen });
+  };
 
   sendAlert = () => {
     fetch('http://property-management-dev.herokuapp.com/text').catch(err =>
@@ -148,12 +160,19 @@ class WorkOrders extends Component {
                       >
                         {`Work Order # ${entry.work_order_id}`}
                       </Typography>
-                      <IconButton aria-label="View Image">
-                        <InsertPhoto
-                          primary="Image"
-                          secondary={entry.work_order_image}
-                        />
+                      <IconButton aria-label="View Image"
+                      onClick={this.toggleImageModal}
+                      >
+                        <InsertPhoto/>
                       </IconButton>
+                      <Modal
+                        open={this.state.imageModalOpen}
+                        onClose={this.toggleImageModal}
+                      >
+                        <Paper className={classes.paper}>
+                        <img src={entry.work_order_image}/>
+                        </Paper>
+                     </Modal>
                     </CardActions>
                     <CardContent>
                       <List className={classes.root}>
