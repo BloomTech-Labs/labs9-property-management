@@ -171,29 +171,28 @@ class Maintenance extends React.Component {
   };
 
   phoneConverter = int => {
-    let arr = Array.from(int.toString());
-    arr.splice(6, 0, '-');
-    arr.splice(3, 0, '-');
-    return arr.join('');
+    if (int) {
+      let arr = Array.from(int.toString());
+      arr.splice(6, 0, '-');
+      arr.splice(3, 0, '-');
+      return arr.join('');
+    } else return '800-888-8888';
   };
 
   render() {
     const { classes, theme } = this.props;
     // console.log(theme);
 
-    return (
-      <Grid container className={classes.container} spacing={16}>
-        <Grid item xs={12} className={classes.title}>
-          <List className={classes.root}>
-            <Typography component="h1" variant="h5">
-              Submit a Work Order
-            </Typography>
-            <Divider component="li" />
-          </List>
-
-          {/* conditional statement that displays the work order form or a message stating the tenant needs to have a property assigned to their account first */}
-
-          {this.state.address ? (
+    if (this.state.address && this.state.loading === false) {
+      return (
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} className={classes.title}>
+            <List className={classes.root}>
+              <Typography component="h1" variant="h5">
+                Submit a Work Order
+              </Typography>
+              <Divider component="li" />
+            </List>
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
                 <Paper className={classes.imgpaper}>
@@ -281,7 +280,19 @@ class Maintenance extends React.Component {
                 </Grid>
               </Grid>
             </form>
-          ) : (
+          </Grid>
+        </Grid>
+      );
+    } else if (!this.state.address && this.state.loading === false) {
+      return (
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} className={classes.title}>
+            <List className={classes.root}>
+              <Typography component="h1" variant="h5">
+                Submit a Work Order
+              </Typography>
+              <Divider component="li" />
+            </List>
             <Paper className={classNames.customPaper}>
               <ListItem>
                 <ListItemText
@@ -290,10 +301,12 @@ class Maintenance extends React.Component {
                 />
               </ListItem>
             </Paper>
-          )}
+          </Grid>
         </Grid>
-      </Grid>
-    );
+      );
+    } else {
+      return <Grid />;
+    }
   }
 }
 
