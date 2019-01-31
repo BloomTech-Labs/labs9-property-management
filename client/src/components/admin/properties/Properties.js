@@ -218,6 +218,7 @@ class Properties extends React.Component {
         <Grid item xs={12}>
           <Button
             variant="contained"
+            color="primary"
             className={classes.button}
             onClick={this.toggleAddProperty}
           >
@@ -314,7 +315,8 @@ class Properties extends React.Component {
                       <Button
                         data-index={index}
                         onClick={this.viewMore}
-                        variant="outlined"
+                        color="primary"
+                        variant="text"
                       >
                         View More Info
                       </Button>

@@ -5,7 +5,6 @@ import { compose } from 'recompose';
 import InvitesTable from './InvitesTable';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -13,6 +12,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import CustomSnackbar from '../../snackbar/CustomSnackbar';
@@ -103,21 +103,22 @@ class Tenants extends Component {
       house_id: this.state.house_id,
     };
 
-    console.log('property: ', property);
     axios
       .post('/api/invitations/admin', property)
       .then(response => {
-        console.log(response);
         axios.get('/api/invitations/admin').then(response => {
-          console.log(response.data);
-          this.setState({ pending_invites: response.data });
+          this.setState({
+            pending_invites: response.data,
+            openSnackbar: true,
+            snackbarMessage: 'Invitation Sent!',
+            snackbarVariant: 'success',
+          });
         });
       })
       .catch(err => {
         this.setState({
           openSnackbar: true,
-          snackbarMessage:
-            'Error sending invite: That account might not exist!',
+          snackbarMessage: 'Error: That account might not exist!',
           snackbarVariant: 'error',
         });
       });
@@ -154,30 +155,25 @@ class Tenants extends Component {
             </Grid>
             <Grid item xs={12} md={12}>
               <Card className={classes.longCard}>
-                <CardHeader
-                  title="Add a Tenant"
-                  subheader="Invite a tenant to connect with you"
-                  className={classes.cardTop}
-                  titleTypographyProps={{
-                    component: 'h4',
-                    variant: 'body1',
-                    color: 'inherit',
-                  }}
-                  subheaderTypographyProps={{
-                    variant: 'overline',
-                    color: 'secondary',
-                  }}
-                />
-                <CardContent>
-                  <form style={{ marginTop: 50 }}>
+                <Typography component="h6" variant="h6">
+                  Send An Invite
+                </Typography>
+                <Typography component="p" variant="caption">
+                  Connect With A Tenant
+                </Typography>
+                <Grid container spacing={16}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       id="email"
                       label="Tenant Email"
                       value={this.state.email}
                       onChange={this.handleInputChange('email')}
+                      className={classes.textField}
                       required
                     />
-                    <FormControl required className={classes.formControl}>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl required className={classes.textField}>
                       <InputLabel htmlFor="property-native-required">
                         Property
                       </InputLabel>
@@ -199,6 +195,8 @@ class Tenants extends Component {
                       </Select>
                       <FormHelperText>Required</FormHelperText>
                     </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <DatePicker
                         margin="normal"
@@ -206,20 +204,40 @@ class Tenants extends Component {
                         value={this.state.leaseStart}
                         onChange={this.handleDateChange('leaseStart')}
                         format={'MM/dd/yyyy'}
+                        className={classes.textField}
                       />
+                    </MuiPickersUtilsProvider>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <DatePicker
                         margin="normal"
                         label="Lease End Date"
                         value={this.state.leaseEnd}
                         onChange={this.handleDateChange('leaseEnd')}
                         format={'MM/dd/yyyy'}
+                        className={classes.textField}
                       />
                     </MuiPickersUtilsProvider>
-                    <Button onClick={this.sendInvite} variant="outlined">
+                  </Grid>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      marginTop: '25px',
+                      marginBottom: '25px',
+                      width: '100%',
+                    }}
+                  >
+                    <Button
+                      color="primary"
+                      onClick={this.sendInvite}
+                      variant="contained"
+                    >
                       Send Invite
                     </Button>
-                  </form>
-                </CardContent>
+                  </div>
+                </Grid>
               </Card>
             </Grid>
             <CustomSnackbar
