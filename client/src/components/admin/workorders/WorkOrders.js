@@ -62,7 +62,6 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 5,
     paddingBottom: theme.spacing.unit * 5,
     marginTop: theme.spacing.unit * 11,
-    // maxWidth: 300,
     minHeight: 200,
   },
   listItem: {
@@ -76,13 +75,19 @@ class WorkOrders extends Component {
     workOrders: [],
     imageModalOpen: false,
     img_src: '',
+    loading: true,
   };
 
   componentDidMount() {
     if (this.props.authTokenRecieved) {
-      axios.get('/api/work-orders/owner').then(orders => {
-        this.setState({ workOrders: orders.data.orders });
-      });
+      axios
+        .get('/api/work-orders/owner')
+        .then(orders => {
+          this.setState({ workOrders: orders.data.orders, loading: false });
+        })
+        .catch(error => {
+          console.error('Server Error: ', error);
+        });
     }
   }
 
@@ -91,9 +96,14 @@ class WorkOrders extends Component {
       this.props.authTokenRecieved &&
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
     ) {
-      axios.get('/api/work-orders/owner').then(orders => {
-        this.setState({ workOrders: orders.data.orders });
-      });
+      axios
+        .get('/api/work-orders/owner')
+        .then(orders => {
+          this.setState({ workOrders: orders.data.orders, loading: false });
+        })
+        .catch(error => {
+          console.error('Server Error: ', error);
+        });
     }
     console.log('CDU state: ', this.state);
   }
@@ -135,7 +145,7 @@ class WorkOrders extends Component {
       maxWidth: '90%',
     };
 
-    if (this.state.workOrders.length === 0) {
+    if (this.state.workOrders.length === 0 && this.state.loading === false) {
       return (
         <Grid
           container
@@ -157,7 +167,10 @@ class WorkOrders extends Component {
           </Grid>
         </Grid>
       );
-    } else {
+    } else if (
+      this.state.workOrders.length > 0 &&
+      this.state.loading === false
+    ) {
       return (
         <>
           <Grid container className={classes.container} spacing={16}>
@@ -302,6 +315,8 @@ class WorkOrders extends Component {
           </Modal>
         </>
       );
+    } else {
+      return <Grid />;
     }
   }
 }
