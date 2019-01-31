@@ -16,7 +16,6 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FileUploader from '../../admin/workorders/FileUploader';
-import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
@@ -27,6 +26,11 @@ const styles = theme => ({
   root: {
     width: '100%',
   },
+  imgpaper: {
+    marginTop:25,
+    padding: 20,
+    backgroundColor: theme.palette.background.paper,
+  },
   card: {
     marginTop: 25,
     position: 'relative',
@@ -34,6 +38,9 @@ const styles = theme => ({
     minWidth: '40%',
     minHeight: 350,
     zIndex: 0,
+  },
+  typography: {
+    marginLeft:10,
   },
   actions: {
     display: 'flex',
@@ -67,10 +74,10 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: '100%',
+    width: 350
   },
   dense: {
-    marginTop: 16,
+    marginTop: 40,
   },
   center: {
     display: 'flex',
@@ -186,6 +193,7 @@ class Maintenance extends React.Component {
           {this.state.address ? (
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
+              <Paper className={classes.imgpaper}>
                 <Grid item xs={12} md={5}>
                   <ListItem>
                     <Avatar>
@@ -202,22 +210,17 @@ class Maintenance extends React.Component {
                       />
                     </ListItem>
                   </ListItem>
-                  <TextField
-                    id="outlined-dense"
-                    label="Address"
-                    className={classNames(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                    onChange={this.handleInputChange}
-                    value={this.state.address}
-                    type="text"
-                    name="address"
-                  />
+                  <Typography component="h1" variant="h5"
+                   onChange={this.handleInputChange}
+                   className={classes.typography}
+                   >
+                  {this.state.address}
+                  </Typography>
                   <TextField
                     id="outlined-multiline-static"
                     label="Description of Issue"
                     className={classNames(classes.textField, classes.dense)}
-                    rows="6"
+                    rows="7"
                     multiline
                     margin="dense"
                     variant="outlined"
@@ -225,20 +228,12 @@ class Maintenance extends React.Component {
                     value={this.state.description}
                     type="text"
                     name="description"
-                  />
-                  <TextField
-                    id="outlined-dense"
-                    label="Phone Number"
-                    className={classNames(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                    onChange={this.handleInputChange}
-                    value={this.state.phoneNumber}
-                    type="integer"
-                    name="phoneNumber"
-                  />
-                </Grid>
+                  /> 
+                  </Grid>
+                  </Paper>
+                <Paper className={classes.imgpaper}>
                 <FileUploader GetURL={this.GetURL} />
+                </Paper>
                 <Grid item xs={12} md={11}>
                   <div className={classes.center}>
                     <FormControlLabel
