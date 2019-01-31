@@ -129,7 +129,7 @@ class Payments extends React.Component {
       .catch(error => {
         console.log('Payment Error: ', error);
         this.toggleSnackbarError(
-          'Error: payment did not go through. Please try another card or contact property manager!'
+          'Error: payment failed. Please contact support.'
         );
       });
   };
