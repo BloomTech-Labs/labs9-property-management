@@ -1,6 +1,5 @@
 const express = require('express');
 const db = require('../db/dbConfig');
-const Promise = require('bluebird');
 
 const router = express.Router();
 

@@ -45,8 +45,14 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   card: {
-    maxWidth: 400,
+    width: '80%',
     minHeight: 384,
+    [theme.breakpoints.up('sm')]: {
+      width: '90%',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '100%',
+    },
   },
   actions: {
     display: 'flex',
@@ -170,7 +176,7 @@ class Properties extends React.Component {
     axios
       .delete(`/api/properties/${this.state.selectedPropertyId}`)
       .then(response => {
-        this.state.properties.map((property, index) => {
+        this.state.properties.forEach((property, index) => {
           if (index !== this.state.selectedPropertyIndex)
             properties.push({ ...property });
         });
@@ -235,94 +241,105 @@ class Properties extends React.Component {
                 sm={6}
                 md={this.state.detailedViewOn ? 6 : 4}
               >
-                <Card className={classes.card}>
-                  <CardActions className={classes.actions} disableActionSpacing>
-                    <Tooltip title="Edit">
-                      <IconButton
-                        aria-label="Edit Property"
-                        onClick={this.toggleEditProperty}
-                      >
-                        <Edit />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete">
-                      <IconButton
-                        data-id={entry.house_id}
-                        data-index={index}
-                        aria-label="Delete Property"
-                        onClick={this.toggleRemovePropertyModal}
-                      >
-                        <Delete />
-                      </IconButton>
-                    </Tooltip>
-                  </CardActions>
-                  <CardContent>
-                    <Typography variant="h5" align="center" component="h6">
-                      {entry.property_name}
-                    </Typography>
-                    <List className={classes.root}>
-                      <ListItem>
-                        <Avatar>
-                          <Home />
-                        </Avatar>
-                        <ListItemText
-                          primary="Address"
-                          secondary={[
-                            entry.address,
-                            entry.city,
-                            entry.state,
-                            entry.zip_code,
-                          ].join(' ')}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <Avatar>
-                          <Person />
-                        </Avatar>
-                        <ListItemText
-                          primary="Tenant(s)"
-                          secondary={
-                            entry.tenants && entry.tenants.length > 0
-                              ? entry.tenants.join(', ')
-                              : 'No Tenants'
-                          }
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <Avatar>
-                          <DateRange />
-                        </Avatar>
-                        <ListItemText
-                          primary="Lease"
-                          secondary={entry.leaseDate}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <Avatar>
-                          <CheckCircleOutline />
-                        </Avatar>
-                        <ListItemText
-                          primary="Contract Signed"
-                          secondary={
-                            entry.contract
-                              ? entry.contract.toString().toUpperCase()
-                              : 'No Data'
-                          }
-                        />
-                      </ListItem>
-                    </List>
-                    <Grid container justify="center">
-                      <Button
-                        data-index={index}
-                        onClick={this.viewMore}
-                        color="primary"
-                        variant="text"
-                      >
-                        View More Info
-                      </Button>
-                    </Grid>
-                  </CardContent>
-                </Card>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <Card className={classes.card}>
+                    <CardActions
+                      className={classes.actions}
+                      disableActionSpacing
+                    >
+                      <Tooltip title="Edit">
+                        <IconButton
+                          aria-label="Edit Property"
+                          onClick={this.toggleEditProperty}
+                        >
+                          <Edit />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete">
+                        <IconButton
+                          data-id={entry.house_id}
+                          data-index={index}
+                          aria-label="Delete Property"
+                          onClick={this.toggleRemovePropertyModal}
+                        >
+                          <Delete />
+                        </IconButton>
+                      </Tooltip>
+                    </CardActions>
+                    <CardContent>
+                      <Typography variant="h5" align="center" component="h6">
+                        {entry.property_name}
+                      </Typography>
+                      <List className={classes.root}>
+                        <ListItem>
+                          <Avatar>
+                            <Home />
+                          </Avatar>
+                          <ListItemText
+                            primary="Address"
+                            secondary={[
+                              entry.address,
+                              entry.city,
+                              entry.state,
+                              entry.zip_code,
+                            ].join(' ')}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <Avatar>
+                            <Person />
+                          </Avatar>
+                          <ListItemText
+                            primary="Tenant(s)"
+                            secondary={
+                              entry.tenants && entry.tenants.length > 0
+                                ? entry.tenants.join(', ')
+                                : 'No Tenants'
+                            }
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <Avatar>
+                            <DateRange />
+                          </Avatar>
+                          <ListItemText
+                            primary="Lease"
+                            secondary={entry.leaseDate}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <Avatar>
+                            <CheckCircleOutline />
+                          </Avatar>
+                          <ListItemText
+                            primary="Contract Signed"
+                            secondary={
+                              entry.contract
+                                ? entry.contract.toString().toUpperCase()
+                                : 'No Data'
+                            }
+                          />
+                        </ListItem>
+                      </List>
+                      <Grid container justify="center">
+                        <Button
+                          data-index={index}
+                          onClick={this.viewMore}
+                          color="primary"
+                          variant="text"
+                        >
+                          View More Info
+                        </Button>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </div>
               </Grid>
             ))}
           </Grid>
