@@ -237,7 +237,7 @@ class Billing extends Component {
       <>
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12}>
-            <Grid container justify="space-around" spacing={16}>
+            <Grid container justify="space-evenly" spacing={16}>
               <Grid item xs={12} md={5}>
                 <Paper className={classes.paper}>
                   <CardContent>
