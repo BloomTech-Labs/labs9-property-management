@@ -18,6 +18,7 @@ import CardContent from '@material-ui/core/CardContent';
 import { Home, Call, Email, CreditCard, Build } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
+import CardHeader from '@material-ui/core/CardHeader';
 
 const styles = theme => ({
   container: {
@@ -34,7 +35,6 @@ const styles = theme => ({
     minWidth: '40%',
     minHeight: 150,
     zIndex: 0,
-    paddingBottom: 30,
   },
   actions: {
     display: 'flex',
@@ -108,6 +108,9 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
+  },
+  padding: {
+    padding: 20,
   },
 });
 
@@ -202,7 +205,20 @@ class Dashboard extends Component {
     // ======= renders tenant information if the tenant was assign to a property
     if (this.state.address) {
       tenantDetails = (
-        <Paper className={classNames.customPaper}>
+        <div>
+          <CardHeader
+            title="Property information"
+            subheader="You are assign to this property"
+            className={classes.cardHeader}
+            titleTypographyProps={{
+              component: 'h6',
+              variant: 'h6',
+              color: 'inherit',
+            }}
+            subheaderTypographyProps={{
+              variant: 'overline',
+            }}
+          />
           <ListItem>
             <Avatar>
               <Home />
@@ -244,25 +260,25 @@ class Dashboard extends Component {
               secondary={this.phoneConverter(this.state.maintenance_phone)}
             />
           </ListItem>
-        </Paper>
+        </div>
       );
     } else {
       tenantDetails = (
-        <Paper className={classNames.customPaper}>
+        <div>
           <ListItem>
             <ListItemText
               primary="Account does not yet have a property assigned"
               secondary="Please check the settings page to connect"
             />
           </ListItem>
-        </Paper>
+        </div>
       );
     }
 
     return (
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12} className={classes.title}>
-          <List className={classes.root}>
+          {/* <List className={classes.root}>
             <Typography component="h1" variant="h5">
               Outstanding Balance
             </Typography>
@@ -271,15 +287,8 @@ class Dashboard extends Component {
             </Typography>
 
             <Divider component="li" />
-          </List>
+          </List> */}
           <Grid container justify="space-around" spacing={16}>
-            <Grid item xs={12} md={12}>
-              <List className={classes.center}>
-                <Typography component="h1" variant="h5">
-                  Payment Details
-                </Typography>
-              </List>
-            </Grid>
             <Grid item xs={12} md={5}>
               <Button
                 variant="contained"
@@ -305,37 +314,40 @@ class Dashboard extends Component {
               </Button>
               <Card className={classNames(classes.card, classes.marginTop)}>
                 <CardContent>
-                  <ListItem color="primary">
-                    <ListItemText
-                      className={classes.cardTitle}
-                      color="primary"
-                      primary="Alerts"
-                      gutterBottom
-                    />
-                  </ListItem>
-                  <Divider />
+                  <CardHeader
+                    title="Alerts"
+                    subheader="Check your status"
+                    className={classes.cardHeader}
+                    titleTypographyProps={{
+                      component: 'h6',
+                      variant: 'h6',
+                      color: 'inherit',
+                    }}
+                    subheaderTypographyProps={{
+                      variant: 'overline',
+                    }}
+                  />
                   <ListItem>
                     <Avatar>
                       <Build />
                     </Avatar>
                     <ListItemText primary="Work order #123 completed" />
                   </ListItem>
-                  <Divider variant="inset" />
                   <ListItem>
                     <Avatar>
                       <CreditCard />
                     </Avatar>
                     <ListItemText primary="Rent due 7/5/18" />
                   </ListItem>
-                  {/* <Typography component="p">Rent due 7/5/18</Typography> */}
                 </CardContent>
-                {/* <CardActions>
-                  <Button size="small">Learn More</Button>
-                </CardActions> */}
               </Card>
             </Grid>
             <Grid item xs={12} md={5}>
-              {tenantDetails}
+              <Paper
+                className={classNames(classNames.customPaper, classes.padding)}
+              >
+                {tenantDetails}
+              </Paper>
             </Grid>
           </Grid>
         </Grid>
