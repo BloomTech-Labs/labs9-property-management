@@ -336,7 +336,9 @@ class Properties extends React.Component {
                             primary="Tenant(s)"
                             secondary={
                               entry.tenants && entry.tenants.length > 0
-                                ? entry.tenants.join(', ')
+                                ? entry.tenants.map(
+                                    tenant => tenant.display_name + '\n'
+                                  )
                                 : 'No Tenants'
                             }
                           />
@@ -347,7 +349,17 @@ class Properties extends React.Component {
                           </Avatar>
                           <ListItemText
                             primary="Lease"
-                            secondary={entry.leaseDate}
+                            secondary={
+                              entry.tenants && entry.tenants.length > 0
+                                ? entry.tenants.map(
+                                    tenant =>
+                                      tenant.lease_start_date +
+                                      ' - ' +
+                                      tenant.lease_end_date +
+                                      '\n'
+                                  )
+                                : 'No Data'
+                            }
                           />
                         </ListItem>
                         <ListItem>
