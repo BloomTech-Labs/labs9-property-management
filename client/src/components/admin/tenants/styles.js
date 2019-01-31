@@ -20,10 +20,13 @@ const styles = theme => ({
     zIndex: 0,
   },
   textField: {
-    width: '100%',
+    marginTop: '25px',
+    width: '90%',
   },
   longCard: {
-    padding: theme.spacing.unit * 4,
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
+    paddingLeft: theme.spacing.unit * 3,
     minWidth: '80%',
     minHeight: 350,
     zIndex: 0,

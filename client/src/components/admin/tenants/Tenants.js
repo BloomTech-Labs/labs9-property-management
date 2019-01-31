@@ -129,7 +129,12 @@ class Tenants extends Component {
     const { pending_invites } = this.state;
 
     return (
-      <Grid container className={classes.container} spacing={16}>
+      <Grid
+        container
+        className={classes.container}
+        justify="center"
+        spacing={0}
+      >
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
             <Grid item xs={12} md={6}>
@@ -153,7 +158,7 @@ class Tenants extends Component {
                 />
               </Card>
             </Grid>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={6}>
               <Card className={classes.longCard}>
                 <Typography component="h6" variant="h6">
                   Send An Invite
@@ -161,7 +166,7 @@ class Tenants extends Component {
                 <Typography component="p" variant="caption">
                   Connect With A Tenant
                 </Typography>
-                <Grid container spacing={16}>
+                <Grid container spacing={0}>
                   <Grid item xs={12} sm={6}>
                     <TextField
                       id="email"
