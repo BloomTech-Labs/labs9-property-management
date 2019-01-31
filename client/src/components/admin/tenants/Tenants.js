@@ -5,7 +5,6 @@ import { compose } from 'recompose';
 import InvitesTable from './InvitesTable';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -104,21 +103,22 @@ class Tenants extends Component {
       house_id: this.state.house_id,
     };
 
-    console.log('property: ', property);
     axios
       .post('/api/invitations/admin', property)
       .then(response => {
-        console.log(response);
         axios.get('/api/invitations/admin').then(response => {
-          console.log(response.data);
-          this.setState({ pending_invites: response.data });
+          this.setState({
+            pending_invites: response.data,
+            openSnackbar: true,
+            snackbarMessage: 'Invitation Sent!',
+            snackbarVariant: 'success',
+          });
         });
       })
       .catch(err => {
         this.setState({
           openSnackbar: true,
-          snackbarMessage:
-            'Error sending invite: That account might not exist!',
+          snackbarMessage: 'Error: That account might not exist!',
           snackbarVariant: 'error',
         });
       });
@@ -157,9 +157,9 @@ class Tenants extends Component {
               <Card className={classes.longCard}>
                 <Typography component="h6" variant="h6">
                   Send An Invite
-                  <Typography component="p" variant="caption">
-                    Connect With A Tenant
-                  </Typography>
+                </Typography>
+                <Typography component="p" variant="caption">
+                  Connect With A Tenant
                 </Typography>
                 <Grid container spacing={16}>
                   <Grid item xs={12} sm={6}>
