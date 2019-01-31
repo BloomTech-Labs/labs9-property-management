@@ -19,6 +19,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FileUploader from '../../admin/workorders/FileUploader';
 import Paper from '@material-ui/core/Paper';
+import CardHeader from '@material-ui/core/CardHeader';
 
 const styles = theme => ({
   container: {
@@ -219,17 +220,30 @@ class Maintenance extends React.Component {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
-            <List className={classes.root}>
+            {/* <List className={classes.root}>
               <Typography component="h1" variant="h5">
                 Submit a Work Order
               </Typography>
               <Divider component="li" />
-            </List>
+            </List> */}
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
                 <Paper className={classes.imgpaper}>
                   {/* <Grid item xs={12} md={5}> */}
-                  <ListItem className={classes.blockElement}>
+                  <CardHeader
+                    title="Submit a Work Order"
+                    subheader="Fill out the form"
+                    className={classes.cardHeader}
+                    titleTypographyProps={{
+                      component: 'h6',
+                      variant: 'h6',
+                      color: 'inherit',
+                    }}
+                    subheaderTypographyProps={{
+                      variant: 'overline',
+                    }}
+                  />
+                  <ListItem className={classNames(classes.blockElement)}>
                     <Avatar>
                       <Call />
                     </Avatar>
@@ -268,7 +282,7 @@ class Maintenance extends React.Component {
                       classes.textField,
                       classes.marginTop2
                     )}
-                    rows="8"
+                    rows="6"
                     multiline
                     margin="dense"
                     variant="outlined"
