@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withAuthUser } from '../../session';
+import { compose } from 'recompose';
 import PropTypes from 'prop-types';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -30,6 +32,7 @@ const styles = theme => ({
     marginTop: 25,
     padding: 20,
     backgroundColor: theme.palette.background.paper,
+    width: 500,
   },
   card: {
     marginTop: 25,
@@ -51,8 +54,8 @@ const styles = theme => ({
     display: 'none',
   },
   paper: {
-    width: '80%',
-    height: '80vh',
+    // width: '100%',
+    // height: '80vh',
     margin: 'auto',
     marginTop: 50,
   },
@@ -75,15 +78,15 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 350,
+    width: '96%',
   },
   dense: {
     marginTop: 40,
   },
   center: {
     display: 'flex',
-    // flexWrap: 'wrap',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
     width: 200,
@@ -94,7 +97,13 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 11,
-    maxWidth: '60%',
+    // maxWidth: '100%',
+  },
+  marginTop: {
+    marginTop: 10,
+  },
+  marginTop2: {
+    marginTop: 20,
   },
 });
 
@@ -132,6 +141,30 @@ class Maintenance extends React.Component {
       });
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.authTokenRecieved &&
+      this.props.authTokenRecieved !== prevProps.authTokenRecieved
+    ) {
+      const endpoint = 'api/tenant-dash/';
+      axios
+        .get(endpoint)
+        .then(response => {
+          if (response.data.length > 0) {
+            this.setState(() => ({
+              address: response.data[0].address,
+              phoneNumber: response.data[0].mobile,
+              maintenanceNum: response.data[0].maintenance_ph,
+              houseID: response.data[0].house_id,
+              tenantID: response.data[0].tenant_id,
+              loading: false,
+            }));
+          }
+        })
+        .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err));
+    }
+  }
+
   GetURL = photo => this.setState({ photo: photo });
 
   submitWorkOrder = event => {
@@ -153,7 +186,6 @@ class Maintenance extends React.Component {
       })
       .catch(error => {
         console.error('Axios response: ', error);
-        // this.props.history.push('/tenant');
       });
   };
 
@@ -215,14 +247,11 @@ class Maintenance extends React.Component {
                         /> */}
                   </ListItem>
                   {/* </ListItem> */}
-                  <Typography
-                    component="p"
-                    variant="p"
-                    className={classes.typography}
+                  <ListItemText
+                    className={classes.marginTop}
                     color="background"
-                  >
-                    Address
-                  </Typography>
+                    secondary="Address:"
+                  />
                   <Typography
                     component="h1"
                     variant="h5"
@@ -235,8 +264,11 @@ class Maintenance extends React.Component {
                   <TextField
                     id="outlined-multiline-static"
                     label="Description of Issue"
-                    className={classNames(classes.textField, classes.dense)}
-                    rows="7"
+                    className={classNames(
+                      classes.textField,
+                      classes.marginTop2
+                    )}
+                    rows="8"
                     multiline
                     margin="dense"
                     variant="outlined"
@@ -247,11 +279,13 @@ class Maintenance extends React.Component {
                   />
                   {/* </Grid> */}
                 </Paper>
-                <Paper className={classes.imgpaper}>
+                <Paper className={classNames(classes.imgpaper, classes.center)}>
                   <FileUploader GetURL={this.GetURL} />
                 </Paper>
                 <Grid item xs={12} md={11}>
-                  <div className={classes.center}>
+                  <div
+                    className={classNames(classes.center, classes.marginTop2)}
+                  >
                     <FormControlLabel
                       label="Permission to enter premises without tenant home"
                       control={
@@ -314,4 +348,9 @@ Maintenance.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Maintenance);
+const MaintenancePage = compose(
+  withAuthUser,
+  withStyles(styles)
+)(Maintenance);
+
+export default MaintenancePage;
