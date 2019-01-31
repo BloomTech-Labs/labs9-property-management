@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import testlogo from '../../images/test-logo.svg';
+// import leasefrontblack from '../../images/leasefront-black.svg';
+// import leasefrontcap from '../../images/leasefront-capital.svg';
+// import logoplaceholder from '../../images/name.svg';
 import styled from 'styled-components';
 import MobileNav from './MobileNav';
 import { KeyboardBackspace } from '@material-ui/icons';

@@ -6,30 +6,31 @@ import connectwstripe from '../../../images/connect-with-stripe@2x.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Skeleton from 'react-loading-skeleton';
+// import Skeleton from 'react-loading-skeleton';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+import Avatar from '@material-ui/core/Avatar';
+// import Card from '@material-ui/core/Card';
+// import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Done } from '@material-ui/icons';
+import { Done, CheckCircleOutline } from '@material-ui/icons';
 import Paper from '@material-ui/core/Paper';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
-import FolderIcon from '@material-ui/icons/Folder';
+// import TextField from '@material-ui/core/TextField';
+// import FolderIcon from '@material-ui/icons/Folder';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+// import ListItemIcon from '@material-ui/core/ListItemIcon';
+// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -107,7 +108,7 @@ const styles = theme => ({
     display: 'none',
   },
   formControl: {
-    width: 300,
+    width: '100%',
   },
   paper: {
     width: '100%',
@@ -216,9 +217,12 @@ class Billing extends Component {
 
     if (this.state.hasStripeID) {
       stripeConnectionDetails = (
-        <Typography className={classes.tableTitle} component="h5" variant="h6">
-          <Done /> Connected to Stripe
-        </Typography>
+        <ListItem>
+          <Avatar>
+            <CheckCircleOutline />
+          </Avatar>
+          <ListItemText primary="Your Stripe account is connected" />
+        </ListItem>
       );
     } else {
       stripeConnectionDetails = (
@@ -237,7 +241,7 @@ class Billing extends Component {
       <>
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12}>
-            <Grid container justify="space-around" spacing={16}>
+            <Grid container justify="space-evenly" spacing={16}>
               <Grid item xs={12} md={5}>
                 <Paper className={classes.paper}>
                   <CardContent>

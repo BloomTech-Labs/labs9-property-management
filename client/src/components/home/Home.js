@@ -24,8 +24,8 @@ class Home extends Component {
           <HeroGroup>
             <HeroGroupH1>Insanely simple property management</HeroGroupH1>
             <HeroP>
-              Leasefront redefines the lightweight app – so that you can spend
-              less time managing your property.
+              Our all-in-one solution gives you the features you need to manage
+              your properties, right in your pocket.
             </HeroP>
             <HeroA href="/">Watch the video</HeroA>
           </HeroGroup>
