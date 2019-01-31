@@ -1,11 +1,13 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import testlogo from '../../../images/test-logo.svg';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import CardContent from '@material-ui/core/CardContent';
+import Paper from '@material-ui/core/Paper';
 // import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -18,6 +20,15 @@ import TextField from '@material-ui/core/TextField';
 // import FormHelperText from '@material-ui/core/FormHelperText';
 // import Select from '@material-ui/core/Select';
 // import InputLabel from '@material-ui/core/InputLabel';
+
+const StyledCheckout = styled(StripeCheckout)`
+  & button {
+    background: none;
+    span {
+      background: none;
+    }
+  }
+`;
 
 const styles = theme => ({
   container: {
@@ -32,7 +43,7 @@ const styles = theme => ({
     position: 'relative',
     overflow: 'visible',
     minWidth: '40%',
-    minHeight: 350,
+    minHeight: 300,
     zIndex: 0,
   },
   actions: {
@@ -43,10 +54,10 @@ const styles = theme => ({
     display: 'none',
   },
   paper: {
-    width: '80%',
-    height: '80vh',
+    width: 'auto',
+    minHeight: 300,
     margin: 'auto',
-    marginTop: 50,
+    marginTop: -140,
   },
   absolute: {
     position: 'absolute',
@@ -143,42 +154,59 @@ class Payments extends React.Component {
           <Grid item xs={12} className={classes.title}>
             <List className={classes.root}>
               <Typography component="h1" variant="h5">
-                Make a Payment
+                Outstanding Balance -$350.00
               </Typography>
               <Divider component="li" />
             </List>
-            <form onSubmit={''} noValidate autoComplete="off">
-              <List className={classes.box}>
-                <ListItem className={classes.blockElement}>
-                  <ListItemText
-                    className={classNames(classes.center, classes.noPadding)}
-                    primary="Payment Amount"
-                  />
-                  <TextField
-                    id="outlined-dense"
-                    label="Amount"
-                    className={classNames(classes.textField, classes.dense)}
-                    margin="dense"
-                    variant="outlined"
-                    value={this.state.paymentAmount}
-                    onChange={this.handleChange('paymentAmount')}
-                  />
-                </ListItem>
-              </List>
-            </form>
-            <div className={classes.center}>
-              <StripeCheckout
-                label="Make payment" //Component button text
-                name="Property Mgmt" //Modal Header
-                description="Make a payment."
-                panelLabel="Make payment" //Submit button in modal
-                amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
-                token={this.onToken}
-                stripeKey={publishableKey}
-                image={testlogo} //Pop-in header image
-                billingAddress={false}
-              />
-            </div>
+          </Grid>
+        </Grid>
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12}>
+            <Grid container justify="space-around" spacing={16}>
+              <Grid item xs={12} md={12}>
+                <Paper className={classes.paper}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6">
+                      Make a Payment
+                    </Typography>
+                  </CardContent>
+                  <Divider />
+                  <CardContent>
+                    <form onSubmit={''} noValidate autoComplete="off">
+                      <List className={classes.box}>
+                        <ListItem className={classes.blockElement}>
+                          <ListItemText
+                            className={classNames(classes.noPadding)}
+                            primary="Payment Amount"
+                          />
+                          <TextField
+                            id="standard-name"
+                            label="Amount"
+                            className={classes.textField}
+                            margin="normal"
+                            value={this.state.paymentAmount}
+                            onChange={this.handleChange('paymentAmount')}
+                          />
+                        </ListItem>
+                      </List>
+                    </form>
+                    <div className={classes.center}>
+                      <StripeCheckout
+                        label="Make secure payment using Stripe" //Component button text
+                        name="Property Mgmt" //Modal Header
+                        description="Make a payment."
+                        panelLabel="Payment Amount:" //Submit button in modal
+                        amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
+                        token={this.onToken}
+                        stripeKey={publishableKey}
+                        image={testlogo} //Pop-in header image
+                        billingAddress={false}
+                      />
+                    </div>
+                  </CardContent>
+                </Paper>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </>
