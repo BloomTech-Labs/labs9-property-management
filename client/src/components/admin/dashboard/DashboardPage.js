@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   container: {
-    marginTop: 100,
+    marginTop: 75,
     marginLeft: 0,
   },
   root: {
@@ -34,19 +30,9 @@ const styles = theme => ({
     zIndex: 0,
     marginTop: 50,
   },
-  cardTop: {
-    padding: '15px',
-    width: '90%',
-    backgroundColor: '#5f29ff',
-    zIndex: '2000',
-    top: '-6%',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    position: 'absolute',
-    boxShadow:
-      '0px 5px 5px -3px rgba(81,71,255,0.2), 0px 8px 10px 1px rgba(81,71,255,0.2), 0px 3px 14px 2px rgba(81,71,255,0.2)',
-    borderRadius: '4px',
-    color: 'white',
+  cardHeader: {
+    paddingTop: theme.spacing.unit * 3,
+    paddingLeft: theme.spacing.unit * 3,
   },
   actions: {
     display: 'flex',
@@ -82,17 +68,16 @@ class DashBoard extends Component {
             <Grid item xs={12} md={5}>
               <Card className={classes.card}>
                 <CardHeader
-                  title="Rent Summary"
-                  subheader="Current Month's Rent Details"
-                  className={classes.cardTop}
+                  title="Notifications"
+                  subheader="Recent Activity"
+                  className={classes.cardHeader}
                   titleTypographyProps={{
-                    component: 'h4',
-                    variant: 'body1',
+                    component: 'h6',
+                    variant: 'h6',
                     color: 'inherit',
                   }}
                   subheaderTypographyProps={{
                     variant: 'overline',
-                    color: 'secondary',
                   }}
                 />
               </Card>
@@ -102,21 +87,34 @@ class DashBoard extends Component {
                 <CardHeader
                   title="Work Order Summary"
                   subheader="Most Recent Work Order"
-                  className={classes.cardTop}
+                  className={classes.cardHeader}
                   titleTypographyProps={{
-                    component: 'h4',
-                    variant: 'body1',
+                    component: 'h6',
+                    variant: 'h6',
                     color: 'inherit',
                   }}
                   subheaderTypographyProps={{
                     variant: 'overline',
-                    color: 'secondary',
                   }}
                 />
               </Card>
             </Grid>
             <Grid item xs={12} md={11}>
-              <Card className={classes.longCard} />
+              <Card className={classes.longCard}>
+                <CardHeader
+                  title="Rent Summary"
+                  subheader="Current Month's Rent Details"
+                  className={classes.cardHeader}
+                  titleTypographyProps={{
+                    component: 'h6',
+                    variant: 'h6',
+                    color: 'inherit',
+                  }}
+                  subheaderTypographyProps={{
+                    variant: 'overline',
+                  }}
+                />
+              </Card>
             </Grid>
           </Grid>
         </Grid>
@@ -125,4 +123,4 @@ class DashBoard extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(DashBoard);
+export default withStyles(styles)(DashBoard);
