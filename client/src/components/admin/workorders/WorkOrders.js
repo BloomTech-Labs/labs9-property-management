@@ -51,11 +51,16 @@ const styles = theme => ({
     transform: 'translateX(25%)',
   },
   customPaper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    // ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 5,
+    paddingBottom: theme.spacing.unit * 5,
     marginTop: theme.spacing.unit * 11,
-    maxWidth: 300,
+    // maxWidth: 300,
+    minHeight: 200,
+  },
+  listItem: {
+    fontSize: '1.4em',
+    textAlign: 'center',
   },
 });
 
@@ -104,12 +109,22 @@ class WorkOrders extends Component {
     const { classes } = this.props;
     if (this.state.workOrders.length === 0) {
       return (
-        <Grid container className={classes.container} spacing={16}>
+        <Grid
+          container
+          className={classes.container}
+          spacing={16}
+          justify="center"
+        >
           <Grid item xs={12}>
             <Paper className={classNames.customPaper}>
-              <ListItem>
-                <ListItemText primary="No work orders in queue" />
-              </ListItem>
+              <List>
+                <ListItem>
+                  <ListItemText
+                    primary="No Work Orders In Queue"
+                    classes={{ primary: classes.listItem }}
+                  />
+                </ListItem>
+              </List>
             </Paper>
           </Grid>
         </Grid>
