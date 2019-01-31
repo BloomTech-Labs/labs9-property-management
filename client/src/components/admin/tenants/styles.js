@@ -19,13 +19,18 @@ const styles = theme => ({
     minHeight: 350,
     zIndex: 0,
   },
+  textField: {
+    marginTop: '25px',
+    width: '90%',
+  },
   longCard: {
-    position: 'relative',
-    overflow: 'visible',
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 3,
+    paddingLeft: theme.spacing.unit * 3,
     minWidth: '80%',
-    minHeight: 350,
+    minHeight: 373,
     zIndex: 0,
-    marginTop: 50,
+    marginTop: 25,
   },
   cardTop: {
     padding: '15px',

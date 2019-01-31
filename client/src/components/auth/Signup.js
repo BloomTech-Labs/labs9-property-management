@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { AuthUserContext } from '../session';
+import { compose } from 'recompose';
+import { withFirebase } from '../firebase';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
+/*
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel"; */
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {
@@ -15,9 +19,12 @@ import {
   LoginOrSignupFormLink,
   AuthLogo,
   StyledH1,
+  GoogleContainer,
+  GoogleLogo,
   BackArrow,
 } from './AuthStyles';
 import testlogo from '../../images/test-logo.svg';
+import google from '../../images/google.svg';
 
 const styles = theme => ({
   main: {
@@ -52,105 +59,104 @@ const styles = theme => ({
   },
 });
 
-const INTIAL_STATE = {
-  username: '',
-  email: '',
-  passwordOne: '',
-  passwordTwo: '',
-  error: null,
-};
-
 class Signup extends Component {
-  state = { ...INTIAL_STATE };
+  state = {
+    error: null,
+  };
 
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  loginGoogle = event => {
+    this.props.firebase
+      .doSignInWithGoogle()
+      .then(socialAuthUser => {
+        console.log('login: ', socialAuthUser);
+        this.setState({ error: null });
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+
+    event.preventDefault();
   };
 
   render() {
     const { classes } = this.props;
-    //const { name, email, passwordOne, passwordTwo, error } = this.state;
 
     return (
-      <>
-        <BackToHomeContainer>
-          <BackToHomeLink to="/">
-            <BackArrow />
-            <AuthLogo src={testlogo} width="32" />
-          </BackToHomeLink>
-          <BackToHomeLink to="/login">
-            Have an account?
-            <LoginOrSignupFormLink> Login here</LoginOrSignupFormLink>
-          </BackToHomeLink>
-        </BackToHomeContainer>
-        <main className={classes.main}>
-          <CssBaseline />
-          <Paper className={classes.paper}>
-            <StyledH1>Sign Up</StyledH1>
-            <form className={classes.form}>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="name">Full Name</InputLabel>
-                <Input
-                  id="name"
-                  name="name"
-                  autoComplete="Name"
-                  autoFocus
-                  onChange={this.onChange}
-                />
-              </FormControl>
-              <FormControl margin="normal" required fullWidth>
+      <AuthUserContext.Consumer>
+        {({ authUser, authUserRole }) => {
+          if (!authUser) {
+            return (
+              <>
+                <BackToHomeContainer>
+                  <BackToHomeLink to="/">
+                    <BackArrow />
+                    <AuthLogo src={testlogo} width="32" />
+                  </BackToHomeLink>
+                  <BackToHomeLink to="/login">
+                    Have an account?
+                    <LoginOrSignupFormLink> Login here</LoginOrSignupFormLink>
+                  </BackToHomeLink>
+                </BackToHomeContainer>
+                <main className={classes.main}>
+                  <Paper className={classes.paper}>
+                    {/* <img src={testlogo} width="32" /> */}
+                    <StyledH1>Sign Up</StyledH1>
+                    <form className={classes.form}>
+                      {/*            <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="email">Email Address</InputLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  autoFocus
-                  onChange={this.onChange}
-                />
+                <Input id="email" name="email" autoComplete="email" autoFocus />
               </FormControl>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="passwordOne">Password</InputLabel>
+                <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
-                  name="passwordOne"
+                  name="password"
                   type="password"
-                  id="passwordOne"
+                  id="password"
                   autoComplete="current-password"
-                  onChange={this.onChange}
-                />
-              </FormControl>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="passwordOne">Confirm Password</InputLabel>
-                <Input
-                  name="passwordTwo"
-                  type="password"
-                  id="passwordTwo"
-                  autoComplete="current-password"
-                  onChange={this.onChange}
                 />
               </FormControl>
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign Up
-              </Button>
-            </form>
-          </Paper>
-        </main>
-      </>
+                label="Remember me" /> 
+*/}
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={this.loginGoogle}
+                      >
+                        <GoogleContainer>
+                          <GoogleLogo src={google} height="16px" />
+                        </GoogleContainer>
+                        Sign up with Google
+                      </Button>
+                    </form>
+                  </Paper>
+                </main>
+              </>
+            );
+          } else if (authUserRole === 'owner') {
+            return <Redirect to="/admin" />;
+          } else if (authUserRole === 'tenant') {
+            return <Redirect to="/tenant" />;
+          } else {
+            return <Redirect to="/setup" />;
+          }
+        }}
+      </AuthUserContext.Consumer>
     );
   }
 }
+
+const SignupPage = compose(
+  withFirebase,
+  withStyles(styles)
+)(Signup);
 
 Signup.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Signup);
+export default SignupPage;

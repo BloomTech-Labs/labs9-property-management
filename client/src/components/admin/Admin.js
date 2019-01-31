@@ -13,7 +13,7 @@ import Assignment from '@material-ui/icons/Assignment';
 import People from '@material-ui/icons/People';
 import Settings from '@material-ui/icons/Settings';
 import CreditCard from '@material-ui/icons/CreditCard';
-import { AuthUserContext } from '../session';
+import { withAuthUser } from '../session';
 
 const links = [
   { name: 'Dashboard', url: 'admin', icon: <Dashboard /> },
@@ -29,40 +29,32 @@ const links = [
   },
   { name: 'Tenants', url: 'admin/tenants', icon: <People /> },
   { name: 'Billing', url: 'admin/billing', icon: <CreditCard /> },
-  { name: 'Settings', url: 'admin/settings', icon: <Settings /> },
+  // { name: 'Settings', url: 'admin/settings', icon: <Settings /> },
 ];
 
 class Admin extends Component {
   render() {
-    return (
-      <AuthUserContext.Consumer>
-        {({ authUser }) =>
-          authUser ? (
-            <Layout links={links}>
-              <Switch>
-                <Route exact path="/admin" component={DashboardPage} />
-                <Route
-                  exact
-                  path="/admin/properties"
-                  component={PropertiesPage}
-                />
-                <Route
-                  exact
-                  path="/admin/work-orders"
-                  component={WorkOrdersPage}
-                />
-                <Route exact path="/admin/tenants" component={Tenants} />
-                <Route exact path="/admin/settings" component={SettingsPage} />
-                <Route exact path="/admin/billing" component={Billing} />
-              </Switch>
-            </Layout>
-          ) : (
-            <Redirect to="/login" />
-          )
-        }
-      </AuthUserContext.Consumer>
-    );
+    const role = this.props.authUserRole;
+
+    if (this.props.authUser && role === 'owner') {
+      return (
+        <Layout links={links}>
+          <Switch>
+            <Route exact path="/admin" component={DashboardPage} />
+            <Route exact path="/admin/properties" component={PropertiesPage} />
+            <Route exact path="/admin/work-orders" component={WorkOrdersPage} />
+            <Route exact path="/admin/tenants" component={Tenants} />
+            {/* <Route exact path="/admin/settings" component={SettingsPage} /> */}
+            <Route exact path="/admin/billing" component={Billing} />
+          </Switch>
+        </Layout>
+      );
+    } else if (this.props.authUser && role === 'tenant') {
+      return <Redirect to="/tenant" />;
+    } else {
+      return <Redirect to="/login" />;
+    }
   }
 }
 
-export default Admin;
+export default withAuthUser(Admin);

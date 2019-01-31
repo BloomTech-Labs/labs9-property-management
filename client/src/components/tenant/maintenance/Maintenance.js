@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withAuthUser } from '../../session';
+import { compose } from 'recompose';
 import PropTypes from 'prop-types';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -16,7 +18,8 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FileUploader from '../../admin/workorders/FileUploader';
-import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import CardHeader from '@material-ui/core/CardHeader';
 
 const styles = theme => ({
   container: {
@@ -26,6 +29,12 @@ const styles = theme => ({
   root: {
     width: '100%',
   },
+  imgpaper: {
+    marginTop: 25,
+    padding: 20,
+    backgroundColor: theme.palette.background.paper,
+    width: 500,
+  },
   card: {
     marginTop: 25,
     position: 'relative',
@@ -33,6 +42,10 @@ const styles = theme => ({
     minWidth: '40%',
     minHeight: 350,
     zIndex: 0,
+  },
+  typography: {
+    marginLeft: 10,
+    marginTop: 6,
   },
   actions: {
     display: 'flex',
@@ -42,8 +55,8 @@ const styles = theme => ({
     display: 'none',
   },
   paper: {
-    width: '80%',
-    height: '80vh',
+    // width: '100%',
+    // height: '80vh',
     margin: 'auto',
     marginTop: 50,
   },
@@ -60,24 +73,37 @@ const styles = theme => ({
   noPadding: {
     padding: 0,
   },
-  blockElement: {
-    display: 'block',
-  },
+  // blockElement: {
+  //   display: 'block',
+  // },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: '100%',
+    width: '96%',
   },
   dense: {
-    marginTop: 16,
+    marginTop: 40,
   },
   center: {
     display: 'flex',
-    // flexWrap: 'wrap',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   button: {
     width: 200,
+    marginTop: 20,
+  },
+  customPaper: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 11,
+    // maxWidth: '100%',
+  },
+  marginTop: {
+    marginTop: 10,
+  },
+  marginTop2: {
     marginTop: 20,
   },
 });
@@ -92,6 +118,7 @@ class Maintenance extends React.Component {
     maintenanceNum: '',
     houseID: '',
     tenantID: '',
+    loading: true,
   };
 
   componentDidMount() {
@@ -106,6 +133,7 @@ class Maintenance extends React.Component {
             maintenanceNum: response.data[0].maintenance_ph,
             houseID: response.data[0].house_id,
             tenantID: response.data[0].tenant_id,
+            loading: false,
           }));
         }
       })
@@ -114,25 +142,51 @@ class Maintenance extends React.Component {
       });
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.authTokenRecieved &&
+      this.props.authTokenRecieved !== prevProps.authTokenRecieved
+    ) {
+      const endpoint = 'api/tenant-dash/';
+      axios
+        .get(endpoint)
+        .then(response => {
+          if (response.data.length > 0) {
+            this.setState(() => ({
+              address: response.data[0].address,
+              phoneNumber: response.data[0].mobile,
+              maintenanceNum: response.data[0].maintenance_ph,
+              houseID: response.data[0].house_id,
+              tenantID: response.data[0].tenant_id,
+              loading: false,
+            }));
+          }
+        })
+        .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err));
+    }
+  }
+
+  GetURL = photo => this.setState({ photo: photo });
+
   submitWorkOrder = event => {
     event.preventDefault();
 
+    console.log('this.state.photo.original', this.state.photo.original);
     axios
       .post('/api/work-orders/', {
         description: this.state.description,
         property_access: this.state.permission,
-        work_order_image: this.state.photo,
+        work_order_image: this.state.photo.original,
         tenant_id: this.state.tenantID,
         house_id: this.state.houseID,
         work_order_status: 'submitted',
       })
       .then(res => {
         console.log('register response: ', res);
-        // this.props.history.push('/tenant');
+        this.props.history.push('/tenant');
       })
       .catch(error => {
         console.error('Axios response: ', error);
-        // this.props.history.push('/tenant');
       });
   };
 
@@ -149,109 +203,158 @@ class Maintenance extends React.Component {
     console.log('state', this.state);
   };
 
+  phoneConverter = int => {
+    if (int) {
+      let arr = Array.from(int.toString());
+      arr.splice(6, 0, '-');
+      arr.splice(3, 0, '-');
+      return arr.join('');
+    } else return '800-888-8888';
+  };
+
   render() {
     const { classes, theme } = this.props;
-    console.log(theme);
+    // console.log(theme);
 
-    return (
-      <Grid container className={classes.container} spacing={16}>
-        <Grid item xs={12} className={classes.title}>
-          <List className={classes.root}>
-            <Typography component="h1" variant="h5">
-              Submit a Work Order
-            </Typography>
-            <Divider component="li" />
-          </List>
-          <form onSubmit={this.submitWorkOrder} autoComplete="off">
-            <Grid container justify="space-around" spacing={16}>
-              <Grid item xs={12} md={5}>
-                <ListItem>
-                  <Avatar>
-                    <Call />
-                  </Avatar>
-                  <ListItem className={classes.blockElement}>
-                    <ListItemText
-                      className={classes.noPadding}
-                      primary="24/7 Maintenance"
-                    />
-                    <ListItemText
-                      className={classes.noPadding}
-                      primary={this.state.maintenanceNum}
-                    />
-                  </ListItem>
-                </ListItem>
-                <TextField
-                  id="outlined-dense"
-                  label="Address"
-                  className={classNames(classes.textField, classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                  onChange={this.handleInputChange}
-                  value={this.state.address}
-                  type="text"
-                  name="address"
-                />
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Description of Issue"
-                  className={classNames(classes.textField, classes.dense)}
-                  rows="6"
-                  multiline
-                  margin="dense"
-                  variant="outlined"
-                  onChange={this.handleInputChange}
-                  value={this.state.description}
-                  type="text"
-                  name="description"
-                />
-                <TextField
-                  id="outlined-dense"
-                  label="Phone Number"
-                  className={classNames(classes.textField, classes.dense)}
-                  margin="dense"
-                  variant="outlined"
-                  onChange={this.handleInputChange}
-                  value={this.state.phoneNumber}
-                  type="integer"
-                  name="phoneNumber"
-                />
-              </Grid>
-              <IconButton>
-                <FileUploader />
-              </IconButton>
-              <Grid item xs={12} md={11}>
-                <div className={classes.center}>
-                  <FormControlLabel
-                    label="Permission to enter premises without tenant home"
-                    control={
-                      <Checkbox
-                        checked={this.state.permission}
-                        onChange={this.handleCheckedBox('permission')}
-                        value="permission"
-                        color="primary"
-                      />
-                    }
+    if (this.state.address && this.state.loading === false) {
+      return (
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} className={classes.title}>
+            {/* <List className={classes.root}>
+              <Typography component="h1" variant="h5">
+                Submit a Work Order
+              </Typography>
+              <Divider component="li" />
+            </List> */}
+            <form onSubmit={this.submitWorkOrder} autoComplete="off">
+              <Grid container justify="space-around" spacing={16}>
+                <Paper className={classes.imgpaper}>
+                  {/* <Grid item xs={12} md={5}> */}
+                  <CardHeader
+                    title="Submit a Work Order"
+                    subheader="Fill out the form"
+                    className={classes.cardHeader}
+                    titleTypographyProps={{
+                      component: 'h6',
+                      variant: 'h6',
+                      color: 'inherit',
+                    }}
+                    subheaderTypographyProps={{
+                      variant: 'overline',
+                    }}
                   />
-                </div>
-              </Grid>
-              <Grid item xs={12} md={11}>
-                <div className={classes.center}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
+                  <ListItem className={classNames(classes.blockElement)}>
+                    <Avatar>
+                      <Call />
+                    </Avatar>
+                    {/* <ListItem className={classes.blockElement}> */}
+                    <ListItemText
+                      // className={classes.noPadding}
+                      primary="24/7 Maintenance"
+                      secondary={this.phoneConverter(this.state.maintenanceNum)}
+                    />
+                    {/* <ListItemText
+                          className={classes.noPadding}
+                          primary={this.phoneConverter(
+                            this.state.maintenanceNum
+                          )}
+                        /> */}
+                  </ListItem>
+                  {/* </ListItem> */}
+                  <ListItemText
+                    className={classes.marginTop}
+                    color="background"
+                    secondary="Address:"
+                  />
+                  <Typography
+                    component="h1"
+                    variant="h5"
+                    // onChange={this.handleInputChange}
+                    className={classes.typography}
                     color="primary"
-                    className={classes.button}
                   >
-                    Submit
-                  </Button>
-                </div>
+                    {this.state.address}
+                  </Typography>
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Description of Issue"
+                    className={classNames(
+                      classes.textField,
+                      classes.marginTop2
+                    )}
+                    rows="6"
+                    multiline
+                    margin="dense"
+                    variant="outlined"
+                    onChange={this.handleInputChange}
+                    value={this.state.description}
+                    type="text"
+                    name="description"
+                  />
+                  {/* </Grid> */}
+                </Paper>
+                <Paper className={classNames(classes.imgpaper, classes.center)}>
+                  <FileUploader GetURL={this.GetURL} />
+                </Paper>
+                <Grid item xs={12} md={11}>
+                  <div
+                    className={classNames(classes.center, classes.marginTop2)}
+                  >
+                    <FormControlLabel
+                      label="Permission to enter premises without tenant home"
+                      control={
+                        <Checkbox
+                          checked={this.state.permission}
+                          onChange={this.handleCheckedBox('permission')}
+                          value="permission"
+                          color="primary"
+                        />
+                      }
+                    />
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={11}>
+                  <div className={classes.center}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      fullWidth
+                      color="primary"
+                      className={classes.button}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </Grid>
               </Grid>
-            </Grid>
-          </form>
+            </form>
+          </Grid>
         </Grid>
-      </Grid>
-    );
+      );
+    } else if (!this.state.address && this.state.loading === false) {
+      return (
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} className={classes.title}>
+            <List className={classes.root}>
+              <Typography component="h1" variant="h5">
+                Submit a Work Order
+              </Typography>
+              <Divider component="li" />
+            </List>
+            <Paper className={classNames.customPaper}>
+              <ListItem>
+                <ListItemText
+                  primary="Account has no property assigned"
+                  secondary="Cannot make maintenance requests until this is completed.  Please work with your landlord to remedy this."
+                />
+              </ListItem>
+            </Paper>
+          </Grid>
+        </Grid>
+      );
+    } else {
+      return <Grid />;
+    }
   }
 }
 
@@ -259,4 +362,9 @@ Maintenance.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Maintenance);
+const MaintenancePage = compose(
+  withAuthUser,
+  withStyles(styles)
+)(Maintenance);
+
+export default MaintenancePage;

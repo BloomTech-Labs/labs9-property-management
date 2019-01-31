@@ -108,6 +108,7 @@ class Sidebar extends Component {
                 onClick={() =>
                   this.setState({
                     link: `${link.name === '' ? 'Dashboard' : link.name}`,
+                    mobileOpen: false,
                   })
                 }
               >

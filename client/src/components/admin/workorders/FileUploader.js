@@ -3,16 +3,36 @@ import '@uppy/dashboard/dist/style.css'
 import '@uppy/progress-bar/dist/style.css'
 import {InsertPhoto} from "@material-ui/icons";
 import Transloadit from '@uppy/transloadit';
+import styled from 'styled-components'
+import Typography from '@material-ui/core/Typography';
+import { withStyles, withTheme } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import './FileUploader.css'
 const Uppy = require('@uppy/core')
 const GoogleDrive = require('@uppy/google-drive')
 const Dropbox = require('@uppy/dropbox')
 const Url = require('@uppy/url')
 const React = require('react')
 const { DashboardModal } = require('@uppy/react')
-const dotenv = require('dotenv');
+
+const PhotoUploadIcon = styled(InsertPhoto)`
+  color: #999;
+  font-size: 300px !important;
+  cursor: pointer;
+  @media (max-width: 960px) {
+    font-size: 64px;
+  }
+`;
 
 
-dotenv.load();
+
+const styles = theme => ({
+  container: {
+    marginLeft: 60,
+    marginBottom: 20,
+  },
+});
+
 
 
 class FileUploader extends React.Component {
@@ -20,16 +40,18 @@ class FileUploader extends React.Component {
     super(props)
 
     this.state = {
-      open: false
+      open: false,
     }
     
+    const {GetURL} = this.props;
+
     this.uppy = Uppy({
       id: 'uppy',
       debug: false,
       autoProceed: false,
       restrictions: {
-        maxFileSize: 1000000,
-        maxNumberOfFiles: 3,
+        maxFileSize: 4000000,
+        maxNumberOfFiles: 1,
         minNumberOfFiles: 1
       }
     })
@@ -70,7 +92,8 @@ class FileUploader extends React.Component {
             ],
             "robot": "/google/store",
             "credentials": "propertyApp",
-            "path": "${unique_prefix}/${file.url_name}"
+            "path": "${unique_prefix}/${file.url_name}",
+            "acl": "public-read",
           }
         }
         
@@ -89,8 +112,12 @@ class FileUploader extends React.Component {
         id: 'addUrl',
         serverUrl: 'https://api2.transloadit.com/companion',
         serverPattern: /.transloadit.com$/
-      });
-      
+      })
+      .on('transloadit:complete', (assembly) => {
+        GetURL({original:assembly.results[":original"][0].url
+      });  
+          
+      });     
       this.handleModalClick = this.handleModalClick.bind(this)
   }
 
@@ -105,15 +132,19 @@ class FileUploader extends React.Component {
   }
 
   render () {
-
+    const { classes } = this.props;
     return (
       <div>
         <div>
-           <InsertPhoto onClick={this.handleModalClick}
+           <PhotoUploadIcon onClick={this.handleModalClick}
           />
+            <Typography className={classes.container} component="h1" variant="h5">
+              Upload a Photo
+            </Typography>
           <DashboardModal
             uppy={this.uppy}
             plugins={['addGoogleDrive', 'addDropbox', 'addUrl']}
+            closeModalOnClickOutside
             open={this.state.open}
             target={document.body}
             onRequestClose={() => this.setState({ open: false })}
@@ -124,6 +155,15 @@ class FileUploader extends React.Component {
     )
   }
 }
+
+FileUploader.propTypes = {
+  classes: PropTypes.object.isRequired,
+  GetURL: PropTypes.func,
+};
+
+FileUploader.defaultProps = {
+  GetURL: () => {},
+};
  
-export default FileUploader;
+export default withStyles(styles)(FileUploader);
 
