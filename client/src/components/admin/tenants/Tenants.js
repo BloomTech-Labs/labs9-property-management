@@ -3,9 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
 import InvitesTable from './InvitesTable';
+import TenantsTable from './TenantsTable';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -25,6 +25,7 @@ class Tenants extends Component {
     leaseStart: new Date(),
     leaseEnd: new Date(),
     properties: [],
+    tenants: [],
     house_id: 0, // Selected property
     pending_invites: [],
     openSnackbar: false,
@@ -34,36 +35,52 @@ class Tenants extends Component {
 
   componentDidMount() {
     if (this.props.authTokenRecieved) {
-      axios.get('/api/properties/admin').then(response => {
-        this.setState({ properties: response.data.properties });
-      });
+      axios
+        .get('/api/properties/admin')
+        .then(response => {
+          this.setState({ properties: response.data.properties });
+        })
+        .catch(error => console.log(error));
 
       axios
         .get('/api/invitations/admin')
         .then(response => {
-          console.log(response.data);
           this.setState({ pending_invites: response.data });
+        })
+        .catch(error => console.log(error));
+
+      axios
+        .get('/api/users/tenants')
+        .then(response => {
+          this.setState({ tenants: response.data });
         })
         .catch(error => console.log(error));
     }
   }
 
   componentDidUpdate(prevProps) {
-    console.log('update');
     if (
       this.props.authTokenRecieved &&
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
     ) {
-      axios.get('/api/properties/admin').then(response => {
-        console.log(response.data.properties);
-        this.setState({ properties: response.data.properties });
-      });
+      axios
+        .get('/api/properties/admin')
+        .then(response => {
+          this.setState({ properties: response.data.properties });
+        })
+        .catch(error => console.log(error));
 
       axios
         .get('/api/invitations/admin')
         .then(response => {
-          console.log(response.data);
           this.setState({ pending_invites: response.data });
+        })
+        .catch(error => console.log(error));
+
+      axios
+        .get('/api/users/tenants')
+        .then(response => {
+          this.setState({ tenants: response.data });
         })
         .catch(error => console.log(error));
     }
@@ -126,7 +143,7 @@ class Tenants extends Component {
 
   render() {
     const { classes } = this.props;
-    const { pending_invites } = this.state;
+    const { pending_invites, tenants } = this.state;
 
     return (
       <Grid
@@ -137,26 +154,11 @@ class Tenants extends Component {
       >
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
-            <Grid item xs={12} md={6}>
-              <InvitesTable pending={pending_invites} />
+            <Grid item xs={12} md={12}>
+              <TenantsTable data={tenants} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Card className={classes.card}>
-                <CardHeader
-                  title="Tenants"
-                  subheader="Your Current Tenants"
-                  className={classes.cardTop}
-                  titleTypographyProps={{
-                    component: 'h4',
-                    variant: 'body1',
-                    color: 'inherit',
-                  }}
-                  subheaderTypographyProps={{
-                    variant: 'overline',
-                    color: 'secondary',
-                  }}
-                />
-              </Card>
+              <InvitesTable pending={pending_invites} />
             </Grid>
             <Grid item xs={12} md={6}>
               <Card className={classes.longCard}>
