@@ -251,8 +251,8 @@ class Dashboard extends Component {
         <Paper className={classNames.customPaper}>
           <ListItem>
             <ListItemText
-              primary="No house property assign."
-              secondary="Talk to your administrator."
+              primary="Account does not yet have a property assigned"
+              secondary="Please check the settings page to connect"
             />
           </ListItem>
         </Paper>
