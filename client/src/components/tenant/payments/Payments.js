@@ -210,7 +210,7 @@ class Payments extends React.Component {
                         <ListItem className={classes.blockElement}>
                           <ListItemText
                             className={classNames(classes.noPadding)}
-                            secondary="Payment Amount:"
+                            primary="Payment Amount:"
                           />
                           <TextField
                             id="standard-name"
