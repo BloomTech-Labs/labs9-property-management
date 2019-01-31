@@ -15,10 +15,9 @@ import classNames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import { Home, Call, Email } from '@material-ui/icons';
+import { Home, Call, Email, CreditCard, Build } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
-import Skeleton from 'react-loading-skeleton';
 
 const styles = theme => ({
   container: {
@@ -33,8 +32,9 @@ const styles = theme => ({
     position: 'relative',
     overflow: 'visible',
     minWidth: '40%',
-    minHeight: 350,
+    minHeight: 150,
     zIndex: 0,
+    paddingBottom: 30,
   },
   actions: {
     display: 'flex',
@@ -101,9 +101,9 @@ const styles = theme => ({
     margin: '0 2px',
     transform: 'scale(0.8)',
   },
-  card: {
-    height: 150,
-  },
+  // card: {
+  //   height: 150,
+  // },
   customPaper: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
@@ -187,10 +187,12 @@ class Dashboard extends Component {
   };
 
   phoneConverter = int => {
-    let arr = Array.from(int.toString());
-    arr.splice(6, 0, '-');
-    arr.splice(3, 0, '-');
-    return arr.join('');
+    if (int) {
+      let arr = Array.from(int.toString());
+      arr.splice(6, 0, '-');
+      arr.splice(3, 0, '-');
+      return arr.join('');
+    } else return '800-888-8888';
   };
 
   render() {
@@ -303,21 +305,33 @@ class Dashboard extends Component {
               </Button>
               <Card className={classNames(classes.card, classes.marginTop)}>
                 <CardContent>
-                  <ListItemText
-                    className={classes.cardTitle}
-                    color="primary"
-                    primary="Alerts"
-                    gutterBottom
-                  />
-                  <Divider component="li" />
-                  <Typography component="p">
-                    Work order #123 completed
-                  </Typography>
-                  <Typography component="p">Rent due 7/5/18</Typography>
+                  <ListItem color="primary">
+                    <ListItemText
+                      className={classes.cardTitle}
+                      color="primary"
+                      primary="Alerts"
+                      gutterBottom
+                    />
+                  </ListItem>
+                  <Divider />
+                  <ListItem>
+                    <Avatar>
+                      <Build />
+                    </Avatar>
+                    <ListItemText primary="Work order #123 completed" />
+                  </ListItem>
+                  <Divider variant="inset" />
+                  <ListItem>
+                    <Avatar>
+                      <CreditCard />
+                    </Avatar>
+                    <ListItemText primary="Rent due 7/5/18" />
+                  </ListItem>
+                  {/* <Typography component="p">Rent due 7/5/18</Typography> */}
                 </CardContent>
-                <CardActions>
+                {/* <CardActions>
                   <Button size="small">Learn More</Button>
-                </CardActions>
+                </CardActions> */}
               </Card>
             </Grid>
             <Grid item xs={12} md={5}>
