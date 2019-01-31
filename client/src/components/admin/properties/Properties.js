@@ -93,6 +93,14 @@ const styles = theme => ({
   detailedView: {
     width: '100%',
   },
+  detailedViewModal: {
+    minWidth: '250px',
+    maxWidth: '90%',
+    marginTop: '10vh',
+    marginLeft: '50%',
+    transform: 'translateX(-50%)',
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class Properties extends React.Component {
@@ -144,10 +152,7 @@ class Properties extends React.Component {
   viewMore = event => {
     const index = event.currentTarget.getAttribute('data-index');
 
-    if (
-      this.state.detailedViewOn !== true &&
-      this.state.selectedPropertyIndex !== index
-    ) {
+    if (this.state.selectedPropertyIndex !== index) {
       this.setState({
         detailedViewOn: true,
         selectedProperty: { ...this.state.properties[index] },
@@ -274,16 +279,10 @@ class Properties extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} lg={this.state.detailedViewOn ? 4 : 12}>
+        <Grid item xs={12}>
           <Grid container justify="center" spacing={16}>
             {this.state.properties.map((entry, index) => (
-              <Grid
-                key={entry.house_id}
-                item
-                xs={12}
-                sm={6}
-                md={this.state.detailedViewOn ? 12 : 4}
-              >
+              <Grid key={entry.house_id} item xs={12} sm={6} md={4}>
                 <div
                   style={{
                     display: 'flex',
@@ -400,73 +399,96 @@ class Properties extends React.Component {
             ))}
           </Grid>
         </Grid>
-        <Grid
-          item
-          xs={8}
-          className={this.state.detailedViewOn ? '' : classes.displayNone}
+        <AddPropertyModal
+          open={this.state.addPropertyModalOpen}
+          onClose={this.toggleAddProperty}
+          addPropertyHandler={this.addPropertyHandler}
+          snackbarErrorHandler={this.toggleSnackbarError}
+        />
+        <Modal
+          open={this.state.editModalOpen}
+          onClose={this.toggleEditProperty}
         >
-          <Grid container>
-            <Paper className={classes.detailedView}>
-              <Grid item xs={12}>
-                <Tooltip title="Close">
-                  <IconButton onClick={this.closeDetailedView}>
-                    <Close />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography component="h6" align="center" variant="h6">
-                  {this.state.selectedProperty.property_name}
-                </Typography>
-              </Grid>
-            </Paper>
-          </Grid>
-          <AddPropertyModal
-            open={this.state.addPropertyModalOpen}
-            onClose={this.toggleAddProperty}
-            addPropertyHandler={this.addPropertyHandler}
-            snackbarErrorHandler={this.toggleSnackbarError}
-          />
-          <Modal
-            open={this.state.editModalOpen}
-            onClose={this.toggleEditProperty}
-          >
-            <Paper className={classes.paper}>
-              <Typography variant="h5" component="p">
-                Edit
-              </Typography>
-            </Paper>
-          </Modal>
-          <Modal
+          <Paper className={classes.paper}>
+            <Typography variant="h5" component="p">
+              Edit
+            </Typography>
+          </Paper>
+        </Modal>
+        <Modal
+          open={this.state.trashModalOpen}
+          onClose={this.toggleRemoveProperty}
+        >
+          <Dialog
             open={this.state.trashModalOpen}
             onClose={this.toggleRemoveProperty}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
           >
-            <Dialog
-              open={this.state.trashModalOpen}
-              onClose={this.toggleRemoveProperty}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  Are you sure you would like to delete this property?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions className={classes.dialog}>
-                <Button onClick={this.removeProperty} color="primary">
-                  Delete
-                </Button>
-                <Button
-                  onClick={this.closeRemovePropertyModal}
-                  color="primary"
-                  autoFocus
-                >
-                  No
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Modal>
-        </Grid>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Are you sure you would like to delete this property?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions className={classes.dialog}>
+              <Button onClick={this.removeProperty} color="primary">
+                Delete
+              </Button>
+              <Button
+                onClick={this.closeRemovePropertyModal}
+                color="primary"
+                autoFocus
+              >
+                No
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Modal>
+        <Modal
+          open={this.state.detailedViewOn}
+          onClose={this.closeDetailedView}
+        >
+          <Paper className={classes.detailedViewModal}>
+            <Grid item xs={12}>
+              <Tooltip title="Close">
+                <IconButton onClick={this.closeDetailedView}>
+                  <Close />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography component="h6" align="center" variant="h4">
+                {this.state.selectedProperty.property_name}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <List>
+                <ListItem>
+                  <ListItemText primary="Address" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Bedrooms" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Bathrooms" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Square Footage" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Year Built" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Office Phone:" />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary="Maintanence Phone:" />
+                </ListItem>
+              </List>
+            </Grid>
+            <Grid item xs={6} />
+          </Paper>
+        </Modal>
         <CustomSnackbar
           open={this.state.openSnackbar}
           variant={this.state.snackbarVariant}
@@ -489,3 +511,73 @@ Properties.propTypes = {
 };
 
 export default PropertiesPage;
+
+/*
+
+        <Hidden mdDown>
+          <Grid
+            item
+            xs={8}
+            className={this.state.detailedViewOn ? '' : classes.displayNone}
+          >
+            <Grid container>
+              <Paper className={classes.detailedView}>
+                <Grid item xs={12}>
+                  <Tooltip title="Close">
+                    <IconButton onClick={this.closeDetailedView}>
+                      <Close />
+                    </IconButton>
+                  </Tooltip>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography component="h6" align="center" variant="h4">
+                    {this.state.selectedProperty.property_name}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <List>
+                    <ListItem>
+                      <ListItemText primary="Address" />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Bedrooms" />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Bathrooms" />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Square Footage" />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Year Built" />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Office Phone:" />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Maintanence Phone:" />
+                    </ListItem>
+                  </List>
+                </Grid>
+                <Grid item xs={6}>
+                  <List>
+                    {this.state.selectedProperty.tenants.length > 0
+                      ? this.state.selectedProperty.tenants.map(
+                          (tenant, index) => (
+                            <ListItem key={index}>
+                              <ListItemText
+                                primary="Tenant:"
+                                secondary={tenant.display_name}
+                              />
+                            </ListItem>
+                          )
+                        )
+                      : null}
+                  </List>
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Hidden>
+
+*/
