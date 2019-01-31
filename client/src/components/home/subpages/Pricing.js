@@ -76,8 +76,8 @@ class Pricing extends Component {
           <HeroGroup pricing>
             <HeroGroupH1>Simple pricing</HeroGroupH1>
             <HeroP>
-              Leasefront redefines the lightweight app – so that you can spend
-              less time managing your property.
+              No credit card required to sign up. Start managing your properties
+              today.
             </HeroP>
           </HeroGroup>
           <PricingCardContainer mobile>
