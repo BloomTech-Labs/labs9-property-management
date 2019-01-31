@@ -50,6 +50,30 @@ router.post('/register', (req, res) => {
     });
 });
 
+// Retrieve the tenants under an owner
+router.get('/tenants', (req, res) => {
+  const { uid } = req.body;
+
+  db('users as u')
+    .join('tenants as t', 'u.uid', 't.tenant_uid')
+    .join('house_properties as h', 't.house_id', 'h.house_id')
+    .where('h.owner_uid', uid)
+    .select(
+      't.tenant_id',
+      'u.display_name',
+      'h.property_name',
+      't.lease_start_date',
+      't.lease_end_date'
+    )
+    .then(results => {
+      res.status(200).json(results);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 // Get all owners in owners table
 router.get('/owners', (req, res) => {
   db('owners')
@@ -57,41 +81,6 @@ router.get('/owners', (req, res) => {
     .then(results => {
       res.status(200).json(results);
     });
-});
-
-router.get('/tenants', (req, res) => {
-  db('tenants').then(results => {
-    res.status(200).json(results);
-  });
-});
-
-// Basic Login User
-router.post('/login', (req, res) => {
-  const creds = req.body;
-  db('users')
-    .where({ email: creds.email, password: creds.password })
-    .first()
-    .then(user => {
-      if (user) {
-        // returning user information
-        res.status(200).send(user);
-      } else {
-        res.status(401).json({ errorMessage: 'Wrong credentials!' });
-      }
-    })
-    .catch(err => res.status(500).send(err));
-});
-
-// Admin Settings info
-router.get('/:id/settings', (req, res) => {
-  const { id } = req.params;
-  db('users as u')
-    .where('u.user_id', id)
-    .select('u.first_name', 'u.last_name', 'u.email', 'u.mobile')
-    .then(user => {
-      res.status(200).json(user);
-    })
-    .catch(err => res.status(500).json(err));
 });
 
 module.exports = router;
