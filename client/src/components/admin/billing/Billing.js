@@ -48,12 +48,7 @@ function createData(name, amount) {
   return { id, name, amount };
 }
 
-const rows = [
-  createData('Jan 30', '$625.00'),
-  createData('Jan 22', '$500.00'),
-  createData('Jan 21', '$850.00'),
-  createData('Jan 20', '$800.00'),
-];
+const rows = [createData('Jan 30', '$625.00'), createData('Jan 22', '$500.00')];
 
 const styles = theme => ({
   container: {
