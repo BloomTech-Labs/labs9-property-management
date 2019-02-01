@@ -165,7 +165,7 @@ class Tenants extends Component {
                 <Typography component="h6" variant="h6">
                   Send An Invite
                 </Typography>
-                <Typography component="p" variant="caption">
+                <Typography component="p" variant="overline">
                   Connect With A Tenant
                 </Typography>
                 <Grid container spacing={0}>

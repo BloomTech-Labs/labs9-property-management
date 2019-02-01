@@ -234,7 +234,7 @@ class InvitesTable extends React.Component {
                       <TableCell
                         component="th"
                         scope="row"
-                        align="justify"
+                        align="center"
                         padding="none"
                       >
                         {data.display_name}
