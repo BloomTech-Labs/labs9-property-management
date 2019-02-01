@@ -58,8 +58,7 @@ class DashBoard extends Component {
   componentDidMount() {}
 
   render() {
-    const { classes, theme } = this.props;
-    console.log(theme);
+    const { classes } = this.props;
 
     return (
       <Grid container className={classes.container} spacing={16}>
