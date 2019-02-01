@@ -7,7 +7,7 @@ import Dashboard from '@material-ui/icons/Dashboard';
 import Settings from '@material-ui/icons/Settings';
 import CreditCard from '@material-ui/icons/CreditCard';
 import Maintenance from '@material-ui/icons/Build';
-import { AuthUserContext } from '../session';
+import { withAuthUser } from '../session';
 import DashboardPage from './dashboard/Dashboard';
 import PaymentPage from './payments/Payments';
 import SettingsPage from './settings/Settings';
@@ -30,40 +30,32 @@ const links = [
 
 class Tenant extends Component {
   render() {
-    return (
-      <AuthUserContext.Consumer>
-        {({ authUser }) =>
-          authUser ? (
-            <Layout links={links}>
-              <Switch>
-                <Route exact path="/tenant" component={DashboardPage} />
-                <Route exact path="/tenant/payments" component={PaymentPage} />
-                <Route
-                  exact
-                  path="/tenant/stripe-test"
-                  component={StripeTest}
-                />
-                <Route exact path="/tenant/" component={Dashboard} />
-                <Route
-                  exact
-                  path="/tenant/testing"
-                  component={TestingEndpoints}
-                />
-                <Route
-                  exact
-                  path="/tenant/maintenance"
-                  component={MaintenancePage}
-                />
-                <Route exact path="/tenant/settings" component={SettingsPage} />
-              </Switch>
-            </Layout>
-          ) : (
-            <Redirect to="/login" />
-          )
-        }
-      </AuthUserContext.Consumer>
-    );
+    const role = this.props.authUserRole;
+
+    if (this.props.authUser && role === 'tenant') {
+      return (
+        <Layout links={links}>
+          <Switch>
+            <Route exact path="/tenant" component={DashboardPage} />
+            <Route exact path="/tenant/payments" component={PaymentPage} />
+            <Route exact path="/tenant/stripe-test" component={StripeTest} />
+            <Route exact path="/tenant/" component={Dashboard} />
+            <Route exact path="/tenant/testing" component={TestingEndpoints} />
+            <Route
+              exact
+              path="/tenant/maintenance"
+              component={MaintenancePage}
+            />
+            <Route exact path="/tenant/settings" component={SettingsPage} />
+          </Switch>
+        </Layout>
+      );
+    } else if (this.props.authUser && role === 'owner') {
+      return <Redirect to="/admin" />;
+    } else {
+      return <Redirect to="/login" />;
+    }
   }
 }
 
-export default Tenant;
+export default withAuthUser(Tenant);
