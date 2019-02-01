@@ -16,7 +16,6 @@ import {
   Person,
   DateRange,
   CheckCircleOutline,
-  Close,
 } from '@material-ui/icons';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
@@ -25,6 +24,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import AddPropertyModal from './AddPropertyModal';
+import PropertyModal from './PropertyModal';
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -93,15 +93,6 @@ const styles = theme => ({
   detailedView: {
     width: '100%',
   },
-  detailedViewModal: {
-    minWidth: '250px',
-    maxWidth: '90%',
-    marginTop: '10vh',
-    marginLeft: '50%',
-    transform: 'translateX(-50%)',
-    padding: theme.spacing.unit * 3,
-    overflowY: 'scroll',
-  },
 });
 
 class Properties extends React.Component {
@@ -113,7 +104,7 @@ class Properties extends React.Component {
     editModalOpen: false,
     trashModalOpen: false,
     properties: [],
-    selectedProperty: {},
+    selectedProperty: null,
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
@@ -281,7 +272,7 @@ class Properties extends React.Component {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid container justify="center" spacing={16}>
+          <Grid container justify="flex-start" spacing={16}>
             {this.state.properties.map((entry, index) => (
               <Grid key={entry.house_id} item xs={12} sm={6} md={4}>
                 <div
@@ -357,7 +348,7 @@ class Properties extends React.Component {
                           <ListItemText
                             primary="Lease"
                             secondary={
-                              entry.tenants && entry.tenants.length > 0
+                              entry.tenants.length > 0
                                 ? entry.tenants.map(
                                     tenant =>
                                       tenant.lease_start_date +
@@ -445,51 +436,11 @@ class Properties extends React.Component {
             </DialogActions>
           </Dialog>
         </Modal>
-        <Modal
+        <PropertyModal
           open={this.state.detailedViewOn}
           onClose={this.closeDetailedView}
-        >
-          <Paper className={classes.detailedViewModal}>
-            <Grid item xs={12}>
-              <Tooltip title="Close">
-                <IconButton onClick={this.closeDetailedView}>
-                  <Close />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h6" align="center" variant="h4">
-                {this.state.selectedProperty.property_name}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <List>
-                <ListItem>
-                  <ListItemText primary="Address" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Bedrooms" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Bathrooms" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Square Footage" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Year Built" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Office Phone:" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Maintanence Phone:" />
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={6} />
-          </Paper>
-        </Modal>
+          property={this.state.selectedProperty}
+        />
         <CustomSnackbar
           open={this.state.openSnackbar}
           variant={this.state.snackbarVariant}

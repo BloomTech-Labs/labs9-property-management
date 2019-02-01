@@ -21,7 +21,7 @@ const styles = theme => ({
     marginTop: 50,
     height: '80vh',
     width: '90%',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 3,
     [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
       width: 600,
       marginLeft: 'auto',
@@ -106,6 +106,7 @@ class AddPropertyModal extends Component {
       .then(response => {
         this.props.addPropertyHandler({
           house_id: response.data[0],
+          tenants: [],
           ...request,
         });
       })
@@ -149,7 +150,7 @@ class AddPropertyModal extends Component {
                 required
               />
             </Grid>
-            <Grid item xs={12} sm={5}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="address"
@@ -160,7 +161,7 @@ class AddPropertyModal extends Component {
                 onChange={this.handleChange('address')}
               />
             </Grid>
-            <Grid item xs={8} sm={5}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="city"
@@ -171,7 +172,7 @@ class AddPropertyModal extends Component {
                 onChange={this.handleChange('city')}
               />
             </Grid>
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={12} sm={6}>
               <FormControl className={classes.formControl} required>
                 <InputLabel htmlFor="state-native-required">State</InputLabel>
                 <Select
@@ -190,6 +191,17 @@ class AddPropertyModal extends Component {
                   ))}
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="zipCode"
+                label="Zip Code"
+                className={classes.textField}
+                value={this.state.zip_code}
+                margin="normal"
+                onChange={this.handleChange('zip_code')}
+              />
             </Grid>
             <Grid item xs={6} sm={6}>
               <TextField
