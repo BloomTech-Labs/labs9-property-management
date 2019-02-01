@@ -106,4 +106,18 @@ export const AppImage = styled.img`
     padding: 0px 24px 100px 24px;
   }
 `;
+
+export const InfoSection = styled.div`
+  display: flex;
+  border: 1px solid blue;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 100px;
+`;
+
+export const IconContainer = styled.div`
+  border: 1px solid blue;
+  font-size: 100px;
+  padding: 0 20px;
+`;
 // End Hero
