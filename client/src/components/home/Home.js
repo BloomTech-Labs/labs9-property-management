@@ -19,6 +19,7 @@ import House from '@material-ui/icons/Home';
 import Users from '@material-ui/icons/People';
 import appshot from '../../images/app-shot.svg';
 import appshotmidfi from '../../images/app-shot-mid-fi.svg';
+import updatedappshot from '../../images/updateAppshot.svg';
 import { GlobalStyle } from '../../styles/Styles';
 
 class Home extends Component {
