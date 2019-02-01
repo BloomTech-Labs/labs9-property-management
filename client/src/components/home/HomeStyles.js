@@ -109,15 +109,63 @@ export const AppImage = styled.img`
 
 export const InfoSection = styled.div`
   display: flex;
-  border: 1px solid blue;
   justify-content: center;
   align-items: center;
-  padding-bottom: 100px;
+  padding: 90px 0;
 `;
 
 export const IconContainer = styled.div`
-  border: 1px solid blue;
-  font-size: 100px;
+  font-size: 80px;
   padding: 0 20px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  width: 300px;
+  color: #5f29ff;
+  flex-wrap: wrap;
+  text-align: center;
+  @media (max-width: 900px) {
+    margin-bottom: 40px;
+  }
+`;
+
+export const IconGroup = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  text-align: top;
+  @media (max-width: 900px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+`;
+
+export const HeroGroupH3 = styled.h3`
+  margin: 0;
+  color: rgba(22, 23, 26, 1);
+  font-size: 2.4rem;
+  line-height: 1.2;
+  opacity: 0;
+  padding-bottom: 0;
+  animation: ${HeroAnimation};
+  animation-duration: 2s;
+  animation-delay: 0.01s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  @media (max-width: 900px) {
+    font-size: 1.8rem;
+  }
+`;
+
+export const HeroP2 = styled.p`
+  color: rgba(73, 76, 87, 1);
+  line-height: 1.4;
+  font-weight: 400;
+  font-size: 1.6rem;
+  padding: 0 5px;
+  margin: 0;
+  animation: ${HeroAnimation} 2s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 0;
 `;
 // End Hero

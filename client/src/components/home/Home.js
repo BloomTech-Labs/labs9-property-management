@@ -13,6 +13,9 @@ import {
   AppImageContainer,
   InfoSection,
   IconContainer,
+  IconGroup,
+  HeroGroupH3,
+  HeroP2,
 } from './HomeStyles';
 import { Build, Payment } from '@material-ui/icons';
 import House from '@material-ui/icons/Home';
@@ -45,23 +48,48 @@ class Home extends Component {
               </HeroP>
               <HeroA href="/">Watch the video</HeroA>
             </HeroGroup>
+            <InfoSection>
+              <IconGroup>
+                <IconContainer>
+                  <House fontSize="inherit" />
+                  <HeroGroupH3>Manage properties</HeroGroupH3>
+                  <HeroP2>
+                    Whether you are a landlord or a property manager managing a
+                    handful of properties, ProperEAZY includes all the features
+                    you need to make your operation the most efficient it has
+                    ever been.
+                  </HeroP2>
+                </IconContainer>
+                <IconContainer>
+                  <Users fontSize="inherit" />
+                  <HeroGroupH3>Managing tenants</HeroGroupH3>
+                  <HeroP2>
+                    Setting due dates. Collecting rent each week or month.
+                    Signing lease agreements.
+                  </HeroP2>
+                </IconContainer>
+                <IconContainer>
+                  <Build fontSize="inherit" />
+                  <HeroGroupH3>Maintenance and repairs</HeroGroupH3>
+                  <HeroP2>
+                    Keeping the property in safe and habitable condition is key!
+                    Receive work orders from your tenants instantly!
+                  </HeroP2>
+                </IconContainer>
+                <IconContainer>
+                  <Payment fontSize="inherit" />
+                  <HeroGroupH3>Online payments</HeroGroupH3>
+                  <HeroP2>
+                    Stripe is integrated to the ProperEAZY platform. Stripe
+                    software allows individuals and businesses to receive
+                    payments over the Internet.
+                  </HeroP2>
+                </IconContainer>
+              </IconGroup>
+            </InfoSection>
             <AppImageContainer>
               <AppImage src={appshot} />
             </AppImageContainer>
-            <InfoSection>
-              <IconContainer>
-                <House color="primary" fontSize="inherit" />
-              </IconContainer>
-              <IconContainer>
-                <Users color="primary" fontSize="inherit" />
-              </IconContainer>
-              <IconContainer>
-                <Build color="primary" fontSize="inherit" />
-              </IconContainer>
-              <IconContainer>
-                <Payment color="primary" fontSize="inherit" />
-              </IconContainer>
-            </InfoSection>
           </Hero>
           <Footer />
         </>
