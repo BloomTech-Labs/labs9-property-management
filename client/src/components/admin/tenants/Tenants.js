@@ -28,6 +28,8 @@ class Tenants extends Component {
     tenants: [],
     house_id: 0, // Selected property
     pending_invites: [],
+    tenantsLoading: true,
+    invitesLoading: true,
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
@@ -45,14 +47,17 @@ class Tenants extends Component {
       axios
         .get('/api/invitations/admin')
         .then(response => {
-          this.setState({ pending_invites: response.data });
+          this.setState({
+            pending_invites: response.data,
+            invitesLoading: false,
+          });
         })
         .catch(error => console.log(error));
 
       axios
         .get('/api/users/tenants')
         .then(response => {
-          this.setState({ tenants: response.data });
+          this.setState({ tenants: response.data, tenantsLoading: false });
         })
         .catch(error => console.log(error));
     }
@@ -73,14 +78,17 @@ class Tenants extends Component {
       axios
         .get('/api/invitations/admin')
         .then(response => {
-          this.setState({ pending_invites: response.data });
+          this.setState({
+            pending_invites: response.data,
+            invitesLoading: false,
+          });
         })
         .catch(error => console.log(error));
 
       axios
         .get('/api/users/tenants')
         .then(response => {
-          this.setState({ tenants: response.data });
+          this.setState({ tenants: response.data, tenantsLoading: false });
         })
         .catch(error => console.log(error));
     }
@@ -143,7 +151,12 @@ class Tenants extends Component {
 
   render() {
     const { classes } = this.props;
-    const { pending_invites, tenants } = this.state;
+    const {
+      pending_invites,
+      tenants,
+      invitesLoading,
+      tenantsLoading,
+    } = this.state;
 
     return (
       <Grid
@@ -155,10 +168,13 @@ class Tenants extends Component {
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
             <Grid item xs={12} md={12}>
-              <TenantsTable data={tenants} />
+              <TenantsTable loading={tenantsLoading} data={tenants} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <InvitesTable pending={pending_invites} />
+              <InvitesTable
+                loading={invitesLoading}
+                pending={pending_invites}
+              />
             </Grid>
             <Grid item xs={12} md={6}>
               <Card className={classes.longCard}>

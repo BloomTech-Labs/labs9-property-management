@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
 import EmptyPage from '../../emptypage/EmptyPage';
+import Loading from '../../loading/Loading';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -93,6 +94,10 @@ const styles = theme => ({
   },
   detailedView: {
     width: '100%',
+  },
+  loading: {
+    marginTop: '25%',
+    padding: theme.spacing.unit * 3,
   },
 });
 
@@ -245,134 +250,132 @@ class Properties extends React.Component {
     };
 
     if (!loading && properties.length > 0) {
-      pageBody = () => {
-        return (
-          <Grid item xs={12}>
-            <Grid container justify="flex-start" spacing={16}>
-              {this.state.properties.map((entry, index) => (
-                <Grid key={entry.house_id} item xs={12} sm={6} md={4}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      width: '100%',
-                      height: '100%',
-                    }}
-                  >
-                    <Card className={classes.card}>
-                      <CardActions
-                        className={classes.actions}
-                        disableActionSpacing
-                      >
-                        <Tooltip title="Edit">
-                          <IconButton
-                            aria-label="Edit Property"
-                            onClick={this.toggleEditProperty}
-                          >
-                            <Edit />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Delete">
-                          <IconButton
-                            data-id={entry.house_id}
-                            data-index={index}
-                            aria-label="Delete Property"
-                            onClick={this.toggleRemovePropertyModal}
-                          >
-                            <Delete />
-                          </IconButton>
-                        </Tooltip>
-                      </CardActions>
-                      <CardContent>
-                        <Typography variant="h5" align="center" component="h6">
-                          {entry.property_name}
-                        </Typography>
-                        <List className={classes.list}>
-                          <ListItem>
-                            <Avatar>
-                              <Home />
-                            </Avatar>
-                            <ListItemText
-                              primary="Address"
-                              secondary={[
-                                entry.address,
-                                entry.city,
-                                entry.state,
-                                entry.zip_code,
-                              ].join(' ')}
-                            />
-                          </ListItem>
-                          <ListItem>
-                            <Avatar>
-                              <Person />
-                            </Avatar>
-                            <ListItemText
-                              primary="Tenant(s)"
-                              secondary={
-                                entry.tenants && entry.tenants.length > 0
-                                  ? entry.tenants.map(
-                                      tenant => tenant.display_name + '\n'
-                                    )
-                                  : 'No Tenants'
-                              }
-                            />
-                          </ListItem>
-                          <ListItem>
-                            <Avatar>
-                              <DateRange />
-                            </Avatar>
-                            <ListItemText
-                              primary="Lease"
-                              secondary={
-                                entry.tenants.length > 0
-                                  ? entry.tenants.map(
-                                      tenant =>
-                                        tenant.lease_start_date +
-                                        ' - ' +
-                                        tenant.lease_end_date +
-                                        '\n'
-                                    )
-                                  : 'No Data'
-                              }
-                            />
-                          </ListItem>
-                          <ListItem>
-                            <Avatar>
-                              <CheckCircleOutline />
-                            </Avatar>
-                            <ListItemText
-                              primary="Contract Signed"
-                              secondary={
-                                entry.contract
-                                  ? entry.contract.toString().toUpperCase()
-                                  : 'No Data'
-                              }
-                            />
-                          </ListItem>
-                        </List>
-                        <Grid container justify="center">
-                          <Button
-                            data-index={index}
-                            onClick={this.viewMore}
-                            color="primary"
-                            variant="text"
-                          >
-                            View More Info
-                          </Button>
-                        </Grid>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </Grid>
-              ))}
-            </Grid>
+      pageBody = (
+        <Grid item xs={12}>
+          <Grid container justify="flex-start" spacing={16}>
+            {this.state.properties.map((entry, index) => (
+              <Grid key={entry.house_id} item xs={12} sm={6} md={4}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: '100%',
+                    height: '100%',
+                  }}
+                >
+                  <Card className={classes.card}>
+                    <CardActions
+                      className={classes.actions}
+                      disableActionSpacing
+                    >
+                      <Tooltip title="Edit">
+                        <IconButton
+                          aria-label="Edit Property"
+                          onClick={this.toggleEditProperty}
+                        >
+                          <Edit />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete">
+                        <IconButton
+                          data-id={entry.house_id}
+                          data-index={index}
+                          aria-label="Delete Property"
+                          onClick={this.toggleRemovePropertyModal}
+                        >
+                          <Delete />
+                        </IconButton>
+                      </Tooltip>
+                    </CardActions>
+                    <CardContent>
+                      <Typography variant="h5" align="center" component="h6">
+                        {entry.property_name}
+                      </Typography>
+                      <List className={classes.list}>
+                        <ListItem>
+                          <Avatar>
+                            <Home />
+                          </Avatar>
+                          <ListItemText
+                            primary="Address"
+                            secondary={[
+                              entry.address,
+                              entry.city,
+                              entry.state,
+                              entry.zip_code,
+                            ].join(' ')}
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <Avatar>
+                            <Person />
+                          </Avatar>
+                          <ListItemText
+                            primary="Tenant(s)"
+                            secondary={
+                              entry.tenants && entry.tenants.length > 0
+                                ? entry.tenants.map(
+                                    tenant => tenant.display_name + '\n'
+                                  )
+                                : 'No Tenants'
+                            }
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <Avatar>
+                            <DateRange />
+                          </Avatar>
+                          <ListItemText
+                            primary="Lease"
+                            secondary={
+                              entry.tenants.length > 0
+                                ? entry.tenants.map(
+                                    tenant =>
+                                      tenant.lease_start_date +
+                                      ' - ' +
+                                      tenant.lease_end_date +
+                                      '\n'
+                                  )
+                                : 'No Data'
+                            }
+                          />
+                        </ListItem>
+                        <ListItem>
+                          <Avatar>
+                            <CheckCircleOutline />
+                          </Avatar>
+                          <ListItemText
+                            primary="Contract Signed"
+                            secondary={
+                              entry.contract
+                                ? entry.contract.toString().toUpperCase()
+                                : 'No Data'
+                            }
+                          />
+                        </ListItem>
+                      </List>
+                      <Grid container justify="center">
+                        <Button
+                          data-index={index}
+                          onClick={this.viewMore}
+                          color="primary"
+                          variant="text"
+                        >
+                          View More Info
+                        </Button>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </div>
+              </Grid>
+            ))}
           </Grid>
-        );
-      };
+        </Grid>
+      );
     } else if (!loading && properties.length === 0) {
       pageBody = <EmptyPage message="Please add a property." />;
     } else {
-      pageBody = <></>;
+      pageBody = <Loading className={classes.loading} size={80} />;
     }
 
     return (
