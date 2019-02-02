@@ -48,6 +48,9 @@ class Home extends Component {
               </HeroP>
               <HeroA href="/">Watch the video</HeroA>
             </HeroGroup>
+            <AppImageContainer>
+              <AppImage src={appshot} />
+            </AppImageContainer>
             <InfoSection>
               <IconGroup>
                 <IconContainer>
@@ -55,14 +58,14 @@ class Home extends Component {
                   <HeroGroupH3>Manage properties</HeroGroupH3>
                   <HeroP2>
                     Whether you are a landlord or a property manager managing a
-                    handful of properties, ProperEAZY includes all the features
+                    handful of properties, PropertEAZY includes all the features
                     you need to make your operation the most efficient it has
                     ever been.
                   </HeroP2>
                 </IconContainer>
                 <IconContainer>
                   <Users fontSize="inherit" />
-                  <HeroGroupH3>Managing tenants</HeroGroupH3>
+                  <HeroGroupH3>Manage tenants</HeroGroupH3>
                   <HeroP2>
                     Setting due dates. Collecting rent each week or month.
                     Signing lease agreements.
@@ -76,20 +79,17 @@ class Home extends Component {
                     Receive work orders from your tenants instantly!
                   </HeroP2>
                 </IconContainer>
-                <IconContainer>
+                {/* <IconContainer>
                   <Payment fontSize="inherit" />
                   <HeroGroupH3>Online payments</HeroGroupH3>
                   <HeroP2>
-                    Stripe is integrated to the ProperEAZY platform. Stripe
+                    Stripe is integrated to the PropertEAZY platform. Stripe
                     software allows individuals and businesses to receive
                     payments over the Internet.
                   </HeroP2>
-                </IconContainer>
+                </IconContainer> */}
               </IconGroup>
             </InfoSection>
-            <AppImageContainer>
-              <AppImage src={appshot} />
-            </AppImageContainer>
           </Hero>
           <Footer />
         </>
