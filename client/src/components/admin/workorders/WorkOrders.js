@@ -174,7 +174,11 @@ class WorkOrders extends Component {
     }
     if (this.state.workOrders.length === 0 && this.state.loading === false) {
       return (
-        <EmptyPage className={classes.emptyPage} message="No Work Orders" />
+        <EmptyPage
+          className={classes.emptyPage}
+          variant="h3"
+          message="No Work Orders"
+        />
       );
     } else {
       return (

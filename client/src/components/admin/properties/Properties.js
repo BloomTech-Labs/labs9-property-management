@@ -380,6 +380,7 @@ class Properties extends React.Component {
       pageBody = (
         <EmptyPage
           className={classes.emptyPage}
+          variant="h3"
           message="Please add a property."
         />
       );

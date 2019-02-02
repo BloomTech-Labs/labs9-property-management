@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Loading from '../../loading/Loading';
+import EmptyPage from '../../emptypage/EmptyPage';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -157,6 +158,10 @@ const styles = theme => ({
     height: '196px',
     alignItems: 'center',
   },
+  emptyPage: {
+    height: '196px',
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class InvitesTable extends React.Component {
@@ -260,14 +265,22 @@ class InvitesTable extends React.Component {
                         </TableRow>
                       );
                     })}
-              {emptyRows > 0 && !loading ? (
+              {emptyRows > 0 && !loading && data.length > 0 ? (
                 <TableRow style={{ height: 49 * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               ) : null}
             </TableBody>
           </Table>
-          {loading ? <Loading className={classes.loader} size={40} /> : null}
+          {loading ? (
+            <Loading className={classes.loader} size={40} />
+          ) : data.length === 0 ? (
+            <EmptyPage
+              className={classes.emptyPage}
+              variant="h4"
+              message="No Tenants"
+            />
+          ) : null}
         </div>
         <TablePagination
           rowsPerPageOptions={[5]}
