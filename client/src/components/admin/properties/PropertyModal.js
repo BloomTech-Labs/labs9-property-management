@@ -14,7 +14,8 @@ import Typography from '@material-ui/core/Typography';
 const styles = theme => ({
   detailedViewModal: {
     width: '90%',
-    marginTop: '10vh',
+    marginTop: 50,
+    height: '80vh',
     marginLeft: '50%',
     transform: 'translateX(-50%)',
     padding: theme.spacing.unit * 3,

@@ -50,11 +50,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   card: {
-    width: '80%',
+    width: '90%',
     minHeight: 384,
-    [theme.breakpoints.up('sm')]: {
-      width: '90%',
-    },
     [theme.breakpoints.up('md')]: {
       width: '100%',
     },
@@ -96,8 +93,11 @@ const styles = theme => ({
     width: '100%',
   },
   loading: {
-    marginTop: '25%',
+    marginTop: '50%',
     padding: theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      marginTop: '20%',
+    },
   },
   emptyPage: {
     height: '70vh',
@@ -230,7 +230,6 @@ class Properties extends React.Component {
       snackbarMessage: message,
       snackbarVariant: 'error',
       trashModalOpen: false,
-      addPropertyModalOpen: false,
     });
   };
 

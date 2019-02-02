@@ -86,6 +86,19 @@ class AddPropertyModal extends Component {
       maintenance_ph,
     } = this.state;
 
+    if (
+      name === '' ||
+      address === '' ||
+      city === '' ||
+      state === '' ||
+      zip_code === ''
+    ) {
+      this.props.snackbarErrorHandler(
+        'Please fill out the required information.'
+      );
+      return;
+    }
+
     const request = {
       property_name: name,
       address: address,
@@ -261,6 +274,7 @@ class AddPropertyModal extends Component {
                 onChange={this.handleChange('office_ph')}
                 type="number"
                 className={classes.textField}
+                required
               />
             </Grid>
             <Grid item xs={12}>
@@ -271,6 +285,7 @@ class AddPropertyModal extends Component {
                 onChange={this.handleChange('maintenance_ph')}
                 type="number"
                 className={classes.textField}
+                required
               />
             </Grid>
             <div

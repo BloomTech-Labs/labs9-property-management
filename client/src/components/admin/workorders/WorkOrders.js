@@ -85,11 +85,14 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
   },
   loading: {
-    marginTop: '25%',
+    marginTop: '50%',
     padding: theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      marginTop: '30%',
+    },
   },
   emptyPage: {
-    height: '80vh',
+    height: '100vh',
     padding: theme.spacing.unit * 3,
   },
 });

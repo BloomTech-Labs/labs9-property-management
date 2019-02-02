@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
@@ -26,7 +25,7 @@ class Tenants extends Component {
     leaseEnd: new Date(),
     properties: [],
     tenants: [],
-    house_id: 0, // Selected property
+    house_id: '', // Selected property
     pending_invites: [],
     tenantsLoading: true,
     invitesLoading: true,
@@ -111,7 +110,7 @@ class Tenants extends Component {
   sendInvite = event => {
     event.preventDefault();
 
-    if (this.state.house_id === 0 || this.state.email === '') {
+    if (this.state.house_id === '' || this.state.email === '') {
       this.setState({
         openSnackbar: true,
         snackbarMessage: 'Please fill out the form before submitting!',
@@ -209,14 +208,13 @@ class Tenants extends Component {
                           id: 'property-native-required',
                         }}
                       >
-                        <option value={0} />
+                        <option value="" />
                         {this.state.properties.map((property, index) => (
                           <option key={index} value={property.house_id}>
                             {property.property_name}
                           </option>
                         ))}
                       </Select>
-                      <FormHelperText>Required</FormHelperText>
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={6}>
