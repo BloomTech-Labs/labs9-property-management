@@ -96,13 +96,13 @@ const PropertyModal = props => {
               <ListItem>
                 <ListItemText
                   primary="Office Phone:"
-                  secondary={property.offic_ph}
+                  secondary={property.office_ph}
                 />
               </ListItem>
               <ListItem>
                 <ListItemText
                   primary="Maintanence Phone:"
-                  secondary={property.maintanence_ph}
+                  secondary={property.maintenance_ph}
                 />
               </ListItem>
             </List>

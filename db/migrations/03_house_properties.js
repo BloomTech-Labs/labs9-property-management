@@ -12,8 +12,8 @@ exports.up = function(knex, Promise) {
     tbl.integer('square_footage').notNullable();
     tbl.integer('year_built').notNullable();
     tbl.string('house_image_url', 250);
-    tbl.integer('office_ph');
-    tbl.integer('maintenance_ph');
+    tbl.string('office_ph', 64);
+    tbl.string('maintenance_ph', 64);
     tbl
       .string('owner_uid')
       .references('owner_uid')
