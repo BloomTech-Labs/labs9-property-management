@@ -35,6 +35,11 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     width: 500,
   },
+  imgpaper2: {
+    width: '100%',
+    padding: 20,
+    backgroundColor: theme.palette.background.paper,
+  },
   card: {
     marginTop: 25,
     position: 'relative',
@@ -331,29 +336,30 @@ class Maintenance extends React.Component {
           </Grid>
         </Grid>
       );
-    } else if (!this.state.address && this.state.loading === false) {
+    } else {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
             <List className={classes.root}>
-              <Typography component="h1" variant="h5">
-                Submit a Work Order
-              </Typography>
-              <Divider component="li" />
-            </List>
-            <Paper className={classNames.customPaper}>
-              <ListItem>
-                <ListItemText
-                  primary="Account has no property assigned"
-                  secondary="Cannot make maintenance requests until this is completed.  Please work with your landlord to remedy this."
+              <Paper className={classes.imgpaper2}>
+                <CardHeader
+                  title="Submit a Work Order"
+                  subheader="Account has no property assigned"
+                  className={classes.cardHeader}
+                  titleTypographyProps={{
+                    component: 'h6',
+                    variant: 'h6',
+                    color: 'inherit',
+                  }}
+                  subheaderTypographyProps={{
+                    variant: 'overline',
+                  }}
                 />
-              </ListItem>
-            </Paper>
+              </Paper>
+            </List>
           </Grid>
         </Grid>
       );
-    } else {
-      return <Grid />;
     }
   }
 }

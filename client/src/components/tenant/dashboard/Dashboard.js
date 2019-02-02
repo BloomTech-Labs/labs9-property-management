@@ -6,14 +6,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-// import Typography from '@material-ui/core/Typography';
-// import Divider from '@material-ui/core/Divider';
-// import List from '@material-ui/core/List';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import classNames from 'classnames';
 import Card from '@material-ui/core/Card';
-// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import {
   Home,
@@ -116,6 +113,11 @@ const styles = theme => ({
   padding: {
     padding: 20,
   },
+  imgpaper2: {
+    width: '100%',
+    padding: 20,
+    backgroundColor: theme.palette.background.paper,
+  },
 });
 
 class Dashboard extends Component {
@@ -208,109 +210,73 @@ class Dashboard extends Component {
 
     // ======= renders tenant information if the tenant was assign to a property
     if (this.state.address) {
-      tenantDetails = (
-        <div>
-          <CardHeader
-            title="Property information"
-            subheader="You are assign to this property"
-            className={classes.cardHeader}
-            titleTypographyProps={{
-              component: 'h6',
-              variant: 'h6',
-              color: 'inherit',
-            }}
-            subheaderTypographyProps={{
-              variant: 'overline',
-            }}
-          />
-          <ListItem>
-            <Avatar>
-              <Home />
-            </Avatar>
-            <ListItemText
-              primary="Address:"
-              secondary={
-                this.state.address +
-                ', ' +
-                this.state.city +
-                ', ' +
-                this.state.state +
-                ', ' +
-                this.state.zip_code
-              }
-            />
-          </ListItem>
-          <ListItem>
-            <Avatar>
-              <Call />
-            </Avatar>
-            <ListItemText
-              primary="Office:"
-              secondary={this.phoneConverter(this.state.office_phone)}
-            />
-          </ListItem>
-          <ListItem>
-            <Avatar>
-              <Email />
-            </Avatar>
-            <ListItemText primary="Email:" secondary={this.state.owner_email} />
-          </ListItem>
-          <ListItem>
-            <Avatar>
-              <Call />
-            </Avatar>
-            <ListItemText
-              primary="24/7 Maintenance:"
-              secondary={this.phoneConverter(this.state.maintenance_phone)}
-            />
-          </ListItem>
-        </div>
-      );
-    } else {
-      tenantDetails = (
-        <div>
-          <ListItem>
-            <ListItemText
-              primary="Account does not yet have a property assigned"
-              secondary="Please check the settings page to connect"
-            />
-          </ListItem>
-        </div>
-      );
-    }
-
-    return (
-      <Grid container className={classes.container} spacing={16}>
-        <Grid item xs={12} className={classes.title}>
-          <Grid container justify="space-around" spacing={16}>
-            <Grid item xs={12} md={5}>
-              <Button
-                variant="contained"
-                fullWidth
-                color="secondary"
-                className={classNames(classes.button, classes.biggerText)}
-                onClick={this.makePayment}
-              >
-                Make a Payment
-              </Button>
-              <Button
-                variant="contained"
-                fullWidth
-                color="secondary"
-                className={classNames(
-                  classes.button,
-                  classes.marginTop,
-                  classes.biggerText
-                )}
-                onClick={this.submitWorkorder}
-              >
-                Submit a Work Order
-              </Button>
-              <Card className={classNames(classes.card, classes.marginTop)}>
-                <CardContent>
+      return (
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} className={classes.title}>
+            <Grid container justify="space-around" spacing={16}>
+              <Grid item xs={12} md={5}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  color="secondary"
+                  className={classNames(classes.button, classes.biggerText)}
+                  onClick={this.makePayment}
+                >
+                  Make a Payment
+                </Button>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  color="secondary"
+                  className={classNames(
+                    classes.button,
+                    classes.marginTop,
+                    classes.biggerText
+                  )}
+                  onClick={this.submitWorkorder}
+                >
+                  Submit a Work Order
+                </Button>
+                <Card className={classNames(classes.card, classes.marginTop)}>
+                  <CardContent>
+                    <CardHeader
+                      title="Alerts"
+                      subheader="Check your status"
+                      className={classes.cardHeader}
+                      titleTypographyProps={{
+                        component: 'h6',
+                        variant: 'h6',
+                        color: 'inherit',
+                      }}
+                      subheaderTypographyProps={{
+                        variant: 'overline',
+                      }}
+                    />
+                    <ListItem>
+                      <Avatar>
+                        <Build />
+                      </Avatar>
+                      <ListItemText primary="Work order #123 completed" />
+                    </ListItem>
+                    <ListItem>
+                      <Avatar>
+                        <CreditCard />
+                      </Avatar>
+                      <ListItemText primary="Rent due 7/5/18" />
+                    </ListItem>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs={12} md={5}>
+                <Paper
+                  className={classNames(
+                    classNames.customPaper,
+                    classes.padding
+                  )}
+                >
                   <CardHeader
-                    title="Alerts"
-                    subheader="Check your status"
+                    title="Amount due"
+                    subheader="Keep track of your monthly payments"
                     className={classes.cardHeader}
                     titleTypographyProps={{
                       component: 'h6',
@@ -323,26 +289,92 @@ class Dashboard extends Component {
                   />
                   <ListItem>
                     <Avatar>
-                      <Build />
+                      <Payment />
                     </Avatar>
-                    <ListItemText primary="Work order #123 completed" />
+                    <ListItemText primary="Balance:" secondary="$ 0.00" />
+                  </ListItem>
+                </Paper>
+                <Paper
+                  className={classNames(
+                    classNames.customPaper,
+                    classes.padding,
+                    classes.marginTop
+                  )}
+                >
+                  <CardHeader
+                    title="Property information"
+                    subheader="You are assign to this property"
+                    className={classes.cardHeader}
+                    titleTypographyProps={{
+                      component: 'h6',
+                      variant: 'h6',
+                      color: 'inherit',
+                    }}
+                    subheaderTypographyProps={{
+                      variant: 'overline',
+                    }}
+                  />
+                  <ListItem>
+                    <Avatar>
+                      <Home />
+                    </Avatar>
+                    <ListItemText
+                      primary="Address:"
+                      secondary={
+                        this.state.address +
+                        ', ' +
+                        this.state.city +
+                        ', ' +
+                        this.state.state +
+                        ', ' +
+                        this.state.zip_code
+                      }
+                    />
                   </ListItem>
                   <ListItem>
                     <Avatar>
-                      <CreditCard />
+                      <Call />
                     </Avatar>
-                    <ListItemText primary="Rent due 7/5/18" />
+                    <ListItemText
+                      primary="Office:"
+                      secondary={this.phoneConverter(this.state.office_phone)}
+                    />
                   </ListItem>
-                </CardContent>
-              </Card>
+                  <ListItem>
+                    <Avatar>
+                      <Email />
+                    </Avatar>
+                    <ListItemText
+                      primary="Email:"
+                      secondary={this.state.owner_email}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <Avatar>
+                      <Call />
+                    </Avatar>
+                    <ListItemText
+                      primary="24/7 Maintenance:"
+                      secondary={this.phoneConverter(
+                        this.state.maintenance_phone
+                      )}
+                    />
+                  </ListItem>
+                </Paper>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={5}>
-              <Paper
-                className={classNames(classNames.customPaper, classes.padding)}
-              >
+          </Grid>
+        </Grid>
+      );
+    } else {
+      return (
+        <Grid container className={classes.container} spacing={16}>
+          <Grid item xs={12} className={classes.title}>
+            <List className={classes.root}>
+              <Paper className={classes.imgpaper2}>
                 <CardHeader
-                  title="Amount due"
-                  subheader="Keep track of your monthly payments"
+                  title="Account information"
+                  subheader="Account has no property assigned"
                   className={classes.cardHeader}
                   titleTypographyProps={{
                     component: 'h6',
@@ -353,27 +385,12 @@ class Dashboard extends Component {
                     variant: 'overline',
                   }}
                 />
-                <ListItem>
-                  <Avatar>
-                    <Payment />
-                  </Avatar>
-                  <ListItemText primary="Balance:" secondary="$ 0.00" />
-                </ListItem>
               </Paper>
-              <Paper
-                className={classNames(
-                  classNames.customPaper,
-                  classes.padding,
-                  classes.marginTop
-                )}
-              >
-                {tenantDetails}
-              </Paper>
-            </Grid>
+            </List>
           </Grid>
         </Grid>
-      </Grid>
-    );
+      );
+    }
   }
 }
 

@@ -115,16 +115,16 @@ export const InfoSection = styled.div`
 `;
 
 export const IconContainer = styled.div`
-  font-size: 80px;
+  font-size: 60px;
   padding: 0 20px;
   display: flex;
   justify-content: start;
   align-items: center;
   flex-direction: column;
-  width: 300px;
+  width: 320px;
   color: #5f29ff;
   flex-wrap: wrap;
-  text-align: center;
+  text-align: justify;
   @media (max-width: 900px) {
     margin-bottom: 40px;
   }
@@ -142,9 +142,9 @@ export const IconGroup = styled.div`
 `;
 
 export const HeroGroupH3 = styled.h3`
-  margin: 0;
+  margin: 30px 0;
   color: rgba(22, 23, 26, 1);
-  font-size: 2.4rem;
+  font-size: 2rem;
   line-height: 1.2;
   opacity: 0;
   padding-bottom: 0;
@@ -167,5 +167,6 @@ export const HeroP2 = styled.p`
   margin: 0;
   animation: ${HeroAnimation} 2s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
   opacity: 0;
+  line-height: 30px;
 `;
 // End Hero
