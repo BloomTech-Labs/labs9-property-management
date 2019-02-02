@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
@@ -26,8 +25,10 @@ class Tenants extends Component {
     leaseEnd: new Date(),
     properties: [],
     tenants: [],
-    house_id: 0, // Selected property
+    house_id: '', // Selected property
     pending_invites: [],
+    tenantsLoading: true,
+    invitesLoading: true,
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
@@ -45,14 +46,17 @@ class Tenants extends Component {
       axios
         .get('/api/invitations/admin')
         .then(response => {
-          this.setState({ pending_invites: response.data });
+          this.setState({
+            pending_invites: response.data,
+            invitesLoading: false,
+          });
         })
         .catch(error => console.log(error));
 
       axios
         .get('/api/users/tenants')
         .then(response => {
-          this.setState({ tenants: response.data });
+          this.setState({ tenants: response.data, tenantsLoading: false });
         })
         .catch(error => console.log(error));
     }
@@ -73,14 +77,17 @@ class Tenants extends Component {
       axios
         .get('/api/invitations/admin')
         .then(response => {
-          this.setState({ pending_invites: response.data });
+          this.setState({
+            pending_invites: response.data,
+            invitesLoading: false,
+          });
         })
         .catch(error => console.log(error));
 
       axios
         .get('/api/users/tenants')
         .then(response => {
-          this.setState({ tenants: response.data });
+          this.setState({ tenants: response.data, tenantsLoading: false });
         })
         .catch(error => console.log(error));
     }
@@ -103,7 +110,7 @@ class Tenants extends Component {
   sendInvite = event => {
     event.preventDefault();
 
-    if (this.state.house_id === 0 || this.state.email === '') {
+    if (this.state.house_id === '' || this.state.email === '') {
       this.setState({
         openSnackbar: true,
         snackbarMessage: 'Please fill out the form before submitting!',
@@ -143,7 +150,12 @@ class Tenants extends Component {
 
   render() {
     const { classes } = this.props;
-    const { pending_invites, tenants } = this.state;
+    const {
+      pending_invites,
+      tenants,
+      invitesLoading,
+      tenantsLoading,
+    } = this.state;
 
     return (
       <Grid
@@ -155,17 +167,20 @@ class Tenants extends Component {
         <Grid item xs={12}>
           <Grid container justify="space-around" spacing={16}>
             <Grid item xs={12} md={12}>
-              <TenantsTable data={tenants} />
+              <TenantsTable loading={tenantsLoading} data={tenants} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <InvitesTable pending={pending_invites} />
+              <InvitesTable
+                loading={invitesLoading}
+                pending={pending_invites}
+              />
             </Grid>
             <Grid item xs={12} md={6}>
               <Card className={classes.longCard}>
                 <Typography component="h6" variant="h6">
                   Send An Invite
                 </Typography>
-                <Typography component="p" variant="caption">
+                <Typography component="p" variant="overline">
                   Connect With A Tenant
                 </Typography>
                 <Grid container spacing={0}>
@@ -193,14 +208,13 @@ class Tenants extends Component {
                           id: 'property-native-required',
                         }}
                       >
-                        <option value={0} />
+                        <option value="" />
                         {this.state.properties.map((property, index) => (
                           <option key={index} value={property.house_id}>
                             {property.property_name}
                           </option>
                         ))}
                       </Select>
-                      <FormHelperText>Required</FormHelperText>
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={6}>

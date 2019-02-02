@@ -133,6 +133,7 @@ router.get('/admin/alldata', (req, res) => {
       'h.state',
       'h.zip_code',
       'h.bedrooms',
+      'h.bathrooms',
       'h.max_occupants',
       'h.square_footage',
       'h.year_built',
