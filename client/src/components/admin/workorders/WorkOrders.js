@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
+import Loading from '../../loading/Loading';
+import EmptyPage from '../../emptypage/EmptyPage';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
@@ -82,6 +84,14 @@ const styles = theme => ({
   status: {
     padding: theme.spacing.unit * 2,
   },
+  loading: {
+    marginTop: '25%',
+    padding: theme.spacing.unit * 3,
+  },
+  emptyPage: {
+    height: '80vh',
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class WorkOrders extends Component {
@@ -159,32 +169,14 @@ class WorkOrders extends Component {
       maxWidth: '90%',
     };
 
+    if (this.state.loading) {
+      return <Loading className={classes.loading} size={80} />;
+    }
     if (this.state.workOrders.length === 0 && this.state.loading === false) {
       return (
-        <Grid
-          container
-          className={classes.container}
-          spacing={16}
-          justify="center"
-        >
-          <Grid item xs={12}>
-            <Paper className={classNames.customPaper}>
-              <List>
-                <ListItem>
-                  <ListItemText
-                    primary="No Work Orders In Queue"
-                    classes={{ primary: classes.listItem }}
-                  />
-                </ListItem>
-              </List>
-            </Paper>
-          </Grid>
-        </Grid>
+        <EmptyPage className={classes.emptyPage} message="No Work Orders" />
       );
-    } else if (
-      this.state.workOrders.length > 0 &&
-      this.state.loading === false
-    ) {
+    } else {
       return (
         <>
           <Grid container className={classes.container} spacing={16}>
@@ -351,8 +343,6 @@ class WorkOrders extends Component {
           </Modal>
         </>
       );
-    } else {
-      return <Grid />;
     }
   }
 }

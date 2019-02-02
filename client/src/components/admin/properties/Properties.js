@@ -99,6 +99,10 @@ const styles = theme => ({
     marginTop: '25%',
     padding: theme.spacing.unit * 3,
   },
+  emptyPage: {
+    height: '70vh',
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class Properties extends React.Component {
@@ -373,7 +377,12 @@ class Properties extends React.Component {
         </Grid>
       );
     } else if (!loading && properties.length === 0) {
-      pageBody = <EmptyPage message="Please add a property." />;
+      pageBody = (
+        <EmptyPage
+          className={classes.emptyPage}
+          message="Please add a property."
+        />
+      );
     } else {
       pageBody = <Loading className={classes.loading} size={80} />;
     }

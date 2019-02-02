@@ -1,25 +1,12 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
-  container: {
-    height: '70vh',
-    padding: theme.spacing.unit * 3,
-  },
-});
-
 const EmptyPage = props => {
-  const { classes } = props;
+  const { className } = props;
 
   return (
-    <Grid
-      className={classes.container}
-      alignItems="center"
-      container
-      spacing={0}
-    >
+    <Grid className={className} alignItems="center" container spacing={0}>
       <Grid item xs={12}>
         <Typography
           align="center"
@@ -34,4 +21,4 @@ const EmptyPage = props => {
   );
 };
 
-export default withStyles(styles)(EmptyPage);
+export default EmptyPage;
