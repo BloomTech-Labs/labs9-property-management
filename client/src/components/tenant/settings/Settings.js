@@ -10,10 +10,10 @@ import axios from 'axios';
 const styles = theme => ({
   container: {
     marginTop: 75,
-    marginLeft: 0,
+    marginLeft: -8,
   },
   root: {
-    paddingRight: theme.spacing.unit,
+    padding: theme.spacing.unit,
   },
 });
 
@@ -63,7 +63,6 @@ class Settings extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={16}>
@@ -74,7 +73,6 @@ class Settings extends React.Component {
           </Grid>
         </Grid>
       </Grid>
- 
     );
   }
 }
