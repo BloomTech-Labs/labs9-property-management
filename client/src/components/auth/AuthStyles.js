@@ -34,6 +34,7 @@ export const BackToHomeLink = styled(Link)`
 
 export const LoginOrSignupFormLink = styled.span`
   color: #5f29ff;
+  margin-left: 5px;
 `;
 
 export const AuthLogo = styled(Logo)`
