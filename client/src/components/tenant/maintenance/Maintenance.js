@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import Call from '@material-ui/icons/Call';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -60,8 +58,6 @@ const styles = theme => ({
     display: 'none',
   },
   paper: {
-    // width: '100%',
-    // height: '80vh',
     margin: 'auto',
     marginTop: 50,
   },
@@ -78,9 +74,6 @@ const styles = theme => ({
   noPadding: {
     padding: 0,
   },
-  // blockElement: {
-  //   display: 'block',
-  // },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -103,7 +96,6 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 11,
-    // maxWidth: '100%',
   },
   marginTop: {
     marginTop: 10,
@@ -116,6 +108,9 @@ const styles = theme => ({
 class Maintenance extends React.Component {
   state = {
     address: '',
+    city: '',
+    state: '',
+    zipcode: '',
     description: '',
     phoneNumber: '',
     permission: true,
@@ -127,13 +122,16 @@ class Maintenance extends React.Component {
   };
 
   componentDidMount() {
-    const endpoint = 'api/tenant-dash/';
+    const endpoint = 'api/tenants/dashboard/';
     axios
       .get(endpoint)
       .then(response => {
         if (response.data.length > 0) {
           this.setState(() => ({
             address: response.data[0].address,
+            city: response.data[0].city,
+            state: response.data[0].state,
+            zipcode: response.data[0].zip_code,
             phoneNumber: response.data[0].mobile,
             maintenanceNum: response.data[0].maintenance_ph,
             houseID: response.data[0].house_id,
@@ -152,13 +150,16 @@ class Maintenance extends React.Component {
       this.props.authTokenRecieved &&
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
     ) {
-      const endpoint = 'api/tenant-dash/';
+      const endpoint = 'api/tenants/dashboard/';
       axios
         .get(endpoint)
         .then(response => {
           if (response.data.length > 0) {
             this.setState(() => ({
               address: response.data[0].address,
+              city: response.data[0].city,
+              state: response.data[0].state,
+              zipcode: response.data[0].zip_code,
               phoneNumber: response.data[0].mobile,
               maintenanceNum: response.data[0].maintenance_ph,
               houseID: response.data[0].house_id,
@@ -218,19 +219,12 @@ class Maintenance extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
-    // console.log(theme);
+    const { classes } = this.props;
 
     if (this.state.address && this.state.loading === false) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
-            {/* <List className={classes.root}>
-              <Typography component="h1" variant="h5">
-                Submit a Work Order
-              </Typography>
-              <Divider component="li" />
-            </List> */}
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
                 <Paper className={classes.imgpaper}>
@@ -252,34 +246,28 @@ class Maintenance extends React.Component {
                     <Avatar>
                       <Call />
                     </Avatar>
-                    {/* <ListItem className={classes.blockElement}> */}
                     <ListItemText
-                      // className={classes.noPadding}
                       primary="24/7 Maintenance"
                       secondary={this.phoneConverter(this.state.maintenanceNum)}
                     />
-                    {/* <ListItemText
-                          className={classes.noPadding}
-                          primary={this.phoneConverter(
-                            this.state.maintenanceNum
-                          )}
-                        /> */}
                   </ListItem>
-                  {/* </ListItem> */}
                   <ListItemText
                     className={classes.marginTop}
                     color="background"
-                    secondary="Address:"
+                    primary="Address:"
                   />
-                  <Typography
-                    component="h1"
-                    variant="h5"
-                    // onChange={this.handleInputChange}
-                    className={classes.typography}
-                    color="primary"
-                  >
-                    {this.state.address}
-                  </Typography>
+                  <ListItemText
+                    color="background"
+                    secondary={
+                      this.state.address +
+                      ', ' +
+                      this.state.city +
+                      ', ' +
+                      this.state.state +
+                      ' ' +
+                      this.state.zipcode
+                    }
+                  />
                   <TextField
                     id="outlined-multiline-static"
                     label="Description of Issue"
@@ -296,7 +284,6 @@ class Maintenance extends React.Component {
                     type="text"
                     name="description"
                   />
-                  {/* </Grid> */}
                 </Paper>
                 <Paper className={classNames(classes.imgpaper, classes.center)}>
                   <FileUploader GetURL={this.GetURL} />

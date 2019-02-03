@@ -326,7 +326,7 @@ class Dashboard extends Component {
                         this.state.city +
                         ', ' +
                         this.state.state +
-                        ', ' +
+                        ' ' +
                         this.state.zip_code
                       }
                     />
