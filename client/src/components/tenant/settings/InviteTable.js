@@ -13,12 +13,16 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: '95%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
+    marginLeft: 20,
+    marginRight: 20,
   },
-  table: {
-    minWidth: 700,
+  customWidth: {
+    width: '20%',
+    margin: 0,
+    padding: 0,
   },
 });
 
@@ -30,20 +34,30 @@ const InviteTable = props => {
       <Toolbar>
         <Typography variant="h6">Invitations</Typography>
       </Toolbar>
-      <Table className={classes.table}>
+      <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Owner</TableCell>
-            <TableCell align="center">Property</TableCell>
-            <TableCell align="center">Lease Start</TableCell>
-            <TableCell align="center">Lease End</TableCell>
-            <TableCell align="center">Action</TableCell>
+            <TableCell className={classes.customWidth} align="center">
+              Owner
+            </TableCell>
+            <TableCell className={classes.customWidth} align="center">
+              Property
+            </TableCell>
+            <TableCell className={classes.customWidth} align="center">
+              Lease Start
+            </TableCell>
+            <TableCell className={classes.customWidth} align="center">
+              Lease End
+            </TableCell>
+            <TableCell className={classes.customWidth} align="center">
+              Action
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.invites.map(invite => (
             <TableRow key={invite.id}>
-              <TableCell component="th" scope="row">
+              <TableCell component="th" scope="row" align="center">
                 {invite.display_name}
               </TableCell>
               <TableCell align="center">{invite.property_name}</TableCell>

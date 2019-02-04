@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import EmptyPage from '../../emptypage/EmptyPage';
 
 const styles = theme => ({
   container: {
@@ -52,14 +53,17 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 3,
   },
+  emptyPage: {
+    padding: theme.spacing.unit * 3,
+    height: '200px',
+  },
 });
 
 class DashBoard extends Component {
   componentDidMount() {}
 
   render() {
-    const { classes, theme } = this.props;
-    console.log(theme);
+    const { classes } = this.props;
 
     return (
       <Grid container className={classes.container} spacing={16}>
@@ -80,6 +84,11 @@ class DashBoard extends Component {
                     variant: 'overline',
                   }}
                 />
+                <EmptyPage
+                  className={classes.emptyPage}
+                  variant="h5"
+                  message="No Notifications"
+                />
               </Card>
             </Grid>
             <Grid item xs={12} md={5}>
@@ -97,6 +106,11 @@ class DashBoard extends Component {
                     variant: 'overline',
                   }}
                 />
+                <EmptyPage
+                  className={classes.emptyPage}
+                  variant="h5"
+                  message="No Work Orders"
+                />
               </Card>
             </Grid>
             <Grid item xs={12} md={11}>
@@ -113,6 +127,11 @@ class DashBoard extends Component {
                   subheaderTypographyProps={{
                     variant: 'overline',
                   }}
+                />
+                <EmptyPage
+                  className={classes.emptyPage}
+                  variant="h5"
+                  message="No Rent Data"
                 />
               </Card>
             </Grid>

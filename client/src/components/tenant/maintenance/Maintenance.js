@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import { withStyles, withTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import Call from '@material-ui/icons/Call';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,6 +18,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FileUploader from '../../admin/workorders/FileUploader';
 import Paper from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
+import CustomSnackbar from '../../snackbar/CustomSnackbar';
+import Loading from '../../loading/Loading';
 
 const styles = theme => ({
   container: {
@@ -34,6 +34,11 @@ const styles = theme => ({
     padding: 20,
     backgroundColor: theme.palette.background.paper,
     width: 500,
+  },
+  imgpaper2: {
+    width: '100%',
+    padding: 20,
+    backgroundColor: theme.palette.background.paper,
   },
   card: {
     marginTop: 25,
@@ -55,8 +60,6 @@ const styles = theme => ({
     display: 'none',
   },
   paper: {
-    // width: '100%',
-    // height: '80vh',
     margin: 'auto',
     marginTop: 50,
   },
@@ -73,9 +76,6 @@ const styles = theme => ({
   noPadding: {
     padding: 0,
   },
-  // blockElement: {
-  //   display: 'block',
-  // },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -98,7 +98,6 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 11,
-    // maxWidth: '100%',
   },
   marginTop: {
     marginTop: 10,
@@ -106,11 +105,21 @@ const styles = theme => ({
   marginTop2: {
     marginTop: 20,
   },
+  loading: {
+    marginTop: '50%',
+    padding: theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      marginTop: '20%',
+    },
+  },
 });
 
 class Maintenance extends React.Component {
   state = {
     address: '',
+    city: '',
+    state: '',
+    zipcode: '',
     description: '',
     phoneNumber: '',
     permission: true,
@@ -119,16 +128,22 @@ class Maintenance extends React.Component {
     houseID: '',
     tenantID: '',
     loading: true,
+    openSnackbar: false,
+    snackbarMessage: '',
+    snackbarVariant: '',
   };
 
   componentDidMount() {
-    const endpoint = 'api/tenant-dash/';
+    const endpoint = 'api/tenants/dashboard/';
     axios
       .get(endpoint)
       .then(response => {
         if (response.data.length > 0) {
           this.setState(() => ({
             address: response.data[0].address,
+            city: response.data[0].city,
+            state: response.data[0].state,
+            zipcode: response.data[0].zip_code,
             phoneNumber: response.data[0].mobile,
             maintenanceNum: response.data[0].maintenance_ph,
             houseID: response.data[0].house_id,
@@ -147,13 +162,16 @@ class Maintenance extends React.Component {
       this.props.authTokenRecieved &&
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
     ) {
-      const endpoint = 'api/tenant-dash/';
+      const endpoint = 'api/tenants/dashboard/';
       axios
         .get(endpoint)
         .then(response => {
           if (response.data.length > 0) {
             this.setState(() => ({
               address: response.data[0].address,
+              city: response.data[0].city,
+              state: response.data[0].state,
+              zipcode: response.data[0].zip_code,
               phoneNumber: response.data[0].mobile,
               maintenanceNum: response.data[0].maintenance_ph,
               houseID: response.data[0].house_id,
@@ -183,10 +201,19 @@ class Maintenance extends React.Component {
       })
       .then(res => {
         console.log('register response: ', res);
-        this.props.history.push('/tenant');
+        this.setState({
+          openSnackbar: true,
+          snackbarMessage: 'Work Order Submitted!',
+          snackbarVariant: 'success',
+        });
       })
       .catch(error => {
         console.error('Axios response: ', error);
+        this.setState({
+          openSnackbar: true,
+          snackbarMessage: 'Error submitting. Please try again.',
+          snackbarVariant: 'error',
+        });
       });
   };
 
@@ -212,27 +239,26 @@ class Maintenance extends React.Component {
     } else return '800-888-8888';
   };
 
+  snackbarClose = () => {
+    this.setState({
+      openSnackbar: false,
+    });
+  };
+
   render() {
-    const { classes, theme } = this.props;
-    // console.log(theme);
+    const { classes } = this.props;
 
     if (this.state.address && this.state.loading === false) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
-            {/* <List className={classes.root}>
-              <Typography component="h1" variant="h5">
-                Submit a Work Order
-              </Typography>
-              <Divider component="li" />
-            </List> */}
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
                 <Paper className={classes.imgpaper}>
                   {/* <Grid item xs={12} md={5}> */}
                   <CardHeader
                     title="Submit a Work Order"
-                    subheader="Fill out the form"
+                    subheader="Please add a description of the issue"
                     className={classes.cardHeader}
                     titleTypographyProps={{
                       component: 'h6',
@@ -247,34 +273,28 @@ class Maintenance extends React.Component {
                     <Avatar>
                       <Call />
                     </Avatar>
-                    {/* <ListItem className={classes.blockElement}> */}
                     <ListItemText
-                      // className={classes.noPadding}
                       primary="24/7 Maintenance"
-                      secondary={this.phoneConverter(this.state.maintenanceNum)}
+                      secondary={this.state.maintenanceNum}
                     />
-                    {/* <ListItemText
-                          className={classes.noPadding}
-                          primary={this.phoneConverter(
-                            this.state.maintenanceNum
-                          )}
-                        /> */}
                   </ListItem>
-                  {/* </ListItem> */}
                   <ListItemText
                     className={classes.marginTop}
                     color="background"
-                    secondary="Address:"
+                    primary="Address:"
                   />
-                  <Typography
-                    component="h1"
-                    variant="h5"
-                    // onChange={this.handleInputChange}
-                    className={classes.typography}
-                    color="primary"
-                  >
-                    {this.state.address}
-                  </Typography>
+                  <ListItemText
+                    color="background"
+                    secondary={
+                      this.state.address +
+                      ', ' +
+                      this.state.city +
+                      ', ' +
+                      this.state.state +
+                      ' ' +
+                      this.state.zipcode
+                    }
+                  />
                   <TextField
                     id="outlined-multiline-static"
                     label="Description of Issue"
@@ -291,7 +311,6 @@ class Maintenance extends React.Component {
                     type="text"
                     name="description"
                   />
-                  {/* </Grid> */}
                 </Paper>
                 <Paper className={classNames(classes.imgpaper, classes.center)}>
                   <FileUploader GetURL={this.GetURL} />
@@ -329,31 +348,41 @@ class Maintenance extends React.Component {
               </Grid>
             </form>
           </Grid>
+          <CustomSnackbar
+            open={this.state.openSnackbar}
+            variant={this.state.snackbarVariant}
+            message={this.state.snackbarMessage}
+            onClose={this.snackbarClose}
+            onClick={this.snackbarClose}
+          />
         </Grid>
       );
-    } else if (!this.state.address && this.state.loading === false) {
+    } else if (this.state.loading === false) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
             <List className={classes.root}>
-              <Typography component="h1" variant="h5">
-                Submit a Work Order
-              </Typography>
-              <Divider component="li" />
-            </List>
-            <Paper className={classNames.customPaper}>
-              <ListItem>
-                <ListItemText
-                  primary="Account has no property assigned"
-                  secondary="Cannot make maintenance requests until this is completed.  Please work with your landlord to remedy this."
+              <Paper className={classes.imgpaper2}>
+                <CardHeader
+                  title="Submit a Work Order"
+                  subheader="Account has no property assigned"
+                  className={classes.cardHeader}
+                  titleTypographyProps={{
+                    component: 'h6',
+                    variant: 'h6',
+                    color: 'inherit',
+                  }}
+                  subheaderTypographyProps={{
+                    variant: 'overline',
+                  }}
                 />
-              </ListItem>
-            </Paper>
+              </Paper>
+            </List>
           </Grid>
         </Grid>
       );
     } else {
-      return <Grid />;
+      return <Loading className={classes.loading} size={80} />;
     }
   }
 }

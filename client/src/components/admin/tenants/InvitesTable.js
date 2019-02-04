@@ -2,6 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Loading from '../../loading/Loading';
+import EmptyPage from '../../emptypage/EmptyPage';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -152,6 +154,14 @@ const styles = theme => ({
   tableWrapper: {
     overflowX: 'auto',
   },
+  loader: {
+    height: '196px',
+    alignItems: 'center',
+  },
+  emptyPage: {
+    height: '196px',
+    padding: theme.spacing.unit * 3,
+  },
 });
 
 class InvitesTable extends React.Component {
@@ -197,7 +207,7 @@ class InvitesTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes, pending } = this.props;
+    const { classes, pending, loading } = this.props;
     const { selected, rowsPerPage, page } = this.state;
 
     const emptyRows =
@@ -214,50 +224,61 @@ class InvitesTable extends React.Component {
               rowCount={pending.length}
             />
             <TableBody>
-              {pending
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => {
-                  const isSelected = this.isSelected(n.id);
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event => this.handleClick(event, n.id)}
-                      role="checkbox"
-                      aria-checked={isSelected}
-                      tabIndex={-1}
-                      key={n.id}
-                      selected={isSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} />
-                      </TableCell>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        align="justify"
-                        padding="none"
-                      >
-                        {n.email}
-                      </TableCell>
-                      <TableCell padding="dense" align="center">
-                        {n.property_name}
-                      </TableCell>
-                      <TableCell padding="dense" align="center">
-                        {n.lease_start_date}
-                      </TableCell>
-                      <TableCell padding="dense" align="center">
-                        {n.lease_end_date}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
+              {loading
+                ? null
+                : pending
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map(n => {
+                      const isSelected = this.isSelected(n.id);
+                      return (
+                        <TableRow
+                          hover
+                          onClick={event => this.handleClick(event, n.id)}
+                          role="checkbox"
+                          aria-checked={isSelected}
+                          tabIndex={-1}
+                          key={n.id}
+                          selected={isSelected}
+                        >
+                          <TableCell padding="checkbox">
+                            <Checkbox checked={isSelected} />
+                          </TableCell>
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            align="center"
+                            padding="none"
+                          >
+                            {n.email}
+                          </TableCell>
+                          <TableCell padding="dense" align="center">
+                            {n.property_name}
+                          </TableCell>
+                          <TableCell padding="dense" align="center">
+                            {n.lease_start_date}
+                          </TableCell>
+                          <TableCell padding="dense" align="center">
+                            {n.lease_end_date}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+              {emptyRows > 0 && !loading && pending.length > 0 ? (
                 <TableRow style={{ height: 49 * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
-              )}
+              ) : null}
             </TableBody>
           </Table>
+          {loading ? (
+            <Loading className={classes.loader} size={40} />
+          ) : pending.length === 0 ? (
+            <EmptyPage
+              className={classes.emptyPage}
+              variant="h4"
+              message="No Invites"
+            />
+          ) : null}
         </div>
         <TablePagination
           rowsPerPageOptions={[5]}

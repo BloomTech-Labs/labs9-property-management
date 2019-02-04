@@ -5,8 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import TextMaskCustom from '../../textmaskcustom/TextMaskCustom';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -21,7 +23,7 @@ const styles = theme => ({
     marginTop: 50,
     height: '80vh',
     width: '90%',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 3,
     [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
       width: 600,
       marginLeft: 'auto',
@@ -35,6 +37,9 @@ const styles = theme => ({
   formControl: {
     marginTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit,
+    width: '100%',
+  },
+  textMaskFormControl: {
     width: '100%',
   },
   button: {
@@ -58,8 +63,8 @@ class AddPropertyModal extends Component {
     max_occupants: 0,
     square_footage: 0,
     year_built: 2019,
-    office_ph: 0,
-    maintenance_ph: 0,
+    office_ph: '(   )    -    ',
+    maintenance_ph: '(   )    -    ',
   };
 
   handleChange = name => event => {
@@ -86,6 +91,19 @@ class AddPropertyModal extends Component {
       maintenance_ph,
     } = this.state;
 
+    if (
+      name === '' ||
+      address === '' ||
+      city === '' ||
+      state === '' ||
+      zip_code === '' ||
+      office_ph === '(   )    -    ' ||
+      maintenance_ph === '(   )    -    '
+    ) {
+      this.props.snackbarErrorHandler('Please fill out required information.');
+      return;
+    }
+
     const request = {
       property_name: name,
       address: address,
@@ -106,6 +124,7 @@ class AddPropertyModal extends Component {
       .then(response => {
         this.props.addPropertyHandler({
           house_id: response.data[0],
+          tenants: [],
           ...request,
         });
       })
@@ -118,7 +137,19 @@ class AddPropertyModal extends Component {
 
   render() {
     const { classes, open, onClose } = this.props;
-
+    const {
+      address,
+      city,
+      state,
+      zip_code,
+      bedrooms,
+      bathrooms,
+      max_occupants,
+      office_ph,
+      maintenance_ph,
+      square_footage,
+      year_built,
+    } = this.state;
     return (
       <Modal open={open} onClose={onClose}>
         <Paper className={classes.paper}>
@@ -149,34 +180,34 @@ class AddPropertyModal extends Component {
                 required
               />
             </Grid>
-            <Grid item xs={12} sm={5}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="address"
                 label="Street Address"
                 className={classes.textField}
-                value={this.state.address}
+                value={address}
                 margin="normal"
                 onChange={this.handleChange('address')}
               />
             </Grid>
-            <Grid item xs={8} sm={5}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 id="city"
                 label="City"
                 className={classes.textField}
-                value={this.state.city}
+                value={city}
                 margin="normal"
                 onChange={this.handleChange('city')}
               />
             </Grid>
-            <Grid item xs={4} sm={2}>
+            <Grid item xs={12} sm={6}>
               <FormControl className={classes.formControl} required>
                 <InputLabel htmlFor="state-native-required">State</InputLabel>
                 <Select
                   native
-                  value={this.state.state}
+                  value={state}
                   onChange={this.handleChange('state')}
                   name="State"
                   inputProps={{
@@ -191,11 +222,22 @@ class AddPropertyModal extends Component {
                 </Select>
               </FormControl>
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="zipCode"
+                label="Zip Code"
+                className={classes.textField}
+                value={zip_code}
+                margin="normal"
+                onChange={this.handleChange('zip_code')}
+              />
+            </Grid>
             <Grid item xs={6} sm={6}>
               <TextField
                 id="bedrooms"
                 label="Bedrooms"
-                value={this.state.bedrooms}
+                value={bedrooms}
                 onChange={this.handleChange('bedrooms')}
                 type="number"
                 className={classes.textField}
@@ -205,7 +247,7 @@ class AddPropertyModal extends Component {
               <TextField
                 id="bathrooms"
                 label="Bathrooms"
-                value={this.state.bathrooms}
+                value={bathrooms}
                 onChange={this.handleChange('bathrooms')}
                 type="number"
                 className={classes.textField}
@@ -215,7 +257,7 @@ class AddPropertyModal extends Component {
               <TextField
                 id="maxOccupants"
                 label="Max. Occupants"
-                value={this.state.max_occupants}
+                value={max_occupants}
                 onChange={this.handleChange('max_occupants')}
                 type="number"
                 className={classes.textField}
@@ -225,7 +267,7 @@ class AddPropertyModal extends Component {
               <TextField
                 id="squareFootage"
                 label="Square Footage"
-                value={this.state.square_footage}
+                value={square_footage}
                 onChange={this.handleChange('square_footage')}
                 type="number"
                 className={classes.textField}
@@ -235,31 +277,35 @@ class AddPropertyModal extends Component {
               <TextField
                 id="yearBuilt"
                 label="Year Built"
-                value={this.state.year_built}
+                value={year_built}
                 onChange={this.handleChange('year_built')}
                 type="number"
                 className={classes.textField}
               />
             </Grid>
             <Grid item xs={6} sm={6}>
-              <TextField
-                id="officePhone"
-                label="Office Phone"
-                value={this.state.office_ph}
-                onChange={this.handleChange('office_ph')}
-                type="number"
-                className={classes.textField}
-              />
+              <FormControl className={classes.textMaskFormControl} required>
+                <InputLabel htmlFor="officePhone">Office Phone</InputLabel>
+                <Input
+                  value={office_ph}
+                  onChange={this.handleChange('office_ph')}
+                  id="officePhone"
+                  inputComponent={TextMaskCustom}
+                />
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                id="maintenancePhone"
-                label="Maintenance Phone"
-                value={this.state.maintenance_ph}
-                onChange={this.handleChange('maintenance_ph')}
-                type="number"
-                className={classes.textField}
-              />
+              <FormControl className={classes.textMaskFormControl} required>
+                <InputLabel htmlFor="maintenancePhone">
+                  Maintenance Phone
+                </InputLabel>
+                <Input
+                  value={maintenance_ph}
+                  onChange={this.handleChange('maintenance_ph')}
+                  id="maintenancePhone"
+                  inputComponent={TextMaskCustom}
+                />
+              </FormControl>
             </Grid>
             <div
               style={{

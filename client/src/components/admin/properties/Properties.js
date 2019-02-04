@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
+import EmptyPage from '../../emptypage/EmptyPage';
+import Loading from '../../loading/Loading';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,7 +18,6 @@ import {
   Person,
   DateRange,
   CheckCircleOutline,
-  Close,
 } from '@material-ui/icons';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
@@ -25,6 +26,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import AddPropertyModal from './AddPropertyModal';
+import PropertyModal from './PropertyModal';
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -48,11 +50,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   card: {
-    width: '80%',
+    width: '90%',
     minHeight: 384,
-    [theme.breakpoints.up('sm')]: {
-      width: '90%',
-    },
     [theme.breakpoints.up('md')]: {
       width: '100%',
     },
@@ -93,19 +92,22 @@ const styles = theme => ({
   detailedView: {
     width: '100%',
   },
-  detailedViewModal: {
-    minWidth: '250px',
-    maxWidth: '90%',
-    marginTop: '10vh',
-    marginLeft: '50%',
-    transform: 'translateX(-50%)',
+  loading: {
+    marginTop: '50%',
     padding: theme.spacing.unit * 3,
-    overflowY: 'scroll',
+    [theme.breakpoints.up('sm')]: {
+      marginTop: '20%',
+    },
+  },
+  emptyPage: {
+    height: '70vh',
+    padding: theme.spacing.unit * 3,
   },
 });
 
 class Properties extends React.Component {
   state = {
+    loading: true,
     detailedViewOn: false,
     selectedPropertyId: 0,
     selectedPropertyIndex: null,
@@ -113,7 +115,7 @@ class Properties extends React.Component {
     editModalOpen: false,
     trashModalOpen: false,
     properties: [],
-    selectedProperty: {},
+    selectedProperty: null,
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
@@ -122,7 +124,7 @@ class Properties extends React.Component {
   componentDidMount() {
     if (this.props.authTokenRecieved) {
       axios.get('/api/properties/admin/alldata').then(properties => {
-        this.setState({ properties: properties.data });
+        this.setState({ properties: properties.data, loading: false });
       });
     }
   }
@@ -133,7 +135,7 @@ class Properties extends React.Component {
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
     ) {
       axios.get('/api/properties/admin/alldata').then(properties => {
-        this.setState({ properties: properties.data });
+        this.setState({ properties: properties.data, loading: false });
       });
     }
   }
@@ -228,7 +230,6 @@ class Properties extends React.Component {
       snackbarMessage: message,
       snackbarVariant: 'error',
       trashModalOpen: false,
-      addPropertyModalOpen: false,
     });
   };
 
@@ -240,6 +241,9 @@ class Properties extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { loading, properties } = this.state;
+    let pageBody = null;
+
     console.log('properties', this.state.properties);
 
     const addBtnClass = {
@@ -248,40 +252,10 @@ class Properties extends React.Component {
       justifyContent: 'center',
     };
 
-    return (
-      <Grid container className={classes.container} spacing={16}>
+    if (!loading && properties.length > 0) {
+      pageBody = (
         <Grid item xs={12}>
-          <Grid container justify="space-between" spacing={0}>
-            <Grid item xs={12} md={4}>
-              <Paper className={classes.searchbar} elevation={1}>
-                <InputBase
-                  className={classes.input}
-                  placeholder="Search by Name"
-                />
-                <IconButton className={classes.iconButton} aria-label="Search">
-                  <SearchIcon />
-                </IconButton>
-              </Paper>
-            </Grid>
-            <Hidden mdDown>
-              <Grid item xs={4} />
-            </Hidden>
-            <Grid item xs={12} md={2}>
-              <div style={addBtnClass}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={this.toggleAddProperty}
-                >
-                  Add Property
-                </Button>
-              </div>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container justify="center" spacing={16}>
+          <Grid container justify="flex-start" spacing={16}>
             {this.state.properties.map((entry, index) => (
               <Grid key={entry.house_id} item xs={12} sm={6} md={4}>
                 <div
@@ -357,7 +331,7 @@ class Properties extends React.Component {
                           <ListItemText
                             primary="Lease"
                             secondary={
-                              entry.tenants && entry.tenants.length > 0
+                              entry.tenants.length > 0
                                 ? entry.tenants.map(
                                     tenant =>
                                       tenant.lease_start_date +
@@ -400,6 +374,52 @@ class Properties extends React.Component {
             ))}
           </Grid>
         </Grid>
+      );
+    } else if (!loading && properties.length === 0) {
+      pageBody = (
+        <EmptyPage
+          className={classes.emptyPage}
+          variant="h3"
+          message="Please add a property."
+        />
+      );
+    } else {
+      pageBody = <Loading className={classes.loading} size={80} />;
+    }
+
+    return (
+      <Grid container className={classes.container} spacing={16}>
+        <Grid item xs={12}>
+          <Grid container justify="space-between" spacing={0}>
+            <Grid item xs={12} md={4}>
+              <Paper className={classes.searchbar} elevation={1}>
+                <InputBase
+                  className={classes.input}
+                  placeholder="Search by Name"
+                />
+                <IconButton className={classes.iconButton} aria-label="Search">
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </Grid>
+            <Hidden mdDown>
+              <Grid item xs={4} />
+            </Hidden>
+            <Grid item xs={12} md={2}>
+              <div style={addBtnClass}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={this.toggleAddProperty}
+                >
+                  Add Property
+                </Button>
+              </div>
+            </Grid>
+          </Grid>
+        </Grid>
+        {pageBody}
         <AddPropertyModal
           open={this.state.addPropertyModalOpen}
           onClose={this.toggleAddProperty}
@@ -445,51 +465,11 @@ class Properties extends React.Component {
             </DialogActions>
           </Dialog>
         </Modal>
-        <Modal
+        <PropertyModal
           open={this.state.detailedViewOn}
           onClose={this.closeDetailedView}
-        >
-          <Paper className={classes.detailedViewModal}>
-            <Grid item xs={12}>
-              <Tooltip title="Close">
-                <IconButton onClick={this.closeDetailedView}>
-                  <Close />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h6" align="center" variant="h4">
-                {this.state.selectedProperty.property_name}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <List>
-                <ListItem>
-                  <ListItemText primary="Address" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Bedrooms" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Bathrooms" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Square Footage" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Year Built" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Office Phone:" />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary="Maintanence Phone:" />
-                </ListItem>
-              </List>
-            </Grid>
-            <Grid item xs={6} />
-          </Paper>
-        </Modal>
+          property={this.state.selectedProperty}
+        />
         <CustomSnackbar
           open={this.state.openSnackbar}
           variant={this.state.snackbarVariant}
@@ -512,73 +492,3 @@ Properties.propTypes = {
 };
 
 export default PropertiesPage;
-
-/*
-
-        <Hidden mdDown>
-          <Grid
-            item
-            xs={8}
-            className={this.state.detailedViewOn ? '' : classes.displayNone}
-          >
-            <Grid container>
-              <Paper className={classes.detailedView}>
-                <Grid item xs={12}>
-                  <Tooltip title="Close">
-                    <IconButton onClick={this.closeDetailedView}>
-                      <Close />
-                    </IconButton>
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography component="h6" align="center" variant="h4">
-                    {this.state.selectedProperty.property_name}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <List>
-                    <ListItem>
-                      <ListItemText primary="Address" />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText primary="Bedrooms" />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText primary="Bathrooms" />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText primary="Square Footage" />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText primary="Year Built" />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText primary="Office Phone:" />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText primary="Maintanence Phone:" />
-                    </ListItem>
-                  </List>
-                </Grid>
-                <Grid item xs={6}>
-                  <List>
-                    {this.state.selectedProperty.tenants.length > 0
-                      ? this.state.selectedProperty.tenants.map(
-                          (tenant, index) => (
-                            <ListItem key={index}>
-                              <ListItemText
-                                primary="Tenant:"
-                                secondary={tenant.display_name}
-                              />
-                            </ListItem>
-                          )
-                        )
-                      : null}
-                  </List>
-                </Grid>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Hidden>
-
-*/
