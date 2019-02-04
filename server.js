@@ -7,12 +7,7 @@ var twilio = require('twilio');
 const dotenv = require('dotenv');
 dotenv.load();
 
-//====TWILIO CODE==============================
-var accountSid = process.env.twilio_accountSid; // Your Account SID from www.twilio.com/console
-var authToken = process.env.twilio_authToken; // Your Account token from www.twilio.com/console
 
-var twilio = require('twilio');
-var client = new twilio(accountSid, authToken);
 
 server.use(express.json());
 server.use(cors());
@@ -53,6 +48,7 @@ server.use(async (req, res) => {
       .auth()
       .verifyIdToken(idToken)
       .then(decodedToken => {
+        console.log('token',decodedToken);
         req.body.uid = decodedToken.uid;
         return req.next();
       });
@@ -84,9 +80,16 @@ server.use('/api/stripe-connect', stripeConnectRoutes);
 server.get('/', (req, res) => {
   res.send('API Running...');
 });
-//======TWILO TEXT CODE============
+
+//====TWILIO CODE==============================
+var accountSid = process.env.twilio_accountSid; // Your Account SID from www.twilio.com/console
+var authToken = process.env.twilio_authToken; // Your Account token from www.twilio.com/console
+
+var twilio = require('twilio');
+var client = new twilio(accountSid, authToken);
+
 server.get('/text', (req, res) => {
-  const { receiver, text } = req.query;
+
   //sends the texts to number
   client.messages
     .create({
