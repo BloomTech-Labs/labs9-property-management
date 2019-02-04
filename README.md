@@ -74,7 +74,7 @@ FIREBASE_CLIENT_X509_CERT_URL=
 ### Stripe Account
 - Sign up for a Stripe Account
 - Go to the `Connect` menu link in your Stripe dashboard then click the get started button
-- Copy and paste your test mode client ID into your `.env` file in the root directory of your project
+- Copy and paste your test `client ID` into your `.env` file in the root directory of your project
 ```
 STRIPE_CLIENT_ID=YOUR_STRIPE_CLIENT_ID
 ```
