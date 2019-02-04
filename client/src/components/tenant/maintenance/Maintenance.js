@@ -18,6 +18,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FileUploader from '../../admin/workorders/FileUploader';
 import Paper from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
+import CustomSnackbar from '../../snackbar/CustomSnackbar';
 
 const styles = theme => ({
   container: {
@@ -119,6 +120,9 @@ class Maintenance extends React.Component {
     houseID: '',
     tenantID: '',
     loading: true,
+    openSnackbar: false,
+    snackbarMessage: '',
+    snackbarVariant: '',
   };
 
   componentDidMount() {
@@ -189,10 +193,19 @@ class Maintenance extends React.Component {
       })
       .then(res => {
         console.log('register response: ', res);
-        this.props.history.push('/tenant');
+        this.setState({
+          openSnackbar: true,
+          snackbarMessage: 'Work Order Submitted!',
+          snackbarVariant: 'success',
+        });
       })
       .catch(error => {
         console.error('Axios response: ', error);
+        this.setState({
+          openSnackbar: true,
+          snackbarMessage: 'Error submitting. Please try again.',
+          snackbarVariant: 'error',
+        });
       });
   };
 
@@ -216,6 +229,12 @@ class Maintenance extends React.Component {
       arr.splice(3, 0, '-');
       return arr.join('');
     } else return '800-888-8888';
+  };
+
+  snackbarClose = () => {
+    this.setState({
+      openSnackbar: false,
+    });
   };
 
   render() {
@@ -321,6 +340,13 @@ class Maintenance extends React.Component {
               </Grid>
             </form>
           </Grid>
+          <CustomSnackbar
+            open={this.state.openSnackbar}
+            variant={this.state.snackbarVariant}
+            message={this.state.snackbarMessage}
+            onClose={this.snackbarClose}
+            onClick={this.snackbarClose}
+          />
         </Grid>
       );
     } else {
