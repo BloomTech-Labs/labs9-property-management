@@ -72,6 +72,22 @@ FIREBASE_CLIENT_X509_CERT_URL=
 ```
 
 ### Stripe Account
+- Sign up for a Stripe Account
+- Go to the `Connect` menu link in your Stripe dashboard then click the get started button
+- Copy and paste your test `client ID` into your `.env` file in the root directory of your project
+```
+STRIPE_CLIENT_ID=YOUR_STRIPE_CLIENT_ID
+```
+- Go back to your Stripe dashboard and click the `Developers` menu link then click `API Keys`
+- Copy the test `publishable key` and replace the publishable key located in the render function of `Payments.js`
+```
+const publishableKey = 'your publishable key';
+```
+- Copy and paste your test `secret key` into your `.env` file in the root directory of your project
+```
+STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET_KEY
+```
+
 ### Twilio Account
 ## Running The App Locally
 - Clone or Fork the repository
@@ -144,4 +160,8 @@ Returns all of an owner's properties along with their tenants
 ## Third-Party API
 ### Firebase Auth
 ### Stripe
+
+A powerful, simple, and seamless payment commerce solution | [View Dependency](https://stripe.com/docs)
+
+
 ### Twilio
