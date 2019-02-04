@@ -86,7 +86,7 @@ FIREBASE_CLIENT_X509_CERT_URL=
 ### React
 ### React Router
 ### Material-UI
-Material-UI is a component library that follow's Google's Material Design standard. We decided to use this library as opposed to a library like Bootstrap because Material-UI offers sleeker styling and a wide range of ready to use components.
+Material-UI is a component library that follow's Google's Material Design standard. We decided to use this library as opposed to a library like Bootstrap because Material-UI offers sleeker styling and a wide range of ready to use components. | [View Dependency](https://github.com/mui-org/material-ui)
 
 ### Styled Components
 Styled Components is used in parts of the app such as the landing/marketing pages. This CSS-in-JS solution allows us to avoid handling multiple stylesheets and abstract the CSS to the component level. [View Dependency](https://github.com/styled-components/styled-components)
