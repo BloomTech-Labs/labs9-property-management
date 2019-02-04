@@ -76,6 +76,25 @@ router.get('/owner', (req, res) => {
     .catch(error => res.status(500).json(error));
 });
 
+// update the status of a work order
+router.put('/update', (req, res) => {
+  const { work_order_id, work_order_status } = req.body;
+  const status = { work_order_status: work_order_status };
+  db('work_orders as w')
+    .where('w.work_order_id', work_order_id)
+    .update(status)
+    .then(order => {
+      if (!order) {
+        res.status(401).json({ message: 'Work order does not exist' });
+        return;
+      } else res.status(200).json(order);
+    })
+    .catch(err => {
+      console.log('Error: ', err);
+      res.status(500).json(err);
+    });
+});
+
 // Retrieve all workorders for a given owner organized by property
 router.get('/:id/workOrdersByProp', (req, res) => {
   const { id } = req.params;
