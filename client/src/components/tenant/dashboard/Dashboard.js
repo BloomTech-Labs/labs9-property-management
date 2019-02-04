@@ -151,7 +151,7 @@ class Dashboard extends Component {
             }));
           }
         })
-        .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err));
+        .catch(err => console.log('ERROR GETTING TENANT INFO', err));
     }
   }
 
@@ -177,7 +177,7 @@ class Dashboard extends Component {
             }));
           }
         })
-        .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err));
+        .catch(err => console.log('ERROR GETTING TENANT INFO', err));
     }
   }
 
@@ -206,7 +206,7 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props;
-    let tenantDetails;
+    // let tenantDetails;
 
     // ======= renders tenant information if the tenant was assign to a property
     if (this.state.address) {
@@ -302,8 +302,8 @@ class Dashboard extends Component {
                   )}
                 >
                   <CardHeader
-                    title="Property information"
-                    subheader="You are assign to this property"
+                    title="Property Information"
+                    // subheader="You are assigned to this property"
                     className={classes.cardHeader}
                     titleTypographyProps={{
                       component: 'h6',
@@ -337,7 +337,7 @@ class Dashboard extends Component {
                     </Avatar>
                     <ListItemText
                       primary="Office:"
-                      secondary={this.phoneConverter(this.state.office_phone)}
+                      secondary={this.state.office_phone}
                     />
                   </ListItem>
                   <ListItem>
@@ -355,9 +355,7 @@ class Dashboard extends Component {
                     </Avatar>
                     <ListItemText
                       primary="24/7 Maintenance:"
-                      secondary={this.phoneConverter(
-                        this.state.maintenance_phone
-                      )}
+                      secondary={this.state.maintenance_phone}
                     />
                   </ListItem>
                 </Paper>

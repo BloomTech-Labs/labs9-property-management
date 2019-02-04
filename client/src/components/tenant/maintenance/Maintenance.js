@@ -258,7 +258,7 @@ class Maintenance extends React.Component {
                   {/* <Grid item xs={12} md={5}> */}
                   <CardHeader
                     title="Submit a Work Order"
-                    subheader="Fill out the form"
+                    subheader="Please add a description of the issue"
                     className={classes.cardHeader}
                     titleTypographyProps={{
                       component: 'h6',
@@ -275,7 +275,7 @@ class Maintenance extends React.Component {
                     </Avatar>
                     <ListItemText
                       primary="24/7 Maintenance"
-                      secondary={this.phoneConverter(this.state.maintenanceNum)}
+                      secondary={this.state.maintenanceNum}
                     />
                   </ListItem>
                   <ListItemText
