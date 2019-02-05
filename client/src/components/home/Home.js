@@ -17,18 +17,15 @@ import {
   HeroGroupH3,
   HeroP2,
 } from './HomeStyles';
-import { Build, Payment } from '@material-ui/icons';
+import { Build } from '@material-ui/icons';
 import House from '@material-ui/icons/Home';
 import Users from '@material-ui/icons/People';
 import appshot from '../../images/app-shot.svg';
-import appshotmidfi from '../../images/app-shot-mid-fi.svg';
-import updatedappshot from '../../images/updateAppshot.svg';
 import { GlobalStyle } from '../../styles/Styles';
 
 class Home extends Component {
   render() {
     const role = this.props.authUserRole;
-    const classes = this.props;
 
     if (this.props.authUser && role === 'owner') {
       return <Redirect to="/admin" />;

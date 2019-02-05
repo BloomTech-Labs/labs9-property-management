@@ -148,7 +148,7 @@ class WorkOrders extends Component {
   };
 
   sendAlert = () => {
-    axios('http://property-management-dev.herokuapp.com/text').catch(err =>
+    axios('https://property-management-dev.herokuapp.com/text').catch(err =>
       console.error(err)
     );
   };

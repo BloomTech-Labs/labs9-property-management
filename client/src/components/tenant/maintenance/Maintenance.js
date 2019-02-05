@@ -357,7 +357,7 @@ class Maintenance extends React.Component {
           />
         </Grid>
       );
-    } else if (this.state.loading === false) {
+    } else if (this.state.loading === true) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>

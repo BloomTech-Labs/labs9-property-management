@@ -5,9 +5,10 @@ import {InsertPhoto} from "@material-ui/icons";
 import Transloadit from '@uppy/transloadit';
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import './FileUploader.css'
+
 const Uppy = require('@uppy/core')
 const GoogleDrive = require('@uppy/google-drive')
 const Dropbox = require('@uppy/dropbox')

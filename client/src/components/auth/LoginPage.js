@@ -5,12 +5,6 @@ import { compose } from 'recompose';
 import { withFirebase } from '../firebase';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-/*
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel"; */
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {
