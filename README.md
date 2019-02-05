@@ -109,7 +109,7 @@ server.get('/text', (req, res) => {
       from: '+Your Twilio Number', 
     })
 ```
-- After all previous steps are completed, try sending a text using the submit button in        WorkOrders.js
+- After all previous steps are completed, try sending a text using the submit button in        WorkOrders.js after a work order is created.
 ## Running The App Locally
 - Clone or Fork the repository
 - Run `yarn install` in the root directory to install server dependencies
@@ -258,3 +258,12 @@ A powerful, simple, and seamless payment commerce solution | [View Dependency](h
 
 ### Twilio
 Twilio's programmable SMS enables our app to send text alerts to the users that agree to recieve them.
+
+### Uppy
+"Uppy is a sleek and modular file uploader. It fetches files from local disk, Google Drive, Instagram, remote urls, cameras etc, and then uploads them to the final destination. It’s fast, easy to use and lets you worry about more important problems than building a file uploader."(https://uppy.io/docs/)
+
+### Transloadit
+The API we decided to use for processing uploaded images, Transloadit (https://transloadit.com/docs/) will give each image a url and store them in our Google Cloud.
+
+### Google Cloud Storage
+Photos uploaded by users are being stored in our Google Cloud bucket.(https://cloud.google.com/storage/docs/)
