@@ -76,6 +76,26 @@ router.get('/owner', (req, res) => {
     .catch(error => res.status(500).json(error));
 });
 
+// Returns all work orders for the tenant maintenance view
+router.get('/maintenance', (req, res) => {
+  const { uid } = req.body;
+
+  db('work_orders as w')
+    .join('tenants as t', 't.tenant_id', 'w.tenant_id')
+    .where('t.tenant_uid', uid)
+    .join('house_properties as h', 'h.house_id', 'w.house_id')
+    .select(
+      'w.work_order_id',
+      'w.description',
+      'w.work_order_status',
+      'h.property_name'
+    )
+    .then(orders => {
+      res.status(200).json({ orders });
+    })
+    .catch(error => res.status(500).json(error));
+});
+
 // update the status of a work order
 router.put('/update', (req, res) => {
   const { work_order_id, work_order_status } = req.body;
