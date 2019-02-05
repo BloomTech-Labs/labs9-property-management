@@ -231,6 +231,8 @@ router.post('/example-path', (req, res) => {
 ```
 ### Endpoints
 
+#### Users Endpoints
+
 **GET** `/api/users/verifyregistration`
 
 Upon logging in, the client sends a request to this path. This endpoint checks if the user is already registered in the database and returns their `role` which could be `'admin'`, `'tenant'` or `null`.
@@ -239,6 +241,8 @@ If the user doesn't exist, a `role` of `null` is returned so the client can redi
 **POST** `/api/users/register`
 
 Called when a user submits their chosen account type in the account setup page. This endpoint inserts a user's Firebase UID and chosen account type (`role`) into the database.
+
+#### Owners Endpoints
 
 **POST** `/api/properties`
 
@@ -251,6 +255,24 @@ Returns all the properties that an owner owns
 **GET** `/api/properites/admin/alldata`
 
 Returns all of an owner's properties along with their tenants
+
+#### Tenants Endpoints
+
+**GET** `/api/tenants/dashboard`
+
+Returns the property data assigned to a tenant.
+
+**GET** `/api/tenants/maintenanceView`
+
+Returns tenant info for Tenant Maintenance View component.
+
+**GET** `/api/work-orders/maintenance`
+
+Returns all work orders submitted by a tenant.
+
+**POST** `/api/work-orders`
+
+Called by tenants to submit a work order.
 
 ## Third-Party API
 ### Firebase Auth
