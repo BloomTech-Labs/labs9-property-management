@@ -147,7 +147,7 @@ Bluebird is a fully feature promise library with focus on innovative features an
 
 See example:
 
-owner = {
+```owner = {
   "property_name":"Lambda House",
   "address": "123 Lambda Street",
   "tenants": [
@@ -175,6 +175,7 @@ owner = {
     ]
   }
 }
+```
 
 # API Documentation
 ## Back-End API
