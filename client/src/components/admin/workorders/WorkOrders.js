@@ -388,7 +388,7 @@ class WorkOrders extends Component {
             open={this.state.imageModalOpen}
             onClose={this.closeImageModal}
           >
-            <img style={imageClass} src={this.state.img_src} />
+            <img style={imageClass} src={this.state.img_src} alt="" />
           </Modal>
         </>
       );
