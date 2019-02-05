@@ -124,7 +124,11 @@ server.get('/text', (req, res) => {
 # Tech-Stack
 ## Front-End
 ### React
+React is a javaScript library for building user interfaces. React's most important advances are the emphasis on components, one-way data flow, the Virtual DOM, JSX, and architecture that extends beyond HTML. React's simplicity lies in that it makes it easy to declare user-interfaces in self-contained independent components. [View Dependency](https://reactjs.org/)
+
 ### React Router
+React Router is the standard routing library for React. From the docs: “React Router keeps your UI in sync with the URL. It has a simple API with powerful features like lazy code loading, dynamic route matching, and location transition handling built right in. [View Dependency](https://reacttraining.com/react-router/web/guides/quick-start)
+
 ### Material-UI
 Material-UI is a component library that follow's Google's Material Design standard. We decided to use this library as opposed to a library like Bootstrap because Material-UI offers sleeker styling and a wide range of ready to use components.
 
