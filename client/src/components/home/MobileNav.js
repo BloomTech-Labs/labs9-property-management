@@ -92,7 +92,7 @@ class MobileNav extends React.Component {
               onClick={() => this.props.handleMenuToggle()}
               to="/signup"
             >
-              Signup
+              Sign Up
             </MobileLink>
           </MobileNavGroup>
         </PageLinkContainer>
