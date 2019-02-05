@@ -163,7 +163,10 @@ The drawbacks of using Node+Express is that due to the flexibility and control i
 [View Dependency](https://expressjs.com/)
 
 ### Knex
+Knex can be used as an SQL query builder in Node.JS. Knex provides schema building features to create and modify a database and tables.
+A database migration describes changes made to the structure of a database. Things like adding new tables, modifying existing ones or removing a column from a table are all migrations.
 
+We used Knex to build our database schema. | [View Dependency](https://knexjs.org/)
 
 ### Cors
 Third party middleware to make it easy to configure CORS in a Node.js application. | [View Dependency](https://www.npmjs.com/package/cors)
