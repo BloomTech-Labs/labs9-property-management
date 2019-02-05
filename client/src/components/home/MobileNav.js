@@ -1,7 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
+const LinkAnimation = keyframes`
+0% {
+  opacity: 0;
+  transform: translateY(5px);
+}
+100% {
+  opacity: 1;
+  transform: translateY(0px);
+}
+`;
 const MobileNavContainer = styled.div`
   height: 100vh;
   width: 100vw;
@@ -36,6 +46,12 @@ const MobileLink = styled(Link)`
   cursor: pointer;
   font-size: ${props => (props.close ? '2.4rem' : '3.6rem')};
   color: rgba(22, 23, 26, 1);
+  opacity: 0;
+  animation: ${LinkAnimation};
+  animation-duration: 2s;
+  animation-delay: 0.01s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 `;
 const CloseNav = styled.span`
   background: none;
