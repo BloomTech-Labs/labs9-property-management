@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-const HeroAnimation = keyframes`
+export const HeroAnimation = keyframes`
 0% {
   opacity: 0;
   transform: translateY(5px);

@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Nav from '../Nav';
 import Footer from '../Footer';
-import { Hero, HeroGroup, HeroGroupH1, HeroP } from '../HomeStyles';
+import {
+  Hero,
+  HeroGroup,
+  HeroGroupH1,
+  HeroP,
+  HeroAnimation,
+} from '../HomeStyles';
 import { GlobalStyle } from '../../../styles/Styles';
 import { Check } from '@material-ui/icons';
 
@@ -19,6 +25,12 @@ const PricingCardContainer = styled.div`
   justify-content: center;
   padding-bottom: 48px;
   padding-top: 32px;
+  opacity: 0;
+  animation: ${HeroAnimation};
+  animation-duration: 2s;
+  animation-delay: 0.01s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   @media (max-width: 680px) {
     flex-direction: ${props => (props.mobile ? 'column' : 'row')};
     align-items: center;
