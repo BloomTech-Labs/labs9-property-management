@@ -102,6 +102,12 @@ export const AppImage = styled.img`
   max-width: 100%;
   width: 704px;
   padding: 0 24px 76px 24px;
+  opacity: 0;
+  animation: ${HeroAnimation};
+  animation-duration: 2s;
+  animation-delay: 0.01s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   @media (max-width: 600px) {
     padding: 0px 24px 100px 24px;
   }
