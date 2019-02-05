@@ -12,11 +12,15 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
+    marginTop: 5,
+    marginBottom: 25,
+    paddingLeft: 10,
+    paddingRight: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: theme.palette.background.paper,
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
-    marginLeft: 0,
-    marginRight: 20,
   },
   customWidth: {
     width: '15%',
