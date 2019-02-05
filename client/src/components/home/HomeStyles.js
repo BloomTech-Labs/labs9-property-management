@@ -111,20 +111,21 @@ export const InfoSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 90px 0;
+  padding: 32px 0 48px 0;
 `;
 
 export const IconContainer = styled.div`
   font-size: 60px;
-  padding: 0 20px;
+  padding: 0 30px 30px 30px;
   display: flex;
   justify-content: start;
   align-items: center;
   flex-direction: column;
-  width: 320px;
+  width: 300px;
   color: #5f29ff;
   flex-wrap: wrap;
-  text-align: justify;
+  text-align: left;
+  max-width: 960px;
   @media (max-width: 900px) {
     margin-bottom: 40px;
   }
@@ -133,7 +134,6 @@ export const IconContainer = styled.div`
 export const IconGroup = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 100%;
   text-align: top;
   @media (max-width: 900px) {
     display: flex;
