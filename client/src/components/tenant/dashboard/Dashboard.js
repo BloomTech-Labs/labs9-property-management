@@ -23,6 +23,7 @@ import {
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
+import CustomSnackbar from '../../snackbar/CustomSnackbar';
 
 const styles = theme => ({
   container: {
@@ -130,28 +131,53 @@ class Dashboard extends Component {
     office_phone: '',
     maintenance_phone: '',
     owner_email: '',
+    invitation: [],
+    gotInvitation: true,
+    openSnackbar: false,
+    snackbarMessage: '',
+    snackbarVariant: '',
   };
 
   componentDidMount() {
     if (this.props.authTokenRecieved) {
-      const endpoint = 'api/tenants/dashboard/';
-      axios
-        .get(endpoint)
-        .then(response => {
-          if (response.data.length > 0) {
-            console.log('This is the response: ', response);
-            this.setState(() => ({
-              address: response.data[0].address,
-              city: response.data[0].city,
-              state: response.data[0].state,
-              zip_code: response.data[0].zip_code,
-              office_phone: response.data[0].office_ph,
-              maintenance_phone: response.data[0].maintenance_ph,
-              owner_email: response.data[0].email,
-            }));
-          }
-        })
-        .catch(err => console.log('ERROR GETTING TENANT INFO', err));
+      if (this.state.gotInvitation) {
+        const inviteEndpoint = 'api/invitations/tenant';
+        axios
+          .get(inviteEndpoint)
+          .then(response => {
+            if (response.data.length > 0) {
+              // console.log(response);
+              this.setState({
+                invitation: response.data,
+                gotInvitation: false,
+                openSnackbar: !response.openSnackbar,
+                snackbarMessage: 'You received an invitation!',
+                snackbarVariant: 'information',
+              });
+            }
+          })
+          .catch(error => console.log(error));
+      }
+      if (this.state.invitation.length === 0) {
+        const endpoint = 'api/tenants/dashboard/';
+        axios
+          .get(endpoint)
+          .then(response => {
+            if (response.data.length > 0) {
+              // console.log('This is the response: ', response);
+              this.setState(() => ({
+                address: response.data[0].address,
+                city: response.data[0].city,
+                state: response.data[0].state,
+                zip_code: response.data[0].zip_code,
+                office_phone: response.data[0].office_ph,
+                maintenance_phone: response.data[0].maintenance_ph,
+                owner_email: response.data[0].email,
+              }));
+            }
+          })
+          .catch(err => console.log('ERROR GETTING TENANT INFO', err));
+      }
     }
   }
 
@@ -160,24 +186,46 @@ class Dashboard extends Component {
       this.props.authTokenRecieved &&
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
     ) {
-      const endpoint = 'api/tenants/dashboard/';
-      axios
-        .get(endpoint)
-        .then(response => {
-          if (response.data.length > 0) {
-            console.log('This is the response: ', response);
-            this.setState(() => ({
-              address: response.data[0].address,
-              city: response.data[0].city,
-              state: response.data[0].state,
-              zip_code: response.data[0].zip_code,
-              office_phone: response.data[0].office_ph,
-              maintenance_phone: response.data[0].maintenance_ph,
-              owner_email: response.data[0].email,
-            }));
-          }
-        })
-        .catch(err => console.log('ERROR GETTING TENANT INFO', err));
+      if (this.state.gotInvitation) {
+        const inviteEndpoint = 'api/invitations/tenant';
+        axios
+          .get(inviteEndpoint)
+          .then(response => {
+            if (response.data.length > 0) {
+              // console.log(response);
+              this.setState({
+                invitation: response.data,
+                gotInvitation: false,
+                gotInvitation: false,
+                openSnackbar: !response.openSnackbar,
+                snackbarMessage:
+                  'You receive an invitation! Check your settings!',
+                snackbarVariant: 'information',
+              });
+            }
+          })
+          .catch(error => console.log(error));
+      }
+      if (this.state.invitation.length === 0) {
+        const endpoint = 'api/tenants/dashboard/';
+        axios
+          .get(endpoint)
+          .then(response => {
+            if (response.data.length > 0) {
+              // console.log('This is the response: ', response);
+              this.setState(() => ({
+                address: response.data[0].address,
+                city: response.data[0].city,
+                state: response.data[0].state,
+                zip_code: response.data[0].zip_code,
+                office_phone: response.data[0].office_ph,
+                maintenance_phone: response.data[0].maintenance_ph,
+                owner_email: response.data[0].email,
+              }));
+            }
+          })
+          .catch(err => console.log('ERROR GETTING TENANT INFO', err));
+      }
     }
   }
 
@@ -202,6 +250,20 @@ class Dashboard extends Component {
       arr.splice(3, 0, '-');
       return arr.join('');
     } else return '800-888-8888';
+  };
+
+  toggleSnackbarError = message => {
+    this.setState({
+      openSnackbar: true,
+      snackbarMessage: message,
+      snackbarVariant: 'error',
+    });
+  };
+
+  snackbarClose = () => {
+    this.setState({
+      openSnackbar: false,
+    });
   };
 
   render() {
@@ -386,6 +448,13 @@ class Dashboard extends Component {
               </Paper>
             </List>
           </Grid>
+          <CustomSnackbar
+            open={this.state.openSnackbar}
+            variant={this.state.snackbarVariant}
+            message={this.state.snackbarMessage}
+            onClose={this.snackbarClose}
+            onClick={this.snackbarClose}
+          />
         </Grid>
       );
     }
