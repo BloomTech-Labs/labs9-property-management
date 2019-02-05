@@ -87,46 +87,46 @@ class Pricing extends Component {
                 Free
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Unlimited queries
-              </PricingTextLine>
-              <PricingTextLine className="planLineItem">
-                <CheckMark /> No scheduled reports for email
+                <CheckMark /> Up to 50 tenants
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
                 <CheckMark /> Up to 10 properties
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
                 <CheckMark /> SMS maintenance alerts
+              </PricingTextLine>
+              <PricingTextLine className="planLineItem">
+                <CheckMark /> Accept rent payments
+              </PricingTextLine>
+              <PricingTextLine className="planLineItem">
+                <CheckMark /> Live chat support
               </PricingTextLine>
             </PricingCard>
             <PricingCard>
               <PricingTextLine className="planName">Growth</PricingTextLine>
               <PricingTextLine className="planNameSubText">
-                $10 / admin / month
+                $39.99 / admin / month
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Unlimited queries
+                <CheckMark /> Unlimited tenants
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> No scheduled reports for email
+                <CheckMark /> Unlimited properties
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Up to 10 properties
+                <CheckMark /> Unlimited SMS maintenance alerts
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> SMS maintenance alerts
+                <CheckMark /> Accept rent payments
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Some more info here
+                <CheckMark /> Rent payment reminders
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Another great free feature
+                <CheckMark /> 24/7 Live chat support
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> SMS maintenance alerts
-              </PricingTextLine>
-              <PricingTextLine className="planLineItem">
-                <CheckMark /> Some more info here
+                <CheckMark /> 24/7 Phone support
               </PricingTextLine>
             </PricingCard>
           </PricingCardContainer>
