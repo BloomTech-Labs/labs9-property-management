@@ -3,7 +3,7 @@ import axios from 'axios';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
 import PropTypes from 'prop-types';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Call from '@material-ui/icons/Call';
@@ -20,6 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
 import CustomSnackbar from '../../snackbar/CustomSnackbar';
 import Loading from '../../loading/Loading';
+import MaintenanceTable from './MaintenanceTable';
 
 const styles = theme => ({
   container: {
@@ -131,6 +132,7 @@ class Maintenance extends React.Component {
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
+    orders: [],
   };
 
   componentDidMount() {
@@ -149,6 +151,14 @@ class Maintenance extends React.Component {
             houseID: response.data[0].house_id,
             tenantID: response.data[0].tenant_id,
             loading: false,
+          }));
+        }
+        return axios.get('api/work-orders/maintenance');
+      })
+      .then(response => {
+        if (response.data.orders.length > 0) {
+          this.setState(() => ({
+            orders: response.data.orders,
           }));
         }
       })
@@ -179,6 +189,14 @@ class Maintenance extends React.Component {
               loading: false,
             }));
           }
+          return axios.get('api/work-orders/maintenance');
+        })
+        .then(response => {
+          if (response.data.orders.length > 0) {
+            this.setState(() => ({
+              orders: response.data.orders,
+            }));
+          }
         })
         .catch(err => console.log('ERROR CHECKING USER STRIPE ID', err));
     }
@@ -189,7 +207,6 @@ class Maintenance extends React.Component {
   submitWorkOrder = event => {
     event.preventDefault();
 
-    console.log('this.state.photo.original', this.state.photo.original);
     axios
       .post('/api/work-orders/', {
         description: this.state.description,
@@ -205,6 +222,7 @@ class Maintenance extends React.Component {
           openSnackbar: true,
           snackbarMessage: 'Work Order Submitted!',
           snackbarVariant: 'success',
+          description: '',
         });
       })
       .catch(error => {
@@ -213,6 +231,7 @@ class Maintenance extends React.Component {
           openSnackbar: true,
           snackbarMessage: 'Error submitting. Please try again.',
           snackbarVariant: 'error',
+          description: '',
         });
       });
   };
@@ -252,6 +271,9 @@ class Maintenance extends React.Component {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
+            <Grid item xs={12} md={12}>
+              <MaintenanceTable orders={this.state.orders} />
+            </Grid>
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
                 <Paper className={classes.imgpaper}>
