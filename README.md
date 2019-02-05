@@ -135,7 +135,32 @@ Nesting HOCs into each other can become verbose. Recompose gives us a clean way 
 
 ## Back-End
 ### Node.js
+Node offers a lot of advantages such as:
+* JavaScript on the server: use the same programming language and paradigm for both client and server. This minimizes context switching and makes it easy to share code between the client and the server.
+* single threaded: removes the complexity involved in handling multiple threads.
+* asynchronous: can take full advantage of the processor it’s running on. This matters because the node process will be running on a single CPU.
+* npm repository: access the the largest ecosystem of useful libraries (most of them free to use) in the form of npm modules.
+
+Also, Node allows for data interchange in `JSON (JavaScript Object Notation)` format between the client and the server.
+
 ### Express
+Express is a web application framework that sits on top of Node.js web server. We chose Express because it offers:
+* Simplicity
+* Flexibility
+* Scalability
+* It is intuitive
+
+Express main features are:
+* Middleware:
+When sending a request, you can use `middleware functions` to verify the request before getting the response. After using a middleware on a response, it can allow the response to return or call the next middleware.
+
+* Routing:
+Using routes is a way to break the application into smaller components (similar to React). Each route can have its own middleware. Having different routes also allows a team of many people to work on different endpoints at the same time.
+
+The drawbacks of using Node+Express is that due to the flexibility and control it provides, we needed to make more decisions in regards to the Backend architecture. It also offers very little out of the box compared to other frameworks. You also need to do all the error handlings yourself.
+
+[View Dependency](https://expressjs.com/)
+
 ### Knex
 ### Helmet
 ### Morgan
