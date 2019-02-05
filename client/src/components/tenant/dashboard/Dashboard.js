@@ -146,7 +146,6 @@ class Dashboard extends Component {
           .get(inviteEndpoint)
           .then(response => {
             if (response.data.length > 0) {
-              // console.log(response);
               this.setState({
                 invitation: response.data,
                 gotInvitation: false,
@@ -164,7 +163,6 @@ class Dashboard extends Component {
           .get(endpoint)
           .then(response => {
             if (response.data.length > 0) {
-              // console.log('This is the response: ', response);
               this.setState(() => ({
                 address: response.data[0].address,
                 city: response.data[0].city,
@@ -192,10 +190,8 @@ class Dashboard extends Component {
           .get(inviteEndpoint)
           .then(response => {
             if (response.data.length > 0) {
-              // console.log(response);
               this.setState({
                 invitation: response.data,
-                gotInvitation: false,
                 gotInvitation: false,
                 openSnackbar: !response.openSnackbar,
                 snackbarMessage:
@@ -212,7 +208,6 @@ class Dashboard extends Component {
           .get(endpoint)
           .then(response => {
             if (response.data.length > 0) {
-              // console.log('This is the response: ', response);
               this.setState(() => ({
                 address: response.data[0].address,
                 city: response.data[0].city,
