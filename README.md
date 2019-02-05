@@ -34,6 +34,7 @@ Welcome to our Property Management Application.
         - [Endpoints](#endpoints)
     - [Third-Party APIs](#third-party-apis)
         - [Stripe](#stripe)
+        - [Twilio](#twilio)
 
 # Getting Started
 ## What You Need
@@ -89,6 +90,25 @@ STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET_KEY
 ```
 
 ### Twilio Account
+- Sign up for a twilio account at (https://www.twilio.com/console)
+- Once the account is made, navigate to the settings on your Twilio console and copy the        ACCOUNT SID and AUTH TOKEN given in the API Credentials section.
+-  In your .env file, create your enviroment variables
+    ```  
+    twilio_accountSid=your Sid
+    twilio_authToken=your Token
+    ```
+- Once the credentials are in place make your way to the bottom of the server.js file to       find the Twilio endpoint.
+- Here you will enter your .env variables, the recieving number that must be verified with     Twilio (https://www.twilio.com/console/phone-numbers/verified), the message, and the         Twilio number given to you in the Twilio console, on the Dashboard.
+```
+server.get('/text', (req, res) => {
+  client.messages
+    .create({
+      body: 'The message that will be sent to the user',
+      to: '+Number Recieving Text',
+      from: '+Your Twilio Number', 
+    })
+```
+- After all previous steps are completed, try sending a text using the submit button in        WorkOrders.js
 ## Running The App Locally
 - Clone or Fork the repository
 - Run `yarn install` in the root directory to install server dependencies
@@ -165,3 +185,4 @@ A powerful, simple, and seamless payment commerce solution | [View Dependency](h
 
 
 ### Twilio
+Twilio's programmable SMS enables our app to send text alerts to the users that agree to recieve them.
