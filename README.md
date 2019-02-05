@@ -25,6 +25,7 @@ Welcome to our Property Management Application.
         - [Node.js](#node.js)
         - [Express](#express)
         - [Knex](#knex)
+        - [Cors](#cors)
         - [Helmet](#helmet)
         - [Morgan](#morgan)
         - [Faker](#faker)
@@ -162,8 +163,17 @@ The drawbacks of using Node+Express is that due to the flexibility and control i
 [View Dependency](https://expressjs.com/)
 
 ### Knex
+
+
+### Cors
+Third party middleware to make it easy to configure CORS in a Node.js application. | [View Dependency](https://www.npmjs.com/package/cors)
+
 ### Helmet
+Third party middleware for configuring security headers in a Node.js application. | [View Dependency](https://www.npmjs.com/package/helmet)
+
 ### Morgan
+Third party middleware for logging in Node.js applications.| [View Dependency](https://www.npmjs.com/package/morgan)
+
 ### Faker
 Used during development to create hundreds of dummy data records. This allows us to test endpoints without having to manually submit hundreds of records into the database | [View Dependency](https://github.com/Marak/Faker.js)
 
