@@ -113,6 +113,10 @@ const styles = theme => ({
       marginTop: '20%',
     },
   },
+  tableMargin: {
+    margin: 'auto',
+    width: '100%',
+  },
 });
 
 class Maintenance extends React.Component {
@@ -271,13 +275,10 @@ class Maintenance extends React.Component {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
-            <Grid item xs={12} md={12}>
-              <MaintenanceTable orders={this.state.orders} />
-            </Grid>
+            <MaintenanceTable orders={this.state.orders} />
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
                 <Paper className={classes.imgpaper}>
-                  {/* <Grid item xs={12} md={5}> */}
                   <CardHeader
                     title="Submit a Work Order"
                     subheader="Please add a description of the issue"
