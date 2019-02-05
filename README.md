@@ -143,6 +143,39 @@ Nesting HOCs into each other can become verbose. Recompose gives us a clean way 
 Used during development to create hundreds of dummy data records. This allows us to test endpoints without having to manually submit hundreds of records into the database | [View Dependency](https://github.com/Marak/Faker.js)
 
 ### Bluebird
+Bluebird is a fully feature promise library with focus on innovative features and performance. We are using Bluebird to get a nested JSON object for a User of type "owner" to display all its properties and tenants on the Frontend without getting repeated data.| [View Dependency](http://bluebirdjs.com/docs/api-reference.html)
+
+See example:
+
+owner = {
+  "property_name":"Lambda House",
+  "address": "123 Lambda Street",
+  "tenants": [
+        {
+            "tenant_id": 6,
+            "leased_start_date": "December 2018",
+            "end_date": "January 2020"
+        },
+        {
+            "tenant_id": 7,
+            "leased_start_date": "December 2018",
+            "end_date": "January 2020"
+        }
+    ]
+  },
+  {
+  "property_name":"Lambda House 2",
+  "address": "124 Lambda Street",
+  "tenants": [
+      {
+        "tenant_id": 8,
+        "leased_start_date": "December 2018",
+        "end_date": "January 2020"
+      }
+    ]
+  }
+}
+
 # API Documentation
 ## Back-End API
 
