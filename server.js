@@ -95,7 +95,7 @@ server.get('/text', (req, res) => {
     .create({
       body: 'Work order status updated',
       to: '+13123207318', // Text this number
-      from: '+12245058863', // From a valid Twilio number
+      from: '+12245058863', // From a valid Twilio number given by console
     })
     .then(message => console.log(message.sid))
     .done();

@@ -29,9 +29,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import Paper from '@material-ui/core/Paper';
-import classNames from 'classnames';
 import Modal from '@material-ui/core/Modal';
+import CustomSnackbar from '../../snackbar/CustomSnackbar';
 
 const styles = theme => ({
   container: {
@@ -103,6 +102,9 @@ class WorkOrders extends Component {
     imageModalOpen: false,
     img_src: '',
     loading: true,
+    openSnackbar: false,
+    snackbarMessage: '',
+    snackbarVariant: '',
   };
 
   componentDidMount() {
@@ -146,12 +148,41 @@ class WorkOrders extends Component {
   };
 
   sendAlert = () => {
-    axios('http://property-management-dev.herokuapp.com/text').catch(err =>
+    axios('https://property-management-dev.herokuapp.com/text').catch(err =>
       console.error(err)
     );
   };
 
-  // updateStatus =
+  updateStatus = entry => event => {
+    this.sendAlert();
+    axios
+      .put('/api/work-orders/update', {
+        work_order_id: entry.work_order_id,
+        work_order_status: entry.work_order_status,
+      })
+      .then(res => {
+        console.log('update response: ', res);
+        this.setState({
+          openSnackbar: true,
+          snackbarMessage: 'Work Order Status Updated!',
+          snackbarVariant: 'success',
+        });
+      })
+      .catch(error => {
+        console.log('catch error: ', error);
+        this.setState({
+          openSnackbar: true,
+          snackbarMessage: 'Error submitting. Please try again.',
+          snackbarVariant: 'error',
+        });
+      });
+  };
+
+  snackbarClose = () => {
+    this.setState({
+      openSnackbar: false,
+    });
+  };
 
   handleRadio = (name, index) => event => {
     const workOrdersCopy = this.state.workOrders.slice();
@@ -270,7 +301,11 @@ class WorkOrders extends Component {
                               Status
                             </Typography>
                           </Grid>
-                          <FormControl component="fieldset" fullWidth={true}>
+                          <FormControl
+                            component="fieldset"
+                            fullWidth={true}
+                            onSubmit={this.updateStatus(entry)}
+                          >
                             <RadioGroup
                               aria-label="work_order_status"
                               name="work_order_status"
@@ -330,7 +365,11 @@ class WorkOrders extends Component {
                             </RadioGroup>
                           </FormControl>
                           <Grid container justify="center">
-                            <Button color="primary" onClick={this.sendAlert}>
+                            <Button
+                              color="primary"
+                              // onClick={this.sendAlert}
+                              onClick={this.updateStatus(entry)}
+                            >
                               Submit
                             </Button>
                           </Grid>
@@ -341,6 +380,13 @@ class WorkOrders extends Component {
                 ))}
               </Grid>
             </Grid>
+            <CustomSnackbar
+              open={this.state.openSnackbar}
+              variant={this.state.snackbarVariant}
+              message={this.state.snackbarMessage}
+              onClose={this.snackbarClose}
+              onClick={this.snackbarClose}
+            />
           </Grid>
           <Modal
             open={this.state.imageModalOpen}
