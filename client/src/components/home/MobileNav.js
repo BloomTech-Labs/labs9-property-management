@@ -15,9 +15,8 @@ const LinkAnimation = keyframes`
 const MobileNavContainer = styled.div`
   height: 100vh;
   width: 100vw;
-  background: white;
   z-index: 1000;
-  margin: 0 auto;
+  background: white;
   padding: 0 4rem;
   overflow: auto;
 `;
@@ -28,6 +27,12 @@ const MobileNavGroup = styled.div`
   flex-direction: column;
   align-items: center;
   font-weight: 500;
+  opacity: 0;
+  animation: ${LinkAnimation};
+  animation-duration: 0.8s;
+  animation-delay: 0.01s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 `;
 
 const PageLinkContainer = styled.div`
@@ -46,12 +51,6 @@ const MobileLink = styled(Link)`
   cursor: pointer;
   font-size: ${props => (props.close ? '2.4rem' : '3.6rem')};
   color: rgba(22, 23, 26, 1);
-  opacity: 0;
-  animation: ${LinkAnimation};
-  animation-duration: 2s;
-  animation-delay: 0.01s;
-  animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 `;
 const CloseNav = styled.span`
   background: none;
