@@ -26,6 +26,9 @@ export const HeaderContainer = styled.div`
 `;
 export const Logo = styled.img`
   justify-self: start;
+  @media (max-width: 500px) {
+    margin-left: ${props => props.marketingpages && '2rem'};
+  }
 `;
 const MobileMenuLink = styled.span`
   justify-self: end;
@@ -34,8 +37,10 @@ const MobileMenuLink = styled.span`
   font-size: 1.6rem;
   text-decoration: none;
   display: none;
+  cursor: pointer;
   @media (max-width: 500px) {
     display: ${props => (props.mobile ? 'flex' : 'none')};
+    margin-right: 2rem;
   }
 `;
 const SignUpLink = styled(Link)`
@@ -48,6 +53,7 @@ const SignUpLink = styled(Link)`
   text-decoration: none;
   @media (max-width: 500px) {
     display: ${props => (props.desktop ? 'none' : 'relative')};
+    padding: 0 2rem;
   }
 `;
 export const HeaderGroup = styled.div`
@@ -62,7 +68,7 @@ export const HeaderGroup = styled.div`
   }
   @media (max-width: 500px) {
     grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    padding: 0;
   }
 `;
 export const HeaderLink = styled(Link)`
@@ -114,9 +120,11 @@ class Header extends React.Component {
       <>
         <HeaderContainer scrolled={this.state.hasScrolled}>
           <HeaderGroup>
-            <HeaderLink to="/">
-              <Logo src={testlogo} alt="logo" width="32" />
-            </HeaderLink>
+            {!this.state.menuIsOpen && (
+              <HeaderLink to="/">
+                <Logo marketingpages src={testlogo} alt="logo" width="32" />
+              </HeaderLink>
+            )}
             {this.state.menuIsOpen ? (
               <MobileNav handleMenuToggle={this.handleMenuToggle} />
             ) : (
@@ -137,7 +145,9 @@ class Header extends React.Component {
                 {/* <MobileMenuLink onClick={""} mobile>
                   Menu
                 </MobileMenuLink> */}
-                <MobileMenuLink mobile>Menu</MobileMenuLink>
+                <MobileMenuLink onClick={this.handleMenuToggle} mobile>
+                  Menu
+                </MobileMenuLink>
               </>
             )}
           </HeaderGroup>
