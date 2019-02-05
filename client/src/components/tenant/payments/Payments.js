@@ -120,7 +120,7 @@ class Payments extends React.Component {
     snackbarMessage: '',
     snackbarVariant: '',
     address: '',
-    loading: 1,
+    loading: true,
   };
 
   componentDidMount() {
@@ -131,14 +131,11 @@ class Payments extends React.Component {
         if (response.data.length > 0) {
           this.setState(() => ({
             address: response.data[0].address,
-            loading: 3,
+            loading: false,
           }));
         }
       })
       .catch(error => {
-        this.setState(() => ({
-          loading: 2,
-        }));
         console.log('Loading: ', this.state.loading);
         console.error('Server Error: ', error);
       });
@@ -156,14 +153,11 @@ class Payments extends React.Component {
           if (response.data.length > 0) {
             this.setState(() => ({
               address: response.data[0].address,
-              loading: 3,
+              loading: false,
             }));
           }
         })
         .catch(err => {
-          this.setState(() => ({
-            loading: 2,
-          }));
           console.log('Loading: ', this.state.loading);
           console.log('ERROR CHECKING USER STRIPE ID', err);
         });
@@ -231,9 +225,7 @@ class Payments extends React.Component {
     const { classes } = this.props;
     const publishableKey = 'pk_test_IiM4lt5m1LYfjZBPfY8wa6Jo';
 
-    if (this.state.loading === 1) {
-      return <Loading className={classes.loading} size={80} />;
-    } else if (this.state.loading === 3) {
+    if (!this.state.loading) {
       return (
         <>
           <Grid container className={classes.container} spacing={16}>
@@ -328,14 +320,14 @@ class Payments extends React.Component {
           </Grid>
         </>
       );
-    } else if (this.state.loading === 2) {
+    } else if (this.state.loading) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
             <List className={classes.root}>
               <Paper className={classes.imgpaper2}>
                 <CardHeader
-                  title="Account information"
+                  title="Payments"
                   subheader="Account has no property assigned"
                   className={classes.cardHeader}
                   titleTypographyProps={{
