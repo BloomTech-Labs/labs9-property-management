@@ -244,8 +244,6 @@ class Properties extends React.Component {
     const { loading, properties } = this.state;
     let pageBody = null;
 
-    console.log('properties', this.state.properties);
-
     const addBtnClass = {
       display: 'flex',
       width: '100%',

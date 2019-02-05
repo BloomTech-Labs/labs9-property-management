@@ -36,6 +36,9 @@ Welcome to our Property Management Application.
     - [Third-Party APIs](#third-party-apis)
         - [Stripe](#stripe)
         - [Twilio](#twilio)
+        - [Uppy](#uppy)
+        - [Transloadit](#transloadit)
+        - [Google Cloud Storage](#google-cloud-storage)
 
 # Getting Started
 ## What You Need
@@ -93,13 +96,13 @@ STRIPE_SECRET_KEY=YOUR_STRIPE_SECRET_KEY
 ### Twilio Account
 - Sign up for a twilio account at (https://www.twilio.com/console)
 - Once the account is made, navigate to the settings on your Twilio console and copy the        ACCOUNT SID and AUTH TOKEN given in the API Credentials section.
--  In your .env file, create your enviroment variables
+-  Create a server-side .env file and in your .env file, create your enviroment variables       and add your credentials.
     ```  
     twilio_accountSid=your Sid
     twilio_authToken=your Token
     ```
 - Once the credentials are in place make your way to the bottom of the server.js file to       find the Twilio endpoint.
-- Here you will enter your .env variables, the recieving number that must be verified with     Twilio (https://www.twilio.com/console/phone-numbers/verified), the message, and the         Twilio number given to you in the Twilio console, on the Dashboard.
+- Here you will place your .env variables, the recieving number that must be verified with     Twilio (https://www.twilio.com/console/phone-numbers/verified), the message, and the         Twilio number given to you in the Twilio console, on the Dashboard.
 ```
 server.get('/text', (req, res) => {
   client.messages
@@ -228,6 +231,8 @@ router.post('/example-path', (req, res) => {
 ```
 ### Endpoints
 
+#### Users Endpoints
+
 **GET** `/api/users/verifyregistration`
 
 Upon logging in, the client sends a request to this path. This endpoint checks if the user is already registered in the database and returns their `role` which could be `'admin'`, `'tenant'` or `null`.
@@ -236,6 +241,8 @@ If the user doesn't exist, a `role` of `null` is returned so the client can redi
 **POST** `/api/users/register`
 
 Called when a user submits their chosen account type in the account setup page. This endpoint inserts a user's Firebase UID and chosen account type (`role`) into the database.
+
+#### Owners Endpoints
 
 **POST** `/api/properties`
 
@@ -248,6 +255,24 @@ Returns all the properties that an owner owns
 **GET** `/api/properites/admin/alldata`
 
 Returns all of an owner's properties along with their tenants
+
+#### Tenants Endpoints
+
+**GET** `/api/tenants/dashboard`
+
+Returns the property data assigned to a tenant.
+
+**GET** `/api/tenants/maintenanceView`
+
+Returns tenant info for Tenant Maintenance View component.
+
+**GET** `/api/work-orders/maintenance`
+
+Returns all work orders submitted by a tenant.
+
+**POST** `/api/work-orders`
+
+Called by tenants to submit a work order.
 
 ## Third-Party API
 ### Firebase Auth
@@ -263,7 +288,7 @@ Twilio's programmable SMS enables our app to send text alerts to the users that 
 "Uppy is a sleek and modular file uploader. It fetches files from local disk, Google Drive, Instagram, remote urls, cameras etc, and then uploads them to the final destination. It’s fast, easy to use and lets you worry about more important problems than building a file uploader."(https://uppy.io/docs/)
 
 ### Transloadit
-The API we decided to use for processing uploaded images, Transloadit (https://transloadit.com/docs/) will give each image a url and store them in our Google Cloud.
+The API we decided to use for processing uploaded images, Transloadit (https://transloadit.com/docs/) will give each image a url and store them in our Google Cloud Storage bucket.
 
 ### Google Cloud Storage
-Photos uploaded by users are being stored in our Google Cloud bucket.(https://cloud.google.com/storage/docs/)
+Photos uploaded by users are being stored in our Google Cloud Storage bucket.(https://cloud.google.com/storage/docs/)

@@ -126,27 +126,22 @@ class Billing extends Component {
     house_id: 0, // Selected property
   };
   componentDidMount() {
-    console.log('props', this.props);
     // check to see if owner has stripe account connected
     if (this.props.authTokenRecieved) {
       axios
         .get('/api/stripe-connect')
         .then(response => {
-          console.log('RESPONSE:', response.data);
           if (response.data.hasStripeID === true) {
-            console.log('SERVER STRIPE ID:', response.data);
             this.setState({ hasStripeID: true, fetchingStripeID: false });
           } else {
             this.setState({ hasStripeID: false, fetchingStripeID: false });
           }
           // check to see if auth code is provided
           if (this.props.location.search) {
-            console.log('BINGO', this.props.location.search.substring(23));
             let computedCode = this.props.location.search.substring(23);
             const stripeAuthCode = {
               computedCode,
             };
-            console.log(stripeAuthCode);
 
             axios.post('/api/stripe-connect', stripeAuthCode).then(response => {
               this.setState({ hasStripeID: true, fetchingStripeID: false });
@@ -170,12 +165,10 @@ class Billing extends Component {
           } else {
             // check to see if auth code is provided
             if (this.props.location.search) {
-              console.log('BINGO', this.props.location.search.substring(23));
               let computedCode = this.props.location.search.substring(23);
               const stripeAuthCode = {
                 computedCode,
               };
-              console.log(stripeAuthCode);
 
               axios
                 .post('/api/stripe-connect', stripeAuthCode)
@@ -197,7 +190,6 @@ class Billing extends Component {
   render() {
     const { classes } = this.props;
     let stripeConnectionDetails;
-    console.log(this.state.hasStripeID);
 
     if (this.state.hasStripeID) {
       stripeConnectionDetails = (
