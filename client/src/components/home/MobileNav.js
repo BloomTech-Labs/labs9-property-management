@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Logo, HeaderLink } from './Nav';
-import testlogo from '../../images/test-logo.svg';
 
 const MobileNavContainer = styled.div`
   height: 100vh;
