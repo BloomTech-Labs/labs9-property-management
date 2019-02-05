@@ -61,7 +61,7 @@ const MaintenanceTable = props => {
         </TableHead>
         <TableBody>
           {props.orders.map(order => (
-            <TableRow key={order.id}>
+            <TableRow key={order.work_order_id}>
               <TableCell component="th" scope="row" align="center">
                 {order.work_order_id}
               </TableCell>
