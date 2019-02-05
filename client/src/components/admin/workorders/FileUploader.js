@@ -25,16 +25,12 @@ const PhotoUploadIcon = styled(InsertPhoto)`
   }
 `;
 
-
-
 const styles = theme => ({
   container: {
     marginLeft: 60,
     marginBottom: 20,
   },
 });
-
-
 
 class FileUploader extends React.Component {
   constructor (props) {
@@ -142,14 +138,14 @@ class FileUploader extends React.Component {
             <Typography className={classes.container} component="h1" variant="h5">
               Upload a Photo
             </Typography>
-          <DashboardModal
-            uppy={this.uppy}
-            plugins={['addGoogleDrive', 'addDropbox', 'addUrl']}
-            closeModalOnClickOutside
-            open={this.state.open}
-            target={document.body}
-            onRequestClose={() => this.setState({ open: false })}
-          />
+            <DashboardModal
+              uppy={this.uppy}
+              plugins={['addGoogleDrive', 'addDropbox', 'addUrl']}
+              closeModalOnClickOutside
+              open={this.state.open}
+              target={document.body}
+              onRequestClose={() => this.setState({ open: false })}
+            />
         </div>
 
       </div>
