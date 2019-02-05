@@ -16,7 +16,6 @@ const withAuthentication = Component => {
     }
 
     updateAuthUserRole = authUserRole => {
-      console.log('update: ', authUserRole);
       localStorage.setItem('authUserRole', JSON.stringify(authUserRole));
       this.setState({ authUserRole: authUserRole });
     };
@@ -25,7 +24,6 @@ const withAuthentication = Component => {
       this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
         if (authUser) {
           this.props.firebase.auth.currentUser.getIdToken().then(idToken => {
-            console.log('Auth Token: ', idToken);
 
             axios.defaults.headers.common['Authorization'] = idToken;
 

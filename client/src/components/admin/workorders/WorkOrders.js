@@ -134,7 +134,6 @@ class WorkOrders extends Component {
           console.error('Server Error: ', error);
         });
     }
-    console.log('CDU state: ', this.state);
   }
 
   toggleImageModal = event => {
@@ -161,7 +160,6 @@ class WorkOrders extends Component {
         work_order_status: entry.work_order_status,
       })
       .then(res => {
-        console.log('update response: ', res);
         this.setState({
           openSnackbar: true,
           snackbarMessage: 'Work Order Status Updated!',
@@ -187,8 +185,6 @@ class WorkOrders extends Component {
   handleRadio = (name, index) => event => {
     const workOrdersCopy = this.state.workOrders.slice();
     workOrdersCopy[index][name] = event.target.value;
-    // console.log('workorderscopy: ', workOrdersCopy);
-    // console.log('workorderscopy[index][name]: ', workOrdersCopy[index][name]);
     this.setState({ workOrders: workOrdersCopy });
   };
 
