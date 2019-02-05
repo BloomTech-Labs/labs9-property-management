@@ -18,7 +18,6 @@ import { Payment } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
-import Loading from '../../loading/Loading';
 
 const styles = theme => ({
   container: {
