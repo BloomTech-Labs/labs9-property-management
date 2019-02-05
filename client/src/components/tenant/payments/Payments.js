@@ -18,6 +18,7 @@ import { Payment } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
+import Loading from '../../loading/Loading';
 
 const styles = theme => ({
   container: {
@@ -96,15 +97,17 @@ const styles = theme => ({
   marginTop: {
     marginTop: 5,
   },
-  title: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: 50,
-  },
   imgpaper2: {
     width: '100%',
     padding: 20,
     backgroundColor: theme.palette.background.paper,
+  },
+  loading: {
+    marginTop: '50%',
+    padding: theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      marginTop: '20%',
+    },
   },
 });
 
@@ -117,7 +120,7 @@ class Payments extends React.Component {
     snackbarMessage: '',
     snackbarVariant: '',
     address: '',
-    loading: true,
+    loading: 1,
   };
 
   componentDidMount() {
@@ -128,12 +131,14 @@ class Payments extends React.Component {
         if (response.data.length > 0) {
           this.setState(() => ({
             address: response.data[0].address,
-            loading: false,
+            loading: 3,
           }));
-          console.log('Loading: ', this.state.loading);
         }
       })
       .catch(error => {
+        this.setState(() => ({
+          loading: 2,
+        }));
         console.log('Loading: ', this.state.loading);
         console.error('Server Error: ', error);
       });
@@ -151,12 +156,14 @@ class Payments extends React.Component {
           if (response.data.length > 0) {
             this.setState(() => ({
               address: response.data[0].address,
-              loading: false,
+              loading: 3,
             }));
-            console.log('Loading: ', this.state.loading);
           }
         })
         .catch(err => {
+          this.setState(() => ({
+            loading: 2,
+          }));
           console.log('Loading: ', this.state.loading);
           console.log('ERROR CHECKING USER STRIPE ID', err);
         });
@@ -224,7 +231,9 @@ class Payments extends React.Component {
     const { classes } = this.props;
     const publishableKey = 'pk_test_IiM4lt5m1LYfjZBPfY8wa6Jo';
 
-    if (!this.state.loading) {
+    if (this.state.loading === 1) {
+      return <Loading className={classes.loading} size={80} />;
+    } else if (this.state.loading === 3) {
       return (
         <>
           <Grid container className={classes.container} spacing={16}>
@@ -319,7 +328,7 @@ class Payments extends React.Component {
           </Grid>
         </>
       );
-    } else if (this.state.loading) {
+    } else if (this.state.loading === 2) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
