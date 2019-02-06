@@ -260,6 +260,14 @@ Returns all the properties that an owner owns
 
 Returns all of an owner's properties along with their tenants
 
+**GET** `/api/stripe-connect`
+
+Checks if the owner has connected their Stripe account to the application and returns an object that contains a boolean value
+
+**POST** `/api/stripe-connect`
+
+Called upon redirect from Stripe back to the application, after the owner clicks Stripe's Connect with Stripe button. This endpoint sends a POST request to Stripe with the authorization code provided in Stripe's reponse and saves the owners Stripe user id in the database.
+
 #### Tenants Endpoints
 
 **GET** `/api/tenants/dashboard`
@@ -277,6 +285,10 @@ Returns all work orders submitted by a tenant.
 **POST** `/api/work-orders`
 
 Called by tenants to submit a work order.
+
+**POST** `/api/payments`
+
+Called when a tenant submits a payment using the Stripe checkout modal. This endpoint charges the tenant and sends the funds to the owners connected Stripe account.
 
 ## Third-Party API
 ### Firebase Auth
