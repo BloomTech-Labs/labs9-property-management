@@ -273,7 +273,7 @@ class Payments extends React.Component {
                       }}
                     />
                     <CardContent>
-                      <form onSubmit={''} noValidate autoComplete="off">
+                      <form noValidate autoComplete="off">
                         <List className={classes.box}>
                           <ListItem className={classes.blockElement}>
                             <ListItemText
