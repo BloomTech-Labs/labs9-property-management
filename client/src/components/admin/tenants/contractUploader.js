@@ -103,7 +103,11 @@ class ContractUploader extends React.Component {
     return (
       <div>
         <div>
-           <Button onClick={this.handleModalClick}>
+           <Button 
+           onClick={this.handleModalClick}
+           color="primary"
+           variant="contained"
+           >
            Upload A Contract
            </Button>
             <DashboardModal
@@ -111,7 +115,6 @@ class ContractUploader extends React.Component {
               plugins={['addGoogleDrive', 'addDropbox', 'addUrl']}
               closeModalOnClickOutside
               open={this.state.open}
-              target={document.body}
               onRequestClose={() => this.setState({ open: false })}
             />
         </div>
