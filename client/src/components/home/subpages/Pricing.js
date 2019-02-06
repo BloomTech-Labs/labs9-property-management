@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Nav from '../Nav';
 import Footer from '../Footer';
-import { Hero, HeroGroup, HeroGroupH1, HeroP } from '../HomeStyles';
+import {
+  Hero,
+  HeroGroup,
+  HeroGroupH1,
+  HeroP,
+  HeroAnimation,
+} from '../HomeStyles';
 import { GlobalStyle } from '../../../styles/Styles';
 import { Check } from '@material-ui/icons';
 
@@ -19,6 +25,12 @@ const PricingCardContainer = styled.div`
   justify-content: center;
   padding-bottom: 48px;
   padding-top: 32px;
+  opacity: 0;
+  animation: ${HeroAnimation};
+  animation-duration: 2s;
+  animation-delay: 0.01s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   @media (max-width: 680px) {
     flex-direction: ${props => (props.mobile ? 'column' : 'row')};
     align-items: center;
@@ -87,46 +99,46 @@ class Pricing extends Component {
                 Free
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Unlimited queries
-              </PricingTextLine>
-              <PricingTextLine className="planLineItem">
-                <CheckMark /> No scheduled reports for email
+                <CheckMark /> Up to 50 tenants
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
                 <CheckMark /> Up to 10 properties
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
                 <CheckMark /> SMS maintenance alerts
+              </PricingTextLine>
+              <PricingTextLine className="planLineItem">
+                <CheckMark /> Accept rent payments
+              </PricingTextLine>
+              <PricingTextLine className="planLineItem">
+                <CheckMark /> Live chat support
               </PricingTextLine>
             </PricingCard>
             <PricingCard>
               <PricingTextLine className="planName">Growth</PricingTextLine>
               <PricingTextLine className="planNameSubText">
-                $10 / admin / month
+                $39.99 / admin / month
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Unlimited queries
+                <CheckMark /> Unlimited tenants
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> No scheduled reports for email
+                <CheckMark /> Unlimited properties
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Up to 10 properties
+                <CheckMark /> Unlimited SMS maintenance alerts
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> SMS maintenance alerts
+                <CheckMark /> Accept rent payments
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Some more info here
+                <CheckMark /> Rent payment reminders
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> Another great free feature
+                <CheckMark /> 24/7 Live chat support
               </PricingTextLine>
               <PricingTextLine className="planLineItem">
-                <CheckMark /> SMS maintenance alerts
-              </PricingTextLine>
-              <PricingTextLine className="planLineItem">
-                <CheckMark /> Some more info here
+                <CheckMark /> 24/7 Phone support
               </PricingTextLine>
             </PricingCard>
           </PricingCardContainer>

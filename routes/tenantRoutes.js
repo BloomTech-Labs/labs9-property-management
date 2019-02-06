@@ -59,6 +59,7 @@ router.get('/dashboard', (req, res) => {
       'h.office_ph',
       'h.maintenance_ph',
       'u.email',
+      'u.display_name',
       't.house_id',
       't.tenant_id'
     )

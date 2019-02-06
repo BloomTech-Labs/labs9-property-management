@@ -6,31 +6,20 @@ import connectwstripe from '../../../images/connect-with-stripe@2x.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import Skeleton from 'react-loading-skeleton';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-// import Card from '@material-ui/core/Card';
-// import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Done, CheckCircleOutline } from '@material-ui/icons';
+import { CheckCircleOutline } from '@material-ui/icons';
 import Paper from '@material-ui/core/Paper';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-// import TextField from '@material-ui/core/TextField';
-// import FolderIcon from '@material-ui/icons/Folder';
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-// import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-// import ListItemIcon from '@material-ui/core/ListItemIcon';
-// import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -137,27 +126,22 @@ class Billing extends Component {
     house_id: 0, // Selected property
   };
   componentDidMount() {
-    console.log('props', this.props);
     // check to see if owner has stripe account connected
     if (this.props.authTokenRecieved) {
       axios
         .get('/api/stripe-connect')
         .then(response => {
-          console.log('RESPONSE:', response.data);
           if (response.data.hasStripeID === true) {
-            console.log('SERVER STRIPE ID:', response.data);
             this.setState({ hasStripeID: true, fetchingStripeID: false });
           } else {
             this.setState({ hasStripeID: false, fetchingStripeID: false });
           }
           // check to see if auth code is provided
           if (this.props.location.search) {
-            console.log('BINGO', this.props.location.search.substring(23));
             let computedCode = this.props.location.search.substring(23);
             const stripeAuthCode = {
               computedCode,
             };
-            console.log(stripeAuthCode);
 
             axios.post('/api/stripe-connect', stripeAuthCode).then(response => {
               this.setState({ hasStripeID: true, fetchingStripeID: false });
@@ -181,12 +165,10 @@ class Billing extends Component {
           } else {
             // check to see if auth code is provided
             if (this.props.location.search) {
-              console.log('BINGO', this.props.location.search.substring(23));
               let computedCode = this.props.location.search.substring(23);
               const stripeAuthCode = {
                 computedCode,
               };
-              console.log(stripeAuthCode);
 
               axios
                 .post('/api/stripe-connect', stripeAuthCode)
@@ -208,7 +190,6 @@ class Billing extends Component {
   render() {
     const { classes } = this.props;
     let stripeConnectionDetails;
-    console.log(this.state.hasStripeID);
 
     if (this.state.hasStripeID) {
       stripeConnectionDetails = (

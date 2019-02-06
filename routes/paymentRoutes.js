@@ -31,7 +31,6 @@ router.post('/', (req, res) => {
     .join('owners as o', 'o.owner_uid', 'h.owner_uid')
     .select('o.owner_uid', 'o.stripe_user_id')
     .then(stripeUID => {
-      console.log('Stripe', stripeUID[0].stripe_user_id);
       stripe.charges.create(
         {
           amount: req.body.amount,

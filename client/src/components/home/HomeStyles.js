@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-const HeroAnimation = keyframes`
+export const HeroAnimation = keyframes`
 0% {
   opacity: 0;
   transform: translateY(5px);
@@ -102,6 +102,12 @@ export const AppImage = styled.img`
   max-width: 100%;
   width: 704px;
   padding: 0 24px 76px 24px;
+  opacity: 0;
+  animation: ${HeroAnimation};
+  animation-duration: 2s;
+  animation-delay: 0.01s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   @media (max-width: 600px) {
     padding: 0px 24px 100px 24px;
   }
@@ -111,20 +117,21 @@ export const InfoSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 90px 0;
+  padding: 32px 0 48px 0;
 `;
 
 export const IconContainer = styled.div`
   font-size: 60px;
-  padding: 0 20px;
+  padding: 0 30px 30px 30px;
   display: flex;
   justify-content: start;
   align-items: center;
   flex-direction: column;
-  width: 320px;
+  width: 300px;
   color: #5f29ff;
   flex-wrap: wrap;
-  text-align: justify;
+  text-align: left;
+  max-width: 960px;
   @media (max-width: 900px) {
     margin-bottom: 40px;
   }
@@ -133,7 +140,6 @@ export const IconContainer = styled.div`
 export const IconGroup = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 100%;
   text-align: top;
   @media (max-width: 900px) {
     display: flex;

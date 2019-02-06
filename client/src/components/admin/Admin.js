@@ -4,14 +4,14 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import DashboardPage from './dashboard/DashboardPage';
 import PropertiesPage from './properties/Properties';
 import WorkOrdersPage from './workorders/WorkOrders';
-import SettingsPage from './settings/SettingsPage';
+//import SettingsPage from './settings/SettingsPage';
 import Billing from './billing/Billing';
 import Tenants from './tenants/Tenants';
 import Dashboard from '@material-ui/icons/Dashboard';
 import Business from '@material-ui/icons/Business';
 import Assignment from '@material-ui/icons/Assignment';
 import People from '@material-ui/icons/People';
-import Settings from '@material-ui/icons/Settings';
+//import Settings from '@material-ui/icons/Settings';
 import CreditCard from '@material-ui/icons/CreditCard';
 import { withAuthUser } from '../session';
 

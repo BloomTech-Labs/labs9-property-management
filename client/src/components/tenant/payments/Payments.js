@@ -18,7 +18,6 @@ import { Payment } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
-import Loading from '../../loading/Loading';
 
 const styles = theme => ({
   container: {
@@ -125,20 +124,22 @@ class Payments extends React.Component {
 
   componentDidMount() {
     const endpoint = 'api/tenants/dashboard/';
-    axios
-      .get(endpoint)
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState(() => ({
-            address: response.data[0].address,
-            loading: false,
-          }));
-        }
-      })
-      .catch(error => {
-        console.log('Loading: ', this.state.loading);
-        console.error('Server Error: ', error);
-      });
+    if (this.props.authTokenRecieved) {
+      axios
+        .get(endpoint)
+        .then(response => {
+          if (response.data.length > 0) {
+            this.setState(() => ({
+              address: response.data[0].address,
+              loading: false,
+            }));
+          }
+        })
+        .catch(error => {
+          console.log('Loading: ', this.state.loading);
+          console.error('Server Error: ', error);
+        });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -172,7 +173,6 @@ class Payments extends React.Component {
     axios
       .post('/api/payments', body)
       .then(response => {
-        console.log('response', response.data);
         // alert(
         //   'Payment Success: token was received by backend and charge was made.'
         // );
@@ -274,7 +274,7 @@ class Payments extends React.Component {
                       }}
                     />
                     <CardContent>
-                      <form onSubmit={''} noValidate autoComplete="off">
+                      <form noValidate autoComplete="off">
                         <List className={classes.box}>
                           <ListItem className={classes.blockElement}>
                             <ListItemText

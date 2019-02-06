@@ -17,18 +17,15 @@ import {
   HeroGroupH3,
   HeroP2,
 } from './HomeStyles';
-import { Build, Payment } from '@material-ui/icons';
+import { Build } from '@material-ui/icons';
 import House from '@material-ui/icons/Home';
 import Users from '@material-ui/icons/People';
-import appshot from '../../images/app-shot.svg';
-import appshotmidfi from '../../images/app-shot-mid-fi.svg';
-import updatedappshot from '../../images/updateAppshot.svg';
+import newAppshot from '../../images/newAppshot.svg';
 import { GlobalStyle } from '../../styles/Styles';
 
 class Home extends Component {
   render() {
     const role = this.props.authUserRole;
-    const classes = this.props;
 
     if (this.props.authUser && role === 'owner') {
       return <Redirect to="/admin" />;
@@ -49,34 +46,32 @@ class Home extends Component {
               <HeroA href="/">Watch the video</HeroA>
             </HeroGroup>
             <AppImageContainer>
-              <AppImage src={appshot} />
+              <AppImage src={newAppshot} />
             </AppImageContainer>
             <InfoSection>
               <IconGroup>
                 <IconContainer>
                   <House fontSize="inherit" />
-                  <HeroGroupH3>Manage properties</HeroGroupH3>
+                  <HeroGroupH3>Property Management</HeroGroupH3>
                   <HeroP2>
-                    Whether you are a landlord or a property manager managing a
-                    handful of properties, PropertEAZY includes all the features
-                    you need to make your operation the most efficient it has
-                    ever been.
+                    Whether you are a property owner or manager, PropertEAZY
+                    includes all the features you need to operate efficiently.
                   </HeroP2>
                 </IconContainer>
                 <IconContainer>
                   <Users fontSize="inherit" />
                   <HeroGroupH3>Manage tenants</HeroGroupH3>
                   <HeroP2>
-                    Setting due dates. Collecting rent each week or month.
-                    Signing lease agreements.
+                    Manage lease agreements. Collect rent payments instantly
+                    using Stripe.
                   </HeroP2>
                 </IconContainer>
                 <IconContainer>
                   <Build fontSize="inherit" />
-                  <HeroGroupH3>Maintenance and repairs</HeroGroupH3>
+                  <HeroGroupH3>Maintenance requests</HeroGroupH3>
                   <HeroP2>
-                    Keeping the property in safe and habitable condition is key!
-                    Receive work orders from your tenants instantly!
+                    Keeping property in safe and habitable condition is key.
+                    Receive work orders from your tenants instantly.
                   </HeroP2>
                 </IconContainer>
                 {/* <IconContainer>

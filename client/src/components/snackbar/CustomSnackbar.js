@@ -3,9 +3,11 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '@material-ui/core/IconButton';
 import CheckCircle from '@material-ui/icons/CheckCircle';
+import InfoIcon from '@material-ui/icons/Info';
 import Close from '@material-ui/icons/Close';
 import Error from '@material-ui/icons/Error';
 import green from '@material-ui/core/colors/green';
+import blue from '@material-ui/core/colors/blue';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
@@ -14,6 +16,9 @@ const styles = theme => ({
   },
   error: {
     backgroundColor: theme.palette.error.dark,
+  },
+  info: {
+    backgroundColor: blue[600],
   },
   message: {
     display: 'flex',
@@ -37,6 +42,10 @@ const CustomSnackbar = props => {
     case 'error':
       icon = <Error className={classes.icon} />;
       snackbarClass = classes.error;
+      break;
+    case 'information':
+      icon = <InfoIcon className={classes.info} />;
+      snackbarClass = classes.info;
       break;
     default:
       icon = null;

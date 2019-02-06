@@ -17,6 +17,7 @@ import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import CustomSnackbar from '../../snackbar/CustomSnackbar';
 import styles from './styles';
 import axios from 'axios';
+import ContractUploader from './contractUploader'
 
 class Tenants extends Component {
   state = {
@@ -32,7 +33,10 @@ class Tenants extends Component {
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
+    pdf: '',
   };
+
+  GetContract = pdf => this.setState({ pdf: pdf });
 
   componentDidMount() {
     if (this.props.authTokenRecieved) {
@@ -257,6 +261,7 @@ class Tenants extends Component {
                     >
                       Send Invite
                     </Button>
+                    <ContractUploader GetContract={this.GetContract}/>
                   </div>
                 </Grid>
               </Card>
@@ -274,6 +279,7 @@ class Tenants extends Component {
     );
   }
 }
+
 
 const TenantsPage = compose(
   withAuthUser,

@@ -9,6 +9,7 @@ exports.up = function(knex, Promise) {
     tbl.string('owner_uid');
     tbl.string('lease_start_date', 64);
     tbl.string('lease_end_date', 64);
+    tbl.string('lease_contract', 250);
     tbl
       .integer('house_id')
       .unsigned()

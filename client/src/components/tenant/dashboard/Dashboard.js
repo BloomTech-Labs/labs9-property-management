@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {
+  Person,
   Home,
   Call,
   Email,
@@ -23,6 +24,8 @@ import {
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
+import CustomSnackbar from '../../snackbar/CustomSnackbar';
+import Loading from '../../loading/Loading';
 
 const styles = theme => ({
   container: {
@@ -118,10 +121,18 @@ const styles = theme => ({
     padding: 20,
     backgroundColor: theme.palette.background.paper,
   },
+  loading: {
+    marginTop: '50%',
+    padding: theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      marginTop: '20%',
+    },
+  },
 });
 
 class Dashboard extends Component {
   state = {
+    owner: '',
     amount: '',
     city: '',
     state: '',
@@ -130,28 +141,68 @@ class Dashboard extends Component {
     office_phone: '',
     maintenance_phone: '',
     owner_email: '',
+    invitation: [],
+    gotInvitation: true,
+    openSnackbar: false,
+    snackbarMessage: '',
+    snackbarVariant: '',
+    orders: [],
+    loading: true,
   };
 
   componentDidMount() {
     if (this.props.authTokenRecieved) {
-      const endpoint = 'api/tenants/dashboard/';
-      axios
-        .get(endpoint)
-        .then(response => {
-          if (response.data.length > 0) {
-            console.log('This is the response: ', response);
-            this.setState(() => ({
-              address: response.data[0].address,
-              city: response.data[0].city,
-              state: response.data[0].state,
-              zip_code: response.data[0].zip_code,
-              office_phone: response.data[0].office_ph,
-              maintenance_phone: response.data[0].maintenance_ph,
-              owner_email: response.data[0].email,
-            }));
-          }
-        })
-        .catch(err => console.log('ERROR GETTING TENANT INFO', err));
+      if (this.state.gotInvitation) {
+        const inviteEndpoint = 'api/invitations/tenant';
+        axios
+          .get(inviteEndpoint)
+          .then(response => {
+            if (response.data.length > 0) {
+              this.setState({
+                invitation: response.data,
+                gotInvitation: false,
+                openSnackbar: !response.openSnackbar,
+                snackbarMessage:
+                  'You were invited to a property! Check your settings!',
+                snackbarVariant: 'information',
+              });
+            }
+          })
+          .catch(error => console.log(error));
+      }
+      if (this.state.invitation.length === 0) {
+        const endpoint = 'api/tenants/dashboard/';
+        axios
+          .get(endpoint)
+          .then(response => {
+            if (response.data.length > 0) {
+              this.setState(() => ({
+                owner: response.data[0].display_name,
+                address: response.data[0].address,
+                city: response.data[0].city,
+                state: response.data[0].state,
+                zip_code: response.data[0].zip_code,
+                office_phone: response.data[0].office_ph,
+                maintenance_phone: response.data[0].maintenance_ph,
+                owner_email: response.data[0].email,
+                loading: false,
+              }));
+            } else {
+              this.setState(() => ({
+                loading: false,
+              }));
+            }
+            return axios.get('api/work-orders/maintenance');
+          })
+          .then(response => {
+            if (response.data.orders.length > 0) {
+              this.setState(() => ({
+                orders: response.data.orders,
+              }));
+            }
+          })
+          .catch(err => console.log('ERROR GETTING TENANT INFO', err));
+      }
     }
   }
 
@@ -160,24 +211,57 @@ class Dashboard extends Component {
       this.props.authTokenRecieved &&
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
     ) {
-      const endpoint = 'api/tenants/dashboard/';
-      axios
-        .get(endpoint)
-        .then(response => {
-          if (response.data.length > 0) {
-            console.log('This is the response: ', response);
-            this.setState(() => ({
-              address: response.data[0].address,
-              city: response.data[0].city,
-              state: response.data[0].state,
-              zip_code: response.data[0].zip_code,
-              office_phone: response.data[0].office_ph,
-              maintenance_phone: response.data[0].maintenance_ph,
-              owner_email: response.data[0].email,
-            }));
-          }
-        })
-        .catch(err => console.log('ERROR GETTING TENANT INFO', err));
+      if (this.state.gotInvitation) {
+        const inviteEndpoint = 'api/invitations/tenant';
+        axios
+          .get(inviteEndpoint)
+          .then(response => {
+            if (response.data.length > 0) {
+              this.setState({
+                invitation: response.data,
+                gotInvitation: false,
+                openSnackbar: !response.openSnackbar,
+                snackbarMessage:
+                  'You were invited to a property! Check your settings!',
+                snackbarVariant: 'information',
+              });
+            }
+          })
+          .catch(error => console.log(error));
+      }
+      if (this.state.invitation.length === 0) {
+        const endpoint = 'api/tenants/dashboard/';
+        axios
+          .get(endpoint)
+          .then(response => {
+            if (response.data.length > 0) {
+              this.setState(() => ({
+                owner: response.data[0].display_name,
+                address: response.data[0].address,
+                city: response.data[0].city,
+                state: response.data[0].state,
+                zip_code: response.data[0].zip_code,
+                office_phone: response.data[0].office_ph,
+                maintenance_phone: response.data[0].maintenance_ph,
+                owner_email: response.data[0].email,
+                loading: false,
+              }));
+            } else {
+              this.setState(() => ({
+                loading: false,
+              }));
+            }
+            return axios.get('api/work-orders/maintenance');
+          })
+          .then(response => {
+            if (response.data.orders.length > 0) {
+              this.setState(() => ({
+                orders: response.data.orders,
+              }));
+            }
+          })
+          .catch(err => console.log('ERROR GETTING TENANT INFO', err));
+      }
     }
   }
 
@@ -204,12 +288,25 @@ class Dashboard extends Component {
     } else return '800-888-8888';
   };
 
+  toggleSnackbarError = message => {
+    this.setState({
+      openSnackbar: true,
+      snackbarMessage: message,
+      snackbarVariant: 'error',
+    });
+  };
+
+  snackbarClose = () => {
+    this.setState({
+      openSnackbar: false,
+    });
+  };
+
   render() {
     const { classes } = this.props;
-    // let tenantDetails;
 
     // ======= renders tenant information if the tenant was assign to a property
-    if (this.state.address) {
+    if (this.state.address && !this.state.loading) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
@@ -241,7 +338,7 @@ class Dashboard extends Component {
                   <CardContent>
                     <CardHeader
                       title="Alerts"
-                      subheader="Check your status"
+                      subheader="Check your work orders status"
                       className={classes.cardHeader}
                       titleTypographyProps={{
                         component: 'h6',
@@ -252,18 +349,22 @@ class Dashboard extends Component {
                         variant: 'overline',
                       }}
                     />
-                    <ListItem>
-                      <Avatar>
-                        <Build />
-                      </Avatar>
-                      <ListItemText primary="Work order #123 completed" />
-                    </ListItem>
-                    <ListItem>
-                      <Avatar>
-                        <CreditCard />
-                      </Avatar>
-                      <ListItemText primary="Rent due 7/5/18" />
-                    </ListItem>
+                    {this.state.orders.map(order => (
+                      <ListItem key={order.work_order_id}>
+                        <Avatar>
+                          <Build />
+                        </Avatar>
+                        <ListItemText
+                          primary={
+                            'Work order ' +
+                            order.work_order_id +
+                            '  -  ' +
+                            order.work_order_status
+                          }
+                          secondary={order.description}
+                        />
+                      </ListItem>
+                    ))}
                   </CardContent>
                 </Card>
               </Grid>
@@ -316,6 +417,15 @@ class Dashboard extends Component {
                   />
                   <ListItem>
                     <Avatar>
+                      <Person />
+                    </Avatar>
+                    <ListItemText
+                      primary="Landlord:"
+                      secondary={this.state.owner}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <Avatar>
                       <Home />
                     </Avatar>
                     <ListItemText
@@ -364,7 +474,7 @@ class Dashboard extends Component {
           </Grid>
         </Grid>
       );
-    } else {
+    } else if (this.state.loading === false) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
@@ -386,8 +496,17 @@ class Dashboard extends Component {
               </Paper>
             </List>
           </Grid>
+          <CustomSnackbar
+            open={this.state.openSnackbar}
+            variant={this.state.snackbarVariant}
+            message={this.state.snackbarMessage}
+            onClose={this.snackbarClose}
+            onClick={this.snackbarClose}
+          />
         </Grid>
       );
+    } else {
+      return <Loading className={classes.loading} size={80} />;
     }
   }
 }

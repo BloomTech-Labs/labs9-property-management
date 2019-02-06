@@ -1,13 +1,12 @@
 import '@uppy/core/dist/style.css'
 import '@uppy/dashboard/dist/style.css'
 import '@uppy/progress-bar/dist/style.css'
-import {InsertPhoto} from "@material-ui/icons";
+import Button from '@material-ui/core/Button';
 import Transloadit from '@uppy/transloadit';
-import styled from 'styled-components'
-import Typography from '@material-ui/core/Typography';
 import { withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import './FileUploader.css'
+import '../workorders/FileUploader.css'
+import styles from './styles';
 
 const Uppy = require('@uppy/core')
 const GoogleDrive = require('@uppy/google-drive')
@@ -16,23 +15,9 @@ const Url = require('@uppy/url')
 const React = require('react')
 const { DashboardModal } = require('@uppy/react')
 
-const PhotoUploadIcon = styled(InsertPhoto)`
-  color: #999;
-  font-size: 300px !important;
-  cursor: pointer;
-  @media (max-width: 960px) {
-    font-size: 64px;
-  }
-`;
 
-const styles = theme => ({
-  container: {
-    marginLeft: 60,
-    marginBottom: 20,
-  },
-});
 
-class FileUploader extends React.Component {
+class ContractUploader extends React.Component {
   constructor (props) {
     super(props)
 
@@ -40,7 +25,7 @@ class FileUploader extends React.Component {
       open: false,
     }
     
-    const {GetURL} = this.props;
+    const {GetContract} = this.props;
 
     this.uppy = Uppy({
       id: 'uppy',
@@ -59,40 +44,25 @@ class FileUploader extends React.Component {
           auth: {
             key: 'a45d67901f6a11e9bfbbed9e321ead56'
           },
-          template_id: '1645d210203911e9a543a1e9d68eabe6',
+          template_id: '53a4e2b02a3c11e98a5f3bbfdcb3df53',
           
         },
-        steps: {
-          ":original": {
-            "robot": "/upload/handle"
-          },
-          "filter": {
-            "use": ":original",
-            "robot": "/file/filter",
-            "accepts": [
-              [
-                "${file.mime}",
-                "regex",
-                "image"
-              ]
-            ],
-            "error_on_decline": true
-          },
-          "viruscheck": {
-            "use": "filter",
-            "robot": "/file/virusscan",
-            "error_on_decline": true
-          },
-          "export": {
-            "use": [
-              ":original"
-            ],
-            "robot": "/google/store",
-            "credentials": "propertyApp",
-            "path": "${unique_prefix}/${file.url_name}",
-            "acl": "public-read",
+        "steps": {
+            ":original": {
+              "robot": "/upload/handle"
+            },
+            "viruscheck": {
+              "use": ":original",
+              "robot": "/file/virusscan",
+              "error_on_decline": true
+            },
+            "export": {
+              "use": [":original"],
+              "robot": "/google/store",
+              "credentials": "propertyApp",
+              "path": "${unique_prefix}/${file.url_name}",
+            }
           }
-        }
         
       })
       .use(GoogleDrive, {
@@ -111,7 +81,7 @@ class FileUploader extends React.Component {
         serverPattern: /.transloadit.com$/
       })
       .on('transloadit:complete', (assembly) => {
-        GetURL({original:assembly.results[":original"][0].url
+        GetContract({original:assembly.results[":original"][0].url
       });  
           
       });     
@@ -129,15 +99,17 @@ class FileUploader extends React.Component {
   }
 
   render () {
-    const { classes } = this.props;
+
     return (
       <div>
         <div>
-           <PhotoUploadIcon onClick={this.handleModalClick}
-          />
-            <Typography className={classes.container} component="h1" variant="h5">
-              Upload a Photo
-            </Typography>
+           <Button 
+           onClick={this.handleModalClick}
+           color="primary"
+           variant="contained"
+           >
+           Upload A Contract
+           </Button>
             <DashboardModal
               uppy={this.uppy}
               plugins={['addGoogleDrive', 'addDropbox', 'addUrl']}
@@ -152,14 +124,13 @@ class FileUploader extends React.Component {
   }
 }
 
-FileUploader.propTypes = {
+ContractUploader.propTypes = {
   classes: PropTypes.object.isRequired,
-  GetURL: PropTypes.func,
+   GetContract: PropTypes.func,
 };
 
-FileUploader.defaultProps = {
-  GetURL: () => {},
+ContractUploader.defaultProps = {
+  GetContract: () => {},
 };
  
-export default withStyles(styles)(FileUploader);
-
+export default withStyles(styles)(ContractUploader);
