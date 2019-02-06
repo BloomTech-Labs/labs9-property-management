@@ -124,20 +124,22 @@ class Payments extends React.Component {
 
   componentDidMount() {
     const endpoint = 'api/tenants/dashboard/';
-    axios
-      .get(endpoint)
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState(() => ({
-            address: response.data[0].address,
-            loading: false,
-          }));
-        }
-      })
-      .catch(error => {
-        console.log('Loading: ', this.state.loading);
-        console.error('Server Error: ', error);
-      });
+    if (this.props.authTokenRecieved) {
+      axios
+        .get(endpoint)
+        .then(response => {
+          if (response.data.length > 0) {
+            this.setState(() => ({
+              address: response.data[0].address,
+              loading: false,
+            }));
+          }
+        })
+        .catch(error => {
+          console.log('Loading: ', this.state.loading);
+          console.error('Server Error: ', error);
+        });
+    }
   }
 
   componentDidUpdate(prevProps) {
