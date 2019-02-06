@@ -137,42 +137,50 @@ class Maintenance extends React.Component {
     snackbarMessage: '',
     snackbarVariant: '',
     orders: [],
+    orderLoading: true,
   };
 
   componentDidMount() {
     const endpoint = 'api/tenants/dashboard/';
-    axios
-      .get(endpoint)
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState(() => ({
-            address: response.data[0].address,
-            city: response.data[0].city,
-            state: response.data[0].state,
-            zipcode: response.data[0].zip_code,
-            phoneNumber: response.data[0].mobile,
-            maintenanceNum: response.data[0].maintenance_ph,
-            houseID: response.data[0].house_id,
-            tenantID: response.data[0].tenant_id,
-            loading: false,
-          }));
-        } else {
-          this.setState(() => ({
-            loading: false,
-          }));
-        }
-        return axios.get('api/work-orders/maintenance');
-      })
-      .then(response => {
-        if (response.data.orders.length > 0) {
-          this.setState(() => ({
-            orders: response.data.orders,
-          }));
-        }
-      })
-      .catch(error => {
-        console.error('Server Error: ', error);
-      });
+    if (this.props.authTokenRecieved) {
+      axios
+        .get(endpoint)
+        .then(response => {
+          if (response.data.length > 0) {
+            this.setState(() => ({
+              address: response.data[0].address,
+              city: response.data[0].city,
+              state: response.data[0].state,
+              zipcode: response.data[0].zip_code,
+              phoneNumber: response.data[0].mobile,
+              maintenanceNum: response.data[0].maintenance_ph,
+              houseID: response.data[0].house_id,
+              tenantID: response.data[0].tenant_id,
+              loading: false,
+            }));
+          } else {
+            this.setState(() => ({
+              loading: false,
+            }));
+          }
+          return axios.get('api/work-orders/maintenance');
+        })
+        .then(response => {
+          if (response.data.orders.length > 0) {
+            this.setState(() => ({
+              orders: response.data.orders,
+              orderLoading: false,
+            }));
+          } else {
+            this.setState(() => ({
+              orderLoading: false,
+            }));
+          }
+        })
+        .catch(error => {
+          console.error('Server Error: ', error);
+        });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -207,6 +215,11 @@ class Maintenance extends React.Component {
           if (response.data.orders.length > 0) {
             this.setState(() => ({
               orders: response.data.orders,
+              orderLoading: false,
+            }));
+          } else {
+            this.setState(() => ({
+              orderLoading: false,
             }));
           }
         })
@@ -283,7 +296,10 @@ class Maintenance extends React.Component {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
-            <MaintenanceTable orders={this.state.orders} />
+            <MaintenanceTable
+              orders={this.state.orders}
+              orderLoading={this.state.orderLoading}
+            />
             <form onSubmit={this.submitWorkOrder} autoComplete="off">
               <Grid container justify="space-around" spacing={16}>
                 <Paper className={classes.imgpaper}>
@@ -302,7 +318,7 @@ class Maintenance extends React.Component {
                   />
                   <ListItem className={classNames(classes.blockElement)}>
                     <Avatar>
-                      <Call />
+                      <Call color="primary" />
                     </Avatar>
                     <ListItemText
                       primary="24/7 Maintenance"
