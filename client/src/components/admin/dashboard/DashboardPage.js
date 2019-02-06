@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { withAuthUser } from '../../session';
+import { compose } from 'recompose';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import EmptyPage from '../../emptypage/EmptyPage';
+import Loading from '../../loading/Loading';
+import axios from 'axios';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import CardContent from '@material-ui/core/CardContent';
+import Avatar from '@material-ui/core/Avatar';
+import { Home, Build, CheckCircleOutline } from '@material-ui/icons';
 
 const styles = theme => ({
   container: {
@@ -20,7 +31,7 @@ const styles = theme => ({
     position: 'relative',
     overflow: 'visible',
     minWidth: '40%',
-    minHeight: 350,
+    minHeight: 360,
     zIndex: 0,
   },
   longCard: {
@@ -60,10 +71,142 @@ const styles = theme => ({
 });
 
 class DashBoard extends Component {
-  componentDidMount() {}
+  state = {
+    workOrder: '',
+    orderLoading: true,
+  };
+
+  componentDidMount() {
+    if (this.props.authTokenRecieved) {
+      axios
+        .get('/api/work-orders/owner')
+        .then(orders => {
+          this.setState({
+            workOrder: orders.data.orders.pop(),
+            orderLoading: false,
+          });
+        })
+        .catch(error => {
+          console.error('Server Error: ', error);
+        });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.authTokenRecieved &&
+      this.props.authTokenRecieved !== prevProps.authTokenRecieved
+    ) {
+      axios
+        .get('/api/work-orders/owner')
+        .then(orders => {
+          this.setState({
+            workOrder: orders.data.orders.pop(),
+            orderLoading: false,
+          });
+        })
+        .catch(error => {
+          console.error('Server Error: ', error);
+        });
+    }
+    console.log('this.state.workOrder: ', this.state.workOrder);
+  }
 
   render() {
     const { classes } = this.props;
+    const { workOrder, orderLoading } = this.state;
+
+    let orderBody = null;
+
+    if (!orderLoading && this.state.workOrder) {
+      orderBody = (
+        <Card className={classes.card}>
+          <CardHeader
+            title="Work Order Summary"
+            subheader="Most Recent Work Order"
+            className={classes.cardHeader}
+            titleTypographyProps={{
+              component: 'h6',
+              variant: 'h6',
+              color: 'inherit',
+            }}
+            subheaderTypographyProps={{
+              variant: 'overline',
+            }}
+          />
+          <CardContent>
+            <List className={classes.root}>
+              <ListItem>
+                <Avatar>
+                  <Home />
+                </Avatar>
+                <ListItemText primary="Address" secondary={workOrder.address} />
+              </ListItem>
+              <ListItem>
+                <Avatar>
+                  <Build />
+                </Avatar>
+                <ListItemText
+                  primary="Issue"
+                  secondary={workOrder.description}
+                />
+              </ListItem>
+              <ListItem>
+                <Avatar>
+                  <CheckCircleOutline />
+                </Avatar>
+                <ListItemText
+                  primary="Permission to Enter Property"
+                  secondary={workOrder.property_access ? 'YES' : 'NO'}
+                />
+              </ListItem>
+            </List>
+          </CardContent>
+        </Card>
+      );
+    } else if (!orderLoading && !workOrder) {
+      orderBody = (
+        <Card className={classes.card}>
+          <CardHeader
+            title="Work Order Summary"
+            subheader="Most Recent Work Order"
+            className={classes.cardHeader}
+            titleTypographyProps={{
+              component: 'h6',
+              variant: 'h6',
+              color: 'inherit',
+            }}
+            subheaderTypographyProps={{
+              variant: 'overline',
+            }}
+          />
+          <EmptyPage
+            className={classes.emptyPage}
+            variant="h5"
+            message="No Work Orders"
+          />
+        </Card>
+      );
+    } else {
+      orderBody = (
+        <Card className={classes.card}>
+          <CardHeader
+            title="Work Order Summary"
+            subheader="Most Recent Work Order"
+            className={classes.cardHeader}
+            titleTypographyProps={{
+              component: 'h6',
+              variant: 'h6',
+              color: 'inherit',
+            }}
+            subheaderTypographyProps={{
+              variant: 'overline',
+            }}
+          />
+          <Loading className={classes.loading} size={80} />
+        </Card>
+      );
+    }
 
     return (
       <Grid container className={classes.container} spacing={16}>
@@ -92,26 +235,7 @@ class DashBoard extends Component {
               </Card>
             </Grid>
             <Grid item xs={12} md={5}>
-              <Card className={classes.card}>
-                <CardHeader
-                  title="Work Order Summary"
-                  subheader="Most Recent Work Order"
-                  className={classes.cardHeader}
-                  titleTypographyProps={{
-                    component: 'h6',
-                    variant: 'h6',
-                    color: 'inherit',
-                  }}
-                  subheaderTypographyProps={{
-                    variant: 'overline',
-                  }}
-                />
-                <EmptyPage
-                  className={classes.emptyPage}
-                  variant="h5"
-                  message="No Work Orders"
-                />
-              </Card>
+              {orderBody}
             </Grid>
             <Grid item xs={12} md={11}>
               <Card className={classes.longCard}>
@@ -142,4 +266,13 @@ class DashBoard extends Component {
   }
 }
 
-export default withStyles(styles)(DashBoard);
+const DashBoardPage = compose(
+  withAuthUser,
+  withStyles(styles)
+)(DashBoard);
+
+DashBoard.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default DashBoardPage;
