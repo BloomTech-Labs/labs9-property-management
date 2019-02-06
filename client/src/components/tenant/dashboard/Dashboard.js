@@ -24,6 +24,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
 import CustomSnackbar from '../../snackbar/CustomSnackbar';
+import Loading from '../../loading/Loading';
 
 const styles = theme => ({
   container: {
@@ -119,6 +120,13 @@ const styles = theme => ({
     padding: 20,
     backgroundColor: theme.palette.background.paper,
   },
+  loading: {
+    marginTop: '50%',
+    padding: theme.spacing.unit * 3,
+    [theme.breakpoints.up('sm')]: {
+      marginTop: '20%',
+    },
+  },
 });
 
 class Dashboard extends Component {
@@ -137,6 +145,7 @@ class Dashboard extends Component {
     snackbarMessage: '',
     snackbarVariant: '',
     orders: [],
+    loading: true,
   };
 
   componentDidMount() {
@@ -173,6 +182,11 @@ class Dashboard extends Component {
                 office_phone: response.data[0].office_ph,
                 maintenance_phone: response.data[0].maintenance_ph,
                 owner_email: response.data[0].email,
+                loading: false,
+              }));
+            } else {
+              this.setState(() => ({
+                loading: false,
               }));
             }
             return axios.get('api/work-orders/maintenance');
@@ -226,6 +240,11 @@ class Dashboard extends Component {
                 office_phone: response.data[0].office_ph,
                 maintenance_phone: response.data[0].maintenance_ph,
                 owner_email: response.data[0].email,
+                loading: false,
+              }));
+            } else {
+              this.setState(() => ({
+                loading: false,
               }));
             }
             return axios.get('api/work-orders/maintenance');
@@ -281,10 +300,9 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props;
-    // let tenantDetails;
 
     // ======= renders tenant information if the tenant was assign to a property
-    if (this.state.address) {
+    if (this.state.address && !this.state.loading) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
@@ -443,7 +461,7 @@ class Dashboard extends Component {
           </Grid>
         </Grid>
       );
-    } else {
+    } else if (this.state.loading === false) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
@@ -474,6 +492,8 @@ class Dashboard extends Component {
           />
         </Grid>
       );
+    } else {
+      return <Loading className={classes.loading} size={80} />;
     }
   }
 }
