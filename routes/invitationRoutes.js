@@ -7,13 +7,21 @@ router.use(express.json());
 
 // Invitation is created by owner
 router.post('/admin', (req, res) => {
-  const { email, lease_start_date, lease_end_date, uid, house_id } = req.body;
+  const {
+    email,
+    lease_start_date,
+    lease_end_date,
+    uid,
+    house_id,
+    lease_contract,
+  } = req.body;
 
   const invitation = {
     lease_start_date: lease_start_date,
     lease_end_date: lease_end_date,
     owner_uid: uid,
     house_id: house_id,
+    lease_contract: lease_contract,
   };
 
   console.log('req', req.body);
@@ -48,7 +56,8 @@ router.get('/admin', (req, res) => {
       'users.email',
       'i.lease_start_date',
       'i.lease_end_date',
-      'h.property_name'
+      'h.property_name',
+      'i.lease_contract'
     )
     .then(data => {
       console.log(data);
@@ -68,7 +77,8 @@ router.get('/tenant', (req, res) => {
       'users.display_name',
       'i.lease_start_date',
       'i.lease_end_date',
-      'h.property_name'
+      'h.property_name',
+      'i.lease_contract'
     )
     .then(data => {
       console.log(data);
@@ -87,6 +97,7 @@ router.post('/accept', (req, res) => {
           house_id: invite[0].house_id,
           lease_start_date: invite[0].lease_start_date,
           lease_end_date: invite[0].lease_end_date,
+          lease_contract: invite[0].lease_contract,
         })
         .then(data => {
           console.log(data);
