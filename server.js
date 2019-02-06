@@ -82,24 +82,24 @@ server.get('/', (req, res) => {
 });
 
 //====TWILIO CODE==============================
-var accountSid = process.env.twilio_accountSid; // Your Account SID from www.twilio.com/console
-var authToken = process.env.twilio_authToken; // Your Account token from www.twilio.com/console
+//var accountSid = process.env.twilio_accountSid; // Your Account SID from www.twilio.com/console
+//var authToken = process.env.twilio_authToken; // Your Account token from www.twilio.com/console
 
-var twilio = require('twilio');
-var client = new twilio(accountSid, authToken);
+// var twilio = require('twilio');
+// var client = new twilio(accountSid, authToken);
 
-server.get('/text', (req, res) => {
+//server.get('/text', (req, res) => {
 
   //sends the texts to number
-  client.messages
-    .create({
-      body: 'Work order status updated',
-      to: '+13123207318', // Text this number
-      from: '+12245058863', // From a valid Twilio number given by console
-    })
-    .then(message => console.log(message.sid))
-    .done();
-});
+//   client.messages
+//     .create({
+//       body: 'Work order status updated',
+//       to: '+13123207318', // Text this number
+//       from: '+12245058863', // From a valid Twilio number given by console
+//     })
+//     .then(message => console.log(message.sid))
+//     .done();
+// });
 
 // server.post('/verify', (req, res) => {});
 module.exports = server;

@@ -146,11 +146,11 @@ class WorkOrders extends Component {
     this.setState({ imageModalOpen: false, img_src: '' });
   };
 
-  sendAlert = () => {
-    axios('https://property-management-dev.herokuapp.com/text').catch(err =>
-      console.error(err)
-    );
-  };
+  // sendAlert = () => {
+  //   axios('https://property-management-dev.herokuapp.com/text').catch(err =>
+  //     console.error(err)
+  //   );
+  // };
 
   updateStatus = entry => event => {
     this.sendAlert();
