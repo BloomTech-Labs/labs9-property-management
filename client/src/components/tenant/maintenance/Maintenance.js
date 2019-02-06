@@ -156,6 +156,10 @@ class Maintenance extends React.Component {
             tenantID: response.data[0].tenant_id,
             loading: false,
           }));
+        } else {
+          this.setState(() => ({
+            loading: false,
+          }));
         }
         return axios.get('api/work-orders/maintenance');
       })
@@ -190,6 +194,10 @@ class Maintenance extends React.Component {
               maintenanceNum: response.data[0].maintenance_ph,
               houseID: response.data[0].house_id,
               tenantID: response.data[0].tenant_id,
+              loading: false,
+            }));
+          } else {
+            this.setState(() => ({
               loading: false,
             }));
           }
@@ -271,7 +279,7 @@ class Maintenance extends React.Component {
   render() {
     const { classes } = this.props;
 
-    if (this.state.address && this.state.loading === false) {
+    if (this.state.address && !this.state.loading) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
@@ -380,7 +388,7 @@ class Maintenance extends React.Component {
           />
         </Grid>
       );
-    } else if (this.state.loading === true) {
+    } else if (this.state.loading === false) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
