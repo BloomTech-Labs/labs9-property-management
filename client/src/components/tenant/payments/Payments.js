@@ -173,7 +173,6 @@ class Payments extends React.Component {
     axios
       .post('/api/payments', body)
       .then(response => {
-        console.log('response', response.data);
         // alert(
         //   'Payment Success: token was received by backend and charge was made.'
         // );
