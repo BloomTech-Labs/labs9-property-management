@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {
+  Person,
   Home,
   Call,
   Email,
@@ -131,6 +132,7 @@ const styles = theme => ({
 
 class Dashboard extends Component {
   state = {
+    owner: '',
     amount: '',
     city: '',
     state: '',
@@ -175,6 +177,7 @@ class Dashboard extends Component {
           .then(response => {
             if (response.data.length > 0) {
               this.setState(() => ({
+                owner: response.data[0].display_name,
                 address: response.data[0].address,
                 city: response.data[0].city,
                 state: response.data[0].state,
@@ -233,6 +236,7 @@ class Dashboard extends Component {
           .then(response => {
             if (response.data.length > 0) {
               this.setState(() => ({
+                owner: response.data[0].display_name,
                 address: response.data[0].address,
                 city: response.data[0].city,
                 state: response.data[0].state,
@@ -346,7 +350,7 @@ class Dashboard extends Component {
                       }}
                     />
                     {this.state.orders.map(order => (
-                      <ListItem>
+                      <ListItem key={order.work_order_id}>
                         <Avatar>
                           <Build />
                         </Avatar>
@@ -411,6 +415,15 @@ class Dashboard extends Component {
                       variant: 'overline',
                     }}
                   />
+                  <ListItem>
+                    <Avatar>
+                      <Person />
+                    </Avatar>
+                    <ListItemText
+                      primary="Landlord:"
+                      secondary={this.state.owner}
+                    />
+                  </ListItem>
                   <ListItem>
                     <Avatar>
                       <Home />
