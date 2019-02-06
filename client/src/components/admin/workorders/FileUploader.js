@@ -143,7 +143,6 @@ class FileUploader extends React.Component {
               plugins={['addGoogleDrive', 'addDropbox', 'addUrl']}
               closeModalOnClickOutside
               open={this.state.open}
-              target={document.body}
               onRequestClose={() => this.setState({ open: false })}
             />
         </div>
