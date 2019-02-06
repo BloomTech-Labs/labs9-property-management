@@ -136,6 +136,7 @@ class Dashboard extends Component {
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
+    orders: [],
   };
 
   componentDidMount() {
@@ -150,7 +151,8 @@ class Dashboard extends Component {
                 invitation: response.data,
                 gotInvitation: false,
                 openSnackbar: !response.openSnackbar,
-                snackbarMessage: 'You received an invitation!',
+                snackbarMessage:
+                  'You were invited to a property! Check your settings!',
                 snackbarVariant: 'information',
               });
             }
@@ -171,6 +173,14 @@ class Dashboard extends Component {
                 office_phone: response.data[0].office_ph,
                 maintenance_phone: response.data[0].maintenance_ph,
                 owner_email: response.data[0].email,
+              }));
+            }
+            return axios.get('api/work-orders/maintenance');
+          })
+          .then(response => {
+            if (response.data.orders.length > 0) {
+              this.setState(() => ({
+                orders: response.data.orders,
               }));
             }
           })
@@ -195,7 +205,7 @@ class Dashboard extends Component {
                 gotInvitation: false,
                 openSnackbar: !response.openSnackbar,
                 snackbarMessage:
-                  'You receive an invitation! Check your settings!',
+                  'You were invited to a property! Check your settings!',
                 snackbarVariant: 'information',
               });
             }
@@ -216,6 +226,14 @@ class Dashboard extends Component {
                 office_phone: response.data[0].office_ph,
                 maintenance_phone: response.data[0].maintenance_ph,
                 owner_email: response.data[0].email,
+              }));
+            }
+            return axios.get('api/work-orders/maintenance');
+          })
+          .then(response => {
+            if (response.data.orders.length > 0) {
+              this.setState(() => ({
+                orders: response.data.orders,
               }));
             }
           })
@@ -298,7 +316,7 @@ class Dashboard extends Component {
                   <CardContent>
                     <CardHeader
                       title="Alerts"
-                      subheader="Check your status"
+                      subheader="Check your work orders status"
                       className={classes.cardHeader}
                       titleTypographyProps={{
                         component: 'h6',
@@ -309,18 +327,22 @@ class Dashboard extends Component {
                         variant: 'overline',
                       }}
                     />
-                    <ListItem>
-                      <Avatar>
-                        <Build />
-                      </Avatar>
-                      <ListItemText primary="Work order #123 completed" />
-                    </ListItem>
-                    <ListItem>
-                      <Avatar>
-                        <CreditCard />
-                      </Avatar>
-                      <ListItemText primary="Rent due 7/5/18" />
-                    </ListItem>
+                    {this.state.orders.map(order => (
+                      <ListItem>
+                        <Avatar>
+                          <Build />
+                        </Avatar>
+                        <ListItemText
+                          primary={
+                            'Work order ' +
+                            order.work_order_id +
+                            '  -  ' +
+                            order.work_order_status
+                          }
+                          secondary={order.description}
+                        />
+                      </ListItem>
+                    ))}
                   </CardContent>
                 </Card>
               </Grid>
