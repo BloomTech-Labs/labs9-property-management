@@ -12,14 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import classNames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import {
-  Person,
-  Home,
-  Call,
-  Email,
-  Build,
-  Payment,
-} from '@material-ui/icons';
+import { Person, Home, Call, Email, Build, Payment } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -355,7 +348,7 @@ class Dashboard extends Component {
                         </Avatar>
                         <ListItemText
                           primary={
-                            'Work order ' +
+                            'Work Order ' +
                             order.work_order_id +
                             '  -  ' +
                             order.work_order_status
