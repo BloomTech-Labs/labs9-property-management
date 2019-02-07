@@ -123,6 +123,13 @@ const styles = theme => ({
   purpleAvatar: {
     backgroundColor: '#5F29FF',
   },
+  alerts: {
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+  },
+  cardHeader: {
+    paddingBottom: 11,
+  },
 });
 
 class Dashboard extends Component {
@@ -344,8 +351,11 @@ class Dashboard extends Component {
                         variant: 'overline',
                       }}
                     />
-                    {this.state.orders.map(order => (
-                      <ListItem key={order.work_order_id}>
+                    {this.state.orders.slice(0, 3).map(order => (
+                      <ListItem
+                        key={order.work_order_id}
+                        className={classes.alerts}
+                      >
                         <Avatar className={classes.purpleAvatar}>
                           <Build />
                         </Avatar>
