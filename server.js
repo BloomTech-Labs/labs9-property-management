@@ -7,8 +7,6 @@ var twilio = require('twilio');
 const dotenv = require('dotenv');
 dotenv.load();
 
-
-
 server.use(express.json());
 server.use(cors());
 server.use(helmet());
@@ -48,7 +46,7 @@ server.use(async (req, res) => {
       .auth()
       .verifyIdToken(idToken)
       .then(decodedToken => {
-        console.log('token',decodedToken);
+        console.log('token', decodedToken);
         req.body.uid = decodedToken.uid;
         return req.next();
       });
@@ -64,6 +62,7 @@ const workOrderRoutes = require('./routes/workOrderRoutes');
 const tenantRoutes = require('./routes/tenantRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const invitationRoutes = require('./routes/invitationRoutes');
+const alertsRoutes = require('./routes/invitationRoutes');
 const tenantDash = require('./routes/tenantDashboard');
 const stripeConnectRoutes = require('./routes/stripeConnectRoutes');
 
@@ -73,6 +72,7 @@ server.use('/api/work-orders', workOrderRoutes);
 server.use('/api/tenants', tenantRoutes);
 server.use('/api/payments', paymentRoutes);
 server.use('/api/invitations', invitationRoutes);
+server.use('/api/alerts', alertsRoutes);
 server.use('/api/tenant-dash', tenantDash);
 server.use('/api/stripe-connect', stripeConnectRoutes);
 
@@ -90,7 +90,7 @@ server.get('/', (req, res) => {
 
 //server.get('/text', (req, res) => {
 
-  //sends the texts to number
+//sends the texts to number
 //   client.messages
 //     .create({
 //       body: 'Work order status updated',
