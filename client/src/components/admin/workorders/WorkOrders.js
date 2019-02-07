@@ -153,7 +153,7 @@ class WorkOrders extends Component {
   // };
 
   updateStatus = entry => event => {
-    this.sendAlert();
+    // this.sendAlert();
     axios
       .put('/api/work-orders/update', {
         work_order_id: entry.work_order_id,

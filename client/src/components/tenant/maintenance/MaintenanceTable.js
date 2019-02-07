@@ -30,7 +30,12 @@ const styles = theme => ({
     padding: 0,
   },
   descriptionWidth: {
-    width: '55%',
+    width: '50%',
+    margin: 0,
+    padding: 0,
+  },
+  propertyWidth: {
+    width: '20%',
     margin: 0,
     padding: 0,
   },
@@ -53,7 +58,7 @@ const MaintenanceTable = props => {
             <TableCell className={classes.customWidth} align="center">
               Request ID
             </TableCell>
-            <TableCell className={classes.customWidth} align="center">
+            <TableCell className={classes.propertyWidth} align="center">
               Property Name
             </TableCell>
             <TableCell className={classes.descriptionWidth} align="center">
