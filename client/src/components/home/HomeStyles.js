@@ -100,8 +100,8 @@ export const AppImageContainer = styled.div`
 
 export const AppImage = styled.img`
   max-width: 100%;
-  width: 800px;
-  padding: 0 24px 76px 24px;
+  width: 824px;
+  padding: 0 24px 24px;
   opacity: 0;
   animation: ${HeroAnimation};
   animation-duration: 2s;
@@ -109,7 +109,7 @@ export const AppImage = styled.img`
   animation-fill-mode: forwards;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   @media (max-width: 600px) {
-    padding: 0px 24px 100px 24px;
+    padding: 0px 24px 48px 24px;
   }
 `;
 
