@@ -63,7 +63,8 @@ router.get('/tenants', (req, res) => {
       'u.display_name',
       'h.property_name',
       't.lease_start_date',
-      't.lease_end_date'
+      't.lease_end_date',
+      't.lease_contract'
     )
     .then(results => {
       res.status(200).json(results);
