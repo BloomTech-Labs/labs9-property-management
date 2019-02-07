@@ -73,7 +73,7 @@ class EditPropertyModal extends Component {
     });
   };
 
-  addProperty = event => {
+  editProperty = event => {
     event.preventDefault();
 
     const {
@@ -105,6 +105,7 @@ class EditPropertyModal extends Component {
     }
 
     const request = {
+      house_id: this.props.houseID,
       property_name: name,
       address: address,
       city: city,
@@ -120,13 +121,9 @@ class EditPropertyModal extends Component {
     };
 
     axios
-      .post('/api/properties', request)
+      .put('/api/properties', request)
       .then(response => {
-        this.props.editPropertyHandler({
-          house_id: response.data[0],
-          tenants: [],
-          ...request,
-        });
+        this.props.editPropertyHandler(request, this.props.houseIndex);
       })
       .catch(err => {
         this.props.snackbarErrorHandler(
@@ -318,7 +315,7 @@ class EditPropertyModal extends Component {
               <Grid item xs={12}>
                 <Button
                   color="primary"
-                  onClick={this.addProperty}
+                  onClick={this.editProperty}
                   variant="text"
                 >
                   Update Property

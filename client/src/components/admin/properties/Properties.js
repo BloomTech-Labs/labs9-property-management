@@ -142,7 +142,11 @@ class Properties extends React.Component {
   }
 
   addPropertyHandler = property => {
-    let properties = [...this.state.properties, property];
+    let properties = [];
+    this.state.properties.forEach(property => {
+      properties.push({ ...property });
+    });
+    properties.push(property);
 
     this.setState({
       properties: properties,
@@ -153,15 +157,21 @@ class Properties extends React.Component {
     });
   };
 
-  editPropertyHandler = property => {
-    let properties = [...this.state.properties, property];
+  editPropertyHandler = (updatedProp, houseIndex) => {
+    let properties = [];
+    console.log('prop: ', updatedProp, ' index: ', houseIndex);
+    this.state.properties.forEach(property => {
+      properties.push({ ...property });
+    });
+
+    properties[houseIndex] = { ...properties[houseIndex], ...updatedProp };
 
     this.setState({
       properties: properties,
       openSnackbar: true,
       snackbarMessage: 'Successfully Updated Property Info!',
       snackbarVariant: 'success',
-      addPropertyModalOpen: !this.state.addPropertyModalOpen,
+      editModalOpen: false,
     });
   };
 
@@ -180,8 +190,14 @@ class Properties extends React.Component {
     this.setState({ detailedViewOn: false });
   };
 
-  toggleEditProperty = () => {
-    this.setState({ editModalOpen: !this.state.editModalOpen });
+  toggleEditProperty = event => {
+    const id = event.currentTarget.getAttribute('data-id');
+    const index = event.currentTarget.getAttribute('data-index');
+    this.setState({
+      editModalOpen: !this.state.editModalOpen,
+      selectedPropertyId: id,
+      selectedPropertyIndex: index,
+    });
   };
 
   toggleRemovePropertyModal = event => {
@@ -285,6 +301,8 @@ class Properties extends React.Component {
                       <Tooltip title="Edit">
                         <IconButton
                           aria-label="Edit Property"
+                          data-id={entry.house_id}
+                          data-index={index}
                           onClick={this.toggleEditProperty}
                         >
                           <Edit />
@@ -442,6 +460,8 @@ class Properties extends React.Component {
           onClose={this.toggleEditProperty}
           editPropertyHandler={this.editPropertyHandler}
           snackbarErrorHandler={this.toggleSnackbarError}
+          houseID={this.state.selectedPropertyId}
+          houseIndex={this.state.selectedPropertyIndex}
         />
         <Modal
           open={this.state.trashModalOpen}
