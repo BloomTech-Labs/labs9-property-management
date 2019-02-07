@@ -26,6 +26,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import AddPropertyModal from './AddPropertyModal';
+import EditPropertyModal from './EditPropertyModal'; // edit property modal
 import PropertyModal from './PropertyModal';
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
@@ -147,6 +148,18 @@ class Properties extends React.Component {
       properties: properties,
       openSnackbar: true,
       snackbarMessage: 'Successfully Added Property!',
+      snackbarVariant: 'success',
+      addPropertyModalOpen: !this.state.addPropertyModalOpen,
+    });
+  };
+
+  editPropertyHandler = property => {
+    let properties = [...this.state.properties, property];
+
+    this.setState({
+      properties: properties,
+      openSnackbar: true,
+      snackbarMessage: 'Successfully Updated Property Info!',
       snackbarVariant: 'success',
       addPropertyModalOpen: !this.state.addPropertyModalOpen,
     });
@@ -424,16 +437,12 @@ class Properties extends React.Component {
           addPropertyHandler={this.addPropertyHandler}
           snackbarErrorHandler={this.toggleSnackbarError}
         />
-        <Modal
+        <EditPropertyModal
           open={this.state.editModalOpen}
           onClose={this.toggleEditProperty}
-        >
-          <Paper className={classes.paper}>
-            <Typography variant="h5" component="p">
-              Edit
-            </Typography>
-          </Paper>
-        </Modal>
+          editPropertyHandler={this.editPropertyHandler}
+          snackbarErrorHandler={this.toggleSnackbarError}
+        />
         <Modal
           open={this.state.trashModalOpen}
           onClose={this.toggleRemoveProperty}
