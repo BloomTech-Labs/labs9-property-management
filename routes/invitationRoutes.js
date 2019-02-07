@@ -13,7 +13,7 @@ router.post('/admin', (req, res) => {
     lease_end_date,
     uid,
     house_id,
-    lease_contract,
+    pdf_url,
   } = req.body;
 
   const invitation = {
@@ -21,7 +21,7 @@ router.post('/admin', (req, res) => {
     lease_end_date: lease_end_date,
     owner_uid: uid,
     house_id: house_id,
-    lease_contract: lease_contract,
+    lease_contract: pdf_url,
   };
 
   console.log('req', req.body);
