@@ -268,7 +268,7 @@ class InvitesTable extends React.Component {
                             {n.lease_end_date}
                           </TableCell>
                           <TableCell padding="dense" align="center">
-                            {n.lease_contract}
+                          <Typography variant="h7"><a href={n.lease_contract} style={{ textDecoration: 'none' }}>View</a></Typography> 
                           </TableCell>
                         </TableRow>
                       );

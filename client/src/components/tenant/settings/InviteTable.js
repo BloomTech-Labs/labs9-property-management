@@ -66,7 +66,6 @@ const InviteTable = props => {
               <TableCell align="center">{invite.property_name}</TableCell>
               <TableCell align="center">{invite.lease_start_date}</TableCell>
               <TableCell align="center">{invite.lease_end_date}</TableCell>
-              <TableCell align="center">{invite.lease_contract}</TableCell>
               <TableCell align="center">
                 <Button
                   color="primary"
@@ -76,6 +75,13 @@ const InviteTable = props => {
                   Accept
                 </Button>
                 <Button>Decline</Button>
+              </TableCell>
+              <TableCell align="center">
+              <Typography variant="h7">
+              <a href={invite.lease_contract} style={{ textDecoration: 'none' }}>
+              View
+              </a>
+              </Typography> 
               </TableCell>
             </TableRow>
           ))}
