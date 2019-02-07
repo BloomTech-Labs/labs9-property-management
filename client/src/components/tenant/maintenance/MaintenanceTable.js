@@ -41,7 +41,6 @@ const styles = theme => ({
 
 const MaintenanceTable = props => {
   const { classes } = props;
-  console.log('props.orderloading: ', props.orderLoading);
 
   return (
     <Paper className={classes.root}>
