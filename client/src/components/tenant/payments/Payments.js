@@ -75,7 +75,6 @@ const styles = theme => ({
   },
   center: {
     display: 'flex',
-    // flexWrap: 'wrap',
     justifyContent: 'center',
   },
   button: {
@@ -108,6 +107,9 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       marginTop: '20%',
     },
+  },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
   },
 });
 
@@ -254,7 +256,7 @@ class Payments extends React.Component {
                   }}
                 />
                 <ListItem>
-                  <Avatar>
+                  <Avatar className={classes.purpleAvatar}>
                     <Payment />
                   </Avatar>
                   <ListItemText primary="Balance:" secondary="$ 0.00" />
