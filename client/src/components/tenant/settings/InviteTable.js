@@ -52,6 +52,9 @@ const InviteTable = props => {
             <TableCell className={classes.customWidth} align="center">
               Action
             </TableCell>
+            <TableCell className={classes.customWidth} align="center">
+              Contract
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -72,6 +75,18 @@ const InviteTable = props => {
                   Accept
                 </Button>
                 <Button>Decline</Button>
+              </TableCell>
+              <TableCell align="center">
+                <Typography variant="inherit">
+                  <a
+                    href={invite.lease_contract}
+                    style={{ textDecoration: 'none' }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View
+                  </a>
+                </Typography>
               </TableCell>
             </TableRow>
           ))}

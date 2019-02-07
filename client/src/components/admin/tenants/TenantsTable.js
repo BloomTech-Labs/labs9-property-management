@@ -39,6 +39,12 @@ const rows = [
     disablePadding: false,
     label: 'Lease End Date',
   },
+  {
+    id: 'lease_contract',
+    numeric: false,
+    disablePadding: false,
+    label: 'Contract',
+  },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -261,6 +267,18 @@ class InvitesTable extends React.Component {
                           </TableCell>
                           <TableCell padding="dense" align="center">
                             {data.lease_end_date}
+                          </TableCell>
+                          <TableCell padding="dense" align="center">
+                            <Typography variant="inherit">
+                              <a
+                                href={data.lease_contract}
+                                style={{ textDecoration: 'none' }}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                View
+                              </a>
+                            </Typography>
                           </TableCell>
                         </TableRow>
                       );

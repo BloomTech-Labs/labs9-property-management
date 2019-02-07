@@ -18,6 +18,7 @@ import { Payment } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
+import Loading from '../../loading/Loading';
 
 const styles = theme => ({
   container: {
@@ -74,7 +75,6 @@ const styles = theme => ({
   },
   center: {
     display: 'flex',
-    // flexWrap: 'wrap',
     justifyContent: 'center',
   },
   button: {
@@ -108,6 +108,9 @@ const styles = theme => ({
       marginTop: '20%',
     },
   },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
+  },
 });
 
 class Payments extends React.Component {
@@ -133,6 +136,10 @@ class Payments extends React.Component {
               address: response.data[0].address,
               loading: false,
             }));
+          } else {
+            this.setState(() => ({
+              loading: false,
+            }));
           }
         })
         .catch(error => {
@@ -154,6 +161,10 @@ class Payments extends React.Component {
           if (response.data.length > 0) {
             this.setState(() => ({
               address: response.data[0].address,
+              loading: false,
+            }));
+          } else {
+            this.setState(() => ({
               loading: false,
             }));
           }
@@ -225,7 +236,7 @@ class Payments extends React.Component {
     const { classes } = this.props;
     const publishableKey = 'pk_test_IiM4lt5m1LYfjZBPfY8wa6Jo';
 
-    if (!this.state.loading) {
+    if (!this.state.loading && this.state.address) {
       return (
         <>
           <Grid container className={classes.container} spacing={16}>
@@ -245,7 +256,7 @@ class Payments extends React.Component {
                   }}
                 />
                 <ListItem>
-                  <Avatar>
+                  <Avatar className={classes.purpleAvatar}>
                     <Payment />
                   </Avatar>
                   <ListItemText primary="Balance:" secondary="$ 0.00" />
@@ -320,7 +331,7 @@ class Payments extends React.Component {
           </Grid>
         </>
       );
-    } else if (this.state.loading) {
+    } else if (!this.state.loading) {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
@@ -344,6 +355,8 @@ class Payments extends React.Component {
           </Grid>
         </Grid>
       );
+    } else {
+      return <Loading className={classes.loading} size={80} />;
     }
   }
 }

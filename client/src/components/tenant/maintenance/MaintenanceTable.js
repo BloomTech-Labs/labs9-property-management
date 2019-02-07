@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Loading from '../../loading/Loading';
+import EmptyPage from '../../emptypage/EmptyPage';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -28,9 +30,17 @@ const styles = theme => ({
     padding: 0,
   },
   descriptionWidth: {
-    width: '55%',
+    width: '50%',
     margin: 0,
     padding: 0,
+  },
+  propertyWidth: {
+    width: '20%',
+    margin: 0,
+    padding: 0,
+  },
+  emptyPage: {
+    padding: theme.spacing.unit * 3,
   },
 });
 
@@ -48,7 +58,7 @@ const MaintenanceTable = props => {
             <TableCell className={classes.customWidth} align="center">
               Request ID
             </TableCell>
-            <TableCell className={classes.customWidth} align="center">
+            <TableCell className={classes.propertyWidth} align="center">
               Property Name
             </TableCell>
             <TableCell className={classes.descriptionWidth} align="center">
@@ -60,18 +70,31 @@ const MaintenanceTable = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.orders.map(order => (
-            <TableRow key={order.work_order_id}>
-              <TableCell component="th" scope="row" align="center">
-                {order.work_order_id}
-              </TableCell>
-              <TableCell align="center">{order.property_name}</TableCell>
-              <TableCell align="center">{order.description}</TableCell>
-              <TableCell align="center">{order.work_order_status}</TableCell>
-            </TableRow>
-          ))}
+          {!props.orderLoading && props.orders.length > 0
+            ? props.orders.map(order => (
+                <TableRow key={order.work_order_id}>
+                  <TableCell component="th" scope="row" align="center">
+                    {order.work_order_id}
+                  </TableCell>
+                  <TableCell align="center">{order.property_name}</TableCell>
+                  <TableCell align="center">{order.description}</TableCell>
+                  <TableCell align="center">
+                    {order.work_order_status}
+                  </TableCell>
+                </TableRow>
+              ))
+            : null}
         </TableBody>
       </Table>
+      {props.orderLoading ? (
+        <Loading className={classes.loader} size={40} />
+      ) : props.orders.length === 0 ? (
+        <EmptyPage
+          className={classes.emptyPage}
+          variant="h4"
+          message="No Requests"
+        />
+      ) : null}
     </Paper>
   );
 };

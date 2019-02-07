@@ -94,6 +94,9 @@ const styles = theme => ({
     height: '100vh',
     padding: theme.spacing.unit * 3,
   },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
+  },
 });
 
 class WorkOrders extends Component {
@@ -153,7 +156,7 @@ class WorkOrders extends Component {
   // };
 
   updateStatus = entry => event => {
-    this.sendAlert();
+    // this.sendAlert();
     axios
       .put('/api/work-orders/update', {
         work_order_id: entry.work_order_id,
@@ -251,7 +254,7 @@ class WorkOrders extends Component {
                         <CardContent>
                           <List className={classes.root}>
                             <ListItem>
-                              <Avatar>
+                              <Avatar className={classes.purpleAvatar}>
                                 <Home />
                               </Avatar>
                               <ListItemText
@@ -260,7 +263,7 @@ class WorkOrders extends Component {
                               />
                             </ListItem>
                             <ListItem>
-                              <Avatar>
+                              <Avatar className={classes.purpleAvatar}>
                                 <Build />
                               </Avatar>
                               <ListItemText
@@ -269,7 +272,7 @@ class WorkOrders extends Component {
                               />
                             </ListItem>
                             <ListItem>
-                              <Avatar>
+                              <Avatar className={classes.purpleAvatar}>
                                 <CheckCircleOutline />
                               </Avatar>
                               <ListItemText
@@ -278,7 +281,7 @@ class WorkOrders extends Component {
                               />
                             </ListItem>
                             <ListItem>
-                              <Avatar>
+                              <Avatar className={classes.purpleAvatar}>
                                 <Call />
                               </Avatar>
                               <ListItemText

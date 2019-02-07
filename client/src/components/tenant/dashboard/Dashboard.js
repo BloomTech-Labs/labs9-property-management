@@ -12,15 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import classNames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import {
-  Person,
-  Home,
-  Call,
-  Email,
-  CreditCard,
-  Build,
-  Payment,
-} from '@material-ui/icons';
+import { Person, Home, Call, Email, Build, Payment } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -127,6 +119,9 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       marginTop: '20%',
     },
+  },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
   },
 });
 
@@ -351,12 +346,12 @@ class Dashboard extends Component {
                     />
                     {this.state.orders.map(order => (
                       <ListItem key={order.work_order_id}>
-                        <Avatar>
+                        <Avatar className={classes.purpleAvatar}>
                           <Build />
                         </Avatar>
                         <ListItemText
                           primary={
-                            'Work order ' +
+                            'Work Order ' +
                             order.work_order_id +
                             '  -  ' +
                             order.work_order_status
@@ -389,7 +384,7 @@ class Dashboard extends Component {
                     }}
                   />
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Payment />
                     </Avatar>
                     <ListItemText primary="Balance:" secondary="$ 0.00" />
@@ -416,7 +411,7 @@ class Dashboard extends Component {
                     }}
                   />
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Person />
                     </Avatar>
                     <ListItemText
@@ -425,7 +420,7 @@ class Dashboard extends Component {
                     />
                   </ListItem>
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Home />
                     </Avatar>
                     <ListItemText
@@ -442,7 +437,7 @@ class Dashboard extends Component {
                     />
                   </ListItem>
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Call />
                     </Avatar>
                     <ListItemText
@@ -451,7 +446,7 @@ class Dashboard extends Component {
                     />
                   </ListItem>
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Email />
                     </Avatar>
                     <ListItemText
@@ -460,7 +455,7 @@ class Dashboard extends Component {
                     />
                   </ListItem>
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Call />
                     </Avatar>
                     <ListItemText

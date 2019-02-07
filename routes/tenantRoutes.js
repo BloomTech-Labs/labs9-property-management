@@ -61,7 +61,8 @@ router.get('/dashboard', (req, res) => {
       'u.email',
       'u.display_name',
       't.house_id',
-      't.tenant_id'
+      't.tenant_id',
+      't.lease_contract'
     )
     .then(property => {
       res.status(200).json(property);

@@ -26,6 +26,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import AddPropertyModal from './AddPropertyModal';
+import EditPropertyModal from './EditPropertyModal'; // edit property modal
 import PropertyModal from './PropertyModal';
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
@@ -103,6 +104,9 @@ const styles = theme => ({
     height: '70vh',
     padding: theme.spacing.unit * 3,
   },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
+  },
 });
 
 class Properties extends React.Component {
@@ -141,7 +145,11 @@ class Properties extends React.Component {
   }
 
   addPropertyHandler = property => {
-    let properties = [...this.state.properties, property];
+    let properties = [];
+    this.state.properties.forEach(property => {
+      properties.push({ ...property });
+    });
+    properties.push(property);
 
     this.setState({
       properties: properties,
@@ -149,6 +157,24 @@ class Properties extends React.Component {
       snackbarMessage: 'Successfully Added Property!',
       snackbarVariant: 'success',
       addPropertyModalOpen: !this.state.addPropertyModalOpen,
+    });
+  };
+
+  editPropertyHandler = (updatedProp, houseIndex) => {
+    let properties = [];
+    console.log('prop: ', updatedProp, ' index: ', houseIndex);
+    this.state.properties.forEach(property => {
+      properties.push({ ...property });
+    });
+
+    properties[houseIndex] = { ...properties[houseIndex], ...updatedProp };
+
+    this.setState({
+      properties: properties,
+      openSnackbar: true,
+      snackbarMessage: 'Successfully Updated Property Info!',
+      snackbarVariant: 'success',
+      editModalOpen: false,
     });
   };
 
@@ -167,8 +193,14 @@ class Properties extends React.Component {
     this.setState({ detailedViewOn: false });
   };
 
-  toggleEditProperty = () => {
-    this.setState({ editModalOpen: !this.state.editModalOpen });
+  toggleEditProperty = event => {
+    const id = event.currentTarget.getAttribute('data-id');
+    const index = event.currentTarget.getAttribute('data-index');
+    this.setState({
+      editModalOpen: !this.state.editModalOpen,
+      selectedPropertyId: id,
+      selectedPropertyIndex: index,
+    });
   };
 
   toggleRemovePropertyModal = event => {
@@ -272,6 +304,8 @@ class Properties extends React.Component {
                       <Tooltip title="Edit">
                         <IconButton
                           aria-label="Edit Property"
+                          data-id={entry.house_id}
+                          data-index={index}
                           onClick={this.toggleEditProperty}
                         >
                           <Edit />
@@ -294,7 +328,7 @@ class Properties extends React.Component {
                       </Typography>
                       <List className={classes.list}>
                         <ListItem>
-                          <Avatar>
+                          <Avatar className={classes.purpleAvatar}>
                             <Home />
                           </Avatar>
                           <ListItemText
@@ -308,7 +342,7 @@ class Properties extends React.Component {
                           />
                         </ListItem>
                         <ListItem>
-                          <Avatar>
+                          <Avatar className={classes.purpleAvatar}>
                             <Person />
                           </Avatar>
                           <ListItemText
@@ -323,7 +357,7 @@ class Properties extends React.Component {
                           />
                         </ListItem>
                         <ListItem>
-                          <Avatar>
+                          <Avatar className={classes.purpleAvatar}>
                             <DateRange />
                           </Avatar>
                           <ListItemText
@@ -342,7 +376,7 @@ class Properties extends React.Component {
                           />
                         </ListItem>
                         <ListItem>
-                          <Avatar>
+                          <Avatar className={classes.purpleAvatar}>
                             <CheckCircleOutline />
                           </Avatar>
                           <ListItemText
@@ -424,16 +458,14 @@ class Properties extends React.Component {
           addPropertyHandler={this.addPropertyHandler}
           snackbarErrorHandler={this.toggleSnackbarError}
         />
-        <Modal
+        <EditPropertyModal
           open={this.state.editModalOpen}
           onClose={this.toggleEditProperty}
-        >
-          <Paper className={classes.paper}>
-            <Typography variant="h5" component="p">
-              Edit
-            </Typography>
-          </Paper>
-        </Modal>
+          editPropertyHandler={this.editPropertyHandler}
+          snackbarErrorHandler={this.toggleSnackbarError}
+          houseID={this.state.selectedPropertyId}
+          houseIndex={this.state.selectedPropertyIndex}
+        />
         <Modal
           open={this.state.trashModalOpen}
           onClose={this.toggleRemoveProperty}
