@@ -19,7 +19,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
-
 const rows = [
   {
     id: 'name',
@@ -268,7 +267,14 @@ class InvitesTable extends React.Component {
                             {n.lease_end_date}
                           </TableCell>
                           <TableCell padding="dense" align="center">
-                          <Typography variant="h7"><a href={n.lease_contract} style={{ textDecoration: 'none' }}>View</a></Typography> 
+                            <Typography variant="inherit">
+                              <a
+                                href={n.lease_contract}
+                                style={{ textDecoration: 'none' }}
+                              >
+                                View
+                              </a>
+                            </Typography>
                           </TableCell>
                         </TableRow>
                       );
