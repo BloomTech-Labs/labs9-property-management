@@ -20,7 +20,6 @@ const styles = theme => ({
     marginRight: 20,
   },
   customWidth: {
-    width: '20%',
     margin: 0,
     padding: 0,
   },
