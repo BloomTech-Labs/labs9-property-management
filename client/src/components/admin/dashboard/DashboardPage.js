@@ -68,6 +68,9 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
     height: '200px',
   },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
+  },
 });
 
 class DashBoard extends Component {
@@ -136,13 +139,13 @@ class DashBoard extends Component {
           <CardContent>
             <List className={classes.root}>
               <ListItem>
-                <Avatar>
+                <Avatar className={classes.purpleAvatar}>
                   <Home />
                 </Avatar>
                 <ListItemText primary="Address" secondary={workOrder.address} />
               </ListItem>
               <ListItem>
-                <Avatar>
+                <Avatar className={classes.purpleAvatar}>
                   <Build />
                 </Avatar>
                 <ListItemText
@@ -151,7 +154,7 @@ class DashBoard extends Component {
                 />
               </ListItem>
               <ListItem>
-                <Avatar>
+                <Avatar className={classes.purpleAvatar}>
                   <CheckCircleOutline />
                 </Avatar>
                 <ListItemText
