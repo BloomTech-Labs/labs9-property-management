@@ -252,7 +252,18 @@ class Tenants extends Component {
                       justifyContent: 'center',
                       marginTop: '25px',
                       marginBottom: '25px',
-                      width: '100%',
+                      width: '50%',
+                    }}
+                  >
+                    <ContractUploader GetContract={this.GetContract} />
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      marginTop: '25px',
+                      marginBottom: '25px',
+                      width: '50%',
                     }}
                   >
                     <Button
@@ -262,7 +273,6 @@ class Tenants extends Component {
                     >
                       Send Invite
                     </Button>
-                    <ContractUploader GetContract={this.GetContract} />
                   </div>
                 </Grid>
               </Card>
