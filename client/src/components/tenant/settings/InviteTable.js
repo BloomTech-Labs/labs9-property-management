@@ -77,8 +77,12 @@ const InviteTable = props => {
                 <Button>Decline</Button>
               </TableCell>
               <TableCell align="center">
-              <Typography variant="h7">
-              <a href={invite.lease_contract} style={{ textDecoration: 'none' }}>
+              <Typography variant="inherit">
+              <a href={invite.lease_contract} 
+              style={{ textDecoration: 'none' }}
+              target="_blank" 
+              rel="noopener noreferrer"
+              >
               View
               </a>
               </Typography> 
