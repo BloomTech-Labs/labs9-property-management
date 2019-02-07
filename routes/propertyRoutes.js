@@ -50,8 +50,7 @@ router.post('/', (req, res) => {
     year_built,
     office_ph,
     maintenance_ph,
-    // owner_id,  // ====== USING FOR TESTING
-    uid, // <-- This is not supposed to be owner_uid!
+    uid,
   } = req.body;
 
   const property = {
@@ -76,6 +75,53 @@ router.post('/', (req, res) => {
     .then(id => {
       console.log('POST property result: ', id[0]);
       res.status(201).json(id);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+// Edit a property
+router.put('/', (req, res) => {
+  const {
+    house_id,
+    property_name,
+    address,
+    city,
+    state,
+    zip_code,
+    bedrooms,
+    bathrooms,
+    max_occupants,
+    square_footage,
+    year_built,
+    office_ph,
+    maintenance_ph,
+    owner_uid,
+  } = req.body;
+
+  const property = {
+    property_name: property_name,
+    address: address,
+    city: city,
+    state: state,
+    zip_code: zip_code,
+    bedrooms: bedrooms,
+    bathrooms: bathrooms,
+    max_occupants: max_occupants,
+    square_footage: square_footage,
+    year_built: year_built,
+    office_ph: office_ph,
+    maintenance_ph: maintenance_ph,
+    owner_uid: owner_uid,
+  };
+
+  db('house_properties')
+    .where('house_id', house_id)
+    .update(property)
+    .then(data => {
+      res.status(200).json(data);
     })
     .catch(err => {
       console.log(err);
