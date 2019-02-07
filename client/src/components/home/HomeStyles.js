@@ -100,7 +100,7 @@ export const AppImageContainer = styled.div`
 
 export const AppImage = styled.img`
   max-width: 100%;
-  width: 704px;
+  width: 800px;
   padding: 0 24px 76px 24px;
   opacity: 0;
   animation: ${HeroAnimation};

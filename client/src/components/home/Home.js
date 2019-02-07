@@ -20,7 +20,8 @@ import {
 import { Build } from '@material-ui/icons';
 import House from '@material-ui/icons/Home';
 import Users from '@material-ui/icons/People';
-import newAppshot from '../../images/newAppshot.svg';
+// import newAppshot from '../../images/newAppshot.svg';
+import bothdash from '../../images/bothdash.png';
 import { GlobalStyle } from '../../styles/Styles';
 
 class Home extends Component {
@@ -46,7 +47,7 @@ class Home extends Component {
               <HeroA href="/">Watch the video</HeroA>
             </HeroGroup>
             <AppImageContainer>
-              <AppImage src={newAppshot} />
+              <AppImage src={bothdash} />
             </AppImageContainer>
             <InfoSection>
               <IconGroup>
