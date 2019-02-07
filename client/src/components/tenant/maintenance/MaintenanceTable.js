@@ -65,28 +65,31 @@ const MaintenanceTable = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.orderLoading ? (
-            <Loading className={classes.loader} size={40} />
-          ) : props.orders.length > 0 ? (
-            props.orders.map(order => (
-              <TableRow key={order.work_order_id}>
-                <TableCell component="th" scope="row" align="center">
-                  {order.work_order_id}
-                </TableCell>
-                <TableCell align="center">{order.property_name}</TableCell>
-                <TableCell align="center">{order.description}</TableCell>
-                <TableCell align="center">{order.work_order_status}</TableCell>
-              </TableRow>
-            ))
-          ) : (
-            <EmptyPage
-              className={classes.emptyPage}
-              variant="h4"
-              message="No Requests"
-            />
-          )}
+          {!props.orderLoading && props.orders.length > 0
+            ? props.orders.map(order => (
+                <TableRow key={order.work_order_id}>
+                  <TableCell component="th" scope="row" align="center">
+                    {order.work_order_id}
+                  </TableCell>
+                  <TableCell align="center">{order.property_name}</TableCell>
+                  <TableCell align="center">{order.description}</TableCell>
+                  <TableCell align="center">
+                    {order.work_order_status}
+                  </TableCell>
+                </TableRow>
+              ))
+            : null}
         </TableBody>
       </Table>
+      {props.orderLoading ? (
+        <Loading className={classes.loader} size={40} />
+      ) : props.orders.length === 0 ? (
+        <EmptyPage
+          className={classes.emptyPage}
+          variant="h4"
+          message="No Requests"
+        />
+      ) : null}
     </Paper>
   );
 };
