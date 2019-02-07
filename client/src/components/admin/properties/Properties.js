@@ -104,6 +104,9 @@ const styles = theme => ({
     height: '70vh',
     padding: theme.spacing.unit * 3,
   },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
+  },
 });
 
 class Properties extends React.Component {
@@ -325,7 +328,7 @@ class Properties extends React.Component {
                       </Typography>
                       <List className={classes.list}>
                         <ListItem>
-                          <Avatar>
+                          <Avatar className={classes.purpleAvatar}>
                             <Home />
                           </Avatar>
                           <ListItemText
@@ -339,7 +342,7 @@ class Properties extends React.Component {
                           />
                         </ListItem>
                         <ListItem>
-                          <Avatar>
+                          <Avatar className={classes.purpleAvatar}>
                             <Person />
                           </Avatar>
                           <ListItemText
@@ -354,7 +357,7 @@ class Properties extends React.Component {
                           />
                         </ListItem>
                         <ListItem>
-                          <Avatar>
+                          <Avatar className={classes.purpleAvatar}>
                             <DateRange />
                           </Avatar>
                           <ListItemText
@@ -373,7 +376,7 @@ class Properties extends React.Component {
                           />
                         </ListItem>
                         <ListItem>
-                          <Avatar>
+                          <Avatar className={classes.purpleAvatar}>
                             <CheckCircleOutline />
                           </Avatar>
                           <ListItemText
