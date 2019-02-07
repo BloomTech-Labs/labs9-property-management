@@ -109,7 +109,6 @@ class DashBoard extends Component {
           console.error('Server Error: ', error);
         });
     }
-    console.log('this.state.workOrder: ', this.state.workOrder);
   }
 
   render() {

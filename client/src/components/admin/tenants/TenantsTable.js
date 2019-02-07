@@ -269,7 +269,14 @@ class InvitesTable extends React.Component {
                             {data.lease_end_date}
                           </TableCell>
                           <TableCell padding="dense" align="center">
-                          <Typography variant="h7"><a href={data.lease_contract} style={{ textDecoration: 'none' }}>View</a></Typography> 
+                            <Typography variant="inherit">
+                              <a
+                                href={data.lease_contract}
+                                style={{ textDecoration: 'none' }}
+                              >
+                                View
+                              </a>
+                            </Typography>
                           </TableCell>
                         </TableRow>
                       );
