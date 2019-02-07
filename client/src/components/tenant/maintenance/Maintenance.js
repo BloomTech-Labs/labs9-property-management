@@ -24,7 +24,7 @@ import MaintenanceTable from './MaintenanceTable';
 
 const styles = theme => ({
   container: {
-    padding: 20,
+    padding: 45,
     marginTop: 70,
   },
   root: {
