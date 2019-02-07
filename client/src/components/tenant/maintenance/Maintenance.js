@@ -117,6 +117,9 @@ const styles = theme => ({
     margin: 'auto',
     width: '100%',
   },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
+  },
 });
 
 class Maintenance extends React.Component {
@@ -317,8 +320,8 @@ class Maintenance extends React.Component {
                     }}
                   />
                   <ListItem className={classNames(classes.blockElement)}>
-                    <Avatar>
-                      <Call color="primary" />
+                    <Avatar className={classes.purpleAvatar}>
+                      <Call />
                     </Avatar>
                     <ListItemText
                       primary="24/7 Maintenance"
