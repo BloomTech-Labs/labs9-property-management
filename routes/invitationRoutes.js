@@ -25,6 +25,7 @@ router.post('/admin', (req, res) => {
   };
 
   console.log('req', req.body);
+  console.log('invitation ---------: ', invitation);
   db('tenants as t')
     .join('users as u', 't.tenant_uid', 'u.uid')
     .where('u.email', email)
