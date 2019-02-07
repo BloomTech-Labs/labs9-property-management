@@ -120,6 +120,9 @@ const styles = theme => ({
       marginTop: '20%',
     },
   },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
+  },
 });
 
 class Dashboard extends Component {
@@ -343,7 +346,7 @@ class Dashboard extends Component {
                     />
                     {this.state.orders.map(order => (
                       <ListItem key={order.work_order_id}>
-                        <Avatar>
+                        <Avatar className={classes.purpleAvatar}>
                           <Build />
                         </Avatar>
                         <ListItemText
@@ -381,7 +384,7 @@ class Dashboard extends Component {
                     }}
                   />
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Payment />
                     </Avatar>
                     <ListItemText primary="Balance:" secondary="$ 0.00" />
@@ -408,7 +411,7 @@ class Dashboard extends Component {
                     }}
                   />
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Person />
                     </Avatar>
                     <ListItemText
@@ -417,7 +420,7 @@ class Dashboard extends Component {
                     />
                   </ListItem>
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Home />
                     </Avatar>
                     <ListItemText
@@ -434,7 +437,7 @@ class Dashboard extends Component {
                     />
                   </ListItem>
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Call />
                     </Avatar>
                     <ListItemText
@@ -443,7 +446,7 @@ class Dashboard extends Component {
                     />
                   </ListItem>
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Email />
                     </Avatar>
                     <ListItemText
@@ -452,7 +455,7 @@ class Dashboard extends Component {
                     />
                   </ListItem>
                   <ListItem>
-                    <Avatar>
+                    <Avatar className={classes.purpleAvatar}>
                       <Call />
                     </Avatar>
                     <ListItemText
