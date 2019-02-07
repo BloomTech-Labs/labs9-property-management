@@ -77,15 +77,16 @@ const InviteTable = props => {
                 <Button>Decline</Button>
               </TableCell>
               <TableCell align="center">
-              <Typography variant="inherit">
-              <a href={invite.lease_contract} 
-              style={{ textDecoration: 'none' }}
-              target="_blank" 
-              rel="noopener noreferrer"
-              >
-              View
-              </a>
-              </Typography> 
+                <Typography variant="inherit">
+                  <a
+                    href={invite.lease_contract}
+                    style={{ textDecoration: 'none' }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View
+                  </a>
+                </Typography>
               </TableCell>
             </TableRow>
           ))}

@@ -271,7 +271,7 @@ class InvitesTable extends React.Component {
                               <a
                                 href={n.lease_contract}
                                 style={{ textDecoration: 'none' }}
-                                target="_blank" 
+                                target="_blank"
                                 rel="noopener noreferrer"
                               >
                                 View
