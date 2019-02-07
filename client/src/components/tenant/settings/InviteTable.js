@@ -52,6 +52,9 @@ const InviteTable = props => {
             <TableCell className={classes.customWidth} align="center">
               Action
             </TableCell>
+            <TableCell className={classes.customWidth} align="center">
+              Contract
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -63,6 +66,7 @@ const InviteTable = props => {
               <TableCell align="center">{invite.property_name}</TableCell>
               <TableCell align="center">{invite.lease_start_date}</TableCell>
               <TableCell align="center">{invite.lease_end_date}</TableCell>
+              <TableCell align="center">{invite.lease_contract}</TableCell>
               <TableCell align="center">
                 <Button
                   color="primary"

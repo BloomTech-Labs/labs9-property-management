@@ -17,7 +17,6 @@ import {
   Home,
   Call,
   Email,
-  CreditCard,
   Build,
   Payment,
 } from '@material-ui/icons';
