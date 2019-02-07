@@ -67,6 +67,7 @@ class Tenants extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log("this.state.pdf.original",this.state.pdf.original)
     if (
       this.props.authTokenRecieved &&
       this.props.authTokenRecieved !== prevProps.authTokenRecieved
@@ -129,6 +130,7 @@ class Tenants extends Component {
       lease_start_date: this.state.leaseStart.toDateString(),
       lease_end_date: this.state.leaseEnd.toDateString(),
       house_id: this.state.house_id,
+      pdf_url: this.state.pdf.original
     };
 
     axios
