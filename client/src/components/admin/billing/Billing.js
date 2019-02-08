@@ -6,7 +6,7 @@ import connectwstripe from '../../../images/connect-with-stripe@2x.png';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -116,6 +116,9 @@ const styles = theme => ({
   table: {
     minWidth: 200,
   },
+  purpleAvatar: {
+    backgroundColor: '#5F29FF',
+  },
 });
 
 class Billing extends Component {
@@ -194,7 +197,7 @@ class Billing extends Component {
     if (this.state.hasStripeID) {
       stripeConnectionDetails = (
         <ListItem>
-          <Avatar>
+          <Avatar className={classes.purpleAvatar}>
             <CheckCircleOutline />
           </Avatar>
           <ListItemText primary="Your Stripe account is connected" />
