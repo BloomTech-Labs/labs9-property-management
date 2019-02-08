@@ -20,7 +20,6 @@ const styles = theme => ({
     marginRight: 20,
   },
   customWidth: {
-    width: '20%',
     margin: 0,
     padding: 0,
   },
@@ -63,10 +62,10 @@ const InviteTable = props => {
               <TableCell component="th" scope="row" align="center">
                 {invite.display_name}
               </TableCell>
-              <TableCell align="center">{invite.property_name}</TableCell>
-              <TableCell align="center">{invite.lease_start_date}</TableCell>
-              <TableCell align="center">{invite.lease_end_date}</TableCell>
-              <TableCell align="center">
+              <TableCell align="right">{invite.property_name}</TableCell>
+              <TableCell align="right">{invite.lease_start_date}</TableCell>
+              <TableCell align="right">{invite.lease_end_date}</TableCell>
+              <TableCell align="right">
                 <Button
                   color="primary"
                   data-id={invite.id}
@@ -76,7 +75,7 @@ const InviteTable = props => {
                 </Button>
                 <Button>Decline</Button>
               </TableCell>
-              <TableCell align="center">
+              <TableCell align="left">
                 <Typography variant="inherit">
                   <a
                     href={invite.lease_contract}

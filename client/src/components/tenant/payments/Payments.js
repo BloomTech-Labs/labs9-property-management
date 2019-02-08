@@ -19,6 +19,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
 import Loading from '../../loading/Loading';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const styles = theme => ({
   container: {
@@ -117,7 +118,7 @@ class Payments extends React.Component {
   state = {
     amount: '',
     payments: [],
-    paymentAmount: 72500,
+    paymentAmount: null,
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
@@ -178,7 +179,7 @@ class Payments extends React.Component {
 
   onToken = token => {
     const body = {
-      amount: this.state.paymentAmount,
+      amount: this.state.paymentAmount * 100,
       token: token,
     };
     axios
@@ -189,7 +190,7 @@ class Payments extends React.Component {
         // );
         this.setState(prevState => {
           return {
-            openSnackbar: !prevState.openSnackbar,
+            openSnackbar: true,
             snackbarMessage: 'Payment was a success. Thank you!',
             snackbarVariant: 'success',
             payments: prevState.payments.concat({
@@ -288,15 +289,18 @@ class Payments extends React.Component {
                       <form noValidate autoComplete="off">
                         <List className={classes.box}>
                           <ListItem className={classes.blockElement}>
-                            <ListItemText
-                              className={classNames(classes.noPadding)}
-                              primary="Payment Amount:"
-                            />
                             <TextField
-                              id="standard-name"
-                              label="Amount"
+                              id="filled-adornment-amount"
+                              label="Payment Amount"
                               className={classes.textField}
                               margin="normal"
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    $
+                                  </InputAdornment>
+                                ),
+                              }}
                               value={this.state.paymentAmount}
                               onChange={this.handleChange('paymentAmount')}
                             />
@@ -309,7 +313,7 @@ class Payments extends React.Component {
                           name="Property Mgmt" //Modal Header
                           description="Make a payment."
                           panelLabel="Payment Amount:" //Submit button in modal
-                          amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
+                          amount={Number(this.state.paymentAmount * 100)} //Default state amount in cents $725.00
                           token={this.onToken}
                           stripeKey={publishableKey}
                           image={testlogo} //Pop-in header image

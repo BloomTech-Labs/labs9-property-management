@@ -174,6 +174,8 @@ class EditPropertyModal extends Component {
                 margin="normal"
                 helperText="Give a nickname to your property"
                 onChange={this.handleChange('name')}
+                InputProps={{ style: { paddingLeft: '1rem' } }}
+                InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                 required
               />
             </Grid>
@@ -185,6 +187,8 @@ class EditPropertyModal extends Component {
                 className={classes.textField}
                 value={address}
                 margin="normal"
+                InputProps={{ style: { paddingLeft: '1rem' } }}
+                InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                 onChange={this.handleChange('address')}
               />
             </Grid>
@@ -196,12 +200,19 @@ class EditPropertyModal extends Component {
                 className={classes.textField}
                 value={city}
                 margin="normal"
+                InputProps={{ style: { paddingLeft: '1rem' } }}
+                InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                 onChange={this.handleChange('city')}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl className={classes.formControl} required>
-                <InputLabel htmlFor="state-native-required">State</InputLabel>
+                <InputLabel
+                  style={{ paddingLeft: '1rem' }}
+                  htmlFor="state-native-required"
+                >
+                  State
+                </InputLabel>
                 <Select
                   native
                   value={state}
@@ -209,6 +220,7 @@ class EditPropertyModal extends Component {
                   name="State"
                   inputProps={{
                     id: 'state-native-required',
+                    style: { paddingLeft: '1rem' },
                   }}
                 >
                   {states.map((state, index) => (
@@ -227,6 +239,8 @@ class EditPropertyModal extends Component {
                 className={classes.textField}
                 value={zip_code}
                 margin="normal"
+                InputProps={{ style: { paddingLeft: '1rem' } }}
+                InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                 onChange={this.handleChange('zip_code')}
               />
             </Grid>
@@ -237,6 +251,8 @@ class EditPropertyModal extends Component {
                 value={bedrooms}
                 onChange={this.handleChange('bedrooms')}
                 type="number"
+                InputProps={{ style: { paddingLeft: '1rem' } }}
+                InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                 className={classes.textField}
               />
             </Grid>
@@ -247,6 +263,8 @@ class EditPropertyModal extends Component {
                 value={bathrooms}
                 onChange={this.handleChange('bathrooms')}
                 type="number"
+                InputProps={{ style: { paddingLeft: '1rem' } }}
+                InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                 className={classes.textField}
               />
             </Grid>
@@ -257,6 +275,8 @@ class EditPropertyModal extends Component {
                 value={max_occupants}
                 onChange={this.handleChange('max_occupants')}
                 type="number"
+                InputProps={{ style: { paddingLeft: '1rem' } }}
+                InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                 className={classes.textField}
               />
             </Grid>
@@ -267,6 +287,8 @@ class EditPropertyModal extends Component {
                 value={square_footage}
                 onChange={this.handleChange('square_footage')}
                 type="number"
+                InputProps={{ style: { paddingLeft: '1rem' } }}
+                InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                 className={classes.textField}
               />
             </Grid>
@@ -277,26 +299,38 @@ class EditPropertyModal extends Component {
                 value={year_built}
                 onChange={this.handleChange('year_built')}
                 type="number"
+                InputProps={{ style: { paddingLeft: '1rem' } }}
+                InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                 className={classes.textField}
               />
             </Grid>
             <Grid item xs={6} sm={6}>
               <FormControl className={classes.textMaskFormControl} required>
-                <InputLabel htmlFor="officePhone">Office Phone</InputLabel>
+                <InputLabel
+                  style={{ paddingLeft: '1rem' }}
+                  htmlFor="officePhone"
+                >
+                  Office Phone
+                </InputLabel>
                 <Input
                   value={office_ph}
                   onChange={this.handleChange('office_ph')}
                   id="officePhone"
                   inputComponent={TextMaskCustom}
+                  style={{ paddingLeft: '1rem' }}
                 />
               </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControl className={classes.textMaskFormControl} required>
-                <InputLabel htmlFor="maintenancePhone">
+                <InputLabel
+                  style={{ paddingLeft: '1rem' }}
+                  htmlFor="maintenancePhone"
+                >
                   Maintenance Phone
                 </InputLabel>
                 <Input
+                  style={{ paddingLeft: '1rem' }}
                   value={maintenance_ph}
                   onChange={this.handleChange('maintenance_ph')}
                   id="maintenancePhone"

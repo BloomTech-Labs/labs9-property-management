@@ -81,7 +81,7 @@ const styles = theme => ({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: '100%',
+    width: '97%',
   },
   input: {
     marginLeft: 8,
@@ -423,7 +423,7 @@ class Properties extends React.Component {
       <Grid container className={classes.container} spacing={16}>
         <Grid item xs={12}>
           <Grid container justify="space-between" spacing={0}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={4}>
               <Paper className={classes.searchbar} elevation={1}>
                 <InputBase
                   className={classes.input}
