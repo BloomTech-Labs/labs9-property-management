@@ -31,10 +31,9 @@ const styles = theme => ({
     width: '100%',
   },
   imgpaper: {
-    marginTop: 25,
     padding: 20,
     backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: '100%',
   },
   imgpaper2: {
     width: '100%',
@@ -71,7 +70,7 @@ const styles = theme => ({
   },
   title: {
     display: 'flex',
-    flexDirection: 'column',
+    // flexDirection: 'column',
     marginBottom: 50,
   },
   noPadding: {
@@ -89,6 +88,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    height: '100%',
   },
   button: {
     width: 200,
@@ -106,6 +106,9 @@ const styles = theme => ({
   marginTop2: {
     marginTop: 20,
   },
+  marginBottom: {
+    marginBottom: 40,
+  },
   loading: {
     marginTop: '50%',
     padding: theme.spacing.unit * 3,
@@ -119,6 +122,19 @@ const styles = theme => ({
   },
   purpleAvatar: {
     backgroundColor: '#5F29FF',
+  },
+  flexWrap: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
+  uploadContainer: {
+    // DON'T TOUCH THIS!!!
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  customHeight2: {
+    height: 392,
   },
 });
 
@@ -299,104 +315,130 @@ class Maintenance extends React.Component {
       return (
         <Grid container className={classes.container} spacing={16}>
           <Grid item xs={12} className={classes.title}>
-            <MaintenanceTable
-              orders={this.state.orders}
-              orderLoading={this.state.orderLoading}
-            />
-            <form onSubmit={this.submitWorkOrder} autoComplete="off">
-              <Grid container justify="space-around" spacing={16}>
-                <Paper className={classes.imgpaper}>
-                  <CardHeader
-                    title="Submit a Work Order"
-                    subheader="Please add a description of the issue"
-                    className={classes.cardHeader}
-                    titleTypographyProps={{
-                      component: 'h6',
-                      variant: 'h6',
-                      color: 'inherit',
-                    }}
-                    subheaderTypographyProps={{
-                      variant: 'overline',
-                    }}
-                  />
-                  <ListItem className={classNames(classes.blockElement)}>
-                    <Avatar className={classes.purpleAvatar}>
-                      <Call />
-                    </Avatar>
-                    <ListItemText
-                      primary="24/7 Maintenance"
-                      secondary={this.state.maintenanceNum}
-                    />
-                  </ListItem>
-                  <ListItemText
-                    className={classes.marginTop}
-                    color="background"
-                    primary="Address:"
-                  />
-                  <ListItemText
-                    color="background"
-                    secondary={
-                      this.state.address +
-                      ', ' +
-                      this.state.city +
-                      ', ' +
-                      this.state.state +
-                      ' ' +
-                      this.state.zipcode
-                    }
-                  />
-                  <TextField
-                    id="outlined-multiline-static"
-                    label="Description of Issue"
-                    className={classNames(
-                      classes.textField,
-                      classes.marginTop2
-                    )}
-                    rows="6"
-                    multiline
-                    margin="dense"
-                    variant="outlined"
-                    onChange={this.handleInputChange}
-                    value={this.state.description}
-                    type="text"
-                    name="description"
-                  />
-                </Paper>
-                <Paper className={classNames(classes.imgpaper, classes.center)}>
-                  <FileUploader GetURL={this.GetURL} />
-                </Paper>
-                <Grid item xs={12} md={11}>
-                  <div
-                    className={classNames(classes.center, classes.marginTop2)}
-                  >
-                    <FormControlLabel
-                      label="Permission to enter premises without tenant home"
-                      control={
-                        <Checkbox
-                          checked={this.state.permission}
-                          onChange={this.handleCheckedBox('permission')}
-                          value="permission"
-                          color="primary"
-                        />
-                      }
-                    />
-                  </div>
-                </Grid>
-                <Grid item xs={12} md={11}>
-                  <div className={classes.center}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      fullWidth
-                      color="primary"
-                      className={classes.button}
-                    >
-                      Submit
-                    </Button>
-                  </div>
-                </Grid>
+            <Grid container justify="space-around" spacing={16}>
+              <Grid item xs={12} md={11}>
+                <MaintenanceTable
+                  orders={this.state.orders}
+                  orderLoading={this.state.orderLoading}
+                />
               </Grid>
-            </form>
+              <Grid item xs={12} md={11}>
+                <form
+                  onSubmit={this.submitWorkOrder}
+                  autoComplete="off"
+                  className={classes.flexWrap}
+                >
+                  <Grid item xs={12} md={6} className={classes.marginBottom}>
+                    <Grid item xs={12} md={11}>
+                      <Paper className={classes.imgpaper}>
+                        <CardHeader
+                          title="Submit a Work Order"
+                          subheader="Please add a description of the issue"
+                          className={classes.cardHeader}
+                          titleTypographyProps={{
+                            component: 'h6',
+                            variant: 'h6',
+                            color: 'inherit',
+                          }}
+                          subheaderTypographyProps={{
+                            variant: 'overline',
+                          }}
+                        />
+                        <ListItem className={classNames(classes.blockElement)}>
+                          <Avatar className={classes.purpleAvatar}>
+                            <Call />
+                          </Avatar>
+                          <ListItemText
+                            primary="24/7 Maintenance"
+                            secondary={this.state.maintenanceNum}
+                          />
+                        </ListItem>
+                        <ListItemText
+                          className={classes.marginTop}
+                          color="background"
+                          primary="Address:"
+                        />
+                        <ListItemText
+                          color="background"
+                          secondary={
+                            this.state.address +
+                            ', ' +
+                            this.state.city +
+                            ', ' +
+                            this.state.state +
+                            ' ' +
+                            this.state.zipcode
+                          }
+                        />
+                        <TextField
+                          id="outlined-multiline-static"
+                          label="Description of Issue"
+                          className={classNames(
+                            classes.textField,
+                            classes.marginTop2
+                          )}
+                          rows="6"
+                          multiline
+                          margin="dense"
+                          variant="outlined"
+                          onChange={this.handleInputChange}
+                          value={this.state.description}
+                          type="text"
+                          name="description"
+                        />
+                      </Paper>
+                    </Grid>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    className={classNames(
+                      classes.uploadContainer,
+                      classes.marginBottom
+                    )}
+                  >
+                    <Grid item xs={12} md={11}>
+                      <Paper
+                        className={classNames(classes.imgpaper, classes.center)}
+                      >
+                        <FileUploader GetURL={this.GetURL} />
+                      </Paper>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12} md={12} className={classes.marginBottom}>
+                    <div
+                      className={classNames(classes.center, classes.marginTop2)}
+                    >
+                      <FormControlLabel
+                        label="Permission to enter premises without tenant home"
+                        control={
+                          <Checkbox
+                            checked={this.state.permission}
+                            onChange={this.handleCheckedBox('permission')}
+                            value="permission"
+                            color="primary"
+                          />
+                        }
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12} md={12} className={classes.marginBottom}>
+                    <div className={classes.center}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        color="primary"
+                        className={classes.button}
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </Grid>
+                </form>
+              </Grid>
+            </Grid>
           </Grid>
           <CustomSnackbar
             open={this.state.openSnackbar}
