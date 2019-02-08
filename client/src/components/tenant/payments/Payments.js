@@ -189,7 +189,7 @@ class Payments extends React.Component {
         // );
         this.setState(prevState => {
           return {
-            openSnackbar: !prevState.openSnackbar,
+            openSnackbar: true,
             snackbarMessage: 'Payment was a success. Thank you!',
             snackbarVariant: 'success',
             payments: prevState.payments.concat({
