@@ -19,6 +19,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { withAuthUser } from '../../session';
 import { compose } from 'recompose';
 import Loading from '../../loading/Loading';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 const styles = theme => ({
   container: {
@@ -288,15 +289,18 @@ class Payments extends React.Component {
                       <form noValidate autoComplete="off">
                         <List className={classes.box}>
                           <ListItem className={classes.blockElement}>
-                            <ListItemText
-                              className={classNames(classes.noPadding)}
-                              primary="Payment Amount:"
-                            />
                             <TextField
-                              id="standard-name"
-                              label="Amount"
+                              id="filled-adornment-amount"
+                              label="Payment Amount"
                               className={classes.textField}
                               margin="normal"
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    $
+                                  </InputAdornment>
+                                ),
+                              }}
                               value={this.state.paymentAmount}
                               onChange={this.handleChange('paymentAmount')}
                             />
