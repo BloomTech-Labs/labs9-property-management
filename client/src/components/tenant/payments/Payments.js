@@ -117,7 +117,7 @@ class Payments extends React.Component {
   state = {
     amount: '',
     payments: [],
-    paymentAmount: 72500,
+    paymentAmount: null,
     openSnackbar: false,
     snackbarMessage: '',
     snackbarVariant: '',
@@ -178,7 +178,7 @@ class Payments extends React.Component {
 
   onToken = token => {
     const body = {
-      amount: this.state.paymentAmount,
+      amount: this.state.paymentAmount * 100,
       token: token,
     };
     axios
@@ -309,7 +309,7 @@ class Payments extends React.Component {
                           name="Property Mgmt" //Modal Header
                           description="Make a payment."
                           panelLabel="Payment Amount:" //Submit button in modal
-                          amount={Number(this.state.paymentAmount)} //Default state amount in cents $725.00
+                          amount={Number(this.state.paymentAmount * 100)} //Default state amount in cents $725.00
                           token={this.onToken}
                           stripeKey={publishableKey}
                           image={testlogo} //Pop-in header image
