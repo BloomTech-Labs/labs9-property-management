@@ -196,12 +196,17 @@ class Tenants extends Component {
                       value={this.state.email}
                       onChange={this.handleInputChange('email')}
                       className={classes.textField}
+                      InputProps={{ style: { paddingLeft: '1rem' } }}
+                      InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                       required
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl required className={classes.textField}>
-                      <InputLabel htmlFor="property-native-required">
+                      <InputLabel
+                        style={{ paddingLeft: '1rem' }}
+                        htmlFor="property-native-required"
+                      >
                         Property
                       </InputLabel>
                       <Select
@@ -231,6 +236,8 @@ class Tenants extends Component {
                         onChange={this.handleDateChange('leaseStart')}
                         format={'MM/dd/yyyy'}
                         className={classes.textField}
+                        InputProps={{ style: { paddingLeft: '1rem' } }}
+                        InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                       />
                     </MuiPickersUtilsProvider>
                   </Grid>
@@ -243,6 +250,8 @@ class Tenants extends Component {
                         onChange={this.handleDateChange('leaseEnd')}
                         format={'MM/dd/yyyy'}
                         className={classes.textField}
+                        InputProps={{ style: { paddingLeft: '1rem' } }}
+                        InputLabelProps={{ style: { paddingLeft: '1rem' } }}
                       />
                     </MuiPickersUtilsProvider>
                   </Grid>
