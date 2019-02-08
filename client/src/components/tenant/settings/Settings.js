@@ -6,6 +6,20 @@ import { compose } from 'recompose';
 import Grid from '@material-ui/core/Grid';
 import InviteTable from './InviteTable';
 import axios from 'axios';
+import { Description } from '@material-ui/icons';
+import styled from 'styled-components';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import classNames from 'classnames';
+
+const ContractUploadIcon = styled(Description)`
+  color: #999;
+  font-size: 200px !important;
+  cursor: pointer;
+  @media (max-width: 960px) {
+    font-size: 64px;
+  }
+`;
 
 const styles = theme => ({
   container: {
@@ -14,6 +28,18 @@ const styles = theme => ({
   },
   root: {
     padding: theme.spacing.unit,
+  },
+  imgpaper: {
+    marginTop: 25,
+    padding: 20,
+    backgroundColor: theme.palette.background.paper,
+    width: 500,
+  },
+  center: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
 });
 
@@ -67,13 +93,25 @@ class Settings extends React.Component {
               invites={this.state.invites}
               acceptInvite={this.acceptInvite}
             />
+          <Paper className={classNames(classes.imgpaper, classes.center)}>
+          <a
+            href={this.props.lease_contract}
+            style={{ textDecoration: 'none' }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+          <ContractUploadIcon />
+          </a>
+          <Typography component="h1" variant="h5">
+            View Contract
+          </Typography>
+          </Paper>
           </Grid>
         </Grid>
       </Grid>
     );
   }
 }
-
 Settings.propTypes = {
   classes: PropTypes.object.isRequired,
 };
