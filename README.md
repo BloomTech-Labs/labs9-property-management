@@ -5,9 +5,9 @@ Welcome to our Property Management Application.
 ## Contributors
 |   **Josue Peralta**  |   **Keegan Burkett**  |    **Charlie Winslow**   |   **Luis Fernando Salazar** |   **Sean Kennedy**   |
 |:----------------:|:----------------:|:---------------:|:---------------:|:---------------:|
-| [<img src="" width="80">](https://github.com/) | [<img src="" width="80">](https://github.com/)  | [<img src="" width="80">](https://github.com/) | [<img src="" width="80">](https://github.com/) | [<img src="" width="80">](https://github.com/) |
-| [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/)  |  [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/) | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/)  | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/) |  [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/)  |
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com) |
+| [<img src="https://media.licdn.com/dms/image/C5603AQGh0ll6Jzyx-w/profile-displayphoto-shrink_200_200/0?e=1554940800&v=beta&t=sHT8KrR6wk6xxpaKSb2m_-awW0xqps1bJFDOYlKYF9w" width="80">](https://github.com/Josephus-P) | [<img src="" width="80">](https://github.com/)  | [<img src="" width="80">](https://github.com/) | [<img src="" width="80">](https://github.com/) | [<img src="" width="80">](https://github.com/) |
+| [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/Josephus-P)  |  [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/) | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/)  | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/) |  [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/)  |
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com/in/josueperalta) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> LinkedIn](https://www.linkedin.com) |
 
 # Table of Contents
 - [Getting Started](#getting-started)
@@ -21,6 +21,9 @@ Welcome to our Property Management Application.
         - [Styled Components](#styled-components)
         - [Typeface Roboto](#typeface-roboto)
         - [Recompose](#recompose)
+        - [Uppy](#uppy)
+        - [Material-UI-Pickers](#material-ui-pickers)
+        - [React-Text-Mask](#react-text-mask)
     - [Back-End](#back-end)
         - [Node.js](#node.js)
         - [Express](#express)
@@ -124,22 +127,31 @@ server.get('/text', (req, res) => {
 # Tech-Stack
 ## Front-End
 ### React
-React is a javaScript library for building user interfaces. React's most important advances are the emphasis on components, one-way data flow, the Virtual DOM, JSX, and architecture that extends beyond HTML. React's simplicity lies in that it makes it easy to declare user-interfaces in self-contained independent components. [View Dependency](https://reactjs.org/)
+React is a javaScript library for building user interfaces. React's most important advances are the emphasis on components, one-way data flow, the Virtual DOM, JSX, and architecture that extends beyond HTML. React's simplicity lies in that it makes it easy to declare user-interfaces in self-contained independent components. | [View Dependency](https://reactjs.org/)
 
 ### React Router
-React Router is the standard routing library for React. From the docs: “React Router keeps your UI in sync with the URL. It has a simple API with powerful features like lazy code loading, dynamic route matching, and location transition handling built right in. [View Dependency](https://reacttraining.com/react-router/web/guides/quick-start)
+React Router is the standard routing library for React. From the docs: “React Router keeps your UI in sync with the URL. It has a simple API with powerful features like lazy code loading, dynamic route matching, and location transition handling built right in. | [View Dependency](https://reacttraining.com/react-router/web/guides/quick-start)
 
 ### Material-UI
-Material-UI is a component library that follow's Google's Material Design standard. We decided to use this library as opposed to a library like Bootstrap because Material-UI offers sleeker styling and a wide range of ready to use components.
+Material-UI is a component library that follow's Google's Material Design standard. We decided to use this library as opposed to a library like Bootstrap because Material-UI offers sleeker styling and a wide range of ready to use components. | [View Dependency](https://github.com/mui-org/material-ui)
 
 ### Styled Components
-Styled Components is used in parts of the app such as the landing/marketing pages. This CSS-in-JS solution allows us to avoid handling multiple stylesheets and abstract the CSS to the component level. [View Dependency](https://github.com/styled-components/styled-components)
+Styled Components is used in parts of the app such as the landing/marketing pages. This CSS-in-JS solution allows us to avoid handling multiple stylesheets and abstract the CSS to the component level. | [View Dependency](https://github.com/styled-components/styled-components)
 
 ### Typeface Roboto
 Self hosting fonts can significantly speed up a site's loading speed by avoiding an extra network request. Material-UI was built with the `Roboto` font in mind so we are using a self-hosted `Roboto` font. | [View Dependency](https://github.com/KyleAMathews/typefaces/tree/master/packages/roboto)
 
 ### Recompose
 Nesting HOCs into each other can become verbose. Recompose gives us a clean way to organize and nest higher-order components. | [View Dependency](https://github.com/acdlite/recompose)
+
+### Uppy
+"Uppy is a sleek and modular file uploader. It fetches files from local disk, Google Drive, Instagram, remote urls, cameras etc, and then uploads them to the final destination. It’s fast, easy to use and lets you worry about more important problems than building a file uploader." | [View Dependency](https://github.com/transloadit/uppy)
+
+### Material-UI-Pickers
+Easy-to-use date/time pickers implemented with the material design standard | [View Dependency](https://github.com/dmtrKovalenko/material-ui-pickers)
+
+### React-Text-Mask
+An input mask library that creates formatted inputs for strings such as phone numbers, dates and more | [View Dependency](https://github.com/text-mask/text-mask)
 
 ## Back-End
 ### Node.js
@@ -299,9 +311,6 @@ A powerful, simple, and seamless payment commerce solution | [View Dependency](h
 
 ### Twilio
 Twilio's programmable SMS enables our app to send text alerts to the users that agree to recieve them.
-
-### Uppy
-"Uppy is a sleek and modular file uploader. It fetches files from local disk, Google Drive, Instagram, remote urls, cameras etc, and then uploads them to the final destination. It’s fast, easy to use and lets you worry about more important problems than building a file uploader."(https://uppy.io/docs/)
 
 ### Transloadit
 The API we decided to use for processing uploaded images, Transloadit (https://transloadit.com/docs/) will give each image a url and store them in our Google Cloud Storage bucket.
